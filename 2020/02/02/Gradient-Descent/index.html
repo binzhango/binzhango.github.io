@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Gradient Descent | BZ</title>
+  <meta name="description" content="gradient-based optimization algorithmsGradient Descent variantsBatch Gradient Descent (BGD)Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradient Descent">
+<meta property="og:url" content="https://github.com/binzhango/binzhango.github.io/2020/02/02/Gradient-Descent/index.html">
+<meta property="og:site_name" content="Bin&#39;s Blog">
+<meta property="og:description" content="gradient-based optimization algorithmsGradient Descent variantsBatch Gradient Descent (BGD)Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to th">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T02:04:06.000Z">
+<meta property="article:modified_time" content="2020-02-03T02:04:06.000Z">
+<meta property="article:author" content="Bin Zhang">
+<meta property="article:tag" content="Optimizer">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://github.com/binzhango/binzhango.github.io/2020/02/02/Gradient-Descent/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    <link href="//cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" rel="stylesheet">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/binzhango" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Bin Zhang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Data Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Boston, MA</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/binzhango" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Optimizer/" rel="tag">Optimizer</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/02/Gradient-Descent/" class="title">Gradient Descent</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-03T02:04:06.000Z" itemprop="datePublished">2020-02-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Hexo/">Hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/01/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-01T15:50:08.822Z" itemprop="datePublished">2020-02-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#gradient-based-optimization-algorithms"><span class="toc-number">1.</span> <span class="toc-text">gradient-based optimization algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-variants"><span class="toc-number">1.1.</span> <span class="toc-text">Gradient Descent variants</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Batch-Gradient-Descent-BGD"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">Batch Gradient Descent (BGD)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stochastic-Gradient-Descent-SGD"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">Stochastic Gradient Descent (SGD)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mini-batch-Gradient-Descent-MB-GD"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">Mini-batch Gradient Descent (MB-GD)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Challenges"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">Challenges</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-Optimization-Algorithms"><span class="toc-number">1.2.</span> <span class="toc-text">Gradient Descent Optimization Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Momentum"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nesterov-Accelerated-Gradient"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">Nesterov Accelerated Gradient</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Adagrad"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">Adagrad</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Adadelta"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">Adadelta</span></a></li></ol></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Gradient-Descent" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Gradient Descent
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/02/02/Gradient-Descent/" class="article-date">
+	  <time datetime="2020-02-03T02:04:06.000Z" itemprop="datePublished">2020-02-02</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Optimizer/" rel="tag">Optimizer</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/02/02/Gradient-Descent/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="gradient-based-optimization-algorithms"><a href="#gradient-based-optimization-algorithms" class="headerlink" title="gradient-based optimization algorithms"></a>gradient-based optimization algorithms</h1><h2 id="Gradient-Descent-variants"><a href="#Gradient-Descent-variants" class="headerlink" title="Gradient Descent variants"></a>Gradient Descent variants</h2><h4 id="Batch-Gradient-Descent-BGD"><a href="#Batch-Gradient-Descent-BGD" class="headerlink" title="Batch Gradient Descent (BGD)"></a>Batch Gradient Descent (BGD)</h4><p>Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters θ</p>
+<p>Batch gradient descent is guaranteed to converge </p>
+<ul>
+<li>to the global minimum for convex error surfaces</li>
+<li>to a local minimum for non-convex surfaces</li>
+</ul>
+<h4 id="Stochastic-Gradient-Descent-SGD"><a href="#Stochastic-Gradient-Descent-SGD" class="headerlink" title="Stochastic Gradient Descent (SGD)"></a>Stochastic Gradient Descent (SGD)</h4><p>Batch gradient descent performs redundant computations for large datasets, as it recomputes gradients for similar examples before each parameter update.<br>SGD does away with this redundancy by performing one update at a time. It is therefore usually much faster and can also be used to learn online.<br>SGD performs frequent updates with a high variance that cause the objective function to <em>fluctuate</em> heavily.<br>While batch gradient descent converges to the minimum of the basin the parameters are placed in, SGD’s fluctuation,</p>
+<ul>
+<li>enables it to jump to new and potentially better local minima</li>
+<li>this ultimately complicates convergence to the exact minimum, as SGD will keep overshooting</li>
+</ul>
+<p>when we slowly decrease the learning rate, SGD shows the same convergence behavior as batch gradient descent, almost certainly converging to a <em>local</em> or the <em>global</em> minimum for <em>non-convex</em> and <em>convex</em> optimization respectively.</p>
+<h4 id="Mini-batch-Gradient-Descent-MB-GD"><a href="#Mini-batch-Gradient-Descent-MB-GD" class="headerlink" title="Mini-batch Gradient Descent (MB-GD)"></a>Mini-batch Gradient Descent (MB-GD)</h4><p>Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of n training examples</p>
+<ul>
+<li>reduces the variance of the parameter updates, which can lead to more stable convergence</li>
+<li>can make use of highly optimized matrix optimizations common to state-of-the-art deep learning libraries that make computing the gradient w.r.t. a mini-batch very efficient</li>
+<li>Mini-batch gradient descent is typically the algorithm of choice when training a neural network and the term SGD usually is employed also when mini-batches are used</li>
+</ul>
+<h4 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h4><ul>
+<li><p><strong>Choosing a proper learning rate can be difficult.</strong></p>
+<blockquote>
+<p>A learning rate that is too small leads to painfully slow convergence, while a learning rate that is too large can hinder convergence and cause the loss function to fluctuate around the minimum or even to diverge.</p>
+</blockquote>
+</li>
+<li><p><strong>Learning rete schedules try to adjust the learning rate during training</strong></p>
+<blockquote>
+<p>e.g. annealing, i.e. reducing the learning rate according to a pre-defined schedule or when the change in objective between epochs falls below a threshold. These schedules and thresholds, however, have to be defined in advance and are thus unable to adapt to a dataset’s characteristics</p>
+</blockquote>
+</li>
+<li><p><strong>The same learning rate applies to all parameter updates</strong></p>
+<blockquote>
+<p>If our data is sparse and our features have very different frequencies, we might not want to update all of them to the same extent, but perform a larger update for rarely occurring features</p>
+</blockquote>
+</li>
+<li><p><strong>Minimizing high non-convex error functions common for neural networks is avoiding getting trapped in their numerous suboptimal local minima</strong></p>
+<blockquote>
+<p>The difficulty arises in fact not from local minima but from saddle points, i.e. points where one dimension slopes up and another slopes down. These saddle points are usually surrounded by a plateau of the same error, which makes it notoriously hard for SGD to escape, as the gradient is close to zero in all dimensions.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Gradient-Descent-Optimization-Algorithms"><a href="#Gradient-Descent-Optimization-Algorithms" class="headerlink" title="Gradient Descent Optimization Algorithms"></a>Gradient Descent Optimization Algorithms</h2><p>We will not discuss algorithms that are infeasible to compute in practice for high-dimensional data sets, e.g. second-order methods such as Newton’s method.</p>
+<h4 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h4><p>SGD has trouble navigating ravines, i.e. areas where the surface curves much more steeply in one dimension than in another, which are common around local optima.</p>
+<p>Some implementations exchange the signs in the equations. The momentum term γ is usually set to 0.9 or a similar value.</p>
+<p>When using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill,<br>becoming faster and faster on the way (until it reaches its terminal velocity if there is air resistance, i.e. γ&lt;1).<br><em>The same thing happens to our parameter updates</em>: </p>
+<blockquote>
+<p>The momentum term increases for dimensions whose gradients point in the same directions and reduces updates for dimensions whose gradients change directions. As a result, we gain <em>faster convergence and reduced oscillation</em>.</p>
+</blockquote>
+<h4 id="Nesterov-Accelerated-Gradient"><a href="#Nesterov-Accelerated-Gradient" class="headerlink" title="Nesterov Accelerated Gradient"></a>Nesterov Accelerated Gradient</h4><p>We’d like to have a smarter ball, a ball that has a notion of where it is going so that it knows to slow down before the hill slopes up again.<br>Nesterov Accelerated Gradient (NAG) is a way to give our momentum term this kind of prescience.<br>We know that we will use our momentum term γvθ<sub>t-1</sub> to move the parameters θ.<br>Computing θ−γv<sub>t-1</sub> thus gives us an approximation of the next position of the parameters (the gradient is missing for the full update),<br>a rough idea where our parameters are going to be. We can now effectively look ahead by calculating the gradient<br><em>not w.r.t. to our current parameters θ but w.r.t. the approximate future position of our parameters</em></p>
+<p>we are able to adapt our updates to the slope of our error function and speed up SGD in turn,<br>we would also like to adapt our updates to each individual parameter to perform larger or smaller updates depending on their importance</p>
+<p>The distinction between Momentum method and Nesterov Accelerated Gradient updates was</p>
+<ul>
+<li>Both methods are distinct only when the learning rate η is reasonably large. </li>
+<li>When the learning rate η is relatively large, Nesterov Accelerated Gradients allows larger decay rate α than Momentum method, while preventing oscillations. </li>
+<li>Both Momentum method and Nesterov Accelerated Gradient <strong>become equivalent when η is small</strong></li>
+</ul>
+<h4 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h4><p>Adagrad is an algorithm for gradient-based optimization that does just this:<br>It adapts the learning rate to the parameters, </p>
+<ul>
+<li>performing smaller updates (i.e. low learning rates) for parameters associated with frequently occurring features, </li>
+<li>and larger updates (i.e. high learning rates) for parameters associated with infrequent features.</li>
+</ul>
+<p>For this reason, <strong>it is well-suited for dealing with sparse data.</strong></p>
+<p>Previously, we performed an update for all parameters θ at once as every parameter θ<sub>i</sub> used the same learning rate η.<br>As Adagrad uses a different learning rate for every parameter θ<sub>i</sub> at every time step t, we first show Adagrad’s per-parameter update, which we then vectorize.<br>For brevity, we use gt to denote the gradient at time step t. g<sub>t,i</sub> is then the partial derivative of the objective function w.r.t. to the parameter θ<sub>i</sub> at time step t</p>
+<p>In its update rule, Adagrad modifies the general learning rate η at each time step t for every parameter θ<sub>i</sub> based on the past gradients that have been computed for θ<sub>i</sub></p>
+<p>θ<sub>t+1,i</sub>=θ<sub>t,i</sub>−η/√(G<sub>t,ii</sub>+ϵ)⋅g<sub>t,i</sub></p>
+<p>G<sub>t</sub>∈R<sup>d×d</sup> here is a diagonal matrix where each diagonal element i,i is the sum of the squares of the gradients w.r.t. θ<sub>i</sub> up to time step t,<br>while ϵ is a smoothing term that avoids division by zero.<br><strong>Interestingly, without the square root operation, the algorithm performs much worse.</strong></p>
+<ul>
+<li>One of Adagrad’s main benefits is that it eliminates the need to manually tune the learning rate</li>
+<li>Adagrad’s main weakness is its accumulation of the squared gradients in the denominator<blockquote>
+<p>Since every added term is positive, the accumulated sum keeps growing during training. This in turn causes the learning rate to shrink and eventually become infinitesimally small, at which point the algorithm is no longer able to acquire additional knowledge. The following algorithms aim to resolve this flaw.</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h4><p>Adadelta is an extension of Adagrad that seeks to its aggressive, monotonically decreasing learning rate.<br>Instead of accumulating all past squared gradients, Adadelta restricts the window of accumulated past gradients to some fixed size w.</p>
+<p>Instead of inefficiently storing w previous squared gradients,<br>the sum of gradients is recursively defined as a decaying average of all past squared gradients. </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>link：</strong>
+      <a href="https://github.com/binzhango/binzhango.github.io/2020/02/02/Gradient-Descent/" title="Gradient Descent" target="_blank" rel="external">https://github.com/binzhango/binzhango.github.io/2020/02/02/Gradient-Descent/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/binzhango" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/binzhango" target="_blank"><span class="text-dark">Bin Zhang</span><small class="ml-1x">Data Engineer</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2020/02/01/hello-world/" title="Hello World"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/binzhango" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/binzhango" target="_blank"> cofess </a>base on <a href="https://github.com/binzhango" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>
