@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Spark Structured Streaming | BZ</title>
+  <meta name="description" content="Spark Structured Streaming Recently reading a blog Structured Streaming in PySpark It’s implemented in Databricks platform. Then I try to reimplement in my local Spark. Some tricky issue happend duri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark Structured Streaming">
+<meta property="og:url" content="https://github.com/binzhango/binzhango.github.io/2020/02/08/Spark-Structured-Streaming/index.html">
+<meta property="og:site_name" content="Bin&#39;s Blog">
+<meta property="og:description" content="Spark Structured Streaming Recently reading a blog Structured Streaming in PySpark It’s implemented in Databricks platform. Then I try to reimplement in my local Spark. Some tricky issue happend duri">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-09T04:23:13.000Z">
+<meta property="article:modified_time" content="2020-02-09T04:23:13.000Z">
+<meta property="article:author" content="Bin Zhang">
+<meta property="article:tag" content="Streaming">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://github.com/binzhango/binzhango.github.io/2020/02/08/Spark-Structured-Streaming/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    <link href="//cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" rel="stylesheet">
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/binzhango" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Bin Zhang</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Data Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Boston, MA</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/binzhango" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Optimizer/" rel="tag">Optimizer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Streaming/" rel="tag">Streaming</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spark/">Spark</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/08/Spark-Structured-Streaming/" class="title">Spark Structured Streaming</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-09T04:23:13.000Z" itemprop="datePublished">2020-02-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/04/Batch-Normalization/" class="title">Batch Normalization</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-04T13:15:15.000Z" itemprop="datePublished">2020-02-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/02/Gradient-Descent/" class="title">Gradient Descent</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-03T02:04:06.000Z" itemprop="datePublished">2020-02-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Hexo/">Hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/01/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-01T15:50:08.822Z" itemprop="datePublished">2020-02-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#spark-structured-streaming"><span class="toc-number">1.</span> <span class="toc-text"> Spark Structured Streaming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reading-data"><span class="toc-number">2.</span> <span class="toc-text"> Reading Data</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#read-json-as-same-as-method-in-the-blog"><span class="toc-number">2.0.1.</span> <span class="toc-text"> read json as same as method in the blog</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#read-a-single-json-file-to-check-schema"><span class="toc-number">2.0.2.</span> <span class="toc-text"> read a single json file to check schema</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#remove-span-stylecolorred-span-and-span-stylecolorred-span-in-source-file"><span class="toc-number">2.0.2.0.1.</span> <span class="toc-text"> Remove   [  and ]  in source file</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#add-one-feature-span-stylecolorbluemultilinespan"><span class="toc-number">2.0.2.0.2.</span> <span class="toc-text"> add one feature multiLine</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#change-the-schema"><span class="toc-number">2.0.3.</span> <span class="toc-text"> change the schema</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#timestamptype"><span class="toc-number">2.0.4.</span> <span class="toc-text"> TimestampType</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#streaming-our-data"><span class="toc-number">3.</span> <span class="toc-text"> Streaming Our Data</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Spark-Structured-Streaming" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spark Structured Streaming
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/02/08/Spark-Structured-Streaming/" class="article-date">
+	  <time datetime="2020-02-09T04:23:13.000Z" itemprop="datePublished">2020-02-08</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Spark/">Spark</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Streaming/" rel="tag">Streaming</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/02/08/Spark-Structured-Streaming/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="spark-structured-streaming"><a class="markdownIt-Anchor" href="#spark-structured-streaming"></a> Spark Structured Streaming</h2>
+<p>Recently reading a blog <a href="https://hackersandslackers.com/structured-streaming-in-pyspark/" target="_blank" rel="noopener">Structured Streaming in PySpark</a><br />
+It’s implemented in Databricks platform. Then I try to reimplement in my local Spark.<br />
+Some tricky issue happend during my work.</p>
+<h2 id="reading-data"><a class="markdownIt-Anchor" href="#reading-data"></a> Reading Data</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> TimestampType, StringType, StructType, StructField</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">"Test Streaming"</span>).enableHiveSupport().getOrCreate()</span><br><span class="line"></span><br><span class="line">json_schema = StructType([</span><br><span class="line">    StructField(<span class="string">"time"</span>, TimestampType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"customer"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"action"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"device"</span>, StringType(), <span class="literal">True</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">file_path = <span class="string">"local_file_path&lt;file:///..."</span></span><br></pre></td></tr></table></figure>
+<h4 id="read-json-as-same-as-method-in-the-blog"><a class="markdownIt-Anchor" href="#read-json-as-same-as-method-in-the-blog"></a> read json as same as method in the blog</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">input = spark.read.schema(json_schema).json(file_path)</span><br><span class="line"></span><br><span class="line">input.show()</span><br><span class="line"><span class="comment"># +----+--------+------+------+</span></span><br><span class="line"><span class="comment"># |time|customer|action|device|</span></span><br><span class="line"><span class="comment"># +----+--------+------+------+</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># +----+--------+------+------+</span></span><br><span class="line">input.count()</span><br><span class="line"><span class="comment"># 20000</span></span><br></pre></td></tr></table></figure>
+<p>All values are null, however, the count is right. It means spark has already read all data but the schema is not correctly mapped.</p>
+<h4 id="read-a-single-json-file-to-check-schema"><a class="markdownIt-Anchor" href="#read-a-single-json-file-to-check-schema"></a> read a single json file to check schema</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">input = spark.read.schema(json_schema).json(file_path+<span class="string">'/1.json'</span>)</span><br><span class="line"></span><br><span class="line">input.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># +----+--------+------+------+</span></span><br><span class="line"><span class="comment"># |time|customer|action|device|</span></span><br><span class="line"><span class="comment"># +----+--------+------+------+</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># |null|    null|  null|  null|</span></span><br><span class="line"><span class="comment"># +----+--------+------+------+</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># same error</span></span><br><span class="line"><span class="comment"># Then I drop schema option and use inferSchema</span></span><br><span class="line">input = spark.read.json(file_path+<span class="string">'/1.json'</span>)</span><br><span class="line"></span><br><span class="line">input.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># +--------------------+-----------+-----------------+--------------------+---------------+</span></span><br><span class="line"><span class="comment"># |     _corrupt_record|     action|         customer|              device|           time|</span></span><br><span class="line"><span class="comment"># +--------------------+-----------+-----------------+--------------------+---------------+</span></span><br><span class="line"><span class="comment"># |[&#123;"time":"3:57:09...|       null|             null|                null|           null|</span></span><br><span class="line"><span class="comment"># |                null|  power off|Nicolle Pargetter| August Doorbell Cam| 1:29:05.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|   power on|   Concordia Muck|Footbot Air Quali...| 6:02:06.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|  power off| Kippar McCaughen|             ecobee4| 5:40:19.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|  power off|    Sidney Jotham|  GreenIQ Controller| 4:54:28.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|  power off|    Fanya Menzies|             ecobee4| 3:12:48.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|low battery|    Jeanne Gresch|             ecobee4| 5:39:47.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|   power on|    Chen Cuttelar| August Doorbell Cam| 2:45:44.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|  power off|       Merwyn Mix|         Amazon Echo| 9:23:41.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|  power off| Angelico Conrath|         Amazon Echo| 4:53:13.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|   power on|     Gilda Emmett| August Doorbell Cam|12:32:29.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|low battery|  Austine Davsley|             ecobee4| 3:35:12.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|low battery| Zackariah Thoday|         Amazon Echo| 1:26:13.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|  power off|     Ewen Gillson|         Amazon Echo| 7:47:20.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|   power on|     Itch Durnill|             ecobee4| 4:45:55.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|  power off|        Winni Dow|  GreenIQ Controller| 4:12:54.000 AM|</span></span><br><span class="line"><span class="comment"># |                null|   power on|Talbot Valentelli| August Doorbell Cam| 7:35:23.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|low battery|    Vikki Muckeen| August Doorbell Cam| 1:17:30.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|  power off|  Christie Karran|Footbot Air Quali...| 9:38:13.000 PM|</span></span><br><span class="line"><span class="comment"># |                null|low battery|     Evonne Guest|         Amazon Echo| 8:02:21.000 AM|</span></span><br><span class="line"><span class="comment"># +--------------------+-----------+-----------------+--------------------+---------------+</span></span><br></pre></td></tr></table></figure>
+<p>A weird column is <em>_corrupt_record</em> and first value is <strong>[{“time”:&quot;3:57:09…</strong> in this column.<br />
+Go back to check source file and notice that it’s a list of object in json file.</p>
+<h6 id="remove-span-stylecolorred-span-and-span-stylecolorred-span-in-source-file"><a class="markdownIt-Anchor" href="#remove-span-stylecolorred-span-and-span-stylecolorred-span-in-source-file"></a> Remove  <span style='color:red'> <em>[</em> </span> and <span style='color:red'><em>]</em> </span> in source file</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">input = spark.read.json(file_path+<span class="string">'/1.json'</span>)</span><br><span class="line"></span><br><span class="line">input.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># +-----------+-----------------+--------------------+---------------+</span></span><br><span class="line"><span class="comment"># |     action|         customer|              device|           time|</span></span><br><span class="line"><span class="comment"># +-----------+-----------------+--------------------+---------------+</span></span><br><span class="line"><span class="comment"># |  power off|      Alexi Barts|  GreenIQ Controller| 3:57:09.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|Nicolle Pargetter| August Doorbell Cam| 1:29:05.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|   Concordia Muck|Footbot Air Quali...| 6:02:06.000 AM|</span></span><br><span class="line"><span class="comment"># |  power off| Kippar McCaughen|             ecobee4| 5:40:19.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|    Sidney Jotham|  GreenIQ Controller| 4:54:28.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|    Fanya Menzies|             ecobee4| 3:12:48.000 PM|</span></span><br><span class="line"><span class="comment"># |low battery|    Jeanne Gresch|             ecobee4| 5:39:47.000 PM|</span></span><br><span class="line"><span class="comment"># |   power on|    Chen Cuttelar| August Doorbell Cam| 2:45:44.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|       Merwyn Mix|         Amazon Echo| 9:23:41.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off| Angelico Conrath|         Amazon Echo| 4:53:13.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|     Gilda Emmett| August Doorbell Cam|12:32:29.000 AM|</span></span><br><span class="line"><span class="comment"># |low battery|  Austine Davsley|             ecobee4| 3:35:12.000 AM|</span></span><br><span class="line"><span class="comment"># |low battery| Zackariah Thoday|         Amazon Echo| 1:26:13.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|     Ewen Gillson|         Amazon Echo| 7:47:20.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|     Itch Durnill|             ecobee4| 4:45:55.000 AM|</span></span><br><span class="line"><span class="comment"># |  power off|        Winni Dow|  GreenIQ Controller| 4:12:54.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|Talbot Valentelli| August Doorbell Cam| 7:35:23.000 PM|</span></span><br><span class="line"><span class="comment"># |low battery|    Vikki Muckeen| August Doorbell Cam| 1:17:30.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|  Christie Karran|Footbot Air Quali...| 9:38:13.000 PM|</span></span><br><span class="line"><span class="comment"># |low battery|     Evonne Guest|         Amazon Echo| 8:02:21.000 AM|</span></span><br><span class="line"><span class="comment"># +-----------+-----------------+--------------------+---------------+</span></span><br></pre></td></tr></table></figure>
+<p>Woo, the dataframe is correct. Let’s check schema</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">input.printSchema()</span><br><span class="line"><span class="comment"># root</span></span><br><span class="line"><span class="comment">#  |-- action: string (nullable = true)</span></span><br><span class="line"><span class="comment">#  |-- customer: string (nullable = true)</span></span><br><span class="line"><span class="comment">#  |-- device: string (nullable = true)</span></span><br><span class="line"><span class="comment">#  |-- time: string (nullable = true)</span></span><br></pre></td></tr></table></figure>
+<p>So far I manually modify source file and drop external schema to obtain a corret dataframe. Is there anyway to<br />
+read these files without these steps.</p>
+<h6 id="add-one-feature-span-stylecolorbluemultilinespan"><a class="markdownIt-Anchor" href="#add-one-feature-span-stylecolorbluemultilinespan"></a> add one feature <span style='color:blue'>multiLine</span></h6>
+<p>Read the file without schema but add one feature <strong>multiLine</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">input = spark.read.json(<span class="string">"file:///path/pyspark_test_data"</span>, multiLine=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># OR input = spark.read.option('multiLine', True).json("file:///path/pyspark_test_data")</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># +-----------+--------------------+--------------------+---------------+</span></span><br><span class="line"><span class="comment"># |     action|            customer|              device|           time|</span></span><br><span class="line"><span class="comment"># +-----------+--------------------+--------------------+---------------+</span></span><br><span class="line"><span class="comment"># |   power on|     Raynor Blaskett|Nest T3021US Ther...| 3:35:09.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|Stafford Blakebrough|  GreenIQ Controller|10:59:46.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|      Alex Woolcocks|Nest T3021US Ther...| 6:26:36.000 PM|</span></span><br><span class="line"><span class="comment"># |   power on|      Clarice Nayshe|Footbot Air Quali...| 4:46:28.000 AM|</span></span><br><span class="line"><span class="comment"># |  power off|      Killie Pirozzi|Footbot Air Quali...| 8:58:43.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|    Lynne Dymidowicz|Footbot Air Quali...| 4:20:49.000 PM|</span></span><br><span class="line"><span class="comment"># |   power on|       Shaina Dowyer|             ecobee4| 3:41:33.000 AM|</span></span><br><span class="line"><span class="comment"># |low battery|       Barbee Melato| August Doorbell Cam|10:40:24.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|        Clem Westcot|Nest T3021US Ther...|11:13:38.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|       Kerri Galfour|         Amazon Echo|10:12:15.000 PM|</span></span><br><span class="line"><span class="comment"># |low battery|        Trev Ashmore|  GreenIQ Controller|11:04:41.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|      Coral Jahnisch| August Doorbell Cam| 3:06:31.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|      Feliza Cowdrey|Nest T3021US Ther...| 2:49:02.000 AM|</span></span><br><span class="line"><span class="comment"># |  power off|   Amabelle De Haven|Footbot Air Quali...|12:11:59.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|     Benton Redbourn|Nest T3021US Ther...| 3:57:39.000 AM|</span></span><br><span class="line"><span class="comment"># |low battery|        Asher Potten| August Doorbell Cam| 1:34:44.000 AM|</span></span><br><span class="line"><span class="comment"># |low battery|    Lorianne Hullyer| August Doorbell Cam| 7:26:42.000 PM|</span></span><br><span class="line"><span class="comment"># |  power off|     Ruperto Aldcorn|Footbot Air Quali...| 3:54:49.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|   Agatha Di Giacomo|Footbot Air Quali...| 7:15:20.000 AM|</span></span><br><span class="line"><span class="comment"># |   power on|    Eunice Penwright|             ecobee4|11:14:14.000 PM|</span></span><br><span class="line"><span class="comment"># +-----------+--------------------+--------------------+---------------+</span></span><br><span class="line"></span><br><span class="line">input.printSchema()</span><br><span class="line"></span><br><span class="line"><span class="comment"># root</span></span><br><span class="line"><span class="comment">#  |-- action: string (nullable = true)</span></span><br><span class="line"><span class="comment">#  |-- customer: string (nullable = true)</span></span><br><span class="line"><span class="comment">#  |-- device: string (nullable = true)</span></span><br><span class="line"><span class="comment">#  |-- time: string (nullable = true)</span></span><br></pre></td></tr></table></figure>
+<h4 id="change-the-schema"><a class="markdownIt-Anchor" href="#change-the-schema"></a> change the schema</h4>
+<p>Set time as <em>StringType</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">json_schema = StructType([</span><br><span class="line">    StructField(<span class="string">"time"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"customer"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"action"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"device"</span>, StringType(), <span class="literal">True</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">input = spark.read.schema(json_schema).json(<span class="string">"file:///path/pyspark_test_data"</span>, multiLine=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">input.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># +---------------+--------------------+-----------+--------------------+</span></span><br><span class="line"><span class="comment"># |           time|            customer|     action|              device|</span></span><br><span class="line"><span class="comment"># +---------------+--------------------+-----------+--------------------+</span></span><br><span class="line"><span class="comment"># | 3:35:09.000 AM|     Raynor Blaskett|   power on|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |10:59:46.000 AM|Stafford Blakebrough|   power on|  GreenIQ Controller|</span></span><br><span class="line"><span class="comment"># | 6:26:36.000 PM|      Alex Woolcocks|   power on|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># | 4:46:28.000 AM|      Clarice Nayshe|   power on|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># | 8:58:43.000 AM|      Killie Pirozzi|  power off|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># | 4:20:49.000 PM|    Lynne Dymidowicz|   power on|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># | 3:41:33.000 AM|       Shaina Dowyer|   power on|             ecobee4|</span></span><br><span class="line"><span class="comment"># |10:40:24.000 PM|       Barbee Melato|low battery| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># |11:13:38.000 PM|        Clem Westcot|  power off|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |10:12:15.000 PM|       Kerri Galfour|  power off|         Amazon Echo|</span></span><br><span class="line"><span class="comment"># |11:04:41.000 AM|        Trev Ashmore|low battery|  GreenIQ Controller|</span></span><br><span class="line"><span class="comment"># | 3:06:31.000 AM|      Coral Jahnisch|   power on| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># | 2:49:02.000 AM|      Feliza Cowdrey|   power on|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |12:11:59.000 PM|   Amabelle De Haven|  power off|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># | 3:57:39.000 AM|     Benton Redbourn|  power off|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># | 1:34:44.000 AM|        Asher Potten|low battery| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># | 7:26:42.000 PM|    Lorianne Hullyer|low battery| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># | 3:54:49.000 AM|     Ruperto Aldcorn|  power off|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># | 7:15:20.000 AM|   Agatha Di Giacomo|   power on|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># |11:14:14.000 PM|    Eunice Penwright|   power on|             ecobee4|</span></span><br><span class="line"><span class="comment"># +---------------+--------------------+-----------+--------------------+</span></span><br></pre></td></tr></table></figure>
+<p>Pyspark can load json files successfully without TimestampType. However, how to handle timestamp issue in this job?</p>
+<h4 id="timestamptype"><a class="markdownIt-Anchor" href="#timestamptype"></a> TimestampType</h4>
+<p>In offical document, the class <em>pyspark.sql.DataFrameReader</em> has one parameter</p>
+<ul>
+<li>timestampFormat</li>
+</ul>
+<blockquote>
+<p>sets the string that indicates a timestamp format.</p>
+<p>Custom date formats follow the formats at java.text.SimpleDateFormat.</p>
+<p>This applies to timestamp type. If None is set, it uses the default value, yyyy-MM-dd’T’HH:mm:ss.SSSXXX.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">input = spark.read.schema(schema).option(<span class="string">"multiLine"</span>, <span class="literal">True</span>).json(<span class="string">"file:///path/pyspark_test_data"</span>, timestampFormat=<span class="string">"h:mm:ss.SSS aa"</span>)</span><br><span class="line"></span><br><span class="line">input.show()</span><br><span class="line"><span class="comment"># +-------------------+--------------------+-----------+--------------------+</span></span><br><span class="line"><span class="comment"># |               time|            customer|     action|              device|</span></span><br><span class="line"><span class="comment"># +-------------------+--------------------+-----------+--------------------+</span></span><br><span class="line"><span class="comment"># |1970-01-01 03:35:09|     Raynor Blaskett|   power on|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 10:59:46|Stafford Blakebrough|   power on|  GreenIQ Controller|</span></span><br><span class="line"><span class="comment"># |1970-01-01 18:26:36|      Alex Woolcocks|   power on|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 04:46:28|      Clarice Nayshe|   power on|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 08:58:43|      Killie Pirozzi|  power off|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 16:20:49|    Lynne Dymidowicz|   power on|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 03:41:33|       Shaina Dowyer|   power on|             ecobee4|</span></span><br><span class="line"><span class="comment"># |1970-01-01 22:40:24|       Barbee Melato|low battery| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># |1970-01-01 23:13:38|        Clem Westcot|  power off|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 22:12:15|       Kerri Galfour|  power off|         Amazon Echo|</span></span><br><span class="line"><span class="comment"># |1970-01-01 11:04:41|        Trev Ashmore|low battery|  GreenIQ Controller|</span></span><br><span class="line"><span class="comment"># |1970-01-01 03:06:31|      Coral Jahnisch|   power on| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># |1970-01-01 02:49:02|      Feliza Cowdrey|   power on|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 12:11:59|   Amabelle De Haven|  power off|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 03:57:39|     Benton Redbourn|  power off|Nest T3021US Ther...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 01:34:44|        Asher Potten|low battery| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># |1970-01-01 19:26:42|    Lorianne Hullyer|low battery| August Doorbell Cam|</span></span><br><span class="line"><span class="comment"># |1970-01-01 03:54:49|     Ruperto Aldcorn|  power off|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 07:15:20|   Agatha Di Giacomo|   power on|Footbot Air Quali...|</span></span><br><span class="line"><span class="comment"># |1970-01-01 23:14:14|    Eunice Penwright|   power on|             ecobee4|</span></span><br><span class="line"><span class="comment"># +-------------------+--------------------+-----------+--------------------+</span></span><br></pre></td></tr></table></figure>
+<p>All yyyy-MM-dd are 1970-01-01 because source file only hh-mm-ss.<br />
+These source files are in wrong format in Windows.</p>
+<h2 id="streaming-our-data"><a class="markdownIt-Anchor" href="#streaming-our-data"></a> Streaming Our Data</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> TimestampType, StringType, StructType, StructField</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">"Test Streaming"</span>).enableHiveSupport().getOrCreate()</span><br><span class="line"></span><br><span class="line">json_schema = StructType([</span><br><span class="line">    StructField(<span class="string">"time"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"customer"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"action"</span>, StringType(), <span class="literal">True</span>),</span><br><span class="line">    StructField(<span class="string">"device"</span>, StringType(), <span class="literal">True</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">streamingDF = spark.readStream.schema(json_schema) \</span><br><span class="line">              .option(<span class="string">"maxFilesPerTrigger"</span>, <span class="number">1</span>) \</span><br><span class="line">              .option(<span class="string">"multiLine"</span>, <span class="literal">True</span>) \</span><br><span class="line">              .json(<span class="string">"file:///path/pyspark_test_data"</span>)</span><br><span class="line"></span><br><span class="line">streamingActionCountsDF = streamingDF.groupBy(<span class="string">'action'</span>).count()</span><br><span class="line"><span class="comment"># streamingActionCountsDF.isStreaming</span></span><br><span class="line">spark.conf.set(<span class="string">"spark.sql.shuffle.partitions"</span>, <span class="string">"2"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># View stream in real-time</span></span><br><span class="line"><span class="comment"># query = streamingActionCountsDF.writeStream \</span></span><br><span class="line"><span class="comment">#         .format("memory").queryName("counts").outputMode("complete").start()</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># format choice:</span></span><br><span class="line"><span class="comment"># parquet</span></span><br><span class="line"><span class="comment"># kafka</span></span><br><span class="line"><span class="comment"># console</span></span><br><span class="line"><span class="comment"># memory</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># query = streamingActionCountsDF.writeStream \</span></span><br><span class="line"><span class="comment">#         .format("console").queryName("counts").outputMode("complete").start()</span></span><br><span class="line"></span><br><span class="line">query = streamingActionCountsDF.writeStream.format(<span class="string">"console"</span>) \</span><br><span class="line">        .queryName(<span class="string">"counts"</span>).outputMode(<span class="string">"complete"</span>).start().awaitTermination(timeout=<span class="number">10</span>)</span><br><span class="line"><span class="comment"># Output Mode choice:</span></span><br><span class="line"><span class="comment"># append</span></span><br><span class="line"><span class="comment"># complete</span></span><br><span class="line"><span class="comment"># update</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>link：</strong>
+      <a href="https://github.com/binzhango/binzhango.github.io/2020/02/08/Spark-Structured-Streaming/" title="Spark Structured Streaming" target="_blank" rel="external">https://github.com/binzhango/binzhango.github.io/2020/02/08/Spark-Structured-Streaming/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/binzhango" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/binzhango" target="_blank"><span class="text-dark">Bin Zhang</span><small class="ml-1x">Data Engineer</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2020/02/04/Batch-Normalization/" title="Batch Normalization"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/binzhango" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/binzhango" target="_blank"> cofess </a>base on <a href="https://github.com/binzhango" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>
