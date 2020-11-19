@@ -17,21 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Batch Normalization | BZ</title>
-  <meta name="description" content="Batch Normalization is one of important parts in our NN.  Why need Normalization This paper title tells me the reason Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covar">
+  <title>Spark Dataframe window function | BZ</title>
+  <meta name="description" content="scala ref  create dataframe">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Batch Normalization">
-<meta property="og:url" content="https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/index.html">
+<meta property="og:title" content="Spark Dataframe window function">
+<meta property="og:url" content="https://github.com/binzhango/binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/index.html">
 <meta property="og:site_name" content="Bin&#39;s Blog">
-<meta property="og:description" content="Batch Normalization is one of important parts in our NN.  Why need Normalization This paper title tells me the reason Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covar">
+<meta property="og:description" content="scala ref  create dataframe">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-02-04T13:15:15.000Z">
-<meta property="article:modified_time" content="2020-02-04T13:15:15.000Z">
+<meta property="article:published_time" content="2020-03-01T23:35:36.000Z">
+<meta property="article:modified_time" content="2020-03-01T23:35:36.000Z">
 <meta property="article:author" content="Bin Zhang">
-<meta property="article:tag" content="Optimizer">
+<meta property="article:tag" content="Dataframe">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/index.html">
+  <link rel="canonical" href="https://github.com/binzhango/binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/index.html">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
@@ -263,21 +263,21 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">Catalogue</h3>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#why-need-normalization"><span class="toc-number">1.</span> <span class="toc-text"> Why need Normalization</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#independent-and-identically-distributed-iid"><span class="toc-number">1.0.1.</span> <span class="toc-text"> Independent and identically distributed (IID)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#whitening"><span class="toc-number">1.0.1.0.1.</span> <span class="toc-text"> Whitening</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#internal-covariate-shift-ics"><span class="toc-number">1.0.2.</span> <span class="toc-text"> Internal Covariate Shift (ICS)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#covariate-shift"><span class="toc-number">1.0.2.0.1.</span> <span class="toc-text"> Covariate Shift</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#todo"><span class="toc-number"></span> <span class="toc-text"> ToDo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#normalizations"><span class="toc-number">1.</span> <span class="toc-text"> Normalizations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#batch-normalization"><span class="toc-number">1.0.1.</span> <span class="toc-text"> Batch Normalization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#layer-normalization"><span class="toc-number">1.0.2.</span> <span class="toc-text"> Layer Normalization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#weight-normalization"><span class="toc-number">1.0.3.</span> <span class="toc-text"> Weight Normalization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cosine-normalization"><span class="toc-number">1.0.4.</span> <span class="toc-text"> Cosine Normalization</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#create-dataframe"><span class="toc-number">1.</span> <span class="toc-text"> create dataframe</span></a></li></ol>
     </nav>
   </div>
 </aside>
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-Batch-Normalization" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-Spark-Dataframe-window-function" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      Batch Normalization
+      Spark Dataframe window function
     </h1>
   
 
@@ -285,71 +285,33 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/02/04/Batch-Normalization/" class="article-date">
-	  <time datetime="2020-02-04T13:15:15.000Z" itemprop="datePublished">2020-02-04</time>
+	<a href="/2020/03/01/Spark-Dataframe-window-function/" class="article-date">
+	  <time datetime="2020-03-01T23:35:36.000Z" itemprop="datePublished">2020-03-01</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    <a class="article-category-link" href="/categories/Spark/">Spark</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/Optimizer/" rel="tag">Optimizer</a>
+	<a class="article-tag-link" href="/tags/Dataframe/" rel="tag">Dataframe</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/02/04/Batch-Normalization/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/03/01/Spark-Dataframe-window-function/#comments" class="article-comment-link">Comments</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>Batch Normalization is one of important parts in our NN.</p>
-<h2 id="why-need-normalization"><a class="markdownIt-Anchor" href="#why-need-normalization"></a> Why need Normalization</h2>
-<p>This paper title tells me the reason<br />
-<a href="https://arxiv.org/abs/1502.03167" target="_blank" rel="noopener">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a></p>
-<ul>
-<li>accelerating traning</li>
-<li>reduce internal covariate shift</li>
-</ul>
-<h4 id="independent-and-identically-distributed-iid"><a class="markdownIt-Anchor" href="#independent-and-identically-distributed-iid"></a> Independent and identically distributed (IID)</h4>
-<p>If our data is independent and identically distributed, training model can be simplified and its predictive ability is improved.<br />
-One important step of data preparation is <strong>whitening</strong> which is used to</p>
-<h6 id="whitening"><a class="markdownIt-Anchor" href="#whitening"></a> Whitening</h6>
-<ul>
-<li>reduce features’ coralation     =&gt; Independent</li>
-<li>all features have zero mean and unit variances =&gt; Identically distributed</li>
-</ul>
-<h4 id="internal-covariate-shift-ics"><a class="markdownIt-Anchor" href="#internal-covariate-shift-ics"></a> Internal Covariate Shift (ICS)</h4>
-<p>What is problem of ICS? Generally data is not IID</p>
-<ul>
-<li>Previous layer should update hyper-parameters to adjust new data so that reduce learning speed</li>
-<li>Get stuck in the saturation region as the network grows deeper and network stop learning earlier</li>
-</ul>
-<h6 id="covariate-shift"><a class="markdownIt-Anchor" href="#covariate-shift"></a> Covariate Shift</h6>
-<blockquote>
-<p>What is covariate shift? While in the process <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi><mo>→</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X \rightarrow Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.07847em;">X</span><span class="mrel">→</span><span class="mord mathit" style="margin-right:0.22222em;">Y</span></span></span></span></p>
-<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow></msup><mo>(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>P</mi><mrow><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow></msup><mo>(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P^{train}(y|x) = P^{test}(y|x)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8746639999999999em;"></span><span class="strut bottom" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">a</span><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mord mathrm">∣</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit">e</span><span class="mord mathit">s</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mord mathrm">∣</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span></span></p>
-<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>u</mi><mi>t</mi><mspace width="0.277778em"></mspace><msup><mi>P</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>≠</mo><msup><mi>P</mi><mrow><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow></msup><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">but\; P^{train}(x) \neq P^{test}(x)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8746639999999999em;"></span><span class="strut bottom" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit">b</span><span class="mord mathit">u</span><span class="mord mathit">t</span><span class="mord mspace thickspace"></span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">a</span><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">≠</span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit">e</span><span class="mord mathit">s</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span></span></p>
-</blockquote>
-<h1 id="todo"><a class="markdownIt-Anchor" href="#todo"></a> ToDo</h1>
-<h2 id="normalizations"><a class="markdownIt-Anchor" href="#normalizations"></a> Normalizations</h2>
-<ul>
-<li>weight scale invariance</li>
-<li>data scale invariance</li>
-</ul>
-<h4 id="batch-normalization"><a class="markdownIt-Anchor" href="#batch-normalization"></a> Batch Normalization</h4>
-<h4 id="layer-normalization"><a class="markdownIt-Anchor" href="#layer-normalization"></a> Layer Normalization</h4>
-<h4 id="weight-normalization"><a class="markdownIt-Anchor" href="#weight-normalization"></a> Weight Normalization</h4>
-<h4 id="cosine-normalization"><a class="markdownIt-Anchor" href="#cosine-normalization"></a> Cosine Normalization</h4>
+        <p><a href="https://databricks.com/blog/2015/07/15/introducing-window-functions-in-spark-sql.html" target="_blank" rel="noopener">scala ref</a></p>
+<h2 id="create-dataframe"><a class="markdownIt-Anchor" href="#create-dataframe"></a> create dataframe</h2>
 
       
     </div>
@@ -359,7 +321,7 @@ One important step of data preparation is <strong>whitening</strong> which is us
     
     <li class="post-copyright-link hidden-xs">
       <strong>link：</strong>
-      <a href="https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/" title="Batch Normalization" target="_blank" rel="external">https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/</a>
+      <a href="https://github.com/binzhango/binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/" title="Spark Dataframe window function" target="_blank" rel="external">https://github.com/binzhango/binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -406,12 +368,12 @@ One important step of data preparation is <strong>whitening</strong> which is us
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/2020/02/08/Spark-Structured-Streaming/" title="Spark Structured Streaming"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+      <a href="/2020/11/18/Azure-Data-Factory-Data-Flow/" title="Azure Data Factory (Data Flow)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/2020/02/02/Gradient-Descent/" title="Gradient Descent"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2020/02/21/Spark-Optimizaion/" title="Spark Optimizaion"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
