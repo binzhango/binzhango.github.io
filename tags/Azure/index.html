@@ -147,11 +147,43 @@
         <div class="article-description">
             
             <p>Recently I’m working in Azuer to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.</p>
-<h2 id="parameter-vs-variable"><a class="markdownIt-Anchor" href="#parameter-vs-variable"></a> parameter VS variable</h2>
-<p>Pipeline parameter must be defined before you start pipeline, whereas variables are set and used in running time.</p>
-<h2 id="get-metadata"><a class="markdownIt-Anchor" href="#get-metadata"></a> Get Metadata</h2>
-<p>The most important setting is <strong>Augument</strong><br />
-<img src="/images/getmetadata.png" alt="Get Metadata" title="Get Metadata" /></p>
+<h2 id="task"><a class="markdownIt-Anchor" href="#task"></a> Task</h2>
+<p>Process CSV files and merge different system files into one file</p>
+<ul>
+<li>Source: CSV files with filename format (<em>abcd_yyyymmdd_uuid.csv</em>), where abcd is system prefix.
+<ul>
+<li>a_20180101_9ca2bed1-2ed0-eaeb-8401-784f43755025.csv</li>
+<li>a_20180101_cca2bed1-aed0-11eb-8401-784f73755025.csv</li>
+<li>b_20190202_ece2bed1-2ed0-abeb-8401-784f43755025.csv</li>
+<li>c_20180101_ada2bed1-2ed0-22eb-8401-784f43755025.csv</li>
+</ul>
+</li>
+<li>Sink: yyyymmdd.csv
+<ul>
+<li>20180101.csv</li>
+<li>20190202.csv</li>
+</ul>
+</li>
+</ul>
+<h2 id="adf-pipeline"><a class="markdownIt-Anchor" href="#adf-pipeline"></a> ADF Pipeline</h2>
+<p><img src="/images/adf_pipeline.png" alt="Pipeline" title="Pipeline" /><br />
+<img src="/images/parameter.png" alt="" title="parameters" /><br />
+<img src="/images/variables.png" alt="" title="variables" /></p>
+<h2 id="activities"><a class="markdownIt-Anchor" href="#activities"></a> Activities</h2>
+<h4 id="get-metadata"><a class="markdownIt-Anchor" href="#get-metadata"></a> Get Metadata</h4>
+<ul>
+<li>input: source directory/parameters</li>
+<li>output: metadata of each object<br />
+Get Metadata activity iterate source directory to obtain each object. The most important setting is <strong>Augument</strong><br />
+<img src="/images/getmetadata.png" alt="Get Metadata" title="Get Metadata" /></li>
+</ul>
+<h4 id="foreach"><a class="markdownIt-Anchor" href="#foreach"></a> ForEach</h4>
+<ul>
+<li>input: output of <em>Get Metadata</em></li>
+<li>output: None<br />
+ForEach activity is used to process each object in source direcoty.</li>
+</ul>
+<pre><code class="hljs sh">@activity(<span class="hljs-string">'Get Metadata1'</span>).output.childItems</code></pre>
 
         </div>
         
