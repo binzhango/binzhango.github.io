@@ -1,146 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-	<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<title>Batch Normalization - Bin&#39;s Blog</title>
-    <link rel="alternate" href="" type="application/atom+xml"/>
-	<link rel="shortcut icon" href=""/>
-	
-<link rel="stylesheet" href="../../../../css/style.css">
-
-	
-<link rel="stylesheet" href="../../../../netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
-
-<body>
-	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="main-con">
-
-        <div class="nav cl">
-    <ul class="cl nav-list">
-        
-            <li>
-                
-                    <a href="../../../../index.html" class="">
-                        <i class="fa fa-home"></i> 
-                        <span>主页</span>
-                    </a>
-                
-            </li>
-        
-            <li>
-                
-                    <a href="../../../../archives/" class="">
-                        <i class=" fa-"></i> 
-                        <span>归档</span>
-                    </a>
-                
-            </li>
-        
-            <li>
-                
-                    
-                    <a href="javascript:void(0)" class="">
-                    
-                        <i class=" fa-"></i> 
-                        <span>关于</span>
-                        <span class="drop-flag fa fa-angle-down"></span>
-                    </a>
-                    <dl>
-                        
-                            <li>
-                                <a href="../../../../about" class="">
-                                    <i class=" fa-"></i>
-                                    <span>关于本站</span>
-                                </a>
-                            </li>
-                        
-                    </dl>
-                
-            </li>
-        
-    </ul>
-    <ul class="cl nav-tool">
-        
-            <li>
-                <a href="../../../../github">
-                    <i class="fa fa-github"></i>
-                </a>
-            </li>
-        
-            <li>
-                <a href="../../../../mail">
-                    <i class="fa fa-envelope"></i>
-                </a>
-            </li>
-        
-            <li>
-                <a href="../../../../twitter">
-                    <i class="fa fa-twitter"></i>
-                </a>
-            </li>
-        
-        
-        <li>
-            <a href="javascript:void(0)" class="nav-search-btn">
-                <i class="fa fa-search"></i>
-            </a>
-        </li>
-        
-    </ul>
-    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://github.com/binzhango/binzhango.github.io"></form>
-</div>
-
-        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
-    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
-    <div class="top-info cl fadeToBottom">
-        <h2 class="site-name"><a href="/">mokusei</a> <small id="type-data">This is a hexo theme</small></h2>
-    </div>
-</header>
-
-        <div class="con-wrap fadeToTop">
-    
-    <section class="article-area">
-    
-        <article class="article">
-    <div class="article-wrap">
-        
-            <h2 class="article-title cl">
-                Batch Normalization
-            </h2>
-        
-
-        <ul class="article-extra" style="margin-bottom: 20px">
-            
-            <li class="article-time">
-                2020-02-04
-            </li>
-            
-
-            
-                
-                <li class="article-category">
-                    <ol class="category-list cl">
-                        <i class="fa fa-folder-o"></i>
-                        
-                            
-                            <li><a href="/categories/Machine Learning/">Machine Learning</a></li>
-                            
-                        
-                    </ol>
-                </li>
-                
-            
-
-
-        </ul>
-        <div class="article-description">
-            
-            <p>Batch Normalization is one of important parts in our NN.</p>
-<h2 id="why-need-normalization"><a class="markdownIt-Anchor" href="#why-need-normalization"></a> Why need Normalization</h2>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Batch Normalization - Bin&#039;s Blog</title><link rel="manifest" href="../../../../manifest.json"><meta name="application-name" content="Bin&#039;s Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Bin&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta description="Batch Normalization is one of important parts in our NN.  Why need Normalization This paper title tells me the reason Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covar"><meta property="og:type" content="blog"><meta property="og:title" content="Batch Normalization"><meta property="og:url" content="https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/"><meta property="og:site_name" content="Bin&#039;s Blog"><meta property="og:description" content="Batch Normalization is one of important parts in our NN.  Why need Normalization This paper title tells me the reason Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covar"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://github.com/binzhango/binzhango.github.io/img/og_image.png"><meta property="article:published_time" content="2020-02-04T13:15:15.000Z"><meta property="article:modified_time" content="2020-02-04T13:15:15.000Z"><meta property="article:author" content="Bin Zhang"><meta property="article:tag" content="Optimizer"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="../../../../img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/"},"headline":"Bin's Blog","image":["https://github.com/binzhango/binzhango.github.io/img/og_image.png"],"datePublished":"2020-02-04T13:15:15.000Z","dateModified":"2020-02-04T13:15:15.000Z","author":{"@type":"Person","name":"Bin Zhang"},"description":"Batch Normalization is one of important parts in our NN.  Why need Normalization This paper title tells me the reason Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covar"}</script><link rel="canonical" href="https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/"><link rel="icon" href="../../../../img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="../../../../css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="atom.xml" title="Bin's Blog" type="application/atom+xml">
+<!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="../../../../index.html"><img src="../../../../img/logo.svg" alt="Bin&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="../../../../index.html">Home</a><a class="navbar-item" href="../../../../archives">Archives</a><a class="navbar-item" href="../../../../categories">Categories</a><a class="navbar-item" href="../../../../tags">Tags</a><a class="navbar-item" href="../../../../about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="../../../../https:/github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2020-02-04T13:15:15.000Z" title="2020-02-04T13:15:15.000Z">2020-02-04</time></span><span class="level-item">Updated&nbsp;<time dateTime="2020-02-04T13:15:15.000Z" title="2020-02-04T13:15:15.000Z">2020-02-04</time></span><span class="level-item"><a class="link-muted" href="../../../../categories/Machine-Learning/">Machine Learning</a></span><span class="level-item">a minute read (About 182 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Batch Normalization</h1><div class="content"><p>Batch Normalization is one of important parts in our NN.</p>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><h2 id="why-need-normalization"><a class="markdownIt-Anchor" href="#why-need-normalization"></a> Why need Normalization</h2>
 <p>This paper title tells me the reason<br />
 <a href="https://arxiv.org/abs/1502.03167" target="_blank" rel="noopener">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a></p>
 <ul>
@@ -179,96 +40,65 @@ One important step of data preparation is <strong>whitening</strong> which is us
 <h4 id="layer-normalization"><a class="markdownIt-Anchor" href="#layer-normalization"></a> Layer Normalization</h4>
 <h4 id="weight-normalization"><a class="markdownIt-Anchor" href="#weight-normalization"></a> Weight Normalization</h4>
 <h4 id="cosine-normalization"><a class="markdownIt-Anchor" href="#cosine-normalization"></a> Cosine Normalization</h4>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Batch Normalization</p><p><a href="https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/">https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Bin Zhang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2020-02-04</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2020-02-04</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="../../../../https:/creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="../../../../https:/creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="../../../../https:/creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="../../../../tags/Optimizer/">Optimizer</a></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" href="../../../../" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>Afdian.net</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="../../../../" alt="Alipay"></span></a><a class="button donate" href="../../../../" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>Buy me a coffee</span></a><a class="button donate" href="../../../../" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><div class="notification is-danger">You forgot to set the <code>business</code> or <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.</div><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="../../../../" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="../../08/Spark-Structured-Streaming/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Spark Structured Streaming</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="../../02/Gradient-Descent/"><span class="level-item">Gradient Descent</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div class="notification is-danger">You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.</div></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="../../../../img/avatar.png" alt="Your name"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Your name</p><p class="is-size-6 is-block">Your title</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Your location</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="../../../../archives"><p class="title">9</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="../../../../categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="../../../../tags"><p class="title">5</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="../../../../https:/github.com/ppoffice" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="../../../../https:/github.com/ppoffice"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="../../../../https:/facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="../../../../https:/twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="../../../../https:/dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="../../../../index.html"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><ul class="menu-list"><li><a class="level is-mobile" href="#why-need-normalization"><span class="level-left"><span class="level-item">1.1</span><span class="level-item"> Why need Normalization</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#internal-covariate-shift-ics"><span class="level-left"><span class="level-item">1.1.1</span><span class="level-item"> Internal Covariate Shift (ICS)</span></span></a></li></ul></li></ul><li><a class="level is-mobile" href="#todo"><span class="level-left"><span class="level-item">2</span><span class="level-item"> ToDo</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#normalizations"><span class="level-left"><span class="level-item">2.1</span><span class="level-item"> Normalizations</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#cosine-normalization"><span class="level-left"><span class="level-item">2.1.1</span><span class="level-item"> Cosine Normalization</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="../../../../js/toc.js" defer></script></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="../../../../categories/DataFactory/"><span class="level-start"><span class="level-item">DataFactory</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="../../../../categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="../../../../categories/Machine-Learning/"><span class="level-start"><span class="level-item">Machine Learning</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="../../../../categories/Spark/"><span class="level-start"><span class="level-item">Spark</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="../../../../categories/airflow/"><span class="level-start"><span class="level-item">airflow</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-11-19T02:27:29.000Z">2020-11-18</time></p><p class="title"><a href="../../../11/18/Azure-Data-Factory-Data-Flow/">Azure Data Factory (Data Flow)</a></p><p class="categories"><a href="../../../../categories/DataFactory/">DataFactory</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-03-01T23:35:36.000Z">2020-03-01</time></p><p class="title"><a href="../../../03/01/Spark-Dataframe-window-function/">Spark Dataframe window function</a></p><p class="categories"><a href="../../../../categories/Spark/">Spark</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-02-21T19:10:36.000Z">2020-02-21</time></p><p class="title"><a href="../../21/Spark-Optimizaion/">Spark Optimizaion</a></p><p class="categories"><a href="../../../../categories/Spark/">Spark</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-02-12T03:20:40.000Z">2020-02-11</time></p><p class="title"><a href="../../11/Airflow-1/">Airflow-- 1</a></p><p class="categories"><a href="../../../../categories/airflow/">airflow</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-02-11T13:17:08.000Z">2020-02-11</time></p><p class="title"><a href="../../11/Whitening-transformation/">Whitening transformation</a></p><p class="categories"><a href="../../../../categories/Machine-Learning/">Machine Learning</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="../../../../archives/2020/11/"><span class="level-start"><span class="level-item">November 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="../../../../archives/2020/03/"><span class="level-start"><span class="level-item">March 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="../../../../archives/2020/02/"><span class="level-start"><span class="level-item">February 2020</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="../../../../tags/Azure/"><span class="tag">Azure</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="../../../../tags/Dataframe/"><span class="tag">Dataframe</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="../../../../tags/Optimization/"><span class="tag">Optimization</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="../../../../tags/Optimizer/"><span class="tag">Optimizer</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="../../../../tags/Streaming/"><span class="tag">Streaming</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><div class="card widget"><div class="card-content"><div class="notification is-danger">You need to set <code>client_id</code> and <code>slot_id</code> to show this AD unit. Please set it in <code>_config.yml</code>.</div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="../../../../index.html"><img src="../../../../img/logo.svg" alt="Bin&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2020 Bin Zhang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="../../../../https:/creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="../../../../https:/creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="../../../../https:/github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" async></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="../../../../js/column.js"></script><script src="../../../../js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="../../../../js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="../../../../js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="../../../../js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"../../../../content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({{ JSON.stringify(config) }});
+</script>
 
-        </div>
-        
-        
-        
-        <div class="article-tags">
-            <ul class="tags-list cl">
-                
-                <li><a href="/tags/Optimizer/"><i class="fa fa-tag"></i>Optimizer</a></li>
-                
-            </ul>
-        </div>
-        
-        <div class="article-pagination cl">
-        
-            <div class="pagination-prev">
-                <a href="../../08/Spark-Structured-Streaming/">Spark Structured Streaming</a>
-            </div>
-        
-        
-            <div class="pagination-next">
-                <a href="../../02/Gradient-Descent/">Gradient Descent</a>
-            </div>
-        
-        </div>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
 
-        
-    </div>
-</article>
-
-    </section>
-    
-<section class="tool-area">
-
-    <div class="toolbar">
-        
-
-        
-        <div class="widget-post widget" style="order: 1 ">
-            <h2 class="widget-title"><i class="fa fa-file-text"></i> Recent articles</h2>
-            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="../../../11/18/Azure-Data-Factory-Data-Flow/">Azure Data Factory (Data Flow)</a></li><li class="post-list-item"><a class="post-list-link" href="../../../03/01/Spark-Dataframe-window-function/">Spark Dataframe window function</a></li><li class="post-list-item"><a class="post-list-link" href="../../21/Spark-Optimizaion/">Spark Optimizaion</a></li><li class="post-list-item"><a class="post-list-link" href="../../11/Airflow-1/">Airflow-- 1</a></li><li class="post-list-item"><a class="post-list-link" href="../../11/Whitening-transformation/">Whitening transformation</a></li><li class="post-list-item"><a class="post-list-link" href="../../08/Spark-Structured-Streaming/">Spark Structured Streaming</a></li><li class="post-list-item"><a class="post-list-link" href="">Batch Normalization</a></li><li class="post-list-item"><a class="post-list-link" href="../../02/Gradient-Descent/">Gradient Descent</a></li></ul>
-        </div>
-        
-
-        
-        <div class="widget-tags widget" style="order: 2 ">
-            <h2 class="widget-title"><i class="fa fa-tags"></i> Tag</h2>
-            <a href="../../../../tags/Azure/" style="font-size: 10px;">Azure</a> <a href="../../../../tags/Dataframe/" style="font-size: 10px;">Dataframe</a> <a href="../../../../tags/Optimization/" style="font-size: 10px;">Optimization</a> <a href="../../../../tags/Optimizer/" style="font-size: 20px;">Optimizer</a> <a href="../../../../tags/Streaming/" style="font-size: 10px;">Streaming</a>
-        </div>
-        
-
-        
-        <div class="widget-categories widget" style="order: 3 ">
-            <h2 class="widget-title"><i class="fa fa-folder-open"></i> Categories</h2>
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/DataFactory/">DataFactory</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Spark/">Spark</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/airflow/">airflow</a><span class="category-list-count">1</span></li></ul>
-        </div>
-        
-
-    </div>
-</section>
-</div>
-
-    
-        <footer class="footer">
-	<p class="footer-intro">
-		
-		@2020 Bin&#39;s Blog.
-	</p>
-	<p class="footer-intro">
-			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
-			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
-	</p>
-</footer>
-
-
-
-
-        <div class="extend-tools" id="extend-tools" style="display: none;">
-    <ul>
-        <li class="tools-returnTop" title="Back to top"><i class="fa fa-angle-double-up"></i></li>
-    </ul>
-</div>
-
-	</div>
-
-	
-<script src="../../../../js/org/jquery.min.js"></script>
-
-    
-<script src="../../../../js/extend.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-</body>
-</html>
+<script type="text/javascript" src="{{ src }}">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body></html>
