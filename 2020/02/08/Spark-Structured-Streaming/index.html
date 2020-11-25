@@ -1,6 +1,88 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Spark Structured Streaming · Bin's Blog</title><meta name="description" content="Spark Structured Streaming - Bin Zhang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="../../../../favicon.ico"><link rel="stylesheet" href="../../../../css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/binzhango/binzhango.github.io/atom.xml" title="Bin's Blog"><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="atom.xml" title="Bin's Blog" type="application/atom+xml">
-<!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Bin's Blog</h2></a></div><a href="../../../../index.html" target="_self" class="li component-nav-item"><p>INDEX</p></a><a href="../../../../archives" target="_self" class="li component-nav-item"><p>ARCHIVES</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">Spark Structured Streaming</h1><div class="post-info">Feb 8, 2020</div><div class="post-content"><h2 id="spark-structured-streaming"><a class="markdownIt-Anchor" href="#spark-structured-streaming"></a> Spark Structured Streaming</h2>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><p>Recently reading a blog <a target="_blank" rel="noopener" href="https://hackersandslackers.com/structured-streaming-in-pyspark/">Structured Streaming in PySpark</a><br />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>Spark Structured Streaming | Bin&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Bin Zhang">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.3.9',
+    localsearch:{
+      "enable": false,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'null'
+  };
+</script>
+
+  <link rel="shortcut icon" href="../../../../favicon.ico">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "greenish",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="atom.xml" title="Bin's Blog" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="single">
+
+<div id="page">
+<div id="lx-aside" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+  <div class="overlay">
+  <div class="page-title">
+    <div class="avatar"><a href="/"><img src="../../../../images/avatar.jpeg"></a></div>
+    <span>2020-02-08</span>
+    <h2>Spark Struct...</h2>
+    <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="../../../../tags/Streaming/" rel="tag">Streaming</a></div>
+    </div>
+</div>
+</div>
+
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <h2 id="spark-structured-streaming"><a class="markdownIt-Anchor" href="#spark-structured-streaming"></a> Spark Structured Streaming</h2>
+<p>Recently reading a blog <a target="_blank" rel="noopener" href="https://hackersandslackers.com/structured-streaming-in-pyspark/">Structured Streaming in PySpark</a><br />
 It’s implemented in Databricks platform. Then I try to reimplement in my local Spark.<br />
 Some tricky issue happend during my work.</p>
 <h2 id="reading-data"><a class="markdownIt-Anchor" href="#reading-data"></a> Reading Data</h2>
@@ -40,12 +122,170 @@ read these files without these steps.</p>
 These source files are in wrong format in Windows.</p>
 <h2 id="streaming-our-data"><a class="markdownIt-Anchor" href="#streaming-our-data"></a> Streaming Our Data</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pyspark.sql <span class="hljs-keyword">import</span> SparkSession<br><span class="hljs-keyword">from</span> pyspark.sql.types <span class="hljs-keyword">import</span> TimestampType, StringType, StructType, StructField<br><br><br>spark = SparkSession.builder.appName(<span class="hljs-string">&quot;Test Streaming&quot;</span>).enableHiveSupport().getOrCreate()<br><br>json_schema = StructType([<br>    StructField(<span class="hljs-string">&quot;time&quot;</span>, StringType(), <span class="hljs-literal">True</span>),<br>    StructField(<span class="hljs-string">&quot;customer&quot;</span>, StringType(), <span class="hljs-literal">True</span>),<br>    StructField(<span class="hljs-string">&quot;action&quot;</span>, StringType(), <span class="hljs-literal">True</span>),<br>    StructField(<span class="hljs-string">&quot;device&quot;</span>, StringType(), <span class="hljs-literal">True</span>)<br>])<br><br>streamingDF = spark.readStream.schema(json_schema) \<br>              .option(<span class="hljs-string">&quot;maxFilesPerTrigger&quot;</span>, <span class="hljs-number">1</span>) \<br>              .option(<span class="hljs-string">&quot;multiLine&quot;</span>, <span class="hljs-literal">True</span>) \<br>              .json(<span class="hljs-string">&quot;file:///path/pyspark_test_data&quot;</span>)<br><br>streamingActionCountsDF = streamingDF.groupBy(<span class="hljs-string">&#x27;action&#x27;</span>).count()<br><span class="hljs-comment"># streamingActionCountsDF.isStreaming</span><br>spark.conf.<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;spark.sql.shuffle.partitions&quot;</span>, <span class="hljs-string">&quot;2&quot;</span>)<br><br><br><span class="hljs-comment"># View stream in real-time</span><br><span class="hljs-comment"># query = streamingActionCountsDF.writeStream \</span><br><span class="hljs-comment">#         .format(&quot;memory&quot;).queryName(&quot;counts&quot;).outputMode(&quot;complete&quot;).start()</span><br><br><span class="hljs-comment"># format choice:</span><br><span class="hljs-comment"># parquet</span><br><span class="hljs-comment"># kafka</span><br><span class="hljs-comment"># console</span><br><span class="hljs-comment"># memory</span><br><br><span class="hljs-comment"># query = streamingActionCountsDF.writeStream \</span><br><span class="hljs-comment">#         .format(&quot;console&quot;).queryName(&quot;counts&quot;).outputMode(&quot;complete&quot;).start()</span><br><br>query = streamingActionCountsDF.writeStream.<span class="hljs-built_in">format</span>(<span class="hljs-string">&quot;console&quot;</span>) \<br>        .queryName(<span class="hljs-string">&quot;counts&quot;</span>).outputMode(<span class="hljs-string">&quot;complete&quot;</span>).start().awaitTermination(timeout=<span class="hljs-number">10</span>)<br><span class="hljs-comment"># Output Mode choice:</span><br><span class="hljs-comment"># append</span><br><span class="hljs-comment"># complete</span><br><span class="hljs-comment"># update</span><br><br></code></pre></td></tr></table></figure>
-</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
-var disqus_identifier = '2020/02/08/Spark-Structured-Streaming/';
-var disqus_title = 'Spark Structured Streaming';
-var disqus_url = 'https://github.com/binzhango/binzhango.github.io/2020/02/08/Spark-Structured-Streaming/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="../../11/Whitening-transformation/" class="prev">PREV</a><a href="../../04/Batch-Normalization/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="https://github.com/binzhango/binzhango.github.io">Bin Zhang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="../../11/Whitening-transformation/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>Whiteni...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="../../04/Batch-Normalization/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Batch N...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+
+<footer>
+  <div>
+  Copyright &copy; 2019.<a href="/">Bin's Blog</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button> 
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="../../../../images/avatar.jpeg" alt="Bin Zhang"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>Bin Zhang</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="../../../../guestbook/">Guestbook</a></li>
+        <li><a href="../../../../about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="../../../../https:/lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+  TeX: {
+          extensions: ["mhchem.js"]
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({{ JSON.stringify(config) }});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="{{ src }}">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
