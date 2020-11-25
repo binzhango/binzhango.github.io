@@ -1,256 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme-color" content=#58b77a>
-  <title>Airflow-- 1 | Bin&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Bin Zhang">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <script id="hexo-configurations">
-  var CONFIG = {
-    root: '/',
-    theme: 'lx',
-    version: '0.3.9',
-    localsearch:{
-      "enable": false,
-      "trigger": "auto",
-      "top_n_per_article": 1,
-      "unescape": false,
-      "preload": false
-      },
-    path: 'null'
-  };
-</script>
+{% extends '_layout.swig' %}
+{% import '_macro/post.swig' as post_template %}
+{% import '_macro/sidebar.swig' as sidebar_template %}
 
-  <link rel="shortcut icon" href="../../../../favicon.ico">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
-  <style type="text/css">
-    pre,
-    code {
-      font-family: 'Fira Code', monospace;
-    }
-    html {
-      font-family: sans-serif;
-    }
-    body {
-      font-family: sans-serif;
-    }
-    h1, h2, h3, h4, h5, figure {
-      font-family: sans-serif;
-    }
-    .menu-container{
-      font-family: sans-serif;
-    }
-  </style>
 
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
-	<script>
-	$(document).ready(function(){
-	$(".menu-container").jSideMenu({
-	    jSidePosition: "position-right",
-	    jSideSticky: true,
-	    jSideSkin: "greenish",
-	     });
-	}); 
-	</script>
-  
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
-<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="atom.xml" title="Bin's Blog" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-<body>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="single">
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-<div id="page">
-<div id="lx-aside" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
-  <div class="overlay">
-  <div class="page-title">
-    <div class="avatar"><a href="/"><img src="../../../../images/avatar.jpeg"></a></div>
-    <span>2020-02-11</span>
-    <h2>Airflow-- 1</h2>
-    
-    </div>
-</div>
-</div>
+{% block page_class %}page-post-detail{% endblock %}
 
-<div id="lx-main-content">
-  <div class="lx-post">
-    <div class="lx-entry padding">
-      <div>
-        <h2 id="all-in-one"><a class="markdownIt-Anchor" href="#all-in-one"></a> all in one</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#调度机中的dag代码示例</span><br><span class="hljs-comment">#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()</span><br> <br><span class="hljs-keyword">import</span> airflow<br><span class="hljs-keyword">from</span> airflow.models <span class="hljs-keyword">import</span> DAG<br><span class="hljs-keyword">from</span> airflow.operators.python_operator <span class="hljs-keyword">import</span> PythonOperator<br> <br>default_args = &#123;<br>	<span class="hljs-string">&#x27;owner&#x27;</span>: <span class="hljs-string">&#x27;xiaoming&#x27;</span>,<br>	<span class="hljs-string">&#x27;start_date&#x27;</span>: airflow.utils.dates.days_ago(<span class="hljs-number">1</span>),<br>	<span class="hljs-string">&#x27;depends_on_past&#x27;</span>: <span class="hljs-literal">False</span>,<br>    <span class="hljs-comment"># 失败发邮件</span><br>	<span class="hljs-string">&#x27;email&#x27;</span>: [<span class="hljs-string">&#x27;xiaoming@163.com&#x27;</span>],<br>	<span class="hljs-string">&#x27;email_on_failure&#x27;</span>: <span class="hljs-literal">True</span>,<br>	<span class="hljs-string">&#x27;email_on_retry&#x27;</span>: <span class="hljs-literal">True</span>,<br>	<span class="hljs-comment"># 重试相关</span><br>	<span class="hljs-string">&#x27;retries&#x27;</span>: <span class="hljs-number">3</span>,<br>	<span class="hljs-string">&#x27;retry_delay&#x27;</span>: timedelta(minutes=<span class="hljs-number">5</span>),<br>	<span class="hljs-comment"># 并发限制</span><br>	<span class="hljs-string">&#x27;pool&#x27;</span>: <span class="hljs-string">&#x27;data_hadoop_pool&#x27;</span>,<br>	<span class="hljs-string">&#x27;priority_weight&#x27;</span>: <span class="hljs-number">900</span>,<br>	<span class="hljs-comment"># 按机器名指定运行位置</span><br>	<span class="hljs-string">&#x27;queue&#x27;</span>: <span class="hljs-string">&#x27;66.66.0.66:8080&#x27;</span><br>&#125;<br> <br>dag = DAG(<br>    dag_id=<span class="hljs-string">&#x27;daily&#x27;</span>, <br>    default_args=default_args, <span class="hljs-comment">#配置默认参数</span><br>    schedule_interval=<span class="hljs-string">&#x27;0 13 * * *&#x27;</span>)<br> <br><span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch_data_from_hdfs_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span><br>	<span class="hljs-keyword">pass</span><br> <br><span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">push_data_to_mysql_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span><br>	<span class="hljs-keyword">pass</span><br> <br>fetch_data_from_hdfs = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=fetch_data_from_hdfs_function,<br>	dag=dag)<br> <br>push_data_to_mysql = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;push_data_to_mysql&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=push_data_to_mysql_function,<br>	dag=dag)<br> <br>fetch_data_from_hdfs &gt;&gt; push_data_to_mysql<br></code></pre></td></tr></table></figure>
-<h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#该task未修改参数，采用默认参数</span><br>fetch_data_from_hdfs = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=fetch_data_from_hdfs_function,<br>	dag=dag)<br> <br><span class="hljs-comment">#该task修改通过指定参数，覆盖默认参数，调整调度行为</span><br>push_data_to_mysql = PythonOperator(<br>    task_id=<span class="hljs-string">&#x27;push_data_to_mysql&#x27;</span>,<br>    queue=<span class="hljs-string">&#x27;77.66.0.66:8080&#x27;</span>, <span class="hljs-comment">#通过修改参数，调整调度</span><br>    pool=<span class="hljs-string">&#x27;data_mysql_pool&#x27;</span>, <span class="hljs-comment">#通过修改参数，调整调度</span><br>    provide_context=<span class="hljs-literal">True</span>,<br>    python_callable=push_data_to_mysql_function,<br>    dag=dag)<br></code></pre></td></tr></table></figure>
-<h2 id="decouple"><a class="markdownIt-Anchor" href="#decouple"></a> decouple</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> xx.fetch_data_from_hdfs <span class="hljs-comment">#将包装成函数的业务代码引入</span><br> <br><span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch_data_from_hdfs_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span><br>	<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> fetch_data_from_hdfs: <span class="hljs-comment">#判断业务代码是否执行成功，不成功报错</span><br>        <span class="hljs-keyword">raise</span> AirflowException(<span class="hljs-string">&#x27;run fail: fetch_data_from_hdfs&#x27;</span>)<br> <br>fetch_data_from_hdfs = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=fetch_data_from_hdfs_function,<br>	dag=dag)<br></code></pre></td></tr></table></figure>
 
-      </div>
+{% block content %}
+
+  <div id="posts" class="posts-expand">
+    {{ post_template.render(page) }}
+
+    <div class="post-spread">
+      {% if theme.jiathis %}
+        {% include '_partials/share/jiathis.swig' %}
+      {% elseif theme.baidushare %}
+        {% include '_partials/share/baidushare.swig' %}
+      {% elseif theme.add_this_id %}
+        {% include '_partials/share/add-this.swig' %}
+      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
+        {% include '_partials/share/duoshuo_share.swig' %}
+      {% endif %}
     </div>
   </div>
-</div>
-<div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="../../21/Spark-Optimizaion/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Next</span>
-						<h3>Spark O...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="../Whitening-transformation/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Prev</span>
-						<h3>Whiteni...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-</div>
 
-</div>
+{% endblock %}
 
-<footer>
-  <div>
-  Copyright &copy; 2019.<a href="/">Bin's Blog</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
-  </div>
-</footer>
-
-</div>
-
-<button class="hamburger hamburger--arrow-r" type="button">
-    <div class="hamburger-box">
-      <div class="hamburger-inner"></div>
-    </div>
-</button> 
-<div class="menu visibility">
-  <div class="menu-head">
-    <span class="layer">
-      <div class="col">
-        <div class="row for-pic">
-          <div class="profile-pic">
-            <a href="/"><img src="../../../../images/avatar.jpeg" alt="Bin Zhang"/></a>
-          </div>
-        </div>
-        <div class="row for-name">
-          <p>Bin Zhang</p>
-          <span class="tagline">Hello, World!</span>
-        </div>
-      </div>
-    </span>
-  </div>
-  <nav class="menu-container">
-  <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
-    
-    <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
-        <ul>
-          <li><a href="../../../../guestbook/">Guestbook</a></li>
-        <li><a href="../../../../about/">About</a></li>
-        </ul>
-    </li>
-    <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
-        <ul>
-          <li> <a href="../../../../https:/lx.js.org" target="_blank">Theme-Lx</a></li>
-        </ul>
-    </li>
-  </ul>
-  </nav>
-</div>
-
-<div class="gototop js-top">
-  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
-</div>
-<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
-<script>
-(function () {
-	"use strict";
-	var goToTop = function() {
-		$(".js-gotop").on("click", function(event){
-			event.preventDefault();
-			$("html, body").animate({
-				scrollTop: $("html").offset().top
-			}, 500, "easeInOutExpo");
-			return false;
-		});
-		$(window).scroll(function(){
-			var $win = $(window);
-			if ($win.scrollTop() > 200) {
-				$(".js-top").addClass("active");
-			} else {
-				$(".js-top").removeClass("active");
-			}
-		});
-	};
-	$(function(){
-		goToTop();
-	});
-}());
-</script>
+{% block sidebar %}
+  {{ sidebar_template.render(true) }}
+{% endblock %}
 
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-  TeX: {
-          extensions: ["mhchem.js"]
-    }
-  });
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
-        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
-      }
-    });
-  });
-</script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
-    }
-  });
-</script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({{ JSON.stringify(config) }});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="{{ src }}">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
-</body>
-</html>
+{% block script_extra %}
+  {% include '_scripts/pages/post-details.swig' %}
+{% endblock %}

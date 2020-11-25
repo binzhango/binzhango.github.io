@@ -1,355 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme-color" content=#58b77a>
-  <title>Gradient Descent | Bin&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Bin Zhang">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <script id="hexo-configurations">
-  var CONFIG = {
-    root: '/',
-    theme: 'lx',
-    version: '0.3.9',
-    localsearch:{
-      "enable": false,
-      "trigger": "auto",
-      "top_n_per_article": 1,
-      "unescape": false,
-      "preload": false
-      },
-    path: 'null'
-  };
-</script>
+{% extends '_layout.swig' %}
+{% import '_macro/post.swig' as post_template %}
+{% import '_macro/sidebar.swig' as sidebar_template %}
 
-  <link rel="shortcut icon" href="../../../../favicon.ico">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
-  <style type="text/css">
-    pre,
-    code {
-      font-family: 'Fira Code', monospace;
-    }
-    html {
-      font-family: sans-serif;
-    }
-    body {
-      font-family: sans-serif;
-    }
-    h1, h2, h3, h4, h5, figure {
-      font-family: sans-serif;
-    }
-    .menu-container{
-      font-family: sans-serif;
-    }
-  </style>
 
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
-	<script>
-	$(document).ready(function(){
-	$(".menu-container").jSideMenu({
-	    jSidePosition: "position-right",
-	    jSideSticky: true,
-	    jSideSkin: "greenish",
-	     });
-	}); 
-	</script>
-  
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
-<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="atom.xml" title="Bin's Blog" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-<body>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="single">
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-<div id="page">
-<div id="lx-aside" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
-  <div class="overlay">
-  <div class="page-title">
-    <div class="avatar"><a href="/"><img src="../../../../images/avatar.jpeg"></a></div>
-    <span>2020-02-02</span>
-    <h2>Gradient Des...</h2>
-    <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="../../../../tags/Optimizer/" rel="tag">Optimizer</a></div>
-    </div>
-</div>
-</div>
+{% block page_class %}page-post-detail{% endblock %}
 
-<div id="lx-main-content">
-  <div class="lx-post">
-    <div class="lx-entry padding">
-      <div>
-        <h1 id="gradient-based-optimization-algorithms"><a class="markdownIt-Anchor" href="#gradient-based-optimization-algorithms"></a> gradient-based optimization algorithms</h1>
-<h2 id="gradient-descent-variants"><a class="markdownIt-Anchor" href="#gradient-descent-variants"></a> Gradient Descent variants</h2>
-<h4 id="batch-gradient-descent-bgd"><a class="markdownIt-Anchor" href="#batch-gradient-descent-bgd"></a> Batch Gradient Descent (BGD)</h4>
-<p>Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters θ</p>
-<p>Batch gradient descent is guaranteed to converge</p>
-<ul>
-<li>to the global minimum for convex error surfaces</li>
-<li>to a local minimum for non-convex surfaces</li>
-</ul>
-<h4 id="stochastic-gradient-descent-sgd"><a class="markdownIt-Anchor" href="#stochastic-gradient-descent-sgd"></a> Stochastic Gradient Descent (SGD)</h4>
-<p>Batch gradient descent performs redundant computations for large datasets, as it recomputes gradients for similar examples before each parameter update.<br />
-SGD does away with this redundancy by performing one update at a time. It is therefore usually much faster and can also be used to learn online.<br />
-SGD performs frequent updates with a high variance that cause the objective function to <em>fluctuate</em> heavily.<br />
-While batch gradient descent converges to the minimum of the basin the parameters are placed in, SGD’s fluctuation,</p>
-<ul>
-<li>enables it to jump to new and potentially better local minima</li>
-<li>this ultimately complicates convergence to the exact minimum, as SGD will keep overshooting</li>
-</ul>
-<p>when we slowly decrease the learning rate, SGD shows the same convergence behavior as batch gradient descent, almost certainly converging to a <em>local</em> or the <em>global</em> minimum for <em>non-convex</em> and <em>convex</em> optimization respectively.</p>
-<h4 id="mini-batch-gradient-descent-mb-gd"><a class="markdownIt-Anchor" href="#mini-batch-gradient-descent-mb-gd"></a> Mini-batch Gradient Descent (MB-GD)</h4>
-<p>Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of n training examples</p>
-<ul>
-<li>reduces the variance of the parameter updates, which can lead to more stable convergence</li>
-<li>can make use of highly optimized matrix optimizations common to state-of-the-art deep learning libraries that make computing the gradient w.r.t. a mini-batch very efficient</li>
-<li>Mini-batch gradient descent is typically the algorithm of choice when training a neural network and the term SGD usually is employed also when mini-batches are used</li>
-</ul>
-<h4 id="challenges"><a class="markdownIt-Anchor" href="#challenges"></a> Challenges</h4>
-<ul>
-<li><strong>Choosing a proper learning rate can be difficult.</strong></li>
-</ul>
-<blockquote>
-<p>A learning rate that is too small leads to painfully slow convergence, while a learning rate that is too large can hinder convergence and cause the loss function to fluctuate around the minimum or even to diverge.</p>
-</blockquote>
-<ul>
-<li><strong>Learning rete schedules try to adjust the learning rate during training</strong></li>
-</ul>
-<blockquote>
-<p>e.g. annealing, i.e. reducing the learning rate according to a pre-defined schedule or when the change in objective between epochs falls below a threshold. These schedules and thresholds, however, have to be defined in advance and are thus unable to adapt to a dataset’s characteristics</p>
-</blockquote>
-<ul>
-<li><strong>The same learning rate applies to all parameter updates</strong></li>
-</ul>
-<blockquote>
-<p>If our data is sparse and our features have very different frequencies, we might not want to update all of them to the same extent, but perform a larger update for rarely occurring features</p>
-</blockquote>
-<ul>
-<li><strong>Minimizing high non-convex error functions common for neural networks is avoiding getting trapped in their numerous suboptimal local minima</strong></li>
-</ul>
-<blockquote>
-<p>The difficulty arises in fact not from local minima but from saddle points, i.e. points where one dimension slopes up and another slopes down. These saddle points are usually surrounded by a plateau of the same error, which makes it notoriously hard for SGD to escape, as the gradient is close to zero in all dimensions.</p>
-</blockquote>
-<h2 id="gradient-descent-optimization-algorithms"><a class="markdownIt-Anchor" href="#gradient-descent-optimization-algorithms"></a> Gradient Descent Optimization Algorithms</h2>
-<p>We will not discuss algorithms that are infeasible to compute in practice for high-dimensional data sets, e.g. second-order methods such as Newton’s method.</p>
-<h4 id="momentum"><a class="markdownIt-Anchor" href="#momentum"></a> Momentum</h4>
-<p>SGD has trouble navigating ravines, i.e. areas where the surface curves much more steeply in one dimension than in another, which are common around local optima.</p>
-<p>Some implementations exchange the signs in the equations. The momentum term γ is usually set to 0.9 or a similar value.</p>
-<p>When using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill,<br />
-becoming faster and faster on the way (until it reaches its terminal velocity if there is air resistance, i.e. γ&lt;1).<br />
-<em>The same thing happens to our parameter updates</em>:</p>
-<blockquote>
-<p>The momentum term increases for dimensions whose gradients point in the same directions and reduces updates for dimensions whose gradients change directions. As a result, we gain <em>faster convergence and reduced oscillation</em>.</p>
-</blockquote>
-<h4 id="nesterov-accelerated-gradient"><a class="markdownIt-Anchor" href="#nesterov-accelerated-gradient"></a> Nesterov Accelerated Gradient</h4>
-<p>We’d like to have a smarter ball, a ball that has a notion of where it is going so that it knows to slow down before the hill slopes up again.<br />
-Nesterov Accelerated Gradient (NAG) is a way to give our momentum term this kind of prescience.<br />
-We know that we will use our momentum term γvθ<sub>t-1</sub> to move the parameters θ.<br />
-Computing θ−γv<sub>t-1</sub> thus gives us an approximation of the next position of the parameters (the gradient is missing for the full update),<br />
-a rough idea where our parameters are going to be. We can now effectively look ahead by calculating the gradient<br />
-<em>not w.r.t. to our current parameters θ but w.r.t. the approximate future position of our parameters</em></p>
-<p>we are able to adapt our updates to the slope of our error function and speed up SGD in turn,<br />
-we would also like to adapt our updates to each individual parameter to perform larger or smaller updates depending on their importance</p>
-<p>The distinction between Momentum method and Nesterov Accelerated Gradient updates was</p>
-<ul>
-<li>Both methods are distinct only when the learning rate η is reasonably large.</li>
-<li>When the learning rate η is relatively large, Nesterov Accelerated Gradients allows larger decay rate α than Momentum method, while preventing oscillations.</li>
-<li>Both Momentum method and Nesterov Accelerated Gradient <strong>become equivalent when η is small</strong></li>
-</ul>
-<h4 id="adagrad"><a class="markdownIt-Anchor" href="#adagrad"></a> Adagrad</h4>
-<p>Adagrad is an algorithm for gradient-based optimization that does just this:<br />
-It adapts the learning rate to the parameters,</p>
-<ul>
-<li>performing smaller updates (i.e. low learning rates) for parameters associated with frequently occurring features,</li>
-<li>and larger updates (i.e. high learning rates) for parameters associated with infrequent features.</li>
-</ul>
-<p>For this reason, <strong>it is well-suited for dealing with sparse data.</strong></p>
-<p>Previously, we performed an update for all parameters θ at once as every parameter θ<sub>i</sub> used the same learning rate η.<br />
-As Adagrad uses a different learning rate for every parameter θ<sub>i</sub> at every time step t, we first show Adagrad’s per-parameter update, which we then vectorize.<br />
-For brevity, we use gt to denote the gradient at time step t. g<sub>t,i</sub> is then the partial derivative of the objective function w.r.t. to the parameter θ<sub>i</sub> at time step t</p>
-<p>In its update rule, Adagrad modifies the general learning rate η at each time step t for every parameter θ<sub>i</sub> based on the past gradients that have been computed for θ<sub>i</sub></p>
-<p>θ<sub>t+1,i</sub>=θ<sub>t,i</sub>−η/√(G<sub>t,ii</sub>+ϵ)⋅g<sub>t,i</sub></p>
-<p>G<sub>t</sub>∈R<sup>d×d</sup> here is a diagonal matrix where each diagonal element i,i is the sum of the squares of the gradients w.r.t. θ<sub>i</sub> up to time step t,<br />
-while ϵ is a smoothing term that avoids division by zero.<br />
-<strong>Interestingly, without the square root operation, the algorithm performs much worse.</strong></p>
-<ul>
-<li>One of Adagrad’s main benefits is that it eliminates the need to manually tune the learning rate</li>
-<li>Adagrad’s main weakness is its accumulation of the squared gradients in the denominator</li>
-</ul>
-<blockquote>
-<p>Since every added term is positive, the accumulated sum keeps growing during training. This in turn causes the learning rate to shrink and eventually become infinitesimally small, at which point the algorithm is no longer able to acquire additional knowledge. The following algorithms aim to resolve this flaw.</p>
-</blockquote>
-<h4 id="adadelta"><a class="markdownIt-Anchor" href="#adadelta"></a> Adadelta</h4>
-<p>Adadelta is an extension of Adagrad that seeks to its aggressive, monotonically decreasing learning rate.<br />
-Instead of accumulating all past squared gradients, Adadelta restricts the window of accumulated past gradients to some fixed size w.</p>
-<p>Instead of inefficiently storing w previous squared gradients,<br />
-the sum of gradients is recursively defined as a decaying average of all past squared gradients.</p>
 
-      </div>
+{% block content %}
+
+  <div id="posts" class="posts-expand">
+    {{ post_template.render(page) }}
+
+    <div class="post-spread">
+      {% if theme.jiathis %}
+        {% include '_partials/share/jiathis.swig' %}
+      {% elseif theme.baidushare %}
+        {% include '_partials/share/baidushare.swig' %}
+      {% elseif theme.add_this_id %}
+        {% include '_partials/share/add-this.swig' %}
+      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
+        {% include '_partials/share/duoshuo_share.swig' %}
+      {% endif %}
     </div>
   </div>
-</div>
-<div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="../../04/Batch-Normalization/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Next</span>
-						<h3>Batch N...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(../../../../cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="../../01/hello-world/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Prev</span>
-						<h3>Hello W...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-</div>
 
-</div>
+{% endblock %}
 
-<footer>
-  <div>
-  Copyright &copy; 2019.<a href="/">Bin's Blog</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
-  </div>
-</footer>
-
-</div>
-
-<button class="hamburger hamburger--arrow-r" type="button">
-    <div class="hamburger-box">
-      <div class="hamburger-inner"></div>
-    </div>
-</button> 
-<div class="menu visibility">
-  <div class="menu-head">
-    <span class="layer">
-      <div class="col">
-        <div class="row for-pic">
-          <div class="profile-pic">
-            <a href="/"><img src="../../../../images/avatar.jpeg" alt="Bin Zhang"/></a>
-          </div>
-        </div>
-        <div class="row for-name">
-          <p>Bin Zhang</p>
-          <span class="tagline">Hello, World!</span>
-        </div>
-      </div>
-    </span>
-  </div>
-  <nav class="menu-container">
-  <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
-    
-    <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
-        <ul>
-          <li><a href="../../../../guestbook/">Guestbook</a></li>
-        <li><a href="../../../../about/">About</a></li>
-        </ul>
-    </li>
-    <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
-        <ul>
-          <li> <a href="../../../../https:/lx.js.org" target="_blank">Theme-Lx</a></li>
-        </ul>
-    </li>
-  </ul>
-  </nav>
-</div>
-
-<div class="gototop js-top">
-  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
-</div>
-<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
-<script>
-(function () {
-	"use strict";
-	var goToTop = function() {
-		$(".js-gotop").on("click", function(event){
-			event.preventDefault();
-			$("html, body").animate({
-				scrollTop: $("html").offset().top
-			}, 500, "easeInOutExpo");
-			return false;
-		});
-		$(window).scroll(function(){
-			var $win = $(window);
-			if ($win.scrollTop() > 200) {
-				$(".js-top").addClass("active");
-			} else {
-				$(".js-top").removeClass("active");
-			}
-		});
-	};
-	$(function(){
-		goToTop();
-	});
-}());
-</script>
+{% block sidebar %}
+  {{ sidebar_template.render(true) }}
+{% endblock %}
 
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-  TeX: {
-          extensions: ["mhchem.js"]
-    }
-  });
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
-        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
-      }
-    });
-  });
-</script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
-    }
-  });
-</script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({{ JSON.stringify(config) }});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="{{ src }}">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
-</body>
-</html>
+{% block script_extra %}
+  {% include '_scripts/pages/post-details.swig' %}
+{% endblock %}
