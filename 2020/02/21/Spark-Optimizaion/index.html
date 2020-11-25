@@ -1,48 +1,105 @@
-extends partial/layout
-
-block site_title
-    != page.title + " · " + config.title
-
-block description
-    - var desc = page.desc || page.title + ' - ' + config.author;
-    meta(name="description", content=desc)
-
-block container
-    div#post-container
-        include mixins/post
-        +post(page)
-        include partial/comment
-
-    //- Comment
-    if theme.duoshuo
-        script.
-            var duoshuoQuery = {short_name:"#{theme.duoshuo}"};
-            (function() {
-                var ds = document.createElement('script');
-                ds.type = 'text/javascript';ds.async = true;
-                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-                ds.charset = 'UTF-8';
-                (document.getElementsByTagName('head')[0] 
-                || document.getElementsByTagName('body')[0]).appendChild(ds);
-            })();
-
-
-    if theme.disqus
-        script.
-            var disqus_shortname = '#{theme.disqus}';
-            var disqus_identifier = '#{page.path}';
-            var disqus_title = '#{page.title}';
-            var disqus_url = '#{config.url}/#{page.path}';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        script(id='dsq-count-scr' src='//#{theme.disqus}.disqus.com/count.js' async)
-
-block pagination
-    include mixins/paginator
-    +post()
-
-block copyright
-    include partial/copyright
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Spark Optimizaion · Bin's Blog</title><meta name="description" content="Spark Optimizaion - Bin Zhang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/binzhango/binzhango.github.io/atom.xml" title="Bin's Blog"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bin's Blog" type="application/atom+xml">
+<!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Bin's Blog</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>INDEX</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>ARCHIVES</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">Spark Optimizaion</h1><div class="post-info">Feb 21, 2020</div><div class="post-content"><h1 id="spark-run-faster-and-faster"><a class="markdownIt-Anchor" href="#spark-run-faster-and-faster"></a> Spark run faster and faster</h1>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><ul>
+<li>Cluster Optimization</li>
+<li>Parameters Optimization</li>
+<li>Code Optimization</li>
+</ul>
+<h2 id="cluster-optimization"><a class="markdownIt-Anchor" href="#cluster-optimization"></a> Cluster Optimization</h2>
+<h4 id="locality-level"><a class="markdownIt-Anchor" href="#locality-level"></a> Locality Level</h4>
+<p>Data locality is how close data is to the code processing it. There are several levels of locality based on the data’s current location. In order from closest to farthest:</p>
+<ul>
+<li><strong>PROCESS_LOCAL</strong> data is in the same JVM as the running code. This is the best locality possible</li>
+<li><strong>NODE_LOCAL</strong> data is on the same node. Examples might be in HDFS on the same node, or in another executor on the same node. This is a little slower than PROCESS_LOCAL because the data has to travel between processes</li>
+<li><strong>NO_PREF</strong> data is accessed equally quickly from anywhere and has no locality preference</li>
+<li><strong>RACK_LOCAL</strong> data is on the same rack of servers. Data is on a different server on the same rack so needs to be sent over the network, typically through a single switch</li>
+<li><strong>ANY</strong> data is elsewhere on the network and not in the same rack</li>
+</ul>
+<p>Performance: PROCESS_LOCAL &gt; NODE_LOCAL &gt; NO_PREF &gt; RACK_LOCAL</p>
+<h6 id="locality-settting"><a class="markdownIt-Anchor" href="#locality-settting"></a> Locality settting</h6>
+<ul>
+<li>spark.locality.wait.process</li>
+<li>spark.locality.wait.node</li>
+<li>spark.locality.wait.rack</li>
+</ul>
+<h4 id="data-format"><a class="markdownIt-Anchor" href="#data-format"></a> Data Format</h4>
+<ul>
+<li>text</li>
+<li>orc</li>
+<li>parquet</li>
+<li>avro</li>
+</ul>
+<h6 id="format-setting"><a class="markdownIt-Anchor" href="#format-setting"></a> format setting</h6>
+<ul>
+<li>spark.sql.hive.convertCTAS</li>
+<li>spark.sql.sources.default</li>
+</ul>
+<h4 id="parallelising"><a class="markdownIt-Anchor" href="#parallelising"></a> parallelising</h4>
+<ul>
+<li>spark.sql.shuffle.partitions : default is 200</li>
+</ul>
+<h4 id="computing"><a class="markdownIt-Anchor" href="#computing"></a> computing</h4>
+<ul>
+<li>–executor-memory : default is 1G</li>
+<li>–executor-cores : default is 1<br />
+if large memory cause resource throtle in cluster, if small memory cause task termination<br />
+if more cores cause IO issue, if less cores slow dow computing</li>
+</ul>
+<h4 id="memory"><a class="markdownIt-Anchor" href="#memory"></a> memory</h4>
+<ul>
+<li>spark.executor.overhead.memory</li>
+</ul>
+<h4 id="table-join"><a class="markdownIt-Anchor" href="#table-join"></a> table join</h4>
+<ul>
+<li>spark.sql.autoBroadcastJoinThreshold : default 10M</li>
+</ul>
+<h4 id="predicate-push-down-in-spark-sql-queries"><a class="markdownIt-Anchor" href="#predicate-push-down-in-spark-sql-queries"></a> predicate push down in Spark SQL queries</h4>
+<ul>
+<li>spark.sql.parquet.filterPushdown : default True</li>
+<li>spark.sql.orc.filterPushdown=true : default False</li>
+</ul>
+<h4 id="reuse-rdd"><a class="markdownIt-Anchor" href="#reuse-rdd"></a> reuse RDD</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.persist(pyspark.StorageLevel.MEMORY_ONLY)</span><br></pre></td></tr></table></figure>
+<h4 id="spark-operators"><a class="markdownIt-Anchor" href="#spark-operators"></a> Spark operators</h4>
+<ul>
+<li>
+<p>shuffle operators</p>
+<ul>
+<li>avoid using <span style="color:blue"> <strong>reduceByKey</strong>, <strong>join</strong>, <strong>distinct</strong>, <strong>repartition</strong> etc</span></li>
+<li>Broadcast small dataset</li>
+</ul>
+</li>
+<li>
+<p>High performance operator</p>
+<ul>
+<li>reduceByKey &gt; groupByKey (reduceByKey works at map side)</li>
+<li>mapPartitions &gt; map (reduce function calls)</li>
+<li>treeReduce &gt; reduce (treeReduce works at executor not driver)
+<ul>
+<li>treeReduce &amp; reduce return some result to driver</li>
+<li>treeReduce does more work on the executors while reduce bring everything back to the driver.</li>
+</ul>
+</li>
+<li>foreachPartitions &gt; foreach (reduce function calls)</li>
+<li>filter -&gt; coalesce (reduce number of partitions and reduce tasks)</li>
+<li>repartitionAndSortWithinPartitions &gt; repartition &amp; sort</li>
+<li>broadcast (100M)</li>
+</ul>
+</li>
+</ul>
+<h4 id="shuffle"><a class="markdownIt-Anchor" href="#shuffle"></a> shuffle</h4>
+<ul>
+<li>spark.shuffle.sort.bypassMergeThreshold</li>
+<li>spark.shuffle.io.retryWait</li>
+<li>spark.shuffle.io.maxRetries</li>
+</ul>
+<p>TBC</p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
+var disqus_identifier = '2020/02/21/Spark-Optimizaion/';
+var disqus_title = 'Spark Optimizaion';
+var disqus_url = 'https://github.com/binzhango/binzhango.github.io/2020/02/21/Spark-Optimizaion/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/03/01/Spark-Dataframe-window-function/" class="prev">PREV</a><a href="/2020/02/11/Airflow-1/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="https://github.com/binzhango/binzhango.github.io">Bin Zhang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
