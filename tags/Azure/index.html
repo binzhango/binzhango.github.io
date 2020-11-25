@@ -146,11 +146,11 @@
         </ul>
         <div class="article-description">
             
-            <p>Recently I’m working in Azuer to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.</p>
+            <p>Recently I’m working in Azure to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.</p>
 <h2 id="task"><a class="markdownIt-Anchor" href="#task"></a> Task</h2>
 <p>Process CSV files and merge different system files into one file</p>
 <ul>
-<li>Source: CSV files with filename format (<em>abcd_yyyymmdd_uuid.csv</em>), where abcd is system prefix.
+<li>Source: CSV files with filename format (<em>abcd_yyyymmdd_uuid.csv</em>), where abcd is system id.
 <ul>
 <li>a_20180101_9ca2bed1-2ed0-eaeb-8401-784f43755025.csv</li>
 <li>a_20180101_cca2bed1-aed0-11eb-8401-784f73755025.csv</li>
@@ -172,18 +172,24 @@
 <h2 id="activities"><a class="markdownIt-Anchor" href="#activities"></a> Activities</h2>
 <h4 id="get-metadata"><a class="markdownIt-Anchor" href="#get-metadata"></a> Get Metadata</h4>
 <ul>
-<li>input: source directory/parameters</li>
-<li>output: metadata of each object<br />
-Get Metadata activity iterate source directory to obtain each object. The most important setting is <strong>Augument</strong><br />
-<img src="/images/getmetadata.png" alt="Get Metadata" title="Get Metadata" /></li>
+<li>Input: source directory/parameters</li>
+<li>Output: metadata of each object</li>
 </ul>
+<p>Get Metadata activity iterate source directory to obtain each object. The most important one is <strong>Argument</strong><br />
+<img src="/images/getmetadata.png" alt="Get Metadata" title="Get Metadata" /></p>
 <h4 id="foreach"><a class="markdownIt-Anchor" href="#foreach"></a> ForEach</h4>
 <ul>
-<li>input: output of <em>Get Metadata</em></li>
-<li>output: None<br />
-ForEach activity is used to process each object in source direcoty.</li>
+<li>Input: output of <em>Get Metadata</em></li>
+<li>Output: None</li>
 </ul>
+<p>ForEach activity is used to process each object in source direcoty.</p>
 <pre><code class="hljs sh">@activity(<span class="hljs-string">'Get Metadata1'</span>).output.childItems</code></pre>
+<p><img src="/images/foreach.png" alt="" title="ForEach" /></p>
+<h4 id="set-variables"><a class="markdownIt-Anchor" href="#set-variables"></a> Set Variables</h4>
+<p>It’s convenient to predefine a value used in next step.</p>
+<p><img src="/images/variable_activity.png" alt="" title="Set Variable" /></p>
+<h4 id="dataflow"><a class="markdownIt-Anchor" href="#dataflow"></a> Dataflow</h4>
+<p><img src="/images/dataflow.png" alt="" title="Dataflow" /></p>
 
         </div>
         
