@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Gradient Descent · Bin's Blog</title><meta name="description" content="Gradient Descent - Bin Zhang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="../../../../favicon.ico"><link rel="stylesheet" href="../../../../css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/binzhango/binzhango.github.io/atom.xml" title="Bin's Blog"><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="atom.xml" title="Bin's Blog" type="application/atom+xml">
+<!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Bin's Blog</h2></a></div><a href="../../../../index.html" target="_self" class="li component-nav-item"><p>INDEX</p></a><a href="../../../../archives" target="_self" class="li component-nav-item"><p>ARCHIVES</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">Gradient Descent</h1><div class="post-info">Feb 2, 2020</div><div class="post-content"><h1 id="gradient-based-optimization-algorithms"><a class="markdownIt-Anchor" href="#gradient-based-optimization-algorithms"></a> gradient-based optimization algorithms</h1>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><h2 id="gradient-descent-variants"><a class="markdownIt-Anchor" href="#gradient-descent-variants"></a> Gradient Descent variants</h2>
+<h4 id="batch-gradient-descent-bgd"><a class="markdownIt-Anchor" href="#batch-gradient-descent-bgd"></a> Batch Gradient Descent (BGD)</h4>
+<p>Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters θ</p>
+<p>Batch gradient descent is guaranteed to converge</p>
+<ul>
+<li>to the global minimum for convex error surfaces</li>
+<li>to a local minimum for non-convex surfaces</li>
+</ul>
+<h4 id="stochastic-gradient-descent-sgd"><a class="markdownIt-Anchor" href="#stochastic-gradient-descent-sgd"></a> Stochastic Gradient Descent (SGD)</h4>
+<p>Batch gradient descent performs redundant computations for large datasets, as it recomputes gradients for similar examples before each parameter update.<br />
+SGD does away with this redundancy by performing one update at a time. It is therefore usually much faster and can also be used to learn online.<br />
+SGD performs frequent updates with a high variance that cause the objective function to <em>fluctuate</em> heavily.<br />
+While batch gradient descent converges to the minimum of the basin the parameters are placed in, SGD’s fluctuation,</p>
+<ul>
+<li>enables it to jump to new and potentially better local minima</li>
+<li>this ultimately complicates convergence to the exact minimum, as SGD will keep overshooting</li>
+</ul>
+<p>when we slowly decrease the learning rate, SGD shows the same convergence behavior as batch gradient descent, almost certainly converging to a <em>local</em> or the <em>global</em> minimum for <em>non-convex</em> and <em>convex</em> optimization respectively.</p>
+<h4 id="mini-batch-gradient-descent-mb-gd"><a class="markdownIt-Anchor" href="#mini-batch-gradient-descent-mb-gd"></a> Mini-batch Gradient Descent (MB-GD)</h4>
+<p>Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of n training examples</p>
+<ul>
+<li>reduces the variance of the parameter updates, which can lead to more stable convergence</li>
+<li>can make use of highly optimized matrix optimizations common to state-of-the-art deep learning libraries that make computing the gradient w.r.t. a mini-batch very efficient</li>
+<li>Mini-batch gradient descent is typically the algorithm of choice when training a neural network and the term SGD usually is employed also when mini-batches are used</li>
+</ul>
+<h4 id="challenges"><a class="markdownIt-Anchor" href="#challenges"></a> Challenges</h4>
+<ul>
+<li><strong>Choosing a proper learning rate can be difficult.</strong></li>
+</ul>
+<blockquote>
+<p>A learning rate that is too small leads to painfully slow convergence, while a learning rate that is too large can hinder convergence and cause the loss function to fluctuate around the minimum or even to diverge.</p>
+</blockquote>
+<ul>
+<li><strong>Learning rete schedules try to adjust the learning rate during training</strong></li>
+</ul>
+<blockquote>
+<p>e.g. annealing, i.e. reducing the learning rate according to a pre-defined schedule or when the change in objective between epochs falls below a threshold. These schedules and thresholds, however, have to be defined in advance and are thus unable to adapt to a dataset’s characteristics</p>
+</blockquote>
+<ul>
+<li><strong>The same learning rate applies to all parameter updates</strong></li>
+</ul>
+<blockquote>
+<p>If our data is sparse and our features have very different frequencies, we might not want to update all of them to the same extent, but perform a larger update for rarely occurring features</p>
+</blockquote>
+<ul>
+<li><strong>Minimizing high non-convex error functions common for neural networks is avoiding getting trapped in their numerous suboptimal local minima</strong></li>
+</ul>
+<blockquote>
+<p>The difficulty arises in fact not from local minima but from saddle points, i.e. points where one dimension slopes up and another slopes down. These saddle points are usually surrounded by a plateau of the same error, which makes it notoriously hard for SGD to escape, as the gradient is close to zero in all dimensions.</p>
+</blockquote>
+<h2 id="gradient-descent-optimization-algorithms"><a class="markdownIt-Anchor" href="#gradient-descent-optimization-algorithms"></a> Gradient Descent Optimization Algorithms</h2>
+<p>We will not discuss algorithms that are infeasible to compute in practice for high-dimensional data sets, e.g. second-order methods such as Newton’s method.</p>
+<h4 id="momentum"><a class="markdownIt-Anchor" href="#momentum"></a> Momentum</h4>
+<p>SGD has trouble navigating ravines, i.e. areas where the surface curves much more steeply in one dimension than in another, which are common around local optima.</p>
+<p>Some implementations exchange the signs in the equations. The momentum term γ is usually set to 0.9 or a similar value.</p>
+<p>When using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill,<br />
+becoming faster and faster on the way (until it reaches its terminal velocity if there is air resistance, i.e. γ&lt;1).<br />
+<em>The same thing happens to our parameter updates</em>:</p>
+<blockquote>
+<p>The momentum term increases for dimensions whose gradients point in the same directions and reduces updates for dimensions whose gradients change directions. As a result, we gain <em>faster convergence and reduced oscillation</em>.</p>
+</blockquote>
+<h4 id="nesterov-accelerated-gradient"><a class="markdownIt-Anchor" href="#nesterov-accelerated-gradient"></a> Nesterov Accelerated Gradient</h4>
+<p>We’d like to have a smarter ball, a ball that has a notion of where it is going so that it knows to slow down before the hill slopes up again.<br />
+Nesterov Accelerated Gradient (NAG) is a way to give our momentum term this kind of prescience.<br />
+We know that we will use our momentum term γvθ<sub>t-1</sub> to move the parameters θ.<br />
+Computing θ−γv<sub>t-1</sub> thus gives us an approximation of the next position of the parameters (the gradient is missing for the full update),<br />
+a rough idea where our parameters are going to be. We can now effectively look ahead by calculating the gradient<br />
+<em>not w.r.t. to our current parameters θ but w.r.t. the approximate future position of our parameters</em></p>
+<p>we are able to adapt our updates to the slope of our error function and speed up SGD in turn,<br />
+we would also like to adapt our updates to each individual parameter to perform larger or smaller updates depending on their importance</p>
+<p>The distinction between Momentum method and Nesterov Accelerated Gradient updates was</p>
+<ul>
+<li>Both methods are distinct only when the learning rate η is reasonably large.</li>
+<li>When the learning rate η is relatively large, Nesterov Accelerated Gradients allows larger decay rate α than Momentum method, while preventing oscillations.</li>
+<li>Both Momentum method and Nesterov Accelerated Gradient <strong>become equivalent when η is small</strong></li>
+</ul>
+<h4 id="adagrad"><a class="markdownIt-Anchor" href="#adagrad"></a> Adagrad</h4>
+<p>Adagrad is an algorithm for gradient-based optimization that does just this:<br />
+It adapts the learning rate to the parameters,</p>
+<ul>
+<li>performing smaller updates (i.e. low learning rates) for parameters associated with frequently occurring features,</li>
+<li>and larger updates (i.e. high learning rates) for parameters associated with infrequent features.</li>
+</ul>
+<p>For this reason, <strong>it is well-suited for dealing with sparse data.</strong></p>
+<p>Previously, we performed an update for all parameters θ at once as every parameter θ<sub>i</sub> used the same learning rate η.<br />
+As Adagrad uses a different learning rate for every parameter θ<sub>i</sub> at every time step t, we first show Adagrad’s per-parameter update, which we then vectorize.<br />
+For brevity, we use gt to denote the gradient at time step t. g<sub>t,i</sub> is then the partial derivative of the objective function w.r.t. to the parameter θ<sub>i</sub> at time step t</p>
+<p>In its update rule, Adagrad modifies the general learning rate η at each time step t for every parameter θ<sub>i</sub> based on the past gradients that have been computed for θ<sub>i</sub></p>
+<p>θ<sub>t+1,i</sub>=θ<sub>t,i</sub>−η/√(G<sub>t,ii</sub>+ϵ)⋅g<sub>t,i</sub></p>
+<p>G<sub>t</sub>∈R<sup>d×d</sup> here is a diagonal matrix where each diagonal element i,i is the sum of the squares of the gradients w.r.t. θ<sub>i</sub> up to time step t,<br />
+while ϵ is a smoothing term that avoids division by zero.<br />
+<strong>Interestingly, without the square root operation, the algorithm performs much worse.</strong></p>
+<ul>
+<li>One of Adagrad’s main benefits is that it eliminates the need to manually tune the learning rate</li>
+<li>Adagrad’s main weakness is its accumulation of the squared gradients in the denominator</li>
+</ul>
+<blockquote>
+<p>Since every added term is positive, the accumulated sum keeps growing during training. This in turn causes the learning rate to shrink and eventually become infinitesimally small, at which point the algorithm is no longer able to acquire additional knowledge. The following algorithms aim to resolve this flaw.</p>
+</blockquote>
+<h4 id="adadelta"><a class="markdownIt-Anchor" href="#adadelta"></a> Adadelta</h4>
+<p>Adadelta is an extension of Adagrad that seeks to its aggressive, monotonically decreasing learning rate.<br />
+Instead of accumulating all past squared gradients, Adadelta restricts the window of accumulated past gradients to some fixed size w.</p>
+<p>Instead of inefficiently storing w previous squared gradients,<br />
+the sum of gradients is recursively defined as a decaying average of all past squared gradients.</p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
+var disqus_identifier = '2020/02/02/Gradient-Descent/';
+var disqus_title = 'Gradient Descent';
+var disqus_url = 'https://github.com/binzhango/binzhango.github.io/2020/02/02/Gradient-Descent/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="../../04/Batch-Normalization/" class="prev">PREV</a><a href="../../01/hello-world/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="https://github.com/binzhango/binzhango.github.io">Bin Zhang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
