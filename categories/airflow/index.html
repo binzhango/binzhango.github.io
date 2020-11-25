@@ -1,2 +1,232 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Bin's Blog</title><meta name="description" content="A Blog Powered By Hexo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/binzhango/binzhango.github.io/atom.xml" title="Bin's Blog"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bin's Blog" type="application/atom+xml">
-</head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Bin's Blog</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>INDEX</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>ARCHIVES</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div class="archive"><h2 class="archive-year">2020</h2><div class="post-item"><div class="post-info">Feb 11, 2020</div><a href="/2020/02/11/Airflow-1/" class="post-title-link">Airflow-- 1</a></div></div></main><footer class="footer-container"><div class="paginator"></div><div class="copyright"><p>© 2017 - 2020 <a href="https://github.com/binzhango/binzhango.github.io">Bin Zhang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script></body></html>
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>airflow - Bin&#39;s Blog</title>
+    <link rel="alternate" href="" type="application/atom+xml"/>
+	<link rel="shortcut icon" href=""/>
+	
+<link rel="stylesheet" href="/css/style.css">
+
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body>
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="main-con">
+
+        <div class="nav cl">
+    <ul class="cl nav-list">
+        
+            <li>
+                
+                    <a href="/" class="">
+                        <i class="fa fa-home"></i> 
+                        <span>主页</span>
+                    </a>
+                
+            </li>
+        
+            <li>
+                
+                    <a href="/archives/" class="">
+                        <i class=" fa-"></i> 
+                        <span>归档</span>
+                    </a>
+                
+            </li>
+        
+            <li>
+                
+                    
+                    <a href="javascript:void(0)" class="">
+                    
+                        <i class=" fa-"></i> 
+                        <span>关于</span>
+                        <span class="drop-flag fa fa-angle-down"></span>
+                    </a>
+                    <dl>
+                        
+                            <li>
+                                <a href="/about" class="">
+                                    <i class=" fa-"></i>
+                                    <span>关于本站</span>
+                                </a>
+                            </li>
+                        
+                    </dl>
+                
+            </li>
+        
+    </ul>
+    <ul class="cl nav-tool">
+        
+            <li>
+                <a href="/github">
+                    <i class="fa fa-github"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/mail">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="/twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </li>
+        
+        
+        <li>
+            <a href="javascript:void(0)" class="nav-search-btn">
+                <i class="fa fa-search"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="nav-search"><input type="search" name="q" class="nav-search-input" placeholder="search..."><input type="hidden" name="sitesearch" value="https://github.com/binzhango/binzhango.github.io"></form>
+</div>
+
+        <header class="top" id="fallEle" style="background-image: url(/imgs/head.jpg)">
+    <i class="fa fa-bars" id="media-toggle" style="display: none"></i>
+    <div class="top-info cl fadeToBottom">
+        <h2 class="site-name"><a href="/">mokusei</a> <small id="type-data">This is a hexo theme</small></h2>
+    </div>
+</header>
+
+        <div class="column-title fadeToTop">
+    <h3><span class="title-info">Categories</span> airflow</h3>
+</div>
+
+<div class="con-wrap fadeToTop">
+    
+    <section class="article-area">
+    
+        
+            <article class="article">
+    <div class="article-wrap">
+        
+            <h2 class="article-title cl">
+                <a href="/2020/02/11/Airflow-1/" title="Airflow-- 1">
+                    Airflow-- 1
+                </a>
+            </h2>
+        
+
+        <ul class="article-extra" style="margin-bottom: 20px">
+            
+            <li class="article-time">
+                2020-02-11
+            </li>
+            
+
+            
+                
+                <li class="article-category">
+                    <ol class="category-list cl">
+                        <i class="fa fa-folder-o"></i>
+                        
+                            
+                            <li><a href="/categories/airflow/">airflow</a></li>
+                            
+                        
+                    </ol>
+                </li>
+                
+            
+
+
+        </ul>
+        <div class="article-description">
+            
+            <h2 id="all-in-one"><a class="markdownIt-Anchor" href="#all-in-one"></a> all in one</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调度机中的dag代码示例</span></span><br><span class="line"><span class="comment">#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> airflow</span><br><span class="line"><span class="keyword">from</span> airflow.models <span class="keyword">import</span> DAG</span><br><span class="line"><span class="keyword">from</span> airflow.operators.python_operator <span class="keyword">import</span> PythonOperator</span><br><span class="line"> </span><br><span class="line">default_args = &#123;</span><br><span class="line">	<span class="string">'owner'</span>: <span class="string">'xiaoming'</span>,</span><br><span class="line">	<span class="string">'start_date'</span>: airflow.utils.dates.days_ago(<span class="number">1</span>),</span><br><span class="line">	<span class="string">'depends_on_past'</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="comment"># 失败发邮件</span></span><br><span class="line">	<span class="string">'email'</span>: [<span class="string">'xiaoming@163.com'</span>],</span><br><span class="line">	<span class="string">'email_on_failure'</span>: <span class="literal">True</span>,</span><br><span class="line">	<span class="string">'email_on_retry'</span>: <span class="literal">True</span>,</span><br><span class="line">	<span class="comment"># 重试相关</span></span><br><span class="line">	<span class="string">'retries'</span>: <span class="number">3</span>,</span><br><span class="line">	<span class="string">'retry_delay'</span>: timedelta(minutes=<span class="number">5</span>),</span><br><span class="line">	<span class="comment"># 并发限制</span></span><br><span class="line">	<span class="string">'pool'</span>: <span class="string">'data_hadoop_pool'</span>,</span><br><span class="line">	<span class="string">'priority_weight'</span>: <span class="number">900</span>,</span><br><span class="line">	<span class="comment"># 按机器名指定运行位置</span></span><br><span class="line">	<span class="string">'queue'</span>: <span class="string">'66.66.0.66:8080'</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">dag = DAG(</span><br><span class="line">    dag_id=<span class="string">'daily'</span>, </span><br><span class="line">    default_args=default_args, <span class="comment">#配置默认参数</span></span><br><span class="line">    schedule_interval=<span class="string">'0 13 * * *'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#生产机中，将具体执行过程放置在该函数下</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch_data_from_hdfs_function</span><span class="params">(ds, **kwargs)</span>:</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#生产机中，将具体执行过程放置在该函数下</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">push_data_to_mysql_function</span><span class="params">(ds, **kwargs)</span>:</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">fetch_data_from_hdfs = PythonOperator(</span><br><span class="line">	task_id=<span class="string">'fetch_data_from_hdfs'</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=fetch_data_from_hdfs_function,</span><br><span class="line">	dag=dag)</span><br><span class="line"> </span><br><span class="line">push_data_to_mysql = PythonOperator(</span><br><span class="line">	task_id=<span class="string">'push_data_to_mysql'</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=push_data_to_mysql_function,</span><br><span class="line">	dag=dag)</span><br><span class="line"> </span><br><span class="line">fetch_data_from_hdfs &gt;&gt; push_data_to_mysql</span><br></pre></td></tr></table></figure>
+<h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#该task未修改参数，采用默认参数</span></span><br><span class="line">fetch_data_from_hdfs = PythonOperator(</span><br><span class="line">	task_id=<span class="string">'fetch_data_from_hdfs'</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=fetch_data_from_hdfs_function,</span><br><span class="line">	dag=dag)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#该task修改通过指定参数，覆盖默认参数，调整调度行为</span></span><br><span class="line">push_data_to_mysql = PythonOperator(</span><br><span class="line">    task_id=<span class="string">'push_data_to_mysql'</span>,</span><br><span class="line">    queue=<span class="string">'77.66.0.66:8080'</span>, <span class="comment">#通过修改参数，调整调度</span></span><br><span class="line">    pool=<span class="string">'data_mysql_pool'</span>, <span class="comment">#通过修改参数，调整调度</span></span><br><span class="line">    provide_context=<span class="literal">True</span>,</span><br><span class="line">    python_callable=push_data_to_mysql_function,</span><br><span class="line">    dag=dag)</span><br></pre></td></tr></table></figure>
+<h2 id="decouple"><a class="markdownIt-Anchor" href="#decouple"></a> decouple</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xx.fetch_data_from_hdfs <span class="comment">#将包装成函数的业务代码引入</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#生产机中，将具体执行过程放置在该函数下</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch_data_from_hdfs_function</span><span class="params">(ds, **kwargs)</span>:</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> fetch_data_from_hdfs: <span class="comment">#判断业务代码是否执行成功，不成功报错</span></span><br><span class="line">        <span class="keyword">raise</span> AirflowException(<span class="string">'run fail: fetch_data_from_hdfs'</span>)</span><br><span class="line"> </span><br><span class="line">fetch_data_from_hdfs = PythonOperator(</span><br><span class="line">	task_id=<span class="string">'fetch_data_from_hdfs'</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=fetch_data_from_hdfs_function,</span><br><span class="line">	dag=dag)</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+            
+        
+        
+    </div>
+</article>
+
+        
+        <ul class="pagination clear">
+    <span class="page-number current">1</span>
+</ul>
+    </section>
+    
+<section class="tool-area">
+
+    <div class="toolbar">
+        
+
+        
+        <div class="widget-post widget" style="order: 1 ">
+            <h2 class="widget-title"><i class="fa fa-file-text"></i> Recent articles</h2>
+            <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/11/18/Azure-Data-Factory-Data-Flow/">Azure Data Factory (Data Flow)</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/01/Spark-Dataframe-window-function/">Spark Dataframe window function</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/21/Spark-Optimizaion/">Spark Optimizaion</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/Airflow-1/">Airflow-- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/Whitening-transformation/">Whitening transformation</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/08/Spark-Structured-Streaming/">Spark Structured Streaming</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/04/Batch-Normalization/">Batch Normalization</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/02/Gradient-Descent/">Gradient Descent</a></li></ul>
+        </div>
+        
+
+        
+        <div class="widget-tags widget" style="order: 2 ">
+            <h2 class="widget-title"><i class="fa fa-tags"></i> Tag</h2>
+            <a href="/tags/Azure/" style="font-size: 10px;">Azure</a> <a href="/tags/Dataframe/" style="font-size: 10px;">Dataframe</a> <a href="/tags/Optimization/" style="font-size: 10px;">Optimization</a> <a href="/tags/Optimizer/" style="font-size: 20px;">Optimizer</a> <a href="/tags/Streaming/" style="font-size: 10px;">Streaming</a>
+        </div>
+        
+
+        
+        <div class="widget-categories widget" style="order: 3 ">
+            <h2 class="widget-title"><i class="fa fa-folder-open"></i> Categories</h2>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DataFactory/">DataFactory</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/airflow/">airflow</a><span class="category-list-count">1</span></li></ul>
+        </div>
+        
+
+    </div>
+</section>
+    
+</div>
+
+
+    
+        <footer class="footer">
+	<p class="footer-intro">
+		
+		@2020 Bin&#39;s Blog.
+	</p>
+	<p class="footer-intro">
+			Powered By <a href="https://hexo.io/zh-cn/" target="_blank">hexo</a>
+			theme <a href="https://github.com/iengu/hexo-theme-mokusei" target="_blank">mokusei</a> by <a href="https://www.iengu.com" target="blank">iengu</a>
+	</p>
+</footer>
+
+
+
+
+        <div class="extend-tools" id="extend-tools" style="display: none;">
+    <ul>
+        <li class="tools-returnTop" title="Back to top"><i class="fa fa-angle-double-up"></i></li>
+    </ul>
+</div>
+
+	</div>
+
+	
+<script src="/js/org/jquery.min.js"></script>
+
+    
+<script src="/js/extend.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
