@@ -1,85 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Airflow-- 1 · Bin's Blog</title><meta name="description" content="Airflow-- 1 - Bin Zhang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="../../../../favicon.ico"><link rel="stylesheet" href="../../../../css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="https://github.com/binzhango/binzhango.github.io/atom.xml" title="Bin's Blog"><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="atom.xml" title="Bin's Blog" type="application/atom+xml">
 <!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Bin's Blog</h2></a></div><a href="../../../../index.html" target="_self" class="li component-nav-item"><p>INDEX</p></a><a href="../../../../archives" target="_self" class="li component-nav-item"><p>ARCHIVES</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">Airflow-- 1</h1><div class="post-info">Feb 11, 2020</div><div class="post-content"><h2 id="all-in-one"><a class="markdownIt-Anchor" href="#all-in-one"></a> all in one</h2>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><pre><code class="hljs python"><span class="hljs-comment">#调度机中的dag代码示例</span>
-<span class="hljs-comment">#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()</span>
- 
-<span class="hljs-keyword">import</span> airflow
-<span class="hljs-keyword">from</span> airflow.models <span class="hljs-keyword">import</span> DAG
-<span class="hljs-keyword">from</span> airflow.operators.python_operator <span class="hljs-keyword">import</span> PythonOperator
- 
-default_args = &#123;
-	<span class="hljs-string">&#x27;owner&#x27;</span>: <span class="hljs-string">&#x27;xiaoming&#x27;</span>,
-	<span class="hljs-string">&#x27;start_date&#x27;</span>: airflow.utils.dates.days_ago(<span class="hljs-number">1</span>),
-	<span class="hljs-string">&#x27;depends_on_past&#x27;</span>: <span class="hljs-literal">False</span>,
-    <span class="hljs-comment"># 失败发邮件</span>
-	<span class="hljs-string">&#x27;email&#x27;</span>: [<span class="hljs-string">&#x27;xiaoming@163.com&#x27;</span>],
-	<span class="hljs-string">&#x27;email_on_failure&#x27;</span>: <span class="hljs-literal">True</span>,
-	<span class="hljs-string">&#x27;email_on_retry&#x27;</span>: <span class="hljs-literal">True</span>,
-	<span class="hljs-comment"># 重试相关</span>
-	<span class="hljs-string">&#x27;retries&#x27;</span>: <span class="hljs-number">3</span>,
-	<span class="hljs-string">&#x27;retry_delay&#x27;</span>: timedelta(minutes=<span class="hljs-number">5</span>),
-	<span class="hljs-comment"># 并发限制</span>
-	<span class="hljs-string">&#x27;pool&#x27;</span>: <span class="hljs-string">&#x27;data_hadoop_pool&#x27;</span>,
-	<span class="hljs-string">&#x27;priority_weight&#x27;</span>: <span class="hljs-number">900</span>,
-	<span class="hljs-comment"># 按机器名指定运行位置</span>
-	<span class="hljs-string">&#x27;queue&#x27;</span>: <span class="hljs-string">&#x27;66.66.0.66:8080&#x27;</span>
-&#125;
- 
-dag = DAG(
-    dag_id=<span class="hljs-string">&#x27;daily&#x27;</span>, 
-    default_args=default_args, <span class="hljs-comment">#配置默认参数</span>
-    schedule_interval=<span class="hljs-string">&#x27;0 13 * * *&#x27;</span>)
- 
-<span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span>
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch_data_from_hdfs_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span>
-	<span class="hljs-keyword">pass</span>
- 
-<span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span>
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">push_data_to_mysql_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span>
-	<span class="hljs-keyword">pass</span>
- 
-fetch_data_from_hdfs = PythonOperator(
-	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,
-	provide_context=<span class="hljs-literal">True</span>,
-	python_callable=fetch_data_from_hdfs_function,
-	dag=dag)
- 
-push_data_to_mysql = PythonOperator(
-	task_id=<span class="hljs-string">&#x27;push_data_to_mysql&#x27;</span>,
-	provide_context=<span class="hljs-literal">True</span>,
-	python_callable=push_data_to_mysql_function,
-	dag=dag)
- 
-fetch_data_from_hdfs &gt;&gt; push_data_to_mysql</code></pre>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#调度机中的dag代码示例</span><br><span class="hljs-comment">#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()</span><br> <br><span class="hljs-keyword">import</span> airflow<br><span class="hljs-keyword">from</span> airflow.models <span class="hljs-keyword">import</span> DAG<br><span class="hljs-keyword">from</span> airflow.operators.python_operator <span class="hljs-keyword">import</span> PythonOperator<br> <br>default_args = &#123;<br>	<span class="hljs-string">&#x27;owner&#x27;</span>: <span class="hljs-string">&#x27;xiaoming&#x27;</span>,<br>	<span class="hljs-string">&#x27;start_date&#x27;</span>: airflow.utils.dates.days_ago(<span class="hljs-number">1</span>),<br>	<span class="hljs-string">&#x27;depends_on_past&#x27;</span>: <span class="hljs-literal">False</span>,<br>    <span class="hljs-comment"># 失败发邮件</span><br>	<span class="hljs-string">&#x27;email&#x27;</span>: [<span class="hljs-string">&#x27;xiaoming@163.com&#x27;</span>],<br>	<span class="hljs-string">&#x27;email_on_failure&#x27;</span>: <span class="hljs-literal">True</span>,<br>	<span class="hljs-string">&#x27;email_on_retry&#x27;</span>: <span class="hljs-literal">True</span>,<br>	<span class="hljs-comment"># 重试相关</span><br>	<span class="hljs-string">&#x27;retries&#x27;</span>: <span class="hljs-number">3</span>,<br>	<span class="hljs-string">&#x27;retry_delay&#x27;</span>: timedelta(minutes=<span class="hljs-number">5</span>),<br>	<span class="hljs-comment"># 并发限制</span><br>	<span class="hljs-string">&#x27;pool&#x27;</span>: <span class="hljs-string">&#x27;data_hadoop_pool&#x27;</span>,<br>	<span class="hljs-string">&#x27;priority_weight&#x27;</span>: <span class="hljs-number">900</span>,<br>	<span class="hljs-comment"># 按机器名指定运行位置</span><br>	<span class="hljs-string">&#x27;queue&#x27;</span>: <span class="hljs-string">&#x27;66.66.0.66:8080&#x27;</span><br>&#125;<br> <br>dag = DAG(<br>    dag_id=<span class="hljs-string">&#x27;daily&#x27;</span>, <br>    default_args=default_args, <span class="hljs-comment">#配置默认参数</span><br>    schedule_interval=<span class="hljs-string">&#x27;0 13 * * *&#x27;</span>)<br> <br><span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch_data_from_hdfs_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span><br>	<span class="hljs-keyword">pass</span><br> <br><span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">push_data_to_mysql_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span><br>	<span class="hljs-keyword">pass</span><br> <br>fetch_data_from_hdfs = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=fetch_data_from_hdfs_function,<br>	dag=dag)<br> <br>push_data_to_mysql = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;push_data_to_mysql&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=push_data_to_mysql_function,<br>	dag=dag)<br> <br>fetch_data_from_hdfs &gt;&gt; push_data_to_mysql<br></code></pre></td></tr></table></figure>
 <h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
-<pre><code class="hljs python"><span class="hljs-comment">#该task未修改参数，采用默认参数</span>
-fetch_data_from_hdfs = PythonOperator(
-	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,
-	provide_context=<span class="hljs-literal">True</span>,
-	python_callable=fetch_data_from_hdfs_function,
-	dag=dag)
- 
-<span class="hljs-comment">#该task修改通过指定参数，覆盖默认参数，调整调度行为</span>
-push_data_to_mysql = PythonOperator(
-    task_id=<span class="hljs-string">&#x27;push_data_to_mysql&#x27;</span>,
-    queue=<span class="hljs-string">&#x27;77.66.0.66:8080&#x27;</span>, <span class="hljs-comment">#通过修改参数，调整调度</span>
-    pool=<span class="hljs-string">&#x27;data_mysql_pool&#x27;</span>, <span class="hljs-comment">#通过修改参数，调整调度</span>
-    provide_context=<span class="hljs-literal">True</span>,
-    python_callable=push_data_to_mysql_function,
-    dag=dag)</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#该task未修改参数，采用默认参数</span><br>fetch_data_from_hdfs = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=fetch_data_from_hdfs_function,<br>	dag=dag)<br> <br><span class="hljs-comment">#该task修改通过指定参数，覆盖默认参数，调整调度行为</span><br>push_data_to_mysql = PythonOperator(<br>    task_id=<span class="hljs-string">&#x27;push_data_to_mysql&#x27;</span>,<br>    queue=<span class="hljs-string">&#x27;77.66.0.66:8080&#x27;</span>, <span class="hljs-comment">#通过修改参数，调整调度</span><br>    pool=<span class="hljs-string">&#x27;data_mysql_pool&#x27;</span>, <span class="hljs-comment">#通过修改参数，调整调度</span><br>    provide_context=<span class="hljs-literal">True</span>,<br>    python_callable=push_data_to_mysql_function,<br>    dag=dag)<br></code></pre></td></tr></table></figure>
 <h2 id="decouple"><a class="markdownIt-Anchor" href="#decouple"></a> decouple</h2>
-<pre><code class="hljs python"><span class="hljs-keyword">import</span> xx.fetch_data_from_hdfs <span class="hljs-comment">#将包装成函数的业务代码引入</span>
- 
-<span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span>
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch_data_from_hdfs_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span>
-	<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> fetch_data_from_hdfs: <span class="hljs-comment">#判断业务代码是否执行成功，不成功报错</span>
-        <span class="hljs-keyword">raise</span> AirflowException(<span class="hljs-string">&#x27;run fail: fetch_data_from_hdfs&#x27;</span>)
- 
-fetch_data_from_hdfs = PythonOperator(
-	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,
-	provide_context=<span class="hljs-literal">True</span>,
-	python_callable=fetch_data_from_hdfs_function,
-	dag=dag)</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> xx.fetch_data_from_hdfs <span class="hljs-comment">#将包装成函数的业务代码引入</span><br> <br><span class="hljs-comment">#生产机中，将具体执行过程放置在该函数下</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch_data_from_hdfs_function</span>(<span class="hljs-params">ds, **kwargs</span>):</span><br>	<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> fetch_data_from_hdfs: <span class="hljs-comment">#判断业务代码是否执行成功，不成功报错</span><br>        <span class="hljs-keyword">raise</span> AirflowException(<span class="hljs-string">&#x27;run fail: fetch_data_from_hdfs&#x27;</span>)<br> <br>fetch_data_from_hdfs = PythonOperator(<br>	task_id=<span class="hljs-string">&#x27;fetch_data_from_hdfs&#x27;</span>,<br>	provide_context=<span class="hljs-literal">True</span>,<br>	python_callable=fetch_data_from_hdfs_function,<br>	dag=dag)<br></code></pre></td></tr></table></figure>
 </div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
 var disqus_identifier = '2020/02/11/Airflow-1/';
 var disqus_title = 'Airflow-- 1';
