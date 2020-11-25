@@ -216,11 +216,11 @@ One important step of data preparation is <strong>whitening</strong> which is us
 </ul>
 <h6 id="covariate-shift"><a class="markdownIt-Anchor" href="#covariate-shift"></a> Covariate Shift</h6>
 <blockquote>
-<p>What is covariate shift? While in the process <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi><mo>→</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X \rightarrow Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.07847em;">X</span><span class="mrel">→</span><span class="mord mathit" style="margin-right:0.22222em;">Y</span></span></span></span></p>
-<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow></msup><mo>(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>P</mi><mrow><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow></msup><mo>(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P^{train}(y|x) = P^{test}(y|x)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8746639999999999em;"></span><span class="strut bottom" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">a</span><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mord mathrm">∣</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit">e</span><span class="mord mathit">s</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mord mathrm">∣</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span></span></p>
-<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>u</mi><mi>t</mi><mspace width="0.277778em"></mspace><msup><mi>P</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>≠</mo><msup><mi>P</mi><mrow><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow></msup><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">but\; P^{train}(x) \neq P^{test}(x)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8746639999999999em;"></span><span class="strut bottom" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit">b</span><span class="mord mathit">u</span><span class="mord mathit">t</span><span class="mord mspace thickspace"></span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">a</span><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">≠</span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span><span class="mord mathit">e</span><span class="mord mathit">s</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span></span></p>
+<p>What is covariate shift? While in the process <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi><mo>→</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">X \rightarrow Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow></msup><mo stretchy="false">(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>P</mi><mrow><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow></msup><mo stretchy="false">(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P^{train}(y|x) = P^{test}(y|x)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8746639999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.093556em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.843556em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">t</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>u</mi><mi>t</mi><mtext>  </mtext><msup><mi>P</mi><mrow><mi>t</mi><mi>r</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi mathvariant="normal">≠</mi><msup><mi>P</mi><mrow><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi></mrow></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">but\; P^{train}(x) \neq P^{test}(x)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1246639999999999em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8746639999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.093556em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.843556em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">t</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span></span></p>
 </blockquote>
 <h1 id="todo"><a class="markdownIt-Anchor" href="#todo"></a> ToDo</h1>
 <h2 id="normalizations"><a class="markdownIt-Anchor" href="#normalizations"></a> Normalizations</h2>
@@ -278,80 +278,111 @@ One important step of data preparation is <strong>whitening</strong> which is us
         </ul>
         <div class="article-description">
             
-            <h1 id="gradient-based-optimization-algorithms"><a href="#gradient-based-optimization-algorithms" class="headerlink" title="gradient-based optimization algorithms"></a>gradient-based optimization algorithms</h1><h2 id="Gradient-Descent-variants"><a href="#Gradient-Descent-variants" class="headerlink" title="Gradient Descent variants"></a>Gradient Descent variants</h2><h4 id="Batch-Gradient-Descent-BGD"><a href="#Batch-Gradient-Descent-BGD" class="headerlink" title="Batch Gradient Descent (BGD)"></a>Batch Gradient Descent (BGD)</h4><p>Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters θ</p>
-<p>Batch gradient descent is guaranteed to converge </p>
+            <h1 id="gradient-based-optimization-algorithms"><a class="markdownIt-Anchor" href="#gradient-based-optimization-algorithms"></a> gradient-based optimization algorithms</h1>
+<h2 id="gradient-descent-variants"><a class="markdownIt-Anchor" href="#gradient-descent-variants"></a> Gradient Descent variants</h2>
+<h4 id="batch-gradient-descent-bgd"><a class="markdownIt-Anchor" href="#batch-gradient-descent-bgd"></a> Batch Gradient Descent (BGD)</h4>
+<p>Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters θ</p>
+<p>Batch gradient descent is guaranteed to converge</p>
 <ul>
 <li>to the global minimum for convex error surfaces</li>
 <li>to a local minimum for non-convex surfaces</li>
 </ul>
-<h4 id="Stochastic-Gradient-Descent-SGD"><a href="#Stochastic-Gradient-Descent-SGD" class="headerlink" title="Stochastic Gradient Descent (SGD)"></a>Stochastic Gradient Descent (SGD)</h4><p>Batch gradient descent performs redundant computations for large datasets, as it recomputes gradients for similar examples before each parameter update.<br>SGD does away with this redundancy by performing one update at a time. It is therefore usually much faster and can also be used to learn online.<br>SGD performs frequent updates with a high variance that cause the objective function to <em>fluctuate</em> heavily.<br>While batch gradient descent converges to the minimum of the basin the parameters are placed in, SGD’s fluctuation,</p>
+<h4 id="stochastic-gradient-descent-sgd"><a class="markdownIt-Anchor" href="#stochastic-gradient-descent-sgd"></a> Stochastic Gradient Descent (SGD)</h4>
+<p>Batch gradient descent performs redundant computations for large datasets, as it recomputes gradients for similar examples before each parameter update.<br />
+SGD does away with this redundancy by performing one update at a time. It is therefore usually much faster and can also be used to learn online.<br />
+SGD performs frequent updates with a high variance that cause the objective function to <em>fluctuate</em> heavily.<br />
+While batch gradient descent converges to the minimum of the basin the parameters are placed in, SGD’s fluctuation,</p>
 <ul>
 <li>enables it to jump to new and potentially better local minima</li>
 <li>this ultimately complicates convergence to the exact minimum, as SGD will keep overshooting</li>
 </ul>
 <p>when we slowly decrease the learning rate, SGD shows the same convergence behavior as batch gradient descent, almost certainly converging to a <em>local</em> or the <em>global</em> minimum for <em>non-convex</em> and <em>convex</em> optimization respectively.</p>
-<h4 id="Mini-batch-Gradient-Descent-MB-GD"><a href="#Mini-batch-Gradient-Descent-MB-GD" class="headerlink" title="Mini-batch Gradient Descent (MB-GD)"></a>Mini-batch Gradient Descent (MB-GD)</h4><p>Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of n training examples</p>
+<h4 id="mini-batch-gradient-descent-mb-gd"><a class="markdownIt-Anchor" href="#mini-batch-gradient-descent-mb-gd"></a> Mini-batch Gradient Descent (MB-GD)</h4>
+<p>Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of n training examples</p>
 <ul>
 <li>reduces the variance of the parameter updates, which can lead to more stable convergence</li>
 <li>can make use of highly optimized matrix optimizations common to state-of-the-art deep learning libraries that make computing the gradient w.r.t. a mini-batch very efficient</li>
 <li>Mini-batch gradient descent is typically the algorithm of choice when training a neural network and the term SGD usually is employed also when mini-batches are used</li>
 </ul>
-<h4 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h4><ul>
-<li><p><strong>Choosing a proper learning rate can be difficult.</strong></p>
+<h4 id="challenges"><a class="markdownIt-Anchor" href="#challenges"></a> Challenges</h4>
+<ul>
+<li><strong>Choosing a proper learning rate can be difficult.</strong></li>
+</ul>
 <blockquote>
 <p>A learning rate that is too small leads to painfully slow convergence, while a learning rate that is too large can hinder convergence and cause the loss function to fluctuate around the minimum or even to diverge.</p>
 </blockquote>
-</li>
-<li><p><strong>Learning rete schedules try to adjust the learning rate during training</strong></p>
+<ul>
+<li><strong>Learning rete schedules try to adjust the learning rate during training</strong></li>
+</ul>
 <blockquote>
 <p>e.g. annealing, i.e. reducing the learning rate according to a pre-defined schedule or when the change in objective between epochs falls below a threshold. These schedules and thresholds, however, have to be defined in advance and are thus unable to adapt to a dataset’s characteristics</p>
 </blockquote>
-</li>
-<li><p><strong>The same learning rate applies to all parameter updates</strong></p>
+<ul>
+<li><strong>The same learning rate applies to all parameter updates</strong></li>
+</ul>
 <blockquote>
 <p>If our data is sparse and our features have very different frequencies, we might not want to update all of them to the same extent, but perform a larger update for rarely occurring features</p>
 </blockquote>
-</li>
-<li><p><strong>Minimizing high non-convex error functions common for neural networks is avoiding getting trapped in their numerous suboptimal local minima</strong></p>
+<ul>
+<li><strong>Minimizing high non-convex error functions common for neural networks is avoiding getting trapped in their numerous suboptimal local minima</strong></li>
+</ul>
 <blockquote>
 <p>The difficulty arises in fact not from local minima but from saddle points, i.e. points where one dimension slopes up and another slopes down. These saddle points are usually surrounded by a plateau of the same error, which makes it notoriously hard for SGD to escape, as the gradient is close to zero in all dimensions.</p>
 </blockquote>
-</li>
-</ul>
-<h2 id="Gradient-Descent-Optimization-Algorithms"><a href="#Gradient-Descent-Optimization-Algorithms" class="headerlink" title="Gradient Descent Optimization Algorithms"></a>Gradient Descent Optimization Algorithms</h2><p>We will not discuss algorithms that are infeasible to compute in practice for high-dimensional data sets, e.g. second-order methods such as Newton’s method.</p>
-<h4 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h4><p>SGD has trouble navigating ravines, i.e. areas where the surface curves much more steeply in one dimension than in another, which are common around local optima.</p>
+<h2 id="gradient-descent-optimization-algorithms"><a class="markdownIt-Anchor" href="#gradient-descent-optimization-algorithms"></a> Gradient Descent Optimization Algorithms</h2>
+<p>We will not discuss algorithms that are infeasible to compute in practice for high-dimensional data sets, e.g. second-order methods such as Newton’s method.</p>
+<h4 id="momentum"><a class="markdownIt-Anchor" href="#momentum"></a> Momentum</h4>
+<p>SGD has trouble navigating ravines, i.e. areas where the surface curves much more steeply in one dimension than in another, which are common around local optima.</p>
 <p>Some implementations exchange the signs in the equations. The momentum term γ is usually set to 0.9 or a similar value.</p>
-<p>When using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill,<br>becoming faster and faster on the way (until it reaches its terminal velocity if there is air resistance, i.e. γ&lt;1).<br><em>The same thing happens to our parameter updates</em>: </p>
+<p>When using momentum, we push a ball down a hill. The ball accumulates momentum as it rolls downhill,<br />
+becoming faster and faster on the way (until it reaches its terminal velocity if there is air resistance, i.e. γ&lt;1).<br />
+<em>The same thing happens to our parameter updates</em>:</p>
 <blockquote>
 <p>The momentum term increases for dimensions whose gradients point in the same directions and reduces updates for dimensions whose gradients change directions. As a result, we gain <em>faster convergence and reduced oscillation</em>.</p>
 </blockquote>
-<h4 id="Nesterov-Accelerated-Gradient"><a href="#Nesterov-Accelerated-Gradient" class="headerlink" title="Nesterov Accelerated Gradient"></a>Nesterov Accelerated Gradient</h4><p>We’d like to have a smarter ball, a ball that has a notion of where it is going so that it knows to slow down before the hill slopes up again.<br>Nesterov Accelerated Gradient (NAG) is a way to give our momentum term this kind of prescience.<br>We know that we will use our momentum term γvθ<sub>t-1</sub> to move the parameters θ.<br>Computing θ−γv<sub>t-1</sub> thus gives us an approximation of the next position of the parameters (the gradient is missing for the full update),<br>a rough idea where our parameters are going to be. We can now effectively look ahead by calculating the gradient<br><em>not w.r.t. to our current parameters θ but w.r.t. the approximate future position of our parameters</em></p>
-<p>we are able to adapt our updates to the slope of our error function and speed up SGD in turn,<br>we would also like to adapt our updates to each individual parameter to perform larger or smaller updates depending on their importance</p>
+<h4 id="nesterov-accelerated-gradient"><a class="markdownIt-Anchor" href="#nesterov-accelerated-gradient"></a> Nesterov Accelerated Gradient</h4>
+<p>We’d like to have a smarter ball, a ball that has a notion of where it is going so that it knows to slow down before the hill slopes up again.<br />
+Nesterov Accelerated Gradient (NAG) is a way to give our momentum term this kind of prescience.<br />
+We know that we will use our momentum term γvθ<sub>t-1</sub> to move the parameters θ.<br />
+Computing θ−γv<sub>t-1</sub> thus gives us an approximation of the next position of the parameters (the gradient is missing for the full update),<br />
+a rough idea where our parameters are going to be. We can now effectively look ahead by calculating the gradient<br />
+<em>not w.r.t. to our current parameters θ but w.r.t. the approximate future position of our parameters</em></p>
+<p>we are able to adapt our updates to the slope of our error function and speed up SGD in turn,<br />
+we would also like to adapt our updates to each individual parameter to perform larger or smaller updates depending on their importance</p>
 <p>The distinction between Momentum method and Nesterov Accelerated Gradient updates was</p>
 <ul>
-<li>Both methods are distinct only when the learning rate η is reasonably large. </li>
-<li>When the learning rate η is relatively large, Nesterov Accelerated Gradients allows larger decay rate α than Momentum method, while preventing oscillations. </li>
+<li>Both methods are distinct only when the learning rate η is reasonably large.</li>
+<li>When the learning rate η is relatively large, Nesterov Accelerated Gradients allows larger decay rate α than Momentum method, while preventing oscillations.</li>
 <li>Both Momentum method and Nesterov Accelerated Gradient <strong>become equivalent when η is small</strong></li>
 </ul>
-<h4 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h4><p>Adagrad is an algorithm for gradient-based optimization that does just this:<br>It adapts the learning rate to the parameters, </p>
+<h4 id="adagrad"><a class="markdownIt-Anchor" href="#adagrad"></a> Adagrad</h4>
+<p>Adagrad is an algorithm for gradient-based optimization that does just this:<br />
+It adapts the learning rate to the parameters,</p>
 <ul>
-<li>performing smaller updates (i.e. low learning rates) for parameters associated with frequently occurring features, </li>
+<li>performing smaller updates (i.e. low learning rates) for parameters associated with frequently occurring features,</li>
 <li>and larger updates (i.e. high learning rates) for parameters associated with infrequent features.</li>
 </ul>
 <p>For this reason, <strong>it is well-suited for dealing with sparse data.</strong></p>
-<p>Previously, we performed an update for all parameters θ at once as every parameter θ<sub>i</sub> used the same learning rate η.<br>As Adagrad uses a different learning rate for every parameter θ<sub>i</sub> at every time step t, we first show Adagrad’s per-parameter update, which we then vectorize.<br>For brevity, we use gt to denote the gradient at time step t. g<sub>t,i</sub> is then the partial derivative of the objective function w.r.t. to the parameter θ<sub>i</sub> at time step t</p>
+<p>Previously, we performed an update for all parameters θ at once as every parameter θ<sub>i</sub> used the same learning rate η.<br />
+As Adagrad uses a different learning rate for every parameter θ<sub>i</sub> at every time step t, we first show Adagrad’s per-parameter update, which we then vectorize.<br />
+For brevity, we use gt to denote the gradient at time step t. g<sub>t,i</sub> is then the partial derivative of the objective function w.r.t. to the parameter θ<sub>i</sub> at time step t</p>
 <p>In its update rule, Adagrad modifies the general learning rate η at each time step t for every parameter θ<sub>i</sub> based on the past gradients that have been computed for θ<sub>i</sub></p>
 <p>θ<sub>t+1,i</sub>=θ<sub>t,i</sub>−η/√(G<sub>t,ii</sub>+ϵ)⋅g<sub>t,i</sub></p>
-<p>G<sub>t</sub>∈R<sup>d×d</sup> here is a diagonal matrix where each diagonal element i,i is the sum of the squares of the gradients w.r.t. θ<sub>i</sub> up to time step t,<br>while ϵ is a smoothing term that avoids division by zero.<br><strong>Interestingly, without the square root operation, the algorithm performs much worse.</strong></p>
+<p>G<sub>t</sub>∈R<sup>d×d</sup> here is a diagonal matrix where each diagonal element i,i is the sum of the squares of the gradients w.r.t. θ<sub>i</sub> up to time step t,<br />
+while ϵ is a smoothing term that avoids division by zero.<br />
+<strong>Interestingly, without the square root operation, the algorithm performs much worse.</strong></p>
 <ul>
 <li>One of Adagrad’s main benefits is that it eliminates the need to manually tune the learning rate</li>
-<li>Adagrad’s main weakness is its accumulation of the squared gradients in the denominator<blockquote>
+<li>Adagrad’s main weakness is its accumulation of the squared gradients in the denominator</li>
+</ul>
+<blockquote>
 <p>Since every added term is positive, the accumulated sum keeps growing during training. This in turn causes the learning rate to shrink and eventually become infinitesimally small, at which point the algorithm is no longer able to acquire additional knowledge. The following algorithms aim to resolve this flaw.</p>
 </blockquote>
-</li>
-</ul>
-<h4 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h4><p>Adadelta is an extension of Adagrad that seeks to its aggressive, monotonically decreasing learning rate.<br>Instead of accumulating all past squared gradients, Adadelta restricts the window of accumulated past gradients to some fixed size w.</p>
-<p>Instead of inefficiently storing w previous squared gradients,<br>the sum of gradients is recursively defined as a decaying average of all past squared gradients. </p>
+<h4 id="adadelta"><a class="markdownIt-Anchor" href="#adadelta"></a> Adadelta</h4>
+<p>Adadelta is an extension of Adagrad that seeks to its aggressive, monotonically decreasing learning rate.<br />
+Instead of accumulating all past squared gradients, Adadelta restricts the window of accumulated past gradients to some fixed size w.</p>
+<p>Instead of inefficiently storing w previous squared gradients,<br />
+the sum of gradients is recursively defined as a decaying average of all past squared gradients.</p>
 
         </div>
         
