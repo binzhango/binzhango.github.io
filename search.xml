@@ -24,25 +24,56 @@
 </li>
 </ul>
 <h2 id="ADF-Pipeline"><a href="#ADF-Pipeline" class="headerlink" title="ADF Pipeline"></a>ADF Pipeline</h2><p><img src="/images/adf_pipeline.png" alt="Pipeline" title="Pipeline"><br><img src="/images/parameter.png" alt="" title="parameters"><br><img src="/images/variables.png" alt="" title="variables"></p>
-<h2 id="Activities"><a href="#Activities" class="headerlink" title="Activities"></a>Activities</h2><h4 id="Get-Metadata"><a href="#Get-Metadata" class="headerlink" title="Get Metadata"></a>Get Metadata</h4><ul>
+<h2 id="Activities"><a href="#Activities" class="headerlink" title="Activities"></a>Activities</h2><h3 id="Get-Metadata"><a href="#Get-Metadata" class="headerlink" title="Get Metadata"></a>Get Metadata</h3><ul>
 <li>Input: source directory/parameters</li>
 <li>Output: metadata of each object</li>
 </ul>
 <p>Get Metadata activity iterate source directory to obtain each object. The most important one is <strong>Argument</strong><br><img src="/images/getmetadata.png" alt="Get Metadata" title="Get Metadata"></p>
-<h4 id="ForEach"><a href="#ForEach" class="headerlink" title="ForEach"></a>ForEach</h4><ul>
+<h3 id="ForEach"><a href="#ForEach" class="headerlink" title="ForEach"></a>ForEach</h3><ul>
 <li>Input: output of <em>Get Metadata</em></li>
 <li>Output: None</li>
 </ul>
 <p>ForEach activity is used to process each object in source direcoty.</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@activity(<span class="string">'Get Metadata1'</span>).output.childItems</span><br></pre></td></tr></table></figure>
 <p><img src="/images/foreach.png" alt="" title="ForEach"></p>
-<h4 id="Set-Variables"><a href="#Set-Variables" class="headerlink" title="Set Variables"></a>Set Variables</h4><p>It’s convenient to predefine a value used in next step.</p>
+<h3 id="Set-Variables"><a href="#Set-Variables" class="headerlink" title="Set Variables"></a>Set Variables</h3><p>It’s convenient to predefine a value used in next step.</p>
 <p><img src="/images/variable_activity.png" alt="" title="Set Variable"></p>
-<h4 id="Dataflow"><a href="#Dataflow" class="headerlink" title="Dataflow"></a>Dataflow</h4><p><img src="/images/dataflow.png" alt="" title="Dataflow"></p>
+<h3 id="Dataflow"><a href="#Dataflow" class="headerlink" title="Dataflow"></a>Dataflow</h3><p><img src="/images/dataflow.png" alt="" title="Dataflow"></p>
 <p>The dataflow merge all files with same date, and source1 and sink are the same destination.<br>So, initially source1 is empty and check this options.<br><img src="/images/source1.png" alt="" title="source1"></p>
 <p>The only configuration in Sink is the <span style="color: rgb(0, 200,200)"> <em>File name option</em> </span><br><img src="/images/sink.png" alt="" title="sink"></p>
-<h5 id="Aggregation-of-filenames"><a href="#Aggregation-of-filenames" class="headerlink" title="Aggregation of filenames"></a>Aggregation of filenames</h5><p>The last problem in dataflow is how to merge files with same date in dataflow, which means we firstly find out all these files.<br>The solution to this problems is regex expression.</p>
+<h4 id="Aggregation-of-filenames"><a href="#Aggregation-of-filenames" class="headerlink" title="Aggregation of filenames"></a>Aggregation of filenames</h4><p>The last problem in dataflow is how to merge files with same date in dataflow, which means we firstly find out all these files.<br>The solution to this problems is regex expression.</p>
 <p><img src="/images/source2.png" alt="" title="source2"></p>
+<h1 id="Task2"><a href="#Task2" class="headerlink" title="Task2"></a>Task2</h1><p>Generally CSV file has a header and we can process it easily in ADF. However, a special case is a large CSV file has multiple different headers and we need to automatically split it into regular csv files with headers respectively.</p>
+<ul>
+<li><p>Sample data:</p>
+<blockquote>
+<p>h1,h1_col1,h1_col2,h1_col3<br>h2,h2_col1,h2_col2,h2_col3,h2_col4,h2_col5<br>h3,h3_col1,h3_col2<br>h1,h1_row1_1,h1_row1_2,h1_row1_3<br>h1,h1_row2_1,h1_row2_2,h1_row2_3<br>h1,h1_row3_1,h1_row3_2,h1_row3_3<br>h2,h2_row1_1,h2_row1_2,h2_row1_3,h2_row1_4,h2_row1_5<br>h2,h2_row2_1,h2_row2_2,h2_row2_3,h2_row2_4,h2_row2_5<br>h2,h2_row3_1,h2_row3_2,h2_row3_3,h2_row3_4,h2_row3_5<br>h2,h2_row4_1,h2_row4_2,h2_row4_3,h2_row4_4,h2_row4_5<br>h2,h2_row5_1,h2_row5_2,h2_row5_3,h2_row5_4,h2_row5_5<br>h3,h3_row1_1,h3_row1_2<br>h3,h3_row2_1,h3_row2_2</p>
+</blockquote>
+</li>
+<li><p>Explanation:</p>
+<ul>
+<li>header format: <em>\<header name\=""></header></em>, <em>\<columns name\=""></columns></em></li>
+<li>3 headers : h1, h2 and h3</li>
+<li>the 1st column of each row is header name and rest of columns are values</li>
+</ul>
+</li>
+<li><p>Output:</p>
+<ul>
+<li>h1 file<blockquote>
+<p>h1_col1,h1_col2,h1_col3<br>h1_row1_1,h1_row1_2,h1_row1_3<br>h1_row2_1,h1_row2_2,h1_row2_3<br>h1_row3_1,h1_row3_2,h1_row3_3</p>
+</blockquote>
+</li>
+<li>h2 file<blockquote>
+<p>h2_col1,h2_col2,h2_col3,h2_col4,h2_col5<br>h2_row1_1,h2_row1_2,h2_row1_3,h2_row1_4,h2_row1_5<br>h2_row2_1,h2_row2_2,h2_row2_3,h2_row2_4,h2_row2_5<br>h2_row3_1,h2_row3_2,h2_row3_3,h2_row3_4,h2_row3_5<br>h2_row4_1,h2_row4_2,h2_row4_3,h2_row4_4,h2_row4_5<br>h2_row5_1,h2_row5_2,h2_row5_3,h2_row5_4,h2_row5_5</p>
+</blockquote>
+</li>
+<li>h3 file<blockquote>
+<p>h3_col1,h3_col2<br>h3_row1_1,h3_row1_2<br>h3_row2_1,h3_row2_2</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       
         <categories>
