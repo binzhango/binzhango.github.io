@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta name="description" content="all in one 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#调度机中的dag代码示例#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function() import airflowfrom airflow.models i">
+  <meta name="description" content="all in one #调度机中的dag代码示例 #生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()   import airflow from airflow.models import DAG from airflow.operators.python_operator import PythonOperator   default_args &#x3D; &amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Airflow-- 1">
 <meta property="og:url" content="https://github.com/binzhango/binzhango.github.io/2020/02/11/Airflow-1/index.html">
 <meta property="og:site_name" content="Bin&#39;s Blog">
-<meta property="og:description" content="all in one 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#调度机中的dag代码示例#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function() import airflowfrom airflow.models i">
+<meta property="og:description" content="all in one #调度机中的dag代码示例 #生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()   import airflow from airflow.models import DAG from airflow.operators.python_operator import PythonOperator   default_args &#x3D; &amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-12T03:20:40.000Z">
-<meta property="article:modified_time" content="2020-02-12T03:25:11.793Z">
+<meta property="article:modified_time" content="2020-02-12T03:20:40.000Z">
 <meta property="article:author" content="Bin Zhang">
 <meta name="twitter:card" content="summary">
 
@@ -282,9 +282,8 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2020-02-11 22:20:40 / Modified: 22:25:11" itemprop="dateCreated datePublished" datetime="2020-02-11T22:20:40-05:00">2020-02-11</time>
+      <time title="Created: 2020-02-11 22:20:40" itemprop="dateCreated datePublished" datetime="2020-02-11T22:20:40-05:00">2020-02-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,11 +306,86 @@
     
     <div class="post-body" itemprop="articleBody">
         <h2 id="all-in-one"><a class="markdownIt-Anchor" href="#all-in-one"></a> all in one</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调度机中的dag代码示例</span></span><br><span class="line"><span class="comment">#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> airflow</span><br><span class="line"><span class="keyword">from</span> airflow.models <span class="keyword">import</span> DAG</span><br><span class="line"><span class="keyword">from</span> airflow.operators.python_operator <span class="keyword">import</span> PythonOperator</span><br><span class="line"> </span><br><span class="line">default_args = &#123;</span><br><span class="line">	<span class="string">&#x27;owner&#x27;</span>: <span class="string">&#x27;xiaoming&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;start_date&#x27;</span>: airflow.utils.dates.days_ago(<span class="number">1</span>),</span><br><span class="line">	<span class="string">&#x27;depends_on_past&#x27;</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="comment"># 失败发邮件</span></span><br><span class="line">	<span class="string">&#x27;email&#x27;</span>: [<span class="string">&#x27;xiaoming@163.com&#x27;</span>],</span><br><span class="line">	<span class="string">&#x27;email_on_failure&#x27;</span>: <span class="literal">True</span>,</span><br><span class="line">	<span class="string">&#x27;email_on_retry&#x27;</span>: <span class="literal">True</span>,</span><br><span class="line">	<span class="comment"># 重试相关</span></span><br><span class="line">	<span class="string">&#x27;retries&#x27;</span>: <span class="number">3</span>,</span><br><span class="line">	<span class="string">&#x27;retry_delay&#x27;</span>: timedelta(minutes=<span class="number">5</span>),</span><br><span class="line">	<span class="comment"># 并发限制</span></span><br><span class="line">	<span class="string">&#x27;pool&#x27;</span>: <span class="string">&#x27;data_hadoop_pool&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;priority_weight&#x27;</span>: <span class="number">900</span>,</span><br><span class="line">	<span class="comment"># 按机器名指定运行位置</span></span><br><span class="line">	<span class="string">&#x27;queue&#x27;</span>: <span class="string">&#x27;66.66.0.66:8080&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">dag = DAG(</span><br><span class="line">    dag_id=<span class="string">&#x27;daily&#x27;</span>, </span><br><span class="line">    default_args=default_args, <span class="comment">#配置默认参数</span></span><br><span class="line">    schedule_interval=<span class="string">&#x27;0 13 * * *&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#生产机中，将具体执行过程放置在该函数下</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch_data_from_hdfs_function</span>(<span class="params">ds, **kwargs</span>):</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#生产机中，将具体执行过程放置在该函数下</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">push_data_to_mysql_function</span>(<span class="params">ds, **kwargs</span>):</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">fetch_data_from_hdfs = PythonOperator(</span><br><span class="line">	task_id=<span class="string">&#x27;fetch_data_from_hdfs&#x27;</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=fetch_data_from_hdfs_function,</span><br><span class="line">	dag=dag)</span><br><span class="line"> </span><br><span class="line">push_data_to_mysql = PythonOperator(</span><br><span class="line">	task_id=<span class="string">&#x27;push_data_to_mysql&#x27;</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=push_data_to_mysql_function,</span><br><span class="line">	dag=dag)</span><br><span class="line"> </span><br><span class="line">fetch_data_from_hdfs &gt;&gt; push_data_to_mysql</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="comment">#调度机中的dag代码示例</span>
+<span class="comment">#生产机中的dag要放置到与调度机同样的目录下，并且将执行过程增加到*_function()</span>
+ 
+<span class="keyword">import</span> airflow
+<span class="keyword">from</span> airflow.models <span class="keyword">import</span> DAG
+<span class="keyword">from</span> airflow.operators.python_operator <span class="keyword">import</span> PythonOperator
+ 
+default_args = &#123;
+	<span class="string">&#x27;owner&#x27;</span>: <span class="string">&#x27;xiaoming&#x27;</span>,
+	<span class="string">&#x27;start_date&#x27;</span>: airflow.utils.dates.days_ago(<span class="number">1</span>),
+	<span class="string">&#x27;depends_on_past&#x27;</span>: <span class="literal">False</span>,
+    <span class="comment"># 失败发邮件</span>
+	<span class="string">&#x27;email&#x27;</span>: [<span class="string">&#x27;xiaoming@163.com&#x27;</span>],
+	<span class="string">&#x27;email_on_failure&#x27;</span>: <span class="literal">True</span>,
+	<span class="string">&#x27;email_on_retry&#x27;</span>: <span class="literal">True</span>,
+	<span class="comment"># 重试相关</span>
+	<span class="string">&#x27;retries&#x27;</span>: <span class="number">3</span>,
+	<span class="string">&#x27;retry_delay&#x27;</span>: timedelta(minutes=<span class="number">5</span>),
+	<span class="comment"># 并发限制</span>
+	<span class="string">&#x27;pool&#x27;</span>: <span class="string">&#x27;data_hadoop_pool&#x27;</span>,
+	<span class="string">&#x27;priority_weight&#x27;</span>: <span class="number">900</span>,
+	<span class="comment"># 按机器名指定运行位置</span>
+	<span class="string">&#x27;queue&#x27;</span>: <span class="string">&#x27;66.66.0.66:8080&#x27;</span>
+&#125;
+ 
+dag = DAG(
+    dag_id=<span class="string">&#x27;daily&#x27;</span>, 
+    default_args=default_args, <span class="comment">#配置默认参数</span>
+    schedule_interval=<span class="string">&#x27;0 13 * * *&#x27;</span>)
+ 
+<span class="comment">#生产机中，将具体执行过程放置在该函数下</span>
+<span class="function"><span class="keyword">def</span> <span class="title">fetch_data_from_hdfs_function</span>(<span class="params">ds, **kwargs</span>):</span>
+	<span class="keyword">pass</span>
+ 
+<span class="comment">#生产机中，将具体执行过程放置在该函数下</span>
+<span class="function"><span class="keyword">def</span> <span class="title">push_data_to_mysql_function</span>(<span class="params">ds, **kwargs</span>):</span>
+	<span class="keyword">pass</span>
+ 
+fetch_data_from_hdfs = PythonOperator(
+	task_id=<span class="string">&#x27;fetch_data_from_hdfs&#x27;</span>,
+	provide_context=<span class="literal">True</span>,
+	python_callable=fetch_data_from_hdfs_function,
+	dag=dag)
+ 
+push_data_to_mysql = PythonOperator(
+	task_id=<span class="string">&#x27;push_data_to_mysql&#x27;</span>,
+	provide_context=<span class="literal">True</span>,
+	python_callable=push_data_to_mysql_function,
+	dag=dag)
+ 
+fetch_data_from_hdfs &gt;&gt; push_data_to_mysql</code></pre>
 <h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#该task未修改参数，采用默认参数</span></span><br><span class="line">fetch_data_from_hdfs = PythonOperator(</span><br><span class="line">	task_id=<span class="string">&#x27;fetch_data_from_hdfs&#x27;</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=fetch_data_from_hdfs_function,</span><br><span class="line">	dag=dag)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#该task修改通过指定参数，覆盖默认参数，调整调度行为</span></span><br><span class="line">push_data_to_mysql = PythonOperator(</span><br><span class="line">    task_id=<span class="string">&#x27;push_data_to_mysql&#x27;</span>,</span><br><span class="line">    queue=<span class="string">&#x27;77.66.0.66:8080&#x27;</span>, <span class="comment">#通过修改参数，调整调度</span></span><br><span class="line">    pool=<span class="string">&#x27;data_mysql_pool&#x27;</span>, <span class="comment">#通过修改参数，调整调度</span></span><br><span class="line">    provide_context=<span class="literal">True</span>,</span><br><span class="line">    python_callable=push_data_to_mysql_function,</span><br><span class="line">    dag=dag)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="comment">#该task未修改参数，采用默认参数</span>
+fetch_data_from_hdfs = PythonOperator(
+	task_id=<span class="string">&#x27;fetch_data_from_hdfs&#x27;</span>,
+	provide_context=<span class="literal">True</span>,
+	python_callable=fetch_data_from_hdfs_function,
+	dag=dag)
+ 
+<span class="comment">#该task修改通过指定参数，覆盖默认参数，调整调度行为</span>
+push_data_to_mysql = PythonOperator(
+    task_id=<span class="string">&#x27;push_data_to_mysql&#x27;</span>,
+    queue=<span class="string">&#x27;77.66.0.66:8080&#x27;</span>, <span class="comment">#通过修改参数，调整调度</span>
+    pool=<span class="string">&#x27;data_mysql_pool&#x27;</span>, <span class="comment">#通过修改参数，调整调度</span>
+    provide_context=<span class="literal">True</span>,
+    python_callable=push_data_to_mysql_function,
+    dag=dag)</code></pre>
 <h2 id="decouple"><a class="markdownIt-Anchor" href="#decouple"></a> decouple</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xx.fetch_data_from_hdfs <span class="comment">#将包装成函数的业务代码引入</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#生产机中，将具体执行过程放置在该函数下</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch_data_from_hdfs_function</span>(<span class="params">ds, **kwargs</span>):</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> fetch_data_from_hdfs: <span class="comment">#判断业务代码是否执行成功，不成功报错</span></span><br><span class="line">        <span class="keyword">raise</span> AirflowException(<span class="string">&#x27;run fail: fetch_data_from_hdfs&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">fetch_data_from_hdfs = PythonOperator(</span><br><span class="line">	task_id=<span class="string">&#x27;fetch_data_from_hdfs&#x27;</span>,</span><br><span class="line">	provide_context=<span class="literal">True</span>,</span><br><span class="line">	python_callable=fetch_data_from_hdfs_function,</span><br><span class="line">	dag=dag)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="keyword">import</span> xx.fetch_data_from_hdfs <span class="comment">#将包装成函数的业务代码引入</span>
+ 
+<span class="comment">#生产机中，将具体执行过程放置在该函数下</span>
+<span class="function"><span class="keyword">def</span> <span class="title">fetch_data_from_hdfs_function</span>(<span class="params">ds, **kwargs</span>):</span>
+	<span class="keyword">if</span> <span class="keyword">not</span> fetch_data_from_hdfs: <span class="comment">#判断业务代码是否执行成功，不成功报错</span>
+        <span class="keyword">raise</span> AirflowException(<span class="string">&#x27;run fail: fetch_data_from_hdfs&#x27;</span>)
+ 
+fetch_data_from_hdfs = PythonOperator(
+	task_id=<span class="string">&#x27;fetch_data_from_hdfs&#x27;</span>,
+	provide_context=<span class="literal">True</span>,
+	python_callable=fetch_data_from_hdfs_function,
+	dag=dag)</code></pre>
 
     </div>
 

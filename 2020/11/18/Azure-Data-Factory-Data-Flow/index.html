@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://github.com/images/variable_activity.png">
 <meta property="og:image" content="https://github.com/images/dataflow.png">
 <meta property="article:published_time" content="2020-11-19T02:27:29.000Z">
-<meta property="article:modified_time" content="2020-11-25T14:25:42.849Z">
+<meta property="article:modified_time" content="2020-11-19T02:27:29.000Z">
 <meta property="article:author" content="Bin Zhang">
 <meta property="article:tag" content="Azure">
 <meta name="twitter:card" content="summary">
@@ -294,13 +294,6 @@
 
       <time title="Created: 2020-11-18 21:27:29" itemprop="dateCreated datePublished" datetime="2020-11-18T21:27:29-05:00">2020-11-18</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-25 09:25:42" itemprop="dateModified" datetime="2020-11-25T09:25:42-05:00">2020-11-25</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -358,7 +351,7 @@
 <li>Output: None</li>
 </ul>
 <p>ForEach activity is used to process each object in source direcoty.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@activity(<span class="string">&#x27;Get Metadata1&#x27;</span>).output.childItems</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight sh">@activity(<span class="string">&#x27;Get Metadata1&#x27;</span>).output.childItems</code></pre>
 <p><img src="/images/foreach.png" alt="" title="ForEach" /></p>
 <h4 id="set-variables"><a class="markdownIt-Anchor" href="#set-variables"></a> Set Variables</h4>
 <p>It’s convenient to predefine a value used in next step.</p>
