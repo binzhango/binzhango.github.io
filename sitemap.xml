@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
+    <loc>https://binzhango.github.io/about/index.html</loc>
     
-    <lastmod>2020-11-25T14:25:42.849Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://binzhango.github.io/tags/index.html</loc>
-    
-    <lastmod>2020-07-19T06:52:07.000Z</lastmod>
+    <lastmod>2020-11-26T02:06:35.551Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://binzhango.github.io/categories/index.html</loc>
     
-    <lastmod>2020-07-19T06:52:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://binzhango.github.io/about/index.html</loc>
-    
-    <lastmod>2020-07-19T06:52:07.000Z</lastmod>
+    <lastmod>2020-11-26T02:06:02.908Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://binzhango.github.io/404.html</loc>
     
-    <lastmod>2020-07-19T06:52:07.000Z</lastmod>
+    <lastmod>2020-11-26T02:05:42.673Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://binzhango.github.io/tags/index.html</loc>
+    
+    <lastmod>2020-11-26T02:04:52.434Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
+    
+    <lastmod>2020-11-25T14:25:42.849Z</lastmod>
     
   </url>
   
