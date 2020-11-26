@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
+    
+    <lastmod>2020-11-26T15:04:30.103Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://binzhango.github.io/2020/02/11/Airflow-1/</loc>
+    
+    <lastmod>2020-11-26T12:30:38.860Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://binzhango.github.io/2020/02/21/Spark-Optimizaion/</loc>
     
     <lastmod>2020-11-26T12:22:36.644Z</lastmod>
@@ -51,13 +65,6 @@
   </url>
   
   <url>
-    <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
-    
-    <lastmod>2020-11-26T03:43:49.939Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://binzhango.github.io/about/index.html</loc>
     
     <lastmod>2020-11-26T02:06:35.551Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>https://binzhango.github.io/tags/index.html</loc>
     
     <lastmod>2020-11-26T02:04:52.434Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://binzhango.github.io/2020/02/11/Airflow-1/</loc>
-    
-    <lastmod>2020-02-12T03:25:11.793Z</lastmod>
     
   </url>
   
