@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Bin&#39;s Blog</title>
   
+  <subtitle>Hello</subtitle>
+  <link href="https://github.com/binzhango/binzhango.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/atom.xml" rel="self"/>
-  
-  <link href="http://example.com/"/>
+  <link href="https://github.com/binzhango/binzhango.github.io/"/>
   <updated>2020-11-25T14:25:42.849Z</updated>
-  <id>http://example.com/</id>
+  <id>https://github.com/binzhango/binzhango.github.io/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>Bin Zhang</name>
     
   </author>
   
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Azure Data Factory (Data Flow)</title>
-    <link href="http://example.com/2020/11/18/Azure-Data-Factory-Data-Flow/"/>
-    <id>http://example.com/2020/11/18/Azure-Data-Factory-Data-Flow/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</id>
     <published>2020-11-19T02:27:29.000Z</published>
     <updated>2020-11-25T14:25:42.849Z</updated>
     
@@ -33,17 +33,17 @@
     
     
     
-    <category term="DataFactory" scheme="http://example.com/categories/DataFactory/"/>
+    <category term="DataFactory" scheme="https://github.com/binzhango/binzhango.github.io/categories/DataFactory/"/>
     
     
-    <category term="Azure" scheme="http://example.com/tags/Azure/"/>
+    <category term="Azure" scheme="https://github.com/binzhango/binzhango.github.io/tags/Azure/"/>
     
   </entry>
   
   <entry>
     <title>Spark Dataframe window function</title>
-    <link href="http://example.com/2020/03/01/Spark-Dataframe-window-function/"/>
-    <id>http://example.com/2020/03/01/Spark-Dataframe-window-function/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/</id>
     <published>2020-03-01T23:35:36.000Z</published>
     <updated>2020-07-08T21:59:59.899Z</updated>
     
@@ -58,17 +58,17 @@
     
     
     
-    <category term="Spark" scheme="http://example.com/categories/Spark/"/>
+    <category term="Spark" scheme="https://github.com/binzhango/binzhango.github.io/categories/Spark/"/>
     
     
-    <category term="Dataframe" scheme="http://example.com/tags/Dataframe/"/>
+    <category term="Dataframe" scheme="https://github.com/binzhango/binzhango.github.io/tags/Dataframe/"/>
     
   </entry>
   
   <entry>
     <title>Spark Optimizaion</title>
-    <link href="http://example.com/2020/02/21/Spark-Optimizaion/"/>
-    <id>http://example.com/2020/02/21/Spark-Optimizaion/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/02/21/Spark-Optimizaion/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/02/21/Spark-Optimizaion/</id>
     <published>2020-02-21T19:10:36.000Z</published>
     <updated>2020-03-30T21:20:25.785Z</updated>
     
@@ -83,17 +83,17 @@
     
     
     
-    <category term="Spark" scheme="http://example.com/categories/Spark/"/>
+    <category term="Spark" scheme="https://github.com/binzhango/binzhango.github.io/categories/Spark/"/>
     
     
-    <category term="Optimization" scheme="http://example.com/tags/Optimization/"/>
+    <category term="Optimization" scheme="https://github.com/binzhango/binzhango.github.io/tags/Optimization/"/>
     
   </entry>
   
   <entry>
     <title>Airflow-- 1</title>
-    <link href="http://example.com/2020/02/11/Airflow-1/"/>
-    <id>http://example.com/2020/02/11/Airflow-1/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/02/11/Airflow-1/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/02/11/Airflow-1/</id>
     <published>2020-02-12T03:20:40.000Z</published>
     <updated>2020-02-12T03:25:11.793Z</updated>
     
@@ -108,30 +108,30 @@
     
     
     
-    <category term="airflow" scheme="http://example.com/categories/airflow/"/>
+    <category term="airflow" scheme="https://github.com/binzhango/binzhango.github.io/categories/airflow/"/>
     
     
   </entry>
   
   <entry>
     <title>Whitening transformation</title>
-    <link href="http://example.com/2020/02/11/Whitening-transformation/"/>
-    <id>http://example.com/2020/02/11/Whitening-transformation/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/02/11/Whitening-transformation/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/02/11/Whitening-transformation/</id>
     <published>2020-02-11T13:17:08.000Z</published>
     <updated>2020-02-12T00:23:22.171Z</updated>
     
     
     
     
-    <category term="Machine Learning" scheme="http://example.com/categories/Machine-Learning/"/>
+    <category term="Machine Learning" scheme="https://github.com/binzhango/binzhango.github.io/categories/Machine-Learning/"/>
     
     
   </entry>
   
   <entry>
     <title>Spark Structured Streaming</title>
-    <link href="http://example.com/2020/02/08/Spark-Structured-Streaming/"/>
-    <id>http://example.com/2020/02/08/Spark-Structured-Streaming/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/02/08/Spark-Structured-Streaming/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/02/08/Spark-Structured-Streaming/</id>
     <published>2020-02-09T04:23:13.000Z</published>
     <updated>2020-02-09T04:30:47.981Z</updated>
     
@@ -146,17 +146,17 @@
     
     
     
-    <category term="Spark" scheme="http://example.com/categories/Spark/"/>
+    <category term="Spark" scheme="https://github.com/binzhango/binzhango.github.io/categories/Spark/"/>
     
     
-    <category term="Streaming" scheme="http://example.com/tags/Streaming/"/>
+    <category term="Streaming" scheme="https://github.com/binzhango/binzhango.github.io/tags/Streaming/"/>
     
   </entry>
   
   <entry>
     <title>Batch Normalization</title>
-    <link href="http://example.com/2020/02/04/Batch-Normalization/"/>
-    <id>http://example.com/2020/02/04/Batch-Normalization/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/02/04/Batch-Normalization/</id>
     <published>2020-02-04T13:15:15.000Z</published>
     <updated>2020-02-09T04:20:27.773Z</updated>
     
@@ -171,17 +171,17 @@
     
     
     
-    <category term="Machine Learning" scheme="http://example.com/categories/Machine-Learning/"/>
+    <category term="Machine Learning" scheme="https://github.com/binzhango/binzhango.github.io/categories/Machine-Learning/"/>
     
     
-    <category term="Optimizer" scheme="http://example.com/tags/Optimizer/"/>
+    <category term="Optimizer" scheme="https://github.com/binzhango/binzhango.github.io/tags/Optimizer/"/>
     
   </entry>
   
   <entry>
     <title>Gradient Descent</title>
-    <link href="http://example.com/2020/02/02/Gradient-Descent/"/>
-    <id>http://example.com/2020/02/02/Gradient-Descent/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/02/02/Gradient-Descent/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/02/02/Gradient-Descent/</id>
     <published>2020-02-03T02:04:06.000Z</published>
     <updated>2020-02-03T02:05:18.142Z</updated>
     
@@ -195,17 +195,17 @@
     
     
     
-    <category term="Machine Learning" scheme="http://example.com/categories/Machine-Learning/"/>
+    <category term="Machine Learning" scheme="https://github.com/binzhango/binzhango.github.io/categories/Machine-Learning/"/>
     
     
-    <category term="Optimizer" scheme="http://example.com/tags/Optimizer/"/>
+    <category term="Optimizer" scheme="https://github.com/binzhango/binzhango.github.io/tags/Optimizer/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://example.com/2020/02/01/hello-world/"/>
-    <id>http://example.com/2020/02/01/hello-world/</id>
+    <link href="https://github.com/binzhango/binzhango.github.io/2020/02/01/hello-world/"/>
+    <id>https://github.com/binzhango/binzhango.github.io/2020/02/01/hello-world/</id>
     <published>2020-02-01T15:50:08.822Z</published>
     <updated>2020-02-03T01:54:09.916Z</updated>
     
@@ -219,7 +219,7 @@
     
     
     
-    <category term="Hexo" scheme="http://example.com/categories/Hexo/"/>
+    <category term="Hexo" scheme="https://github.com/binzhango/binzhango.github.io/categories/Hexo/"/>
     
     
   </entry>
