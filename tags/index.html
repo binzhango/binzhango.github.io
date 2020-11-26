@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Optimization," />
+  <meta name="keywords" content="Hexo, NexT, Neveryu, Never_yu, Blog, Node.js, Git, PHP, JAVA, JAVASCRIPT, HTML, CSS, jQuery, Angular, Vue, React" />
 
 
 
@@ -86,31 +86,16 @@
 
 
 
-<meta name="description" content="Spark run faster and faster
-Cluster Optimization
-Parameters Optimization
-Code Optimization
-
-Cluster OptimizationLocality LevelData locality is how close data is to the code processing it. There are se">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Spark Optimizaion">
-<meta property="og:url" content="https://binzhango.github.io/2020/02/21/Spark-Optimizaion/index.html">
+<meta name="description" content="Stay Hungry,Stay Foolish">
+<meta property="og:type" content="website">
+<meta property="og:title" content="tags">
+<meta property="og:url" content="https://binzhango.github.io/tags/index.html">
 <meta property="og:site_name" content="Bin's Blog">
-<meta property="og:description" content="Spark run faster and faster
-Cluster Optimization
-Parameters Optimization
-Code Optimization
-
-Cluster OptimizationLocality LevelData locality is how close data is to the code processing it. There are se">
-<meta property="og:updated_time" content="2020-03-30T21:20:25.785Z">
+<meta property="og:description" content="Stay Hungry,Stay Foolish">
+<meta property="og:updated_time" content="2020-07-19T06:52:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark Optimizaion">
-<meta name="twitter:description" content="Spark run faster and faster
-Cluster Optimization
-Parameters Optimization
-Code Optimization
-
-Cluster OptimizationLocality LevelData locality is how close data is to the code processing it. There are se">
+<meta name="twitter:title" content="tags">
+<meta name="twitter:description" content="Stay Hungry,Stay Foolish">
 
 
 
@@ -131,12 +116,18 @@ Cluster OptimizationLocality LevelData locality is how close data is to the code
 
 
 
-  <link rel="canonical" href="https://binzhango.github.io/2020/02/21/Spark-Optimizaion/"/>
+  <link rel="canonical" href="https://binzhango.github.io/tags/"/>
 
 
 <!-- 网页加载条 -->
 <script src="/js/src/pace.min.js"></script>
-  <title> Spark Optimizaion | Bin's Blog </title>
+  <title>
+  
+
+  
+    Tag | Bin's Blog
+  
+</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -157,7 +148,7 @@ Cluster OptimizationLocality LevelData locality is how close data is to the code
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -302,238 +293,25 @@ Cluster OptimizationLocality LevelData locality is how close data is to the code
 
   <div id="posts" class="posts-expand">
     
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Spark Optimizaion
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
-            <time itemprop="dateCreated" datetime="2020-02-21T14:10:36-05:00" content="2020-02-21">
-              2020-02-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">in</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
+      <div class="tag-cloud">
+        <div class="tag-cloud-title">
+            Insgesamt 5 Tags
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="Spark-run-faster-and-faster"><a href="#Spark-run-faster-and-faster" class="headerlink" title="Spark run faster and faster"></a>Spark run faster and faster</h1><ul>
-<li>Cluster Optimization</li>
-<li>Parameters Optimization</li>
-<li>Code Optimization</li>
-</ul>
-<h2 id="Cluster-Optimization"><a href="#Cluster-Optimization" class="headerlink" title="Cluster Optimization"></a>Cluster Optimization</h2><h4 id="Locality-Level"><a href="#Locality-Level" class="headerlink" title="Locality Level"></a>Locality Level</h4><p>Data locality is how close data is to the code processing it. There are several levels of locality based on the data’s current location. In order from closest to farthest:</p>
-<ul>
-<li><strong>PROCESS_LOCAL</strong> data is in the same JVM as the running code. This is the best locality possible</li>
-<li><strong>NODE_LOCAL</strong> data is on the same node. Examples might be in HDFS on the same node, or in another executor on the same node. This is a little slower than PROCESS_LOCAL because the data has to travel between processes</li>
-<li><strong>NO_PREF</strong> data is accessed equally quickly from anywhere and has no locality preference</li>
-<li><strong>RACK_LOCAL</strong> data is on the same rack of servers. Data is on a different server on the same rack so needs to be sent over the network, typically through a single switch</li>
-<li><strong>ANY</strong> data is elsewhere on the network and not in the same rack</li>
-</ul>
-<p>Performance: PROCESS_LOCAL &gt; NODE_LOCAL &gt; NO_PREF &gt; RACK_LOCAL</p>
-<h6 id="Locality-settting"><a href="#Locality-settting" class="headerlink" title="Locality settting"></a>Locality settting</h6><ul>
-<li>spark.locality.wait.process</li>
-<li>spark.locality.wait.node</li>
-<li>spark.locality.wait.rack</li>
-</ul>
-<h4 id="Data-Format"><a href="#Data-Format" class="headerlink" title="Data Format"></a>Data Format</h4><ul>
-<li>text</li>
-<li>orc</li>
-<li>parquet</li>
-<li>avro<h6 id="format-setting"><a href="#format-setting" class="headerlink" title="format setting"></a>format setting</h6></li>
-<li>spark.sql.hive.convertCTAS</li>
-<li>spark.sql.sources.default</li>
-</ul>
-<h4 id="parallelising"><a href="#parallelising" class="headerlink" title="parallelising"></a>parallelising</h4><ul>
-<li>spark.sql.shuffle.partitions : default is 200</li>
-</ul>
-<h4 id="computing"><a href="#computing" class="headerlink" title="computing"></a>computing</h4><ul>
-<li>–executor-memory : default is 1G</li>
-<li>–executor-cores : default is 1<br>if large memory cause resource throtle in cluster, if small memory cause task termination<br>if more cores cause IO issue, if less cores slow dow computing</li>
-</ul>
-<h4 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h4><ul>
-<li>spark.executor.overhead.memory</li>
-</ul>
-<h4 id="table-join"><a href="#table-join" class="headerlink" title="table join"></a>table join</h4><ul>
-<li>spark.sql.autoBroadcastJoinThreshold : default 10M</li>
-</ul>
-<h4 id="predicate-push-down-in-Spark-SQL-queries"><a href="#predicate-push-down-in-Spark-SQL-queries" class="headerlink" title="predicate push down in Spark SQL queries"></a>predicate push down in Spark SQL queries</h4><ul>
-<li>spark.sql.parquet.filterPushdown : default True</li>
-<li>spark.sql.orc.filterPushdown=true : default False</li>
-</ul>
-<h4 id="reuse-RDD"><a href="#reuse-RDD" class="headerlink" title="reuse RDD"></a>reuse RDD</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.persist(pyspark.StorageLevel.MEMORY_ONLY)</span><br></pre></td></tr></table></figure>
-<h4 id="Spark-operators"><a href="#Spark-operators" class="headerlink" title="Spark operators"></a>Spark operators</h4><ul>
-<li><p>shuffle operators</p>
-<ul>
-<li>avoid using <span style="color:blue"> <strong>reduceByKey</strong>, <strong>join</strong>, <strong>distinct</strong>, <strong>repartition</strong> etc</span></li>
-<li>Broadcast small dataset</li>
-</ul>
-</li>
-<li><p>High performance operator</p>
-<ul>
-<li>reduceByKey &gt; groupByKey (reduceByKey works at map side)</li>
-<li>mapPartitions &gt; map (reduce function calls)</li>
-<li>treeReduce &gt; reduce (treeReduce works at executor not driver)<ul>
-<li>treeReduce &amp; reduce return some result to driver</li>
-<li>treeReduce does more work on the executors while reduce bring everything back to the driver.</li>
-</ul>
-</li>
-<li>foreachPartitions &gt; foreach (reduce function calls)</li>
-<li>filter -&gt; coalesce (reduce number of partitions and reduce tasks)</li>
-<li>repartitionAndSortWithinPartitions &gt; repartition &amp; sort</li>
-<li>broadcast (100M)</li>
-</ul>
-</li>
-</ul>
-<h4 id="shuffle"><a href="#shuffle" class="headerlink" title="shuffle"></a>shuffle</h4><ul>
-<li>spark.shuffle.sort.bypassMergeThreshold</li>
-<li>spark.shuffle.io.retryWait</li>
-<li>spark.shuffle.io.maxRetries</li>
-</ul>
-<p>TBC</p>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Optimization/" rel="tag"><i class="fa fa-tag"></i> Optimization</a>
-          
+        <div class="tag-cloud-tags">
+          <a href="/tags/Azure/" style="font-size: 12px; color: #ccc">Azure</a> <a href="/tags/Dataframe/" style="font-size: 12px; color: #ccc">Dataframe</a> <a href="/tags/Optimization/" style="font-size: 12px; color: #ccc">Optimization</a> <a href="/tags/Optimizer/" style="font-size: 30px; color: #111">Optimizer</a> <a href="/tags/Streaming/" style="font-size: 12px; color: #ccc">Streaming</a>
         </div>
-      
+        <blockquote class="blockquote-center">
+  当所有匆忙随着夜色落幕<br>
+  你才与自己相见
+</blockquote>
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/02/11/Airflow-1/" rel="next" title="Airflow-- 1">
-                <i class="fa fa-chevron-left"></i> Airflow-- 1
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/01/Spark-Dataframe-window-function/" rel="prev" title="Spark Dataframe window function">
-                Spark Dataframe window function <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
+<div style="width: 340px; margin: 0 auto;">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" src="//music.163.com/outchain/player?type=2&id=28445796&auto=0&height=66" oncontextmenu="return false"></iframe>
 </div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
 
-      
-    </div>
+      </div>
+    
   </div>
 
 
@@ -542,26 +320,6 @@ Cluster OptimizationLocality LevelData locality is how close data is to the code
 
 
           
-  <div class="comments" id="comments">
-    <div id="gitmentContainer" style="margin-bottom: -19px;"></div>
-    <link rel="stylesheet" href="/css/gitment.css">
-    <script src="/js/src/gitment.browser.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      var gitment = new Gitment({
-        id: 'blog-guestbook',
-        owner: 'Neveryu',
-        repo: 'Neveryu.github.io',
-        oauth: {
-          client_id: 'bbd367cf498321402719',
-          client_secret: '5d6b890500a2acaf7705495eee9c5ad12ed1f3d2',
-        },
-      })
-      gitment.render('gitmentContainer')
-    </script>
-
-    
-  </div>
-
         </div>
         
           
@@ -580,17 +338,8 @@ Cluster OptimizationLocality LevelData locality is how close data is to the code
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/avatar/avatar.png"
@@ -663,17 +412,6 @@ Cluster OptimizationLocality LevelData locality is how close data is to the code
         
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-run-faster-and-faster"><span class="nav-number">1.</span> <span class="nav-text">Spark run faster and faster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-Optimization"><span class="nav-number">1.1.</span> <span class="nav-text">Cluster Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Locality-Level"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Locality Level</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Locality-settting"><span class="nav-number">1.1.0.1.0.1.</span> <span class="nav-text">Locality settting</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-Format"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Data Format</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#format-setting"><span class="nav-number">1.1.0.2.0.1.</span> <span class="nav-text">format setting</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parallelising"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">parallelising</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#computing"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">computing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memory"><span class="nav-number">1.1.0.5.</span> <span class="nav-text">memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#table-join"><span class="nav-number">1.1.0.6.</span> <span class="nav-text">table join</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#predicate-push-down-in-Spark-SQL-queries"><span class="nav-number">1.1.0.7.</span> <span class="nav-text">predicate push down in Spark SQL queries</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reuse-RDD"><span class="nav-number">1.1.0.8.</span> <span class="nav-text">reuse RDD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-operators"><span class="nav-number">1.1.0.9.</span> <span class="nav-text">Spark operators</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shuffle"><span class="nav-number">1.1.0.10.</span> <span class="nav-text">shuffle</span></a></li></ol></li></ol></li></ol></li></ol></div>
-            
-          </div>
-        </section>
       
 
       
@@ -782,10 +520,6 @@ Cluster OptimizationLocality LevelData locality is how close data is to the code
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
