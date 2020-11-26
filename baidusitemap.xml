@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
+    <lastmod>2020-11-25T14:25:42.849Z</lastmod>
+    <data>
+        <display>
+        <title>Azure Data Factory (Data Flow)</title>
+        <pubTime>2020-11-19T02:27:29.000Z</pubTime>
+        
+        <tag>Azure</tag>
+         
+         
+           
+             
+              <breadCrumb title="DataFactory" url="https://binzhango.github.io/categories/DataFactory/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/</loc>
+    <lastmod>2020-07-08T21:59:59.899Z</lastmod>
+    <data>
+        <display>
+        <title>Spark Dataframe window function</title>
+        <pubTime>2020-03-01T23:35:36.000Z</pubTime>
+        
+        <tag>Dataframe</tag>
+         
+         
+           
+             
+              <breadCrumb title="Spark" url="https://binzhango.github.io/categories/Spark/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/21/Spark-Optimizaion/</loc>
+    <lastmod>2020-03-30T21:20:25.785Z</lastmod>
+    <data>
+        <display>
+        <title>Spark Optimizaion</title>
+        <pubTime>2020-02-21T19:10:36.000Z</pubTime>
+        
+        <tag>Optimization</tag>
+         
+         
+           
+             
+              <breadCrumb title="Spark" url="https://binzhango.github.io/categories/Spark/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/11/Airflow-1/</loc>
+    <lastmod>2020-02-12T03:25:11.793Z</lastmod>
+    <data>
+        <display>
+        <title>Airflow-- 1</title>
+        <pubTime>2020-02-12T03:20:40.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="airflow" url="https://binzhango.github.io/categories/airflow/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/11/Whitening-transformation/</loc>
+    <lastmod>2020-02-12T00:23:22.171Z</lastmod>
+    <data>
+        <display>
+        <title>Whitening transformation</title>
+        <pubTime>2020-02-11T13:17:08.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="Machine Learning" url="https://binzhango.github.io/categories/Machine-Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/08/Spark-Structured-Streaming/</loc>
+    <lastmod>2020-02-09T04:30:47.981Z</lastmod>
+    <data>
+        <display>
+        <title>Spark Structured Streaming</title>
+        <pubTime>2020-02-09T04:23:13.000Z</pubTime>
+        
+        <tag>Streaming</tag>
+         
+         
+           
+             
+              <breadCrumb title="Spark" url="https://binzhango.github.io/categories/Spark/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/04/Batch-Normalization/</loc>
+    <lastmod>2020-02-09T04:20:27.773Z</lastmod>
+    <data>
+        <display>
+        <title>Batch Normalization</title>
+        <pubTime>2020-02-04T13:15:15.000Z</pubTime>
+        
+        <tag>Optimizer</tag>
+         
+         
+           
+             
+              <breadCrumb title="Machine Learning" url="https://binzhango.github.io/categories/Machine-Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/02/Gradient-Descent/</loc>
+    <lastmod>2020-02-03T02:05:18.142Z</lastmod>
+    <data>
+        <display>
+        <title>Gradient Descent</title>
+        <pubTime>2020-02-03T02:04:06.000Z</pubTime>
+        
+        <tag>Optimizer</tag>
+         
+         
+           
+             
+              <breadCrumb title="Machine Learning" url="https://binzhango.github.io/categories/Machine-Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/01/hello-world/</loc>
+    <lastmod>2020-02-03T01:54:09.916Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World</title>
+        <pubTime>2020-02-01T15:50:08.822Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="Hexo" url="https://binzhango.github.io/categories/Hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+</urlset>
