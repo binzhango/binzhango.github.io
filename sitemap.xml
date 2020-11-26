@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://binzhango.github.io/2020/02/01/hello-world/</loc>
+    
+    <lastmod>2020-11-26T03:44:28.551Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://binzhango.github.io/2020/02/02/Gradient-Descent/</loc>
+    
+    <lastmod>2020-11-26T03:44:19.457Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://binzhango.github.io/2020/02/04/Batch-Normalization/</loc>
+    
+    <lastmod>2020-11-26T03:44:08.744Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
+    
+    <lastmod>2020-11-26T03:43:49.939Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://binzhango.github.io/about/index.html</loc>
     
     <lastmod>2020-11-26T02:06:35.551Z</lastmod>
@@ -26,13 +54,6 @@
     <loc>https://binzhango.github.io/tags/index.html</loc>
     
     <lastmod>2020-11-26T02:04:52.434Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
-    
-    <lastmod>2020-11-25T14:25:42.849Z</lastmod>
     
   </url>
   
@@ -68,27 +89,6 @@
     <loc>https://binzhango.github.io/2020/02/08/Spark-Structured-Streaming/</loc>
     
     <lastmod>2020-02-09T04:30:47.981Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://binzhango.github.io/2020/02/04/Batch-Normalization/</loc>
-    
-    <lastmod>2020-02-09T04:20:27.773Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://binzhango.github.io/2020/02/02/Gradient-Descent/</loc>
-    
-    <lastmod>2020-02-03T02:05:18.142Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://binzhango.github.io/2020/02/01/hello-world/</loc>
-    
-    <lastmod>2020-02-03T01:54:09.916Z</lastmod>
     
   </url>
   

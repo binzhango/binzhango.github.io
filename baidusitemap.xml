@@ -3,13 +3,67 @@
 
 
     
+  <url>
+    <loc>https://binzhango.github.io/2020/02/01/hello-world/</loc>
+    <lastmod>2020-11-26T03:44:28.551Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World</title>
+        <pubTime>2020-02-01T15:50:08.822Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="Hexo" url="https://binzhango.github.io/categories/Hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
     
+  <url>
+    <loc>https://binzhango.github.io/2020/02/02/Gradient-Descent/</loc>
+    <lastmod>2020-11-26T03:44:19.457Z</lastmod>
+    <data>
+        <display>
+        <title>Gradient Descent</title>
+        <pubTime>2020-02-03T02:04:06.000Z</pubTime>
+        
+        <tag>Optimizer</tag>
+         
+         
+           
+             
+              <breadCrumb title="Machine Learning" url="https://binzhango.github.io/categories/Machine-Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
     
-    
+  <url>
+    <loc>https://binzhango.github.io/2020/02/04/Batch-Normalization/</loc>
+    <lastmod>2020-11-26T03:44:08.744Z</lastmod>
+    <data>
+        <display>
+        <title>Batch Normalization</title>
+        <pubTime>2020-02-04T13:15:15.000Z</pubTime>
+        
+        <tag>Optimizer</tag>
+         
+         
+           
+             
+              <breadCrumb title="Machine Learning" url="https://binzhango.github.io/categories/Machine-Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
     
   <url>
     <loc>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</loc>
-    <lastmod>2020-11-25T14:25:42.849Z</lastmod>
+    <lastmod>2020-11-26T03:43:49.939Z</lastmod>
     <data>
         <display>
         <title>Azure Data Factory (Data Flow)</title>
@@ -26,6 +80,10 @@
     </data>
     </url>
 
+    
+    
+    
+    
     
   <url>
     <loc>https://binzhango.github.io/2020/03/01/Spark-Dataframe-window-function/</loc>
@@ -117,64 +175,6 @@
            
              
               <breadCrumb title="Spark" url="https://binzhango.github.io/categories/Spark/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://binzhango.github.io/2020/02/04/Batch-Normalization/</loc>
-    <lastmod>2020-02-09T04:20:27.773Z</lastmod>
-    <data>
-        <display>
-        <title>Batch Normalization</title>
-        <pubTime>2020-02-04T13:15:15.000Z</pubTime>
-        
-        <tag>Optimizer</tag>
-         
-         
-           
-             
-              <breadCrumb title="Machine Learning" url="https://binzhango.github.io/categories/Machine-Learning/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://binzhango.github.io/2020/02/02/Gradient-Descent/</loc>
-    <lastmod>2020-02-03T02:05:18.142Z</lastmod>
-    <data>
-        <display>
-        <title>Gradient Descent</title>
-        <pubTime>2020-02-03T02:04:06.000Z</pubTime>
-        
-        <tag>Optimizer</tag>
-         
-         
-           
-             
-              <breadCrumb title="Machine Learning" url="https://binzhango.github.io/categories/Machine-Learning/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://binzhango.github.io/2020/02/01/hello-world/</loc>
-    <lastmod>2020-02-03T01:54:09.916Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2020-02-01T15:50:08.822Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="Hexo" url="https://binzhango.github.io/categories/Hexo/"/>
           
         </display>
     </data>

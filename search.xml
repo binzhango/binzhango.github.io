@@ -7,6 +7,7 @@
       <title><![CDATA[Azure Data Factory (Data Flow)]]></title>
       <url>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</url>
       <content type="html"><![CDATA[<p>Recently I’m working in Azure to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.</p>
+<a id="more"></a>
 <h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><p>Process CSV files and merge different system files into one file</p>
 <ul>
 <li>Source: CSV files with filename format (<em>abcd_yyyymmdd_uuid.csv</em>), where abcd is system id.<ul>
@@ -255,6 +256,7 @@
 <li>accelerating traning</li>
 <li>reduce internal covariate shift</li>
 </ul>
+<a id="more"></a>
 <h4 id="Independent-and-identically-distributed-IID"><a href="#Independent-and-identically-distributed-IID" class="headerlink" title="Independent and identically distributed (IID)"></a>Independent and identically distributed (IID)</h4><p>If our data is independent and identically distributed, training model can be simplified and its predictive ability is improved.<br>One important step of data preparation is <strong>whitening</strong> which is used to</p>
 <h6 id="Whitening"><a href="#Whitening" class="headerlink" title="Whitening"></a>Whitening</h6><ul>
 <li>reduce features’ coralation     =&gt; Independent</li>
@@ -292,7 +294,8 @@
     <entry>
       <title><![CDATA[Gradient Descent]]></title>
       <url>https://binzhango.github.io/2020/02/02/Gradient-Descent/</url>
-      <content type="html"><![CDATA[<h1 id="gradient-based-optimization-algorithms"><a href="#gradient-based-optimization-algorithms" class="headerlink" title="gradient-based optimization algorithms"></a>gradient-based optimization algorithms</h1><h2 id="Gradient-Descent-variants"><a href="#Gradient-Descent-variants" class="headerlink" title="Gradient Descent variants"></a>Gradient Descent variants</h2><h4 id="Batch-Gradient-Descent-BGD"><a href="#Batch-Gradient-Descent-BGD" class="headerlink" title="Batch Gradient Descent (BGD)"></a>Batch Gradient Descent (BGD)</h4><p>Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters θ</p>
+      <content type="html"><![CDATA[<h1 id="gradient-based-optimization-algorithms"><a href="#gradient-based-optimization-algorithms" class="headerlink" title="gradient-based optimization algorithms"></a>gradient-based optimization algorithms</h1><a id="more"></a>
+<h2 id="Gradient-Descent-variants"><a href="#Gradient-Descent-variants" class="headerlink" title="Gradient Descent variants"></a>Gradient Descent variants</h2><h4 id="Batch-Gradient-Descent-BGD"><a href="#Batch-Gradient-Descent-BGD" class="headerlink" title="Batch Gradient Descent (BGD)"></a>Batch Gradient Descent (BGD)</h4><p>Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters θ</p>
 <p>Batch gradient descent is guaranteed to converge </p>
 <ul>
 <li>to the global minimum for convex error surfaces</li>
@@ -389,6 +392,7 @@
       <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<a id="more"></a>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
