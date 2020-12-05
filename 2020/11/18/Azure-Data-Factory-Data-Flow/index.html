@@ -37,7 +37,11 @@
 <meta property="og:image" content="https://binzhango.github.io/images/source1.png">
 <meta property="og:image" content="https://binzhango.github.io/images/sink.png">
 <meta property="og:image" content="https://binzhango.github.io/images/source2.png">
-<meta property="og:updated_time" content="2020-11-26T15:46:47.773Z">
+<meta property="og:image" content="https://binzhango.github.io/images/dataflow1.png">
+<meta property="og:image" content="https://binzhango.github.io/images/dataset1.png">
+<meta property="og:image" content="https://binzhango.github.io/images/derived_col">
+<meta property="og:image" content="https://binzhango.github.io/images/sink1.png">
+<meta property="og:updated_time" content="2020-12-05T20:37:35.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Azure Data Factory (Data Flow)">
 <meta name="twitter:description" content="Recently I’m working in Azure to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.">
@@ -204,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-26 10:46:47" itemprop="dateModified" datetime="2020-11-26T10:46:47-05:00">2020-11-26</time>
+                <time title="Modified: 2020-12-05 15:37:35" itemprop="dateModified" datetime="2020-12-05T15:37:35-05:00">2020-12-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,7 +291,7 @@
 </li>
 <li><p>Explanation:</p>
 <ul>
-<li>header format: <em>\<header name\=""></header></em>, <em>\<columns name\=""></columns></em></li>
+<li>header format: <em>header name</em>, <em>columns names</em></li>
 <li>3 headers : h1, h2 and h3</li>
 <li>the 1st column of each row is header name and rest of columns are values</li>
 </ul>
@@ -309,6 +313,13 @@
 </ul>
 </li>
 </ul>
+<h2 id="Dataflow-1"><a href="#Dataflow-1" class="headerlink" title="Dataflow"></a>Dataflow</h2><p><img src="/images/dataflow1.png" alt="" title="dataflow1"></p>
+<p>The dataset used in <em>source</em> and <em>sink</em> must uncheck this </p>
+<p><img src="/images/dataset1.png" alt="" title="dataset"></p>
+<h3 id="DerivedColumn"><a href="#DerivedColumn" class="headerlink" title="DerivedColumn"></a>DerivedColumn</h3><p>Because no header is in the dataset, ADF automatically assign a column name to each one.<br>The column name format is <strong>_col<span style="color: rgb(0, 200,200)">index</span>_</strong></p>
+<p>In this task the header column is <span style="color: rgb(0, 200,200)">_col0_</span> and we can map this one to another name like <strong>filename</strong><br><img src="/images/derived_col" alt="" title="col"></p>
+<h3 id="Sink"><a href="#Sink" class="headerlink" title="Sink"></a>Sink</h3><p><img src="/images/sink1.png" alt="" title="sink1"></p>
+<p>This dataflow will automatically split composite CSV file into different files and save them at container root path. To save them at another directory, you can add folder name to the mapping column name in DerivedColumn activity.</p>
 
     </div>
 
@@ -389,7 +400,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Task1"><span class="nav-number">1.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ADF-Pipeline"><span class="nav-number">1.1.</span> <span class="nav-text">ADF Pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activities"><span class="nav-number">1.2.</span> <span class="nav-text">Activities</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Get-Metadata"><span class="nav-number">1.2.1.</span> <span class="nav-text">Get Metadata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ForEach"><span class="nav-number">1.2.2.</span> <span class="nav-text">ForEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-Variables"><span class="nav-number">1.2.3.</span> <span class="nav-text">Set Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataflow"><span class="nav-number">1.2.4.</span> <span class="nav-text">Dataflow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Aggregation-of-filenames"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Aggregation of filenames</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Task2"><span class="nav-number">2.</span> <span class="nav-text">Task2</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Task1"><span class="nav-number">1.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ADF-Pipeline"><span class="nav-number">1.1.</span> <span class="nav-text">ADF Pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activities"><span class="nav-number">1.2.</span> <span class="nav-text">Activities</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Get-Metadata"><span class="nav-number">1.2.1.</span> <span class="nav-text">Get Metadata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ForEach"><span class="nav-number">1.2.2.</span> <span class="nav-text">ForEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-Variables"><span class="nav-number">1.2.3.</span> <span class="nav-text">Set Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataflow"><span class="nav-number">1.2.4.</span> <span class="nav-text">Dataflow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Aggregation-of-filenames"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Aggregation of filenames</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Task2"><span class="nav-number">2.</span> <span class="nav-text">Task2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataflow-1"><span class="nav-number">2.1.</span> <span class="nav-text">Dataflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DerivedColumn"><span class="nav-number">2.1.1.</span> <span class="nav-text">DerivedColumn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sink"><span class="nav-number">2.1.2.</span> <span class="nav-text">Sink</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

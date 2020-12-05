@@ -52,7 +52,7 @@
 </li>
 <li><p>Explanation:</p>
 <ul>
-<li>header format: <em>\<header name\=""></header></em>, <em>\<columns name\=""></columns></em></li>
+<li>header format: <em>header name</em>, <em>columns names</em></li>
 <li>3 headers : h1, h2 and h3</li>
 <li>the 1st column of each row is header name and rest of columns are values</li>
 </ul>
@@ -74,6 +74,13 @@
 </ul>
 </li>
 </ul>
+<h2 id="Dataflow-1"><a href="#Dataflow-1" class="headerlink" title="Dataflow"></a>Dataflow</h2><p><img src="/images/dataflow1.png" alt="" title="dataflow1"></p>
+<p>The dataset used in <em>source</em> and <em>sink</em> must uncheck this </p>
+<p><img src="/images/dataset1.png" alt="" title="dataset"></p>
+<h3 id="DerivedColumn"><a href="#DerivedColumn" class="headerlink" title="DerivedColumn"></a>DerivedColumn</h3><p>Because no header is in the dataset, ADF automatically assign a column name to each one.<br>The column name format is <strong>_col<span style="color: rgb(0, 200,200)">index</span>_</strong></p>
+<p>In this task the header column is <span style="color: rgb(0, 200,200)">_col0_</span> and we can map this one to another name like <strong>filename</strong><br><img src="/images/derived_col" alt="" title="col"></p>
+<h3 id="Sink"><a href="#Sink" class="headerlink" title="Sink"></a>Sink</h3><p><img src="/images/sink1.png" alt="" title="sink1"></p>
+<p>This dataflow will automatically split composite CSV file into different files and save them at container root path. To save them at another directory, you can add folder name to the mapping column name in DerivedColumn activity.</p>
 ]]></content>
       
         <categories>
