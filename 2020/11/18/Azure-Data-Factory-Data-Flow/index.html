@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://binzhango.github.io/images/dataset1.png">
 <meta property="og:image" content="https://binzhango.github.io/images/derived_col">
 <meta property="og:image" content="https://binzhango.github.io/images/sink1.png">
-<meta property="og:updated_time" content="2020-12-05T20:37:35.355Z">
+<meta property="og:updated_time" content="2020-12-05T20:47:18.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Azure Data Factory (Data Flow)">
 <meta name="twitter:description" content="Recently I’m working in Azure to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-05 15:37:35" itemprop="dateModified" datetime="2020-12-05T15:37:35-05:00">2020-12-05</time>
+                <time title="Modified: 2020-12-05 15:47:18" itemprop="dateModified" datetime="2020-12-05T15:47:18-05:00">2020-12-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,6 +320,12 @@
 <p>In this task the header column is <span style="color: rgb(0, 200,200)">_col0_</span> and we can map this one to another name like <strong>filename</strong><br><img src="/images/derived_col" alt="" title="col"></p>
 <h3 id="Sink"><a href="#Sink" class="headerlink" title="Sink"></a>Sink</h3><p><img src="/images/sink1.png" alt="" title="sink1"></p>
 <p>This dataflow will automatically split composite CSV file into different files and save them at container root path. To save them at another directory, you can add folder name to the mapping column name in DerivedColumn activity.</p>
+<h2 id="Trigger"><a href="#Trigger" class="headerlink" title="Trigger"></a>Trigger</h2><p>We use blob event trigger to implement automation. Once uploading a new file is done, these pipeline will process it automatically.<br><a href="https://docs.microsoft.com/en-us/azure/data-factory/how-to-create-event-trigger" target="_blank" rel="external">How to create event trigger</a></p>
+<p>Two values in trigger are used by pipeline</p>
+<ul>
+<li>@triggerBody().folderPath : /container name/folder/</li>
+<li>@triggerBody().fileName : blob name</li>
+</ul>
 
     </div>
 
@@ -400,7 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Task1"><span class="nav-number">1.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ADF-Pipeline"><span class="nav-number">1.1.</span> <span class="nav-text">ADF Pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activities"><span class="nav-number">1.2.</span> <span class="nav-text">Activities</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Get-Metadata"><span class="nav-number">1.2.1.</span> <span class="nav-text">Get Metadata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ForEach"><span class="nav-number">1.2.2.</span> <span class="nav-text">ForEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-Variables"><span class="nav-number">1.2.3.</span> <span class="nav-text">Set Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataflow"><span class="nav-number">1.2.4.</span> <span class="nav-text">Dataflow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Aggregation-of-filenames"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Aggregation of filenames</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Task2"><span class="nav-number">2.</span> <span class="nav-text">Task2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataflow-1"><span class="nav-number">2.1.</span> <span class="nav-text">Dataflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DerivedColumn"><span class="nav-number">2.1.1.</span> <span class="nav-text">DerivedColumn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sink"><span class="nav-number">2.1.2.</span> <span class="nav-text">Sink</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Task1"><span class="nav-number">1.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ADF-Pipeline"><span class="nav-number">1.1.</span> <span class="nav-text">ADF Pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activities"><span class="nav-number">1.2.</span> <span class="nav-text">Activities</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Get-Metadata"><span class="nav-number">1.2.1.</span> <span class="nav-text">Get Metadata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ForEach"><span class="nav-number">1.2.2.</span> <span class="nav-text">ForEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-Variables"><span class="nav-number">1.2.3.</span> <span class="nav-text">Set Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataflow"><span class="nav-number">1.2.4.</span> <span class="nav-text">Dataflow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Aggregation-of-filenames"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Aggregation of filenames</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Task2"><span class="nav-number">2.</span> <span class="nav-text">Task2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataflow-1"><span class="nav-number">2.1.</span> <span class="nav-text">Dataflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DerivedColumn"><span class="nav-number">2.1.1.</span> <span class="nav-text">DerivedColumn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sink"><span class="nav-number">2.1.2.</span> <span class="nav-text">Sink</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trigger"><span class="nav-number">2.2.</span> <span class="nav-text">Trigger</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -465,12 +471,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">33k</span>
+    <span title="Symbols count total">34k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">0:33</span>
+    <span title="Reading time total">0:34</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>

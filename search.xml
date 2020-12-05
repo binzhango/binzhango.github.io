@@ -81,6 +81,12 @@
 <p>In this task the header column is <span style="color: rgb(0, 200,200)">_col0_</span> and we can map this one to another name like <strong>filename</strong><br><img src="/images/derived_col" alt="" title="col"></p>
 <h3 id="Sink"><a href="#Sink" class="headerlink" title="Sink"></a>Sink</h3><p><img src="/images/sink1.png" alt="" title="sink1"></p>
 <p>This dataflow will automatically split composite CSV file into different files and save them at container root path. To save them at another directory, you can add folder name to the mapping column name in DerivedColumn activity.</p>
+<h2 id="Trigger"><a href="#Trigger" class="headerlink" title="Trigger"></a>Trigger</h2><p>We use blob event trigger to implement automation. Once uploading a new file is done, these pipeline will process it automatically.<br><a href="https://docs.microsoft.com/en-us/azure/data-factory/how-to-create-event-trigger" target="_blank" rel="external">How to create event trigger</a></p>
+<p>Two values in trigger are used by pipeline</p>
+<ul>
+<li>@triggerBody().folderPath : /container name/folder/</li>
+<li>@triggerBody().fileName : blob name</li>
+</ul>
 ]]></content>
       
         <categories>
