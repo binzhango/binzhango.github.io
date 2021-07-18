@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title><![CDATA[Minikube in MacOS]]></title>
+      <url>https://binzhango.github.io/2021/07/18/Minikube-in-MacOS/</url>
+      <content type="html"><![CDATA[<h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew upgrade </span><br><span class="line">brew install minikube</span><br><span class="line">brew install kubectl</span><br><span class="line"><span class="comment"># minikube kubectl -- get pods -A</span></span><br></pre></td></tr></table></figure>
+<h1 id="Start-Stop-Cluster"><a href="#Start-Stop-Cluster" class="headerlink" title="Start/Stop Cluster"></a>Start/Stop Cluster</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br><span class="line">minikube stop</span><br></pre></td></tr></table></figure>
+<h1 id="Interact-with-Cluster"><a href="#Interact-with-Cluster" class="headerlink" title="Interact with Cluster"></a>Interact with Cluster</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube dashboard --alsologtostderr</span><br></pre></td></tr></table></figure>
+<h1 id="Deploy-application"><a href="#Deploy-application" class="headerlink" title="Deploy application"></a>Deploy application</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create deployment balanced --image=k8s.gcr.io/echoserver:1.4  </span><br><span class="line">kubectl expose deployment balanced --<span class="built_in">type</span>=LoadBalancer --port=8080</span><br></pre></td></tr></table></figure>
+<p><img src="/images/minikube_deployment.png" alt="" title="deployment"><br><img src="/images/minikube_port.png" alt="" title="service"></p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Azure Data Factory (Data Flow)]]></title>
       <url>https://binzhango.github.io/2020/11/18/Azure-Data-Factory-Data-Flow/</url>
       <content type="html"><![CDATA[<p>Recently I’m working in Azure to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.</p>
