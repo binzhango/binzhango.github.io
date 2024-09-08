@@ -44,6 +44,7 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
+      auto_title: false
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.keys
