@@ -9,22 +9,22 @@
       
       
       
-        <link rel="prev" href="../../../02/21/spark-optimization/">
+        <link rel="prev" href="../../">
       
       
-        <link rel="next" href="../../../11/18/azure-data-factory-data-flow/">
+        <link rel="next" href="../datafactory/">
       
       
-      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
     
       
-        <title>Spark Dataframe window function - Bin Zhang's Blog</title>
+        <title>AutoGen - Bin Zhang's Blog</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.35f28582.min.css">
       
       
 
@@ -43,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#create-dataframe" class="md-skip">
+        <a href="#autogen" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +76,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="Bin Zhang&#39;s Blog" class="md-header__button md-logo" aria-label="Bin Zhang's Blog" data-md-component="logo">
+    <a href="../../.." title="Bin Zhang&#39;s Blog" class="md-header__button md-logo" aria-label="Bin Zhang's Blog" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Spark Dataframe window function
+              AutoGen
             
           </span>
         </div>
@@ -167,7 +167,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../.." class="md-tabs__link">
+        <a href="../../.." class="md-tabs__link">
           
   
     
@@ -189,7 +189,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../../../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
     
@@ -213,9 +213,7 @@
           
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -226,7 +224,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="Bin Zhang&#39;s Blog" class="md-nav__button md-logo" aria-label="Bin Zhang's Blog" data-md-component="logo">
+    <a href="../../.." title="Bin Zhang&#39;s Blog" class="md-nav__button md-logo" aria-label="Bin Zhang's Blog" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -267,7 +265,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../.." class="md-nav__link ">
+            <a href="../../.." class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -334,7 +332,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -420,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../archive/2024/" class="md-nav__link">
+      <a href="../../archive/2024/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -443,7 +441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../archive/2021/" class="md-nav__link">
+      <a href="../../archive/2021/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -466,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../archive/2020/" class="md-nav__link">
+      <a href="../../archive/2020/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -492,6 +490,8 @@
                 
   
   
+    
+  
   
   
     
@@ -526,11 +526,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
@@ -544,7 +544,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             Categories
@@ -555,12 +555,34 @@
                 
   
   
-  
     
   
   
-    <li class="md-nav__item">
-      <a href="../../../../category/autogen/" class="md-nav__link">
+    
+      
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AutoGen
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -569,6 +591,35 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#autogen-httpclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      AutoGen HttpClient
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -583,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/datafactory/" class="md-nav__link">
+      <a href="../datafactory/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -606,7 +657,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/k8s/" class="md-nav__link">
+      <a href="../k8s/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -629,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/llm/" class="md-nav__link">
+      <a href="../llm/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -652,7 +703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/ml/" class="md-nav__link">
+      <a href="../ml/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -675,7 +726,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/machine-learning/" class="md-nav__link">
+      <a href="../machine-learning/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -698,7 +749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/python-learning/" class="md-nav__link">
+      <a href="../python-learning/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -721,7 +772,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/spark/" class="md-nav__link">
+      <a href="../spark/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -744,7 +795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../category/airflow/" class="md-nav__link">
+      <a href="../airflow/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -781,8 +832,6 @@
             
             
               
-                
-              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -792,6 +841,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -800,9 +851,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-dataframe" class="md-nav__link">
+  <a href="#autogen-httpclient" class="md-nav__link">
     <span class="md-ellipsis">
-      create dataframe
+      AutoGen HttpClient
     </span>
   </a>
   
@@ -817,132 +868,79 @@
             
           
           
-  <div class="md-content md-content--post" data-md-component="content">
-    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
-      <div class="md-sidebar__scrollwrap">
-        <div class="md-sidebar__inner md-post">
-          <nav class="md-nav md-nav--primary">
-            <div class="md-post__back">
-              <div class="md-nav__title md-nav__container">
-                <a href="../../../../" class="md-nav__link">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-                  <span class="md-ellipsis">
-                    Back to index
-                  </span>
-                </a>
-              </div>
-            </div>
+  <div class="md-content" data-md-component="content">
+    <div class="md-content__inner">
+      <header class="md-typeset">
+        <h1 id="autogen">AutoGen<a class="headerlink" href="#autogen" title="Permanent link">&para;</a></h1>
+      </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../../None" alt="Bin Zhang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-09-08 00:00:00">September 8, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
             
-              <div class="md-post__authors md-typeset">
-                
-                  <div class="md-profile md-post__profile">
-                    <span class="md-author md-author--long">
-                      <img src="../../../../../None" alt="Bin Zhang">
-                    </span>
-                    <span class="md-profile__description">
-                      <strong>
-                        
-                          Bin Zhang
-                        
-                      </strong>
-                      <br>
-                      None
-                    </span>
-                  </div>
-                
-              </div>
-            
-            <ul class="md-post__meta md-nav__list">
-              <li class="md-nav__item md-nav__item--section">
-                <div class="md-post__title">
-                  <span class="md-ellipsis">
-                    Metadata
-                  </span>
-                </div>
-                <nav class="md-nav">
-                  <ul class="md-nav__list">
-                    <li class="md-nav__item">
-                      <div class="md-nav__link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2020-03-01 18:35:36" class="md-ellipsis">March 1, 2020</time>
-                      </div>
-                    </li>
-                    
-                    
-                      <li class="md-nav__item">
-                        <div class="md-nav__link">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
-                          <span class="md-ellipsis">
-                            in
-                            
-                              <a href="../../../../category/spark/">Spark</a></span>
-                        </div>
-                      </li>
-                    
-                    
-                      
-                      <li class="md-nav__item">
-                        <div class="md-nav__link">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
-                          <span class="md-ellipsis">
-                            
-                              1 min read
-                            
-                          </span>
-                        </div>
-                      </li>
-                    
-                  </ul>
-                </nav>
-              </li>
-            </ul>
-          </nav>
+              <a href="../llm/" class="md-meta__link">LLM</a>, 
+              <a href="./" class="md-meta__link">AutoGen</a></li>
+        
+        
           
-        </div>
-      </div>
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
     </div>
-    <article class="md-content__inner md-typeset">
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="autogen-httpclient"><a class="toclink" href="../../2024/09/08/autogen-httpclient/">AutoGen HttpClient</a></h2>
+<h3 id="httpclient"><a class="toclink" href="../../2024/09/08/autogen-httpclient/#httpclient">HttpClient</a></h3>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">my_client.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="kn">import</span> <span class="nn">httpx</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="k">class</span> <span class="nc">MyHttpClient</span><span class="p">(</span><span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">):</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a>    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dummy</span><span class="p">):</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a>        <span class="k">return</span> <span class="bp">self</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="autogen-llm-config"><a class="toclink" href="../../2024/09/08/autogen-httpclient/#autogen-llm-config">AutoGen LLM Config</a></h3>
+<p>Now we can add our proxy config in our client, which will resolve connection issue.
+<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">&quot;http_client&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">MyH</span><span class="kc">tt</span><span class="err">pClie</span><span class="kc">nt</span><span class="err">(veri</span><span class="kc">f</span><span class="err">y=False</span><span class="p">,</span><span class="w"> </span><span class="err">proxy=</span><span class="s2">&quot;http://&lt;&gt;&quot;</span><span class="err">)</span>
+</span></code></pre></div></p>
+    
+  </div>
+</article>
+      
       
         
-  
-  
+          
 
-<nav class="md-tags" >
-  
-    
-    
-    
-      <span class="md-tag">Data Engineer</span>
-    
+
+
+<nav class="md-pagination">
   
 </nav>
-
-
-
-  <h1>Spark Dataframe window function</h1>
-
-<p><a href="https://databricks.com/blog/2015/07/15/introducing-window-functions-in-spark-sql.html">scala ref</a></p>
-<h2 id="create-dataframe">create dataframe<a class="headerlink" href="#create-dataframe" title="Permanent link">&para;</a></h2>
-<!-- more -->
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-  
-
-
-
+        
       
-    </article>
+    </div>
   </div>
 
           
@@ -961,12 +959,10 @@
   
     
       
-        
-      
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../../02/21/spark-optimization/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Spark Optimization">
+          <a href="../../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Blog">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -976,20 +972,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Spark Optimization
+                Blog
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../../11/18/azure-data-factory-data-flow/" class="md-footer__link md-footer__link--next" aria-label="Next: Azure Data Factory (Data Flow)">
+          <a href="../datafactory/" class="md-footer__link md-footer__link--next" aria-label="Next: DataFactory">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Azure Data Factory (Data Flow)
+                DataFactory
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1023,10 +1019,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.footer", "navigation.indexes", "navigation.top", "navigation.sections", "navigation.tabs", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.footer", "navigation.indexes", "navigation.top", "navigation.sections", "navigation.tabs", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.56dfad97.min.js"></script>
       
     
   </body>

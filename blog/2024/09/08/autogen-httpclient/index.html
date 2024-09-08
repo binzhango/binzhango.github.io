@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../../../02/21/spark-optimization/">
+        <link rel="prev" href="../how-to-execute-python-modules/">
       
-      
-        <link rel="next" href="../../../11/18/azure-data-factory-data-flow/">
       
       
       <link rel="icon" href="../../../../../assets/images/favicon.png">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Spark Dataframe window function - Bin Zhang's Blog</title>
+        <title>AutoGen HttpClient - Bin Zhang's Blog</title>
       
     
     
@@ -62,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#create-dataframe" class="md-skip">
+        <a href="#httpclient" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Spark Dataframe window function
+              AutoGen HttpClient
             
           </span>
         </div>
@@ -800,9 +798,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-dataframe" class="md-nav__link">
+  <a href="#httpclient" class="md-nav__link">
     <span class="md-ellipsis">
-      create dataframe
+      HttpClient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autogen-llm-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      AutoGen LLM Config
     </span>
   </a>
   
@@ -864,7 +871,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2020-03-01 18:35:36" class="md-ellipsis">March 1, 2020</time>
+                        <time datetime="2024-09-08 00:00:00" class="md-ellipsis">September 8, 2024</time>
                       </div>
                     </li>
                     
@@ -875,7 +882,8 @@
                           <span class="md-ellipsis">
                             in
                             
-                              <a href="../../../../category/spark/">Spark</a></span>
+                              <a href="../../../../category/llm/">LLM</a>, 
+                              <a href="../../../../category/autogen/">AutoGen</a></span>
                         </div>
                       </li>
                     
@@ -904,26 +912,25 @@
     <article class="md-content__inner md-typeset">
       
         
-  
-  
-
-<nav class="md-tags" >
-  
-    
-    
-    
-      <span class="md-tag">Data Engineer</span>
-    
-  
-</nav>
 
 
+  <h1>AutoGen HttpClient</h1>
 
-  <h1>Spark Dataframe window function</h1>
-
-<p><a href="https://databricks.com/blog/2015/07/15/introducing-window-functions-in-spark-sql.html">scala ref</a></p>
-<h2 id="create-dataframe">create dataframe<a class="headerlink" href="#create-dataframe" title="Permanent link">&para;</a></h2>
-<!-- more -->
+<h2 id="httpclient">HttpClient<a class="headerlink" href="#httpclient" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">my_client.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">httpx</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">class</span> <span class="nc">MyHttpClient</span><span class="p">(</span><span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">):</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dummy</span><span class="p">):</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="k">return</span> <span class="bp">self</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="autogen-llm-config">AutoGen LLM Config<a class="headerlink" href="#autogen-llm-config" title="Permanent link">&para;</a></h2>
+<p>Now we can add our proxy config in our client, which will resolve connection issue.
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">&quot;http_client&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">MyH</span><span class="kc">tt</span><span class="err">pClie</span><span class="kc">nt</span><span class="err">(veri</span><span class="kc">f</span><span class="err">y=False</span><span class="p">,</span><span class="w"> </span><span class="err">proxy=</span><span class="s2">&quot;http://&lt;&gt;&quot;</span><span class="err">)</span>
+</span></code></pre></div></p>
 
 
 
@@ -966,7 +973,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../../02/21/spark-optimization/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Spark Optimization">
+          <a href="../how-to-execute-python-modules/" class="md-footer__link md-footer__link--prev" aria-label="Previous: How to execute python modules">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -976,27 +983,11 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Spark Optimization
+                How to execute python modules
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../../../11/18/azure-data-factory-data-flow/" class="md-footer__link md-footer__link--next" aria-label="Next: Azure Data Factory (Data Flow)">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Azure Data Factory (Data Flow)
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     

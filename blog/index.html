@@ -12,7 +12,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="category/datafactory/">
+        <link rel="next" href="category/autogen/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -509,6 +509,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -554,6 +558,29 @@
   
   
     <li class="md-nav__item">
+      <a href="category/autogen/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoGen
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
       <a href="category/datafactory/" class="md-nav__link">
         
   
@@ -582,6 +609,29 @@
   
   <span class="md-ellipsis">
     K8s
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="category/llm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLM
   </span>
   
 
@@ -748,6 +798,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#autogen-httpclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      AutoGen HttpClient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-execute-python-modules" class="md-nav__link">
     <span class="md-ellipsis">
       How to execute python modules
@@ -828,15 +887,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#spark-structured-streaming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Spark Structured Streaming
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -851,6 +901,61 @@
       <header class="md-typeset">
         <h1 id="blog">Blog<a class="headerlink" href="#blog" title="Permanent link">&para;</a></h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../None" alt="Bin Zhang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-09-08 00:00:00">September 8, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="category/llm/" class="md-meta__link">LLM</a>, 
+              <a href="category/autogen/" class="md-meta__link">AutoGen</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              1 min read
+            
+          </li>
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="autogen-httpclient"><a class="toclink" href="2024/09/08/autogen-httpclient/">AutoGen HttpClient</a></h2>
+<h3 id="httpclient"><a class="toclink" href="2024/09/08/autogen-httpclient/#httpclient">HttpClient</a></h3>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">my_client.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">httpx</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">class</span> <span class="nc">MyHttpClient</span><span class="p">(</span><span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">):</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dummy</span><span class="p">):</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="k">return</span> <span class="bp">self</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="autogen-llm-config"><a class="toclink" href="2024/09/08/autogen-httpclient/#autogen-llm-config">AutoGen LLM Config</a></h3>
+<p>Now we can add our proxy config in our client, which will resolve connection issue.
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">&quot;http_client&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">MyH</span><span class="kc">tt</span><span class="err">pClie</span><span class="kc">nt</span><span class="err">(veri</span><span class="kc">f</span><span class="err">y=False</span><span class="p">,</span><span class="w"> </span><span class="err">proxy=</span><span class="s2">&quot;http://&lt;&gt;&quot;</span><span class="err">)</span>
+</span></code></pre></div></p>
+    
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -1229,48 +1334,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-02-08 23:23:13">February 8, 2020</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="category/spark/" class="md-meta__link">Spark</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              8 min read
-            
-          </li>
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="spark-structured-streaming"><a class="toclink" href="2020/02/08/spark-structured-streaming/">Spark Structured Streaming</a></h2>
-<h3 id="spark-structured-streaming_1"><a class="toclink" href="2020/02/08/spark-structured-streaming/#spark-structured-streaming_1">Spark Structured Streaming</a></h3>
-<p>Recently reading a blog <a href="https://hackersandslackers.com/structured-streaming-in-pyspark/">Structured Streaming in PySpark</a>
-It's implemented in Databricks platform. Then I try to implement in my local Spark.
-Some tricky issue happened during my work.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="2020/02/08/spark-structured-streaming/">
-          Continue reading
-        </a>
-      </nav>
-    
-  </div>
-</article>
-      
       
         
           
@@ -1321,13 +1384,13 @@ Some tricky issue happened during my work.</p>
         
         
           
-          <a href="category/datafactory/" class="md-footer__link md-footer__link--next" aria-label="Next: DataFactory">
+          <a href="category/autogen/" class="md-footer__link md-footer__link--next" aria-label="Next: AutoGen">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                DataFactory
+                AutoGen
               </div>
             </div>
             <div class="md-footer__button md-icon">
