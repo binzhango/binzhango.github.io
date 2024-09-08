@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../../../../2021/07/18/setup-minikube/">
+        <link rel="prev" href="../../../08/12/model-registry/">
       
-      
-        <link rel="next" href="../../../09/08/how-to-execute-python-modules/">
       
       
       <link rel="icon" href="../../../../../assets/images/favicon.png">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Model Registry - Bin Zhang's Blog</title>
+        <title>How to execute python modules - Bin Zhang's Blog</title>
       
     
     
@@ -62,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#model-registry" class="md-skip">
+        <a href="#runpy-module" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Model Registry
+              How to execute python modules
             
           </span>
         </div>
@@ -799,7 +797,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2024-08-12 00:00:00" class="md-ellipsis">August 12, 2024</time>
+                        <time datetime="2024-09-08 00:00:00" class="md-ellipsis">September 8, 2024</time>
                       </div>
                     </li>
                     
@@ -810,7 +808,7 @@
                           <span class="md-ellipsis">
                             in
                             
-                              <a href="../../../../category/ml/">ML</a></span>
+                              <a href="../../../../category/python-learning/">Python Learning</a></span>
                         </div>
                       </li>
                     
@@ -839,38 +837,39 @@
     <article class="md-content__inner md-typeset">
       
         
-  
-  
-
-<nav class="md-tags" >
-  
-    
-    
-    
-      <span class="md-tag">ML Model Registry</span>
-    
-  
-</nav>
-
 
 
 <!-- more -->
 
-<p>Problem: How to introduce ml-based production/features
-to cross-functional teams.</p>
-<p>Question:
-- Where can we find the best version of this model?
-  - audit
-  - test
-  - deploy
-  - reuse
-- How was this model trained?
-- How can we track this docs for each models?
-- How can we review models?
-- How can we integrate with tools and services?</p>
-<h1 id="model-registry">Model Registry<a class="headerlink" href="#model-registry" title="Permanent link">&para;</a></h1>
-<p>An model registry serves as a centralized repository, enabling
-effective model management and documentation.</p>
+<h1 id="runpy-module"><strong>runpy</strong> module<a class="headerlink" href="#runpy-module" title="Permanent link">&para;</a></h1>
+<p>We can use internal <code>runpy</code> to execute different moduls in our project.</p>
+<p>This is used in my pyspark project.</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">submit.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">runpy</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">sys</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">module_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">function_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="c1"># this is important for next python entry point</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">runpy</span><span class="o">.</span><span class="n">run_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="n">function_name</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Now, the spark job can be invoked by</p>
+<div class="language-shell highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>spark-submit<span class="w"> </span>submit.py<span class="w"> </span><span class="s2">&quot;&lt;module_name&gt;&quot;</span><span class="w"> </span><span class="s2">&quot;&lt;function_name&gt;&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Also, we can wrapper this shell command into a script.</p>
+<div class="language-sh highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">run.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nv">module_name</span><span class="o">=</span><span class="nv">$1</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nv">function_name</span><span class="o">=</span><span class="nv">$2</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>spark-submit<span class="w"> </span>submit.py<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$module_name</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$function_name</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="p">@:</span><span class="nv">3</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div></td></tr></table></div>
 
 
 
@@ -913,7 +912,7 @@ effective model management and documentation.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../../../2021/07/18/setup-minikube/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Setup Minikube">
+          <a href="../../../08/12/model-registry/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Model Registry">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -923,27 +922,11 @@ effective model management and documentation.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Setup Minikube
+                Model Registry
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../../../09/08/how-to-execute-python-modules/" class="md-footer__link md-footer__link--next" aria-label="Next: How to execute python modules">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                How to execute python modules
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
