@@ -1,4 +1,9 @@
 site_name: Bin Zhang's Blog
+site_url: http://binzhango.github.io
+
+repo_name: My GitHub Page
+repo_url: https://github.com/binzhango
+
 theme:
   name: material
   features:
@@ -8,6 +13,12 @@ theme:
     - navigation.sections
     - navigation.tabs
     - content.code.copy
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/binzhango
+
 nav:
   - Home:
       - index.md
@@ -22,6 +33,11 @@ plugins:
       post_url_date_format: yyyy/MM/dd
   - tags
   - search
+  - minify:
+      minify_html: true
+  - social:
+      cards_layout_options:
+        background_color: "#ff1439"
 
 markdown_extensions:
   - abbr
