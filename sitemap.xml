@@ -2,122 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://binzhango.github.io/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/02/11/airflow/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2024/09/08/autogen-httpclient/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/11/18/azure-data-factory-data-flow/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/02/04/batch-normalization/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/02/02/gradient-descent/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2024/09/08/how-to-execute-python-modules/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2021/07/18/setup-minikube/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2024/08/12/model-registry/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2024/10/05/snowflake-data-science-training-summary/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/03/01/spark-dataframe-window-function/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/02/21/spark-optimization/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/02/08/spark-structured-streaming/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/02/11/whitening-transformation/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/2020/02/21/spark-sql/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/archive/2024/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/archive/2021/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/archive/2020/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/snowflake/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/llm/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/autogen/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/python-learning/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/ml/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/k8s/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/datafactory/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/spark/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/airflow/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/category/machine-learning/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/blog/page/2/</loc>
-         <lastmod>2024-10-05</lastmod>
+         <lastmod>2024-10-12</lastmod>
     </url>
 </urlset>
