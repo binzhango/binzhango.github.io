@@ -7,4 +7,5 @@ categories:
   - Machine Learning
 ---
 
+# Whitening Transformation
 

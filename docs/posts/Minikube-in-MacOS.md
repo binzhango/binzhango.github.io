@@ -36,8 +36,8 @@ minikube dashboard --alsologtostderr
 kubectl create deployment balanced --image=k8s.gcr.io/echoserver:1.4  
 kubectl expose deployment balanced --type=LoadBalancer --port=8080
 ```
-![](../../assets/images/minikube_deployment.png "deployment")
-![](../../assets/images/minikube_port.png "service")
+![](../assets/images/minikube_deployment.png "deployment")
+![](../assets/images/minikube_port.png "service")
 
 # Spark on K8s
 [Official Reference](https://spark.apache.org/docs/latest/running-on-kubernetes.html)
@@ -53,7 +53,7 @@ sh /usr/local/Cellar/apache-spark/3.1.2/bin/docker-image-tool.sh -m -t spark-doc
 minikube ssh
 docker image ls
 ```
-![](../../assets/images/minikube_docker.png "docker image")
+![](../assets/images/minikube_docker.png "docker image")
 
 
 ## Submit a sample job

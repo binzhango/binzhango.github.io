@@ -1,36 +1,89 @@
-site_name: Bin Zhang's Blog
+site_name: B~~~~~Z
+site_author: Bin Zhang
 site_url: http://binzhango.github.io
 
-repo_name: My GitHub Page
-repo_url: https://github.com/binzhango
+repo_name: binzhango/binzhango.github.io
+repo_url: https://github.com/binzhango/binzhango.github.io
 
 theme:
   name: material
+  favicon: assets/favicon.ico
   features:
+    - header.autohide
     - navigation.footer
     - navigation.indexes
     - navigation.top
-    - navigation.sections
+    - navigation.path
+    # - navigation.sections
     - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.expand
+    - navigation.tracking
     - content.code.copy
+    - content.tabs.link
+    # - content.action.view
+    - content.code.annotate
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - toc.integrate
+  icon:
+    logo: logo
+  logo: assets/favicon.ico
+  logo_bottom: assets/favicon.ico
+  font:
+    code: Fira Code
+    text: Roboto
+    
+  palette:
+    - accent: indigo
+      primary: amber
+      schema: default
+      toggle:
+        icon: material/weather-night
+        name: Dark Mode
+    - accent: indigo
+      primary: blue grey
+      schema: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Light Mode
 
 extra:
+  generator: false
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/binzhango
+    - icon: material/email
+      link: mailto:zhangbinengr@hotmail.com
+    - icon: fontawesome/brands/discord
+      link: None
+  analytics:
+    provider: google
+    property: G-HLMVZHNEWM
 
-nav:
-  - Home:
-      - index.md
-  - Blog:
-      - blog/index.md
+extra_css:
+  - stylesheets/extra.css
+
+# nav: #comment nav: it will move archive and categories to new pages
+#   # - Home:
+#   #     - index.md
+#   - Blog:
+#       - blog/index.md
+
 
 plugins:
   - blog:
-      blog_dir: blog
-      blog_toc: true
+      blog_dir: .
+      # blog_toc: true
       post_dir: "{blog}/posts"
-      post_url_date_format: yyyy/MM/dd
+      post_url_date_format: yyyy/MM
+      archive_name: Archive
+      archive_toc: true
+      archive_date_format: yyyy
+      archive_url_format: "{date}"
+      
   - tags
   - search
   - minify:
@@ -38,6 +91,9 @@ plugins:
   - social:
       cards_layout_options:
         background_color: "#ff1439"
+  - mkdocs-video
+  - autorefs
+  - glightbox
 
 markdown_extensions:
   - abbr
@@ -88,3 +144,6 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
+  - tables
+  - toc:
+      permalink: '#'

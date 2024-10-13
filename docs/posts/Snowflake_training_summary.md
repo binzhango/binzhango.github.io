@@ -26,8 +26,8 @@ mkdocs gh-deploy --force
 ```
 
 ## SQL Worksheets
-
 ML functions:
+
 - forecast
 - anomaly_detection
 - classification
@@ -46,3 +46,37 @@ alter session set search_path = $new_search_path;
 show snowflake.ml.forecast;
 show forecast;
 ```
+
+## Snowpark Notebook
+
+### Snowpark Configuration & Snowflak-Spark Configuration
+
+ :exclamation: **Attributes are different**
+
+- Snowpark config
+  ```json
+  {
+    "account":"",
+    "user":"",
+    "authenticator":"externalbrowser",
+    "role":"",
+    "warehouse":"",
+    "database":"",
+    "schema":""
+  }
+  ```
+- Snowflake Spark config
+  ```json
+  {
+    "sfURL":"",
+    "sfRole":"",
+    "sfWarehouse":"",
+    "sfDatabase":"",
+    "sfSchema":"",
+    "sfUser":"",
+    "sfPassword":"",
+    "authenticator":"externalbrowser",
+  }
+  ```
+
+

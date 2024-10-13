@@ -28,9 +28,9 @@ Process CSV files and merge different system files into one file
 
 
 ## ADF Pipeline
-![Pipeline](../../assets/images/adf_pipeline.png "Pipeline")
-![](../../assets/images/parameter.png "parameters")
-![](../../assets/images/variables.png "variables")
+![Pipeline](../assets/images/adf_pipeline.png "Pipeline")
+![](../assets/images/parameter.png "parameters")
+![](../assets/images/variables.png "variables")
 
 
 
@@ -43,7 +43,7 @@ Process CSV files and merge different system files into one file
 - Output: metadata of each object
 
 Get Metadata activity iterate source directory to obtain each object. The most important one is **Argument**
-![Get Metadata](../../assets/images/getmetadata.png "Get Metadata")
+![Get Metadata](../assets/images/getmetadata.png "Get Metadata")
 
 ### ForEach 
 - Input: output of *Get Metadata*
@@ -54,30 +54,30 @@ ForEach activity is used to process each object in source direcoty.
 ```sh
 @activity('Get Metadata1').output.childItems
 ```
-![](../../assets/images/foreach.png "ForEach")
+![](../assets/images/foreach.png "ForEach")
 
 ### Set Variables
 It's convenient to predefine a value used in next step.
 
-![](../../assets/images/variable_activity.png "Set Variable")
+![](../assets/images/variable_activity.png "Set Variable")
 
 
 ### Dataflow
 
-![](../../assets/images/dataflow.png "Dataflow")
+![](../assets/images/dataflow.png "Dataflow")
 
 The dataflow merge all files with same date, and source1 and sink are the same destination.
 So, initially source1 is empty and check this options.
-![](../../assets/images/source1.png "source1")
+![](../assets/images/source1.png "source1")
 
 The only configuration in Sink is the <span style="color: rgb(0, 200,200)"> *File name option* </span>
-![](../../assets/images/sink.png "sink")
+![](../assets/images/sink.png "sink")
 
 #### Aggregation of filenames
 The last problem in dataflow is how to merge files with same date in dataflow, which means we firstly find out all these files.
 The solution to this problems is regex expression.
 
-![](../../assets/images/source2.png "source2")
+![](../assets/images/source2.png "source2")
 
 
 # Task2
@@ -123,21 +123,21 @@ Generally CSV file has a header and we can process it easily in ADF. However, a 
 
 ## Dataflow
 
-![](../../assets/images/dataflow1.png "dataflow1")
+![](../assets/images/dataflow1.png "dataflow1")
 
 The dataset used in *source* and *sink* must uncheck this 
 
-![](../../assets/images/dataset1.png "dataset")
+![](../assets/images/dataset1.png "dataset")
 
 ### DerivedColumn
 Because no header is in the dataset, ADF automatically assign a column name to each one.
 The column name format is **\_col<span style="color: rgb(0, 200,200)">index</span>\_**
 
 In this task the header column is <span style="color: rgb(0, 200,200)">\_col0\_</span> and we can map this one to another name like **filename**
-![](../../assets/images/derived_col.png "col")
+![](../assets/images/derived_col.png "col")
 
 ### Sink
-![](../../assets/images/sink1.png "sink1")
+![](../assets/images/sink1.png "sink1")
 
 This dataflow will automatically split composite CSV file into different files and save them at container root path. To save them at another directory, you can add folder name to the mapping column name in DerivedColumn activity.
 
