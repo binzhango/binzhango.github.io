@@ -70,7 +70,7 @@ extra_css:
 #   # - Home:
 #   #     - index.md
 #   - Blog:
-#       - blog/index.md
+#       - index.md
 
 
 plugins:
@@ -83,6 +83,18 @@ plugins:
       archive_toc: true
       archive_date_format: yyyy
       archive_url_format: "{date}"
+      categories_allowed:
+        - python
+        - k8s
+        - spark
+        - ML
+        - airflow
+        - LLM
+        - Azure
+        - Snowflake
+        - Spark
+        - Scala
+
       
   - tags
   - search
@@ -91,7 +103,10 @@ plugins:
   - social:
       cards_layout_options:
         background_color: "#ff1439"
-  - mkdocs-video
+  - mkdocs-video:
+      css_style:
+        height: "27vw"
+        width: "48vw"
   - autorefs
   - glightbox
 

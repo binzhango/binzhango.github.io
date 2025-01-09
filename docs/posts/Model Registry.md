@@ -7,8 +7,6 @@ authors:
   - BZ
 categories:
   - ML
-tags:
-  - ML Model Registry
 ---
 <!-- more -->
 

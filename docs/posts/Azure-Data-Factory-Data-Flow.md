@@ -6,7 +6,7 @@ date:
 tags:
   - Data Engineer
 categories: 
-  - DataFactory
+  - Azure
 ---
 
 Recently I'm working in Azure to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.

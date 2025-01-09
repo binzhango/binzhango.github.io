@@ -2,11 +2,10 @@
 title: AutoGen HttpClient
 authors:
   - BZ
-date: 2024-09-08 00:00:00
+date: 2024-09-08
+
 categories: 
   - LLM
-  - AutoGen
-pin: true
 ---
 
 ## HttpClient
