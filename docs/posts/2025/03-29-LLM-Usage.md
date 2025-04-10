@@ -50,6 +50,7 @@ categories:
 | pyspur | [GitHub](https://github.com/PySpur-Dev/pyspur) |
 | agno (phiData) | [Github](https://github.com/agno-agi/agno)|
 | instructor | [Github](https://github.com/instructor-ai/instructor)|
+| **DSpy**| [Github](https://github.com/stanfordnlp/dspy)|
 | **JS Only**|---|
 | n8n | [GitHub](https://github.com/n8n-io/n8n)|
 
