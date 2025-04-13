@@ -25,6 +25,7 @@ categories:
 | Retrieval-Augmented Generation for Large Language Models: A Survey | [Click](https://arxiv.org/abs/2312.10997) | [ref](../../assets/pdfs/2312.10997v5.pdf) |
 | Revolutionizing Retrieval-Augmented Generation with Enhanced PDF Structure Recognition| [Click](https://arxiv.org/abs/2401.12599)||
 | Optimizing RAG Techniques for Automotive Industry PDF Chatbots: A Case Study with Locally Deployed Ollama Models | [Click](https://arxiv.org/abs/2408.05933)||
+|Google Prompt Engineering whitepaper||[ref](../../assets/pdfs/Google_Engineering_2025.pdf)|
 
 
 
