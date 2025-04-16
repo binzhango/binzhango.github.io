@@ -16,6 +16,11 @@ categories:
 
 ## Collections
 
+#### Blogs
+|**Name**|**URL**|
+|---|---|
+|LLM terminology|[Link](https://promptmetheus.com/resources/llm-knowledge-base)
+
 
 #### Papers
 | **Paper** | **Link** | **Preview** |
