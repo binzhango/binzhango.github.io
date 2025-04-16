@@ -2,174 +2,174 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://binzhango.github.io/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/02/airflow/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/11/azure-data-factory-data-flow/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/02/batch-normalization/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/02/gradient-descent/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/09/how-to-execute-python-modules/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2021/07/setup-minikube/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/08/model-registry/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/10/snowflake-data-science-training-summary/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/03/spark-dataframe-window-function/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/02/spark-optimization/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/02/spark-structured-streaming/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/02/whitening-transformation/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2012/10/repo-list/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/02/spark-sql/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/09/autogen-httpclient/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/10/reflex-learning/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/10/zio/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/10/python-decorator/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/11/databricks-wheel-job/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/11/pyspark-dataframe-transformation/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/12/gradio-with-ollama/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2025/02/langgraph-vs-autogen/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2025/02/crawling-the-web-with-llm/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2025/03/genai-projects/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2025/02/autogen-intro-and-rag-workflow/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2025/02/local-llm-setup/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2025/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2024/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2021/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2020/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/2012/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/llm/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/python/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/spark/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/scala/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/snowflake/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/ml/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/k8s/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/azure/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/category/airflow/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/page/2/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
     <url>
          <loc>http://binzhango.github.io/page/3/</loc>
-         <lastmod>2025-04-13</lastmod>
+         <lastmod>2025-04-16</lastmod>
     </url>
 </urlset>
