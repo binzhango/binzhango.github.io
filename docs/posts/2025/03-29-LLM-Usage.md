@@ -31,7 +31,7 @@ categories:
 | Revolutionizing Retrieval-Augmented Generation with Enhanced PDF Structure Recognition| [Click](https://arxiv.org/abs/2401.12599)||
 | Optimizing RAG Techniques for Automotive Industry PDF Chatbots: A Case Study with Locally Deployed Ollama Models | [Click](https://arxiv.org/abs/2408.05933)||
 |<span style="color: red; font-weight:bold;">Google Prompt Engineering whitepaper</span>||[ref](../../assets/pdfs/Google_Engineering_2025.pdf)|
-
+|Speculative Thinking: Enhancing Small-Model Reasoning with Large Model Guidance at Inference Time|[Click](https://arxiv.org/html/2504.12329v1)||
 
 
 #### Model/Repository
