@@ -10,8 +10,10 @@ categories:
 <!-- more -->
 
 ## Ollama Models
-Importing GGUF is a flexible way to play different models.
-We can use `Modelfile` to import any gguf.
+If you're looking to experiment with various models easily, importing GGUF might be your go-to method. 
+Here's how it works: 
+
+- You start by creating a `Modelfile`, which acts as a key to unlock any GGUF model you want to use.
 
 ```shell linenums="1" title="Modelfile"
 FROM /agentica-org_DeepCoder-14B-Preview-Q8_0.gguf
@@ -29,7 +31,8 @@ TEMPLATE """
 """
 ```
 
-Once the `Modelfile` is created, just run below command to import model
+- Once that file is ready, all you need to do is run a simple command, and voilà—your model is imported and ready for action!
+
 ```shell
 ollama create deepcoder -f ./Modelfile
 
