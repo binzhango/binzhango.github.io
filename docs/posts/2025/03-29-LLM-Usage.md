@@ -32,7 +32,7 @@ categories:
 | Optimizing RAG Techniques for Automotive Industry PDF Chatbots: A Case Study with Locally Deployed Ollama Models | [Click](https://arxiv.org/abs/2408.05933)||
 |<span style="color: red; font-weight:bold;">Google Prompt Engineering whitepaper</span>||[ref](../../assets/pdfs/Google_Engineering_2025.pdf)|
 |Speculative Thinking: Enhancing Small-Model Reasoning with Large Model Guidance at Inference Time|[Click](https://arxiv.org/html/2504.12329v1)||
-
+|LLM Post-Training: A Deep Dive into Reasoning Large Language Models||[ref](../../assets/pdfs/2502.21321v2.pdf)|
 
 #### Model/Repository
 |**Model/Repository** | **Link**|
