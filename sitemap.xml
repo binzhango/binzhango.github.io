@@ -117,6 +117,14 @@
          <lastmod>2025-06-23</lastmod>
     </url>
     <url>
+         <loc>http://binzhango.github.io/2025/06/mcp-transports/</loc>
+         <lastmod>2025-06-23</lastmod>
+    </url>
+    <url>
+         <loc>http://binzhango.github.io/2025/06/rust-learning/</loc>
+         <lastmod>2025-06-23</lastmod>
+    </url>
+    <url>
          <loc>http://binzhango.github.io/2025/02/autogen-intro-and-rag-workflow/</loc>
          <lastmod>2025-06-23</lastmod>
     </url>
@@ -146,6 +154,10 @@
     </url>
     <url>
          <loc>http://binzhango.github.io/category/llm/</loc>
+         <lastmod>2025-06-23</lastmod>
+    </url>
+    <url>
+         <loc>http://binzhango.github.io/category/rust/</loc>
          <lastmod>2025-06-23</lastmod>
     </url>
     <url>
@@ -186,6 +198,18 @@
     </url>
     <url>
          <loc>http://binzhango.github.io/page/3/</loc>
+         <lastmod>2025-06-23</lastmod>
+    </url>
+    <url>
+         <loc>http://binzhango.github.io/page/4/</loc>
+         <lastmod>2025-06-23</lastmod>
+    </url>
+    <url>
+         <loc>http://binzhango.github.io/2025/page/2/</loc>
+         <lastmod>2025-06-23</lastmod>
+    </url>
+    <url>
+         <loc>http://binzhango.github.io/category/llm/page/2/</loc>
          <lastmod>2025-06-23</lastmod>
     </url>
 </urlset>
