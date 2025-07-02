@@ -84,5 +84,8 @@ categories:
 | paper (research paper on schema mapping) | [ref](../../assets/pdfs/2503.14434v2.pdf)|
 | paper (research paper on schema mapping) | [ref](../../assets/pdfs/2503.23371v1.pdf)|
 
-### RAG: PDF Converting (Ongoing)
+### RAG: PDF Converting (Completed)
 > LLM can be used to convert PDFs into structured data. This is useful for extracting information from unstructured documents.
+
+### LLM: Fine-Tuning (Ongoing)
+> 
