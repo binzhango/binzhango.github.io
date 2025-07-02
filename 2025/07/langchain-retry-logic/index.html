@@ -42,20 +42,34 @@
 <span class=normal><a href=#__codelineno-1-10>10</a></span>
 <span class=normal><a href=#__codelineno-1-11>11</a></span>
 <span class=normal><a href=#__codelineno-1-12>12</a></span>
-<span class=normal><a href=#__codelineno-1-13>13</a></span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-1-1><a id=__codelineno-1-1 name=__codelineno-1-1></a><span class=nd>@tenacity</span><span class=o>.</span><span class=n>retry</span><span class=p>(</span>
-</span><span id=__span-1-2><a id=__codelineno-1-2 name=__codelineno-1-2></a>    <span class=n>stop</span><span class=o>=</span><span class=n>tenacity</span><span class=o>.</span><span class=n>stop_after_attempt</span><span class=p>(</span><span class=mi>3</span><span class=p>),</span>
-</span><span id=__span-1-3><a id=__codelineno-1-3 name=__codelineno-1-3></a>    <span class=n>wait</span><span class=o>=</span><span class=n>tenacity</span><span class=o>.</span><span class=n>wait_random</span><span class=p>(</span>
-</span><span id=__span-1-4><a id=__codelineno-1-4 name=__codelineno-1-4></a>        <span class=nb>min</span><span class=o>=</span><span class=mi>15</span><span class=p>,</span> <span class=nb>max</span><span class=o>=</span><span class=mi>45</span>
-</span><span id=__span-1-5><a id=__codelineno-1-5 name=__codelineno-1-5></a>    <span class=p>),</span>  <span class=c1># this is mainly included to allow calming RateLimitErrors</span>
-</span><span id=__span-1-6><a id=__codelineno-1-6 name=__codelineno-1-6></a>    <span class=n>retry</span><span class=o>=</span><span class=p>(</span>
-</span><span id=__span-1-7><a id=__codelineno-1-7 name=__codelineno-1-7></a>        <span class=n>tenacity</span><span class=o>.</span><span class=n>retry_if_exception_type</span><span class=p>(</span><span class=n>APITimeoutError</span><span class=p>)</span>
-</span><span id=__span-1-8><a id=__codelineno-1-8 name=__codelineno-1-8></a>        <span class=o>|</span> <span class=n>tenacity</span><span class=o>.</span><span class=n>retry_if_exception_type</span><span class=p>(</span><span class=n>RateLimitError</span><span class=p>)</span>
-</span><span id=__span-1-9><a id=__codelineno-1-9 name=__codelineno-1-9></a>        <span class=o>|</span> <span class=n>tenacity</span><span class=o>.</span><span class=n>retry_if_exception_type</span><span class=p>(</span><span class=n>InternalServerError</span><span class=p>)</span>
-</span><span id=__span-1-10><a id=__codelineno-1-10 name=__codelineno-1-10></a>    <span class=p>),</span>
-</span><span id=__span-1-11><a id=__codelineno-1-11 name=__codelineno-1-11></a><span class=p>)</span>
-</span><span id=__span-1-12><a id=__codelineno-1-12 name=__codelineno-1-12></a><span class=k>async</span> <span class=k>def</span><span class=w> </span><span class=nf>my_async_function</span><span class=p>():</span>
-</span><span id=__span-1-13><a id=__codelineno-1-13 name=__codelineno-1-13></a>  <span class=k>pass</span>
-</span></code></pre></div></td></tr></table></div> <blockquote> <p>Note: The above code snippet is an another retry logic implementation.</p> <ul> <li><code>stop_after_attempt(3)</code> : will retry 3 times</li> <li><code>tenacity.wait_random(min=15, max=45)</code> : wait for a random time between 15 and 45 seconds before retrying</li> <li><code>retry()</code> : only the specified exceptions will trigger the retry</li> </ul> </blockquote> <h2 id=langchain-retry>LangChain Retry<a class=headerlink href=#langchain-retry title="Permanent link">#</a></h2> <div class="language-python highlight"><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal><a href=#__codelineno-2-1> 1</a></span>
+<span class=normal><a href=#__codelineno-1-13>13</a></span>
+<span class=normal><a href=#__codelineno-1-14>14</a></span>
+<span class=normal><a href=#__codelineno-1-15>15</a></span>
+<span class=normal><a href=#__codelineno-1-16>16</a></span>
+<span class=normal><a href=#__codelineno-1-17>17</a></span>
+<span class=normal><a href=#__codelineno-1-18>18</a></span>
+<span class=normal><a href=#__codelineno-1-19>19</a></span>
+<span class=normal><a href=#__codelineno-1-20>20</a></span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-1-1><a id=__codelineno-1-1 name=__codelineno-1-1></a><span class=kn>import</span><span class=w> </span><span class=nn>logging</span>
+</span><span id=__span-1-2><a id=__codelineno-1-2 name=__codelineno-1-2></a>
+</span><span id=__span-1-3><a id=__codelineno-1-3 name=__codelineno-1-3></a><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span><span id=__span-1-4><a id=__codelineno-1-4 name=__codelineno-1-4></a>
+</span><span id=__span-1-5><a id=__codelineno-1-5 name=__codelineno-1-5></a><span class=nd>@tenacity</span><span class=o>.</span><span class=n>retry</span><span class=p>(</span>
+</span><span id=__span-1-6><a id=__codelineno-1-6 name=__codelineno-1-6></a>    <span class=n>reraise</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span>
+</span><span id=__span-1-7><a id=__codelineno-1-7 name=__codelineno-1-7></a>    <span class=n>stop</span><span class=o>=</span><span class=n>tenacity</span><span class=o>.</span><span class=n>stop_after_attempt</span><span class=p>(</span><span class=mi>3</span><span class=p>),</span>
+</span><span id=__span-1-8><a id=__codelineno-1-8 name=__codelineno-1-8></a>    <span class=n>wait</span><span class=o>=</span><span class=n>tenacity</span><span class=o>.</span><span class=n>wait_random</span><span class=p>(</span>
+</span><span id=__span-1-9><a id=__codelineno-1-9 name=__codelineno-1-9></a>        <span class=nb>min</span><span class=o>=</span><span class=mi>15</span><span class=p>,</span> <span class=nb>max</span><span class=o>=</span><span class=mi>45</span>
+</span><span id=__span-1-10><a id=__codelineno-1-10 name=__codelineno-1-10></a>    <span class=p>),</span>  <span class=c1># this is mainly included to allow calming RateLimitErrors</span>
+</span><span id=__span-1-11><a id=__codelineno-1-11 name=__codelineno-1-11></a>    <span class=n>before_sleep</span><span class=o>=</span><span class=n>before_sleep_log</span><span class=p>(</span><span class=n>logger</span><span class=p>,</span> <span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>),</span>
+</span><span id=__span-1-12><a id=__codelineno-1-12 name=__codelineno-1-12></a>    <span class=n>after</span><span class=o>=</span><span class=n>after_log</span><span class=p>(</span><span class=n>logger</span><span class=p>,</span> <span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>),</span>
+</span><span id=__span-1-13><a id=__codelineno-1-13 name=__codelineno-1-13></a>    <span class=n>retry</span><span class=o>=</span><span class=p>(</span>
+</span><span id=__span-1-14><a id=__codelineno-1-14 name=__codelineno-1-14></a>        <span class=n>tenacity</span><span class=o>.</span><span class=n>retry_if_exception_type</span><span class=p>(</span><span class=n>APITimeoutError</span><span class=p>)</span>
+</span><span id=__span-1-15><a id=__codelineno-1-15 name=__codelineno-1-15></a>        <span class=o>|</span> <span class=n>tenacity</span><span class=o>.</span><span class=n>retry_if_exception_type</span><span class=p>(</span><span class=n>RateLimitError</span><span class=p>)</span>
+</span><span id=__span-1-16><a id=__codelineno-1-16 name=__codelineno-1-16></a>        <span class=o>|</span> <span class=n>tenacity</span><span class=o>.</span><span class=n>retry_if_exception_type</span><span class=p>(</span><span class=n>InternalServerError</span><span class=p>)</span>
+</span><span id=__span-1-17><a id=__codelineno-1-17 name=__codelineno-1-17></a>    <span class=p>),</span>
+</span><span id=__span-1-18><a id=__codelineno-1-18 name=__codelineno-1-18></a><span class=p>)</span>
+</span><span id=__span-1-19><a id=__codelineno-1-19 name=__codelineno-1-19></a><span class=k>async</span> <span class=k>def</span><span class=w> </span><span class=nf>my_async_function</span><span class=p>():</span>
+</span><span id=__span-1-20><a id=__codelineno-1-20 name=__codelineno-1-20></a>  <span class=k>pass</span>
+</span></code></pre></div></td></tr></table></div> <blockquote> <p>Note: The above code snippet is an another retry logic implementation.</p> <ul> <li><code>stop_after_attempt(3)</code> : will retry 3 times</li> <li><code>tenacity.wait_random(min=15, max=45)</code> : wait for a random time between 15 and 45 seconds before retrying</li> <li><code>before_sleep_log(logger, logging.INFO)</code> : log before retrying</li> <li><code>after_log(logger, logging.INFO)</code> : log after retrying</li> <li><code>retry()</code> : only the specified exceptions will trigger the retry</li> </ul> </blockquote> <h2 id=langchain-retry>LangChain Retry<a class=headerlink href=#langchain-retry title="Permanent link">#</a></h2> <div class="language-python highlight"><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal><a href=#__codelineno-2-1> 1</a></span>
 <span class=normal><a href=#__codelineno-2-2> 2</a></span>
 <span class=normal><a href=#__codelineno-2-3> 3</a></span>
 <span class=normal><a href=#__codelineno-2-4> 4</a></span>
