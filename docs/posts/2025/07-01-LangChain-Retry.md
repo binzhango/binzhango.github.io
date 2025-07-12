@@ -42,11 +42,18 @@ async def send_address_match_request(requests_client, payload):
 
 ## One Advanced Retry Logic
 ```python linenums="1"
+import logging
+
+logger = logging.getLogger(__name__)
+
 @tenacity.retry(
+    reraise=True,
     stop=tenacity.stop_after_attempt(3),
     wait=tenacity.wait_random(
         min=15, max=45
     ),  # this is mainly included to allow calming RateLimitErrors
+    before_sleep=before_sleep_log(logger, logging.INFO),
+    after=after_log(logger, logging.INFO),
     retry=(
         tenacity.retry_if_exception_type(APITimeoutError)
         | tenacity.retry_if_exception_type(RateLimitError)
@@ -61,6 +68,8 @@ async def my_async_function():
 >
 > - `stop_after_attempt(3)` : will retry 3 times
 > - `tenacity.wait_random(min=15, max=45)` : wait for a random time between 15 and 45 seconds before retrying
+> - `before_sleep_log(logger, logging.INFO)` : log before retrying
+> - `after_log(logger, logging.INFO)` : log after retrying
 > - `retry()` : only the specified exceptions will trigger the retry
 
 ## LangChain Retry
