@@ -110,6 +110,8 @@ plugins:
         width: "48vw"
   - autorefs
   - glightbox
+  - mermaid2:
+      version: 10.4.0
 
 markdown_extensions:
   - abbr
@@ -155,7 +157,8 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          #format: !!python/name:pymdownx.superfences.fence_code_format
+          format: !!python/name:mermaid2.fence_mermaid_custom
   - pymdownx.tabbed:
       alternate_style: true
       combine_header_slug: true
