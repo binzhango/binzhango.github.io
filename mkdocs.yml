@@ -37,14 +37,14 @@ theme:
     text: Roboto
     
   palette:
-    - accent: indigo
-      primary: amber
+    - accent: orange
+      primary: light blue
       schema: default
       toggle:
         icon: material/weather-night
         name: Dark Mode
-    - accent: indigo
-      primary: blue grey
+    - accent: orange
+      primary: grey
       schema: slate
       toggle:
         icon: material/weather-sunny
