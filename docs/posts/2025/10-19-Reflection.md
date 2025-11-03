@@ -12,6 +12,9 @@ categories:
 # Langgraph Reflections
 
 ## Overview
+
+![Overview](../../assets/images/2025/Langgraph_Reflections.png)
+
 Reflection is related to agent self-improvement or reasoning feedback loops.
 
 - Reflection is a framework-level pattern (or module) that enables an LLM agent to evaluate its own outputs, learn from mistakes, and revise or improve results across iterations.

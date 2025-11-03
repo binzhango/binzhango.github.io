@@ -32,3 +32,21 @@ body {
     background-repeat: no-repeat; /* Prevents image repetition */
     background-attachment: fixed; /* Keeps the background fixed when scrolling */
 }
+
+.def-mono-red {
+    font-family: 'Source Code Pro', 'Fira Code', Consolas, monospace;
+    font-weight: 600;
+    color: #c0392b;
+}
+
+.def-mono-blue {
+    font-family: 'Source Code Pro', 'Fira Code', Consolas, monospace;
+    font-weight: 600;
+    color: blue;
+}
+
+.def-mono-gold {
+    font-family: 'Source Code Pro', 'Fira Code', Consolas, monospace;
+    /* font-weight: 600; */
+    color: goldenrod;
+}

@@ -111,4 +111,6 @@ Regularization techniques — especially dropout — can help, though they slow 
 
 **In short**:
 
+![summary](../../assets/images/2025/Multi_Epoch.png)
+
 > **Multi-epoch training on repeated data accelerates overfitting, and regularization is the key to mitigating (but not solving) it.**
