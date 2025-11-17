@@ -7,9 +7,73 @@ categories:
   - LLM
 ---
 
-# LLM Questions
+# Questions
 <!-- more -->
-## Machine Learning Fundamentals
+
+## Machine Learning
+
+??? tip "Machine Learning Concepts"
+
+    ??? question "How would you describe the concept of machine learning in your own words?"
+
+        Machine learning focuses on creating systems that improve their performance on a task by learning patterns from data rather than relying on explicit programming.
+
+    ??? question "Can you give a few examples of real-world areas where machine learning is particularly effective?"
+
+        Machine learning is especially valuable for solving complex problems without clear rule-based solutions, automating decision-making instead of hand-crafted logic, adapting to changing environments, and extracting insights from large datasets.
+
+    
+    ??? question "What are some typical problems addressed with unsupervised learning methods?"
+
+        Typical unsupervised learning tasks include clustering, data visualization, dimensionality reduction, and association rule mining.
+
+
+    ??? question "Would detecting spam emails be treated as a supervised or unsupervised learning problem, and why?"
+        Spam filtering is an example of a supervised learning problem because the model learns from examples of emails labeled as "spam" or "not spam".
+
+
+    ??? question "What does the term ‘out-of-core learning’ refer to in machine learning?"
+
+        Out-of-core learning enables training on datasets too large to fit in memory by processing them in smaller chunks (mini-batches) and updating the model incrementally.
+
+
+    ??? question "How can you distinguish between model parameters and hyperparameters?"
+
+        - **Model parameters** define how the model behaves and are learned during training (e.g., weights in linear regression).
+
+        - **Hyperparameters** are external settings chosen before training, such as the learning rate or regularization strength.
+
+
+    ??? question "What are some major difficulties or limitations commonly faced when building machine learning systems?"
+
+        	Key challenges in machine learning include 
+            
+            - insufficient or low-quality data
+            - poor feature selection
+            - non-representative samples
+            - models that either underfit (too simple) or overfit (too complex)
+
+    ??? question "If a model performs well on training data but poorly on unseen data, what issue is occurring, and how might you address it?"
+
+        When a model performs well on training data but poorly on unseen examples, it’s overfitting. This can be mitigated by collecting more diverse data, simplifying the model, applying regularization, or cleaning noisy data.
+
+    ??? question "What is a test dataset used for, and why is it essential in evaluating a model’s performance?"
+
+        A test set provides an unbiased estimate of how well a model will perform on new, real-world data before deployment.
+
+    ??? question "What role does a validation set play during the model development process?"
+
+        A validation set helps compare multiple models and tune hyperparameters, ensuring better generalization to unseen data.
+
+    ??? question "What is a train-dev dataset, in what situations would you create one, and how is it applied during model evaluation?"
+
+        The train-dev set is a small portion of the training data set aside to identify mismatches between the training distribution and the validation/test distributions. You use it when you suspect that your production data may differ from your training data. The model is trained on most of the training data and evaluated on the train-dev set to detect overfitting or data mismatch before comparing results on the validation set.
+
+    ??? question "Why is it problematic to adjust hyperparameters based on test set performance?"
+
+        If you tune hyperparameters using the test set, you risk overfitting to that specific test data, making your performance results misleadingly high. As a result, the model might perform worse in real-world scenarios because the test set is no longer an unbiased measure of generalization.
+
+## LLM Fundamentals
 
 
 ??? question "Explain bias-variance tradeoff. How does it manifest in LLMs?"
@@ -263,302 +327,529 @@ categories:
 
 ## Fundamentals of Large Language Models (LLMs)
 
-??? "Question Bank: TBD"
+!!! Abstract "Question Bank"
 
-    I. Fundamentals of Large Language Models (LLMs)
+    - <span class="def-mono-red">Fundamentals of Large Language Models (LLMs)</span>
 
-    1. LLM Basics
+    ??? tip "LLM Basic"
 
-        •	What are the main open-source LLM families currently available?
-        •	What’s the difference between prefix decoder, causal decoder, and encoder-decoder architectures?
-        •	What is the training objective of large language models?
-        •	What causes the emergent abilities of LLMs?
-        •	Why are most modern LLMs decoder-only architectures?
-        •	Give a simple introduction to large language models (LLMs).
-        •	What do the numbers like 175B, 60B, or 540B mean in LLM names?
-        •	What are the advantages of LLMs?
-        •	What are the disadvantages of LLMs?
-        •	Explain the difference between encoder-only, decoder-only, and encoder-decoder models.
-        •	Compare the major LLMs such as BART, LLaMA, GPT, T5, and PaLM.
-        •	What’s the difference between prefix LM and causal LM?
+        ??? question "What are the main open-source LLM families currently available?"
 
-    ⸻
+            - Llama: Decoder-Only
+            - Mistral: Decoder-Only (MoE in Mixtral)
+            - Gemma: Decoder-Only
+            - Phi: Decoder-Only
+            - Qwen: Decoder-Only (dense + MoE)
+            - DeepSeek: Decoder-Only (MoE in V2)
+            - Falcon: Decoder-Only
+            - OLMo: Decoder-Only
 
-    2. Layer Normalization Variants
+        
+        ??? question "What’s the difference between prefix decoder, causal decoder, and encoder-decoder architectures?"
 
-    (a) Formulas and Concepts
+            - **Causal Decoder (Decoder-Only)**: Autoregressive model that generates text left-to-right, attending only to previous tokens.
+            - **Prefix Decoder (PrefixLM)**: Causal decoder with a bidirectional prefix (input context) followed by autoregressive generation.
+            - **Encoder-Decoder (Seq2Seq)**: Two separate Transformer stacks(Encoder & Decoder)
 
-        •	What’s the computation formula for LayerNorm?
-        •	What’s the computation formula for RMSNorm?
-        •	What are the main characteristics of RMSNorm compared to LayerNorm?
-        •	What’s the core idea of DeepNorm?
-        •	Show the basic code implementation of DeepNorm.
-        •	What are the advantages of DeepNorm?
+            ??? Example "Causal Decoder"
 
-    (b) Position in Model
+                - Prompt
+                > Translate to French: The cat is on the mat.
+                - Generation (autoregressive, causal mask):
+                > Le [only sees "Le"]
+                >
+                > Le chat [sees "Le chat"]
+                > 
+                > Le chat est [sees "Le chat est"]
+                >
+                > Le chat est sur [sees up to "sur"]
+                > 
+                > Le chat est sur le [sees up to "le"]
+                >
+                > Le chat est sur le tapis. [final]
+                - Summary
+                > **Cannot see future tokens**
+                >
+                > **Cannot see full input bidirectionally — but works via prompt engineering**
 
-        •	What are the differences when applying LayerNorm at different positions in LLMs?
+            ??? Example "Prefix Decoder"
+                - Input Format
+                > [Prefix] The cat is on the mat. [SEP] Translate to French: [Generate] Le chat est sur le tapis.
+                - Attention
+                > **Prefix** (The cat is on the mat. [SEP] Translate to French:) → bidirectional
 
-    (c) Comparison
-        •	Which normalization method is used in different LLM architectures?
+            ??? Example "Encoder-Decoder"
 
-    ⸻
 
-    3. Activation Functions in LLMs
+        ??? question "What is the training objective of large language models?"
+
+            LLMs are trained to predict the next token in a sequence.
+
+        ??? question "Why are most modern LLMs decoder-only architectures?"
+
+            Most modern LLMs are decoder-only because this architecture is the simplest, fastest, and most flexible for large-scale text generation.
+            Below is the full reasoning, broken into the fundamental, engineering, and use-case levels.
+
+             - Decoder-only naturally matches the training objective
+             - Simpler architecture → easier scaling
+             - Better for long-context generation
+             - Fits universal multitask learning with a single text stream
+             - Aligns with inference needs
+                - streaming output
+                - token-by-token generation
+                - low latency
+                - high throughput
+                - continuous prompts
+
+        ??? question "Explain the difference between encoder-only, decoder-only, and encoder-decoder models."
+            
+            - <span class="def-mono-blue">Encoder-only Models (BERT, RoBERTa, DeBERTa, ELECTRA)</span>
+                - classification (sentiment, fraud detection)
+                - named entity recognition
+                - sentence similarity
+                - search / embeddings
+                - anomaly or pattern detection
+            - <span class="def-mono-blue">Decoder-only Models (GPT, Llama, Mixtral, Gemma, Qwen)</span>
+                - Text generation
+                - Multi-task language modeling
+                - Anything that treats tasks as text → text in one stream
+            - <span class="def-mono-blue">Encoder–Decoder (Seq2Seq) Models (T5, FLAN-T5, BART, mT5, early Transformer models)</span>
+                - Translation
+                - Summarization
+                - Text-to-text tasks with clear input → output mapping
+
+        ??? question "What’s the difference between prefix LM and causal LM?"
+
+            - <span class="def-mono-red">Causal LM</span>: every token can only attend to previous tokens.
+            - <span class="def-mono-red">Prefix LM</span>: the prefix can be fully bidirectional, while the rest is generated causally.
+
+
+            |Feature|Causal LM|Prefix LM|
+            |---|---|---|
+            |Attention|Strictly left-to-right|Prefix: full; Generation: causal|
+            |Use case|Free-form generation|Conditional generation, prefix tuning|
+            |Examples|GPT, Llama, Mixtral|T5 (prefix mode), UL2, some prompt-tuning models|
+            |Future access?|No|Only inside prefix|
+            |Mask complexity|Simple|Mixed masks|
+
     
-        •	What’s the formula for the FFN (Feed-Forward Network) block?
-        •	What’s the GeLU formula?
-        •	What’s the Swish formula?
-        •	What’s the formula of an FFN block with GLU (Gated Linear Unit)?
-        •	What’s the formula of a GLU block using GeLU?
-        •	What’s the formula of a GLU block using Swish?
-        •	Which activation functions do popular LLMs use?
-        •	What are the differences between Adam and SGD optimizers?
+    ??? tip "Layer Normalization Variants"
 
-    ⸻
+        ??? question "Comparison of LayerNorm vs BatchNorm vs RMSNorm?"
 
-    4. Attention Mechanisms — Advanced Topics
+            |Norm|Formula|Pros|Cons|
+            |---|---|---|---|
+            |BatchNorm|Normalize across batch|Great for CNNs|Bad for variable batch / autoregressive decoding|
+            |LayerNorm|Normalize across hidden dim|Stable for Transformers|Slightly more compute than RMSNorm|
+            |RMSNorm|Normalize only scale|Faster, more stable in LLMs|No centering → sometimes slightly less expressive|
 
-    (a) Attention Optimization and Variants
-        •	What are the problems with traditional attention?
-        •	What are the directions of improvement for attention?
-        •	What are the attention variants?
+        ??? question "What’s the core idea of DeepNorm?"
 
-    (b) Multi-Query and Grouped-Query Attention
-        •	What issues exist in multi-head attention?
-        •	Explain Multi-Query Attention (MQA).
-        •	Compare Multi-head, Multi-Query, and Grouped-Query Attention.
-        •	What are the benefits of MQA?
-        •	Which models use MQA or GQA?
+            **DeepNorm keeps the Transformer stable at extreme depths by scaling the residual connections proportionally to the square root of the model depth.**
 
-    (c) FlashAttention
-        •	Why was FlashAttention introduced?
-        •	Briefly explain its core idea.
-        •	What are its advantages?
-        •	Which models implement FlashAttention?
+        ??? question "What are the advantages of DeepNorm?"
 
-    (d) Other Improvements
-        •	What is parallel transformer block?
-        •	What’s the computational complexity of attention and how can it be improved?
-        •	What is Paged Attention?
-        •	Compare MHA, GQA, and MQA — what are their key differences?
+            **DeepNorm = deep models that actually train and perform well, without tricks.**
 
-    ⸻
+            - Enables Extremely Deep Transformers (1,000+ layers)
+            - Superior Training Stability
+            - Improved Optimization Landscape
+            - Better Performance on Downstream Tasks
+            - No Architectural Overhead
+            - Robust Across Scales and Tasks
 
-    5. Cross-Attention
-        •	Why do we need Cross-Attention?
-        •	Explain Cross-Attention.
-        •	Compare Cross-Attention and Self-Attention — similarities and differences.
-        •	Compare Cross-Attention and Multi-Head Attention.
-        •	Provide a code implementation of Cross-Attention.
-        •	What are its application scenarios?
-        •	What are the advantages and challenges of Cross-Attention?
+        ??? question "What are the differences when applying LayerNorm at different positions in LLMs?"
 
-    ⸻
+            - <span class="def-mono-red">~~Pre-NormPost-Norm~~ (Original Transformer, 2017)</span>: Normalizes after adding the residual.
+                - Pros:
+                    - Fairly stable for shallow models (<12 layers)
+                    - Works well in classic NMT models
+                - Cons:
+                    - Fails to train deep models (vanishing/exploding gradients)
+                    - Poor gradient flow
+                    - Not used in modern LLMs
+            - Pre-Norm (Current Standard in GPT/LLaMA): Normalize before attention or feed-forward
+                - Pros:
+                    - Much more stable for deep Transformers
+                    - Great training stability up to hundreds of layers
+                    - Works well with small batch sizes
+                    - Default in GPT-2/3, LLaMA, Mistral, Gemma, Phi-3, Qwen2
+                - Cons:
+                    - Residual stream grows in magnitude unless controlled (→ RMSNorm or DeepNorm often added)
+                    - Slightly diminished expressive capacity compared to Post-Norm (but negligible in practice)
+            - Sandwich-Norm: LayerNorm applied before AND after sublayers.
+                - Pros:
+                    - Extra stability & smoothness
+                    - Improved optimization in some NMT models
 
-    6. Transformer Operations
-        •	How to load a BERT model using transformers?
-        •	How to output a specific hidden_state from BERT using transformers?
-        •	How to get the final or intermediate layer vector outputs of BERT?
+                - Cons:
+                    - Expensive (two norms per sublayer)
+                    - Rarely used in large decoder-only LLMs
 
-    ⸻
 
-    7. LLM Loss Functions
-        •	What is KL divergence?
-        •	Write the cross-entropy loss and explain its meaning.
-        •	What’s the difference between KL divergence and cross-entropy?
-        •	How to handle large loss differences in multi-task learning?
-        •	Why is cross-entropy preferred over MSE for classification tasks?
-        •	What is information gain?
-        •	How to compute softmax and cross-entropy loss (and binary cross-entropy)?
-        •	What if the exponential term in softmax overflows the float limit?
 
-    ⸻
+            🧠 Why LayerNorm position matters
 
-    8. Similarity & Contrastive Learning
-        •	Besides cosine similarity, what other similarity metrics exist?
-        •	What is contrastive learning?
-        •	How important are negative samples in contrastive learning, and how to handle costly negative sampling?
+                1. Training Stability
+                    •	Pre-Norm prevents exploding residuals
+                    •	Post-Norm accumulates errors → unstable for deep models
+                2. Gradient Flow
+                    - Residuals in Pre-Norm allow gradients to bypass the sublayers directly.
 
-    ⸻
 
-    II. Advanced Topics in LLMs
-        •	What is a generative large model?
-        •	How do LLMs make generated text diverse and non-repetitive?
-        •	What is the repetition problem (LLM echo problem)?
-        •	Why does it happen?
-        •	How can it be mitigated?
-        •	Can LLaMA handle infinitely long inputs?
-        •	When should you use BERT vs. LLaMA / ChatGLM models?
-        •	Do different domains require their own domain-specific LLMs?
-        •	How to enable an LLM to process longer texts?
 
-    ⸻
+        ??? question "Which normalization method is used in different LLM architectures?"
+            **Large decoder-only LLMs almost universally use RMSNorm + Pre-Norm.**
 
-    III. Fine-Tuning Large Models
+    ??? tip "Activation Functions in LLMs"
 
-    1. General Fine-Tuning
-        •	Why does the loss drop suddenly in the second epoch during SFT?
-        •	How much VRAM is needed for full fine-tuning?
-        •	Why do models seem dumber after SFT?
-        •	How to construct instruction fine-tuning datasets?
-        •	How to improve prompt representativeness?
-        •	How to increase prompt data volume?
-        •	How to select domain data for continued pretraining?
-        •	How to prevent forgetting general abilities after domain tuning?
-        •	How to make the model learn more knowledge during pretraining?
-        •	When performing SFT, should the base model be Chat or Base?
-        •	What’s the input/output format for domain fine-tuning?
-        •	How to build a domain evaluation set?
-        •	Is vocabulary expansion necessary?
-        •	How to train your own LLM?
-        •	Experience in training Chinese LLMs?
-        •	What are the benefits of instruction fine-tuning?
-        •	During which stage — pretraining or fine-tuning — is knowledge injected?
+        ??? question "What’s the formula for the FFN (Feed-Forward Network) block?"
 
-    ⸻
+        ??? question "What’s the GeLU formula?"
 
-    2. SFT Tricks
-        •	What’s the typical SFT workflow?
-        •	What are key aspects of training data?
-        •	How to choose between large and small models?
-        •	How to ensure multi-task training balance?
-        •	Can SFT learn knowledge at all?
-        •	How to select datasets effectively?
+        ??? question "What’s the Swish formula?"
 
-    ⸻
+        ??? question "What’s the formula of an FFN block with GLU (Gated Linear Unit)?"
 
-    3. Training Experience
-        •	How to choose a distributed training framework?
-        •	What are key LLM training tips?
-        •	How to choose model size?
-        •	How to select GPU accelerators?
+        ??? question "What’s the formula of a GLU block using GeLU?"
 
-    ⸻
+        ??? question "What’s the formula of a GLU block using Swish?"
 
-    IV. LangChain and Agent-Based Systems
+        ??? question "Which activation functions do popular LLMs use?"
 
-    1. LangChain Core
-        •	What is LangChain?
-        •	What are its core concepts?
-        •	Components and Chains
-        •	Prompt Templates and Values
-        •	Example Selectors
-        •	Output Parsers
-        •	Indexes and Retrievers
-        •	Chat Message History
-        •	Agents and Toolkits
+        ??? question "What are the differences between Adam and SGD optimizers?"
 
-    ⸻
 
-    2. Long-Term Memory in Multi-Turn Conversations
-        •	How can Agents access conversation context?
-        •	Retrieve full history
-        •	Use sliding window for recent context
-        •	Other strategies
+    ??? tip "Attention Mechanisms — Advanced Topics"
 
-    ⸻
+        ??? question "What are the problems with traditional attention?"
 
-    3. Practical RAG Q&A using LangChain
-        •	(Practical implementation questions about RAG apps in LangChain)
+        ??? question "What are the directions of improvement for attention?"
 
-    ⸻
+        ??? question "What are the attention variants?"
 
-    V. Retrieval-Augmented Generation (RAG)
+        ??? question "What issues exist in multi-head attention?"
 
-    1. RAG Basics
-        •	Why do LLMs need an external (vector) knowledge base?
-        •	What’s the overall workflow of LLM+VectorDB document chat?
-        •	What are the core technologies?
-        •	How to build an effective prompt template?
+        ??? question "Explain Multi-Query Attention (MQA)."
 
-    ⸻
+        ??? question "Compare Multi-head, Multi-Query, and Grouped-Query Attention."
 
-    2. RAG Concepts
-        •	What are the limitations of base LLMs that RAG solves?
-        •	What is RAG?
-        •	Retrieval module
-        •	How to obtain accurate semantic representations?
-        •	How to align query/document semantic spaces?
-        •	How to match retrieval model output with LLM preferences?
-        •	Generation module
-        •	How to improve results via post-retrieval processing?
-        •	How to optimize generator adaptation to inputs?
-        •	What are the benefits of using RAG?
+        ??? question "What are the benefits of MQA?"
 
-    ⸻
+        ??? question "Which models use MQA or GQA?"
 
-    3. RAG Layout Analysis
+        ??? question "Why was FlashAttention introduced? Briefly explain its core idea."
 
-    (a) PDF Parsing
-        •	Why is PDF parsing necessary?
-        •	What are common methods and their differences?
-        •	What problems exist in PDF parsing?
+        ??? question "What are FlashAttention advantages?"
 
-    (b) Table Recognition
-        •	Why is table recognition important?
-        •	What are the main methods?
-        •	Traditional methods
-        •	pdfplumber extraction techniques
+        ??? question "Which models implement FlashAttention?"
 
-    (c) Text Chunking
-        •	Why do we need text chunking?
-        •	What are common chunking strategies (regex, Spacy, LangChain, etc.)?
+        ??? question "What is parallel transformer block?"
 
-    ⸻
+        ??? question "What’s the computational complexity of attention and how can it be improved?"
 
-    4. RAG Retrieval Strategies
-        •	Why use LLMs to assist recall?
-        •	HYDE approach: idea and issues
-        •	FLARE approach: idea and recall strategies
-        •	Why construct hard negative samples?
-        •	Random sampling vs. Top-K hard negative sampling
+        ??? question "Compare MHA, GQA, and MQA — what are their key differences?"
 
-    ⸻
 
-    5. RAG Evaluation
-        •	Why evaluate RAG?
-        •	What are the evaluation methods, metrics, and frameworks?
+        
+    ??? tip "Cross-Attention"
 
-    ⸻
+        ??? question "Why do we need Cross-Attention?"
 
-    6. RAG Optimization
-        •	What are the optimization strategies for retrieval and generation modules?
-        •	How to enhance context using knowledge graphs (KGs)?
-        •	What are the problems with vector-based context augmentation?
-        •	How can KG-based methods improve it?
-        •	What are the main pain points in RAG and their solutions?
-        •	Content missing
-        •	Top-ranked docs missed
-        •	Context loss
-        •	Failure to extract answers
-        •	Explain RAG-Fusion:
-        •	Why it’s needed,
-        •	Core technologies,
-        •	Workflow, and
-        •	Advantages.
+        ??? question "Explain Cross-Attention."
 
-    ⸻
+        ??? question "Compare Cross-Attention and Self-Attention — similarities and differences."
 
-    7. Graph RAG
-        •	Why do we need Graph RAG?
-        •	What is Graph RAG and how does it work?
-        •	Show a code example and use case.
-        •	How to improve ranking optimization in Graph RAG?
+        ??? question "Provide a code implementation of Cross-Attention."
 
-    ⸻
+        ??? question "What are its application scenarios?"
 
-    VI. Parameter-Efficient Fine-Tuning (PEFT)
+        ??? question "What are the advantages and challenges of Cross-Attention?"
 
-    1. PEFT Fundamentals
-        •	What is fine-tuning, and how is it performed?
-        •	Why do we need PEFT?
-        •	What is PEFT and its advantages?
 
-    ⸻
+    ??? tip "Transformer Operations"
 
-    2. Adapter Tuning
-        •	Why use adapter-tuning?
-        •	What’s the core idea behind adapter-tuning?
-        •	How does it differ from full fine-tuning?
+        ??? question "How to load a BERT model using transformers?"
+
+        ??? question "How to output a specific hidden_state from BERT using transformers?"
+
+        ??? question "How to get the final or intermediate layer vector outputs of BERT?"
+
+
+    ??? tip "LLM Loss Functions"
+
+        ??? question "What is KL divergence?"
+
+        ??? question "Write the cross-entropy loss and explain its meaning."
+
+        ??? question "What’s the difference between KL divergence and cross-entropy?"
+
+        ??? question "How to handle large loss differences in multi-task learning?"
+
+        ??? question "Why is cross-entropy preferred over MSE for classification tasks?"
+
+        ??? question "What is information gain?"
+
+        ??? question "How to compute softmax and cross-entropy loss (and binary cross-entropy)?"
+
+        ??? question "What if the exponential term in softmax overflows the float limit?"
+
+
+    ??? tip "Similarity & Contrastive Learning"
+
+        ??? question "Besides cosine similarity, what other similarity metrics exist?"
+
+        ??? question "What is contrastive learning?"
+
+        ??? question "How important are negative samples in contrastive learning, and how to handle costly negative sampling?"
+
+
+
+    - <span class="def-mono-red">Advanced Topics in LLMs</span>
+
+    ??? tip "Advanced LLM"
+        ??? question "What is a generative large model?"
+
+        ??? question "How do LLMs make generated text diverse and non-repetitive?"
+
+        ??? question "What is the repetition problem (LLM echo problem)? Why does it happen? How can it be mitigated?"
+
+        ??? question "Can LLaMA handle infinitely long inputs? Explain why?"
+
+        ??? question "When should you use BERT vs. LLaMA / ChatGLM models?"
+
+        ??? question "Do different domains require their own domain-specific LLMs? Why?"
+
+        ??? question "How to enable an LLM to process longer texts?"
+
+
+    - <span class="def-mono-red">Fine-Tuning Large Models</span>
+
+    ??? tip "General Fine-Tuning"
+
+        ??? question "Why does the loss drop suddenly in the second epoch during SFT?"
+
+        ??? question "How much VRAM is needed for full fine-tuning?"
+
+        ??? question "Why do models seem dumber after SFT?"
+
+        ??? question "How to construct instruction fine-tuning datasets?"
+
+        ??? question "How to improve prompt representativeness?"
+
+        ??? question "How to increase prompt data volume?"
+
+        ??? question "How to select domain data for continued pretraining?"
+
+        ??? question "How to prevent forgetting general abilities after domain tuning?"
+
+        ??? question "How to make the model learn more knowledge during pretraining?"
+
+        ??? question "When performing SFT, should the base model be Chat or Base?"
+
+        ??? question "What’s the input/output format for domain fine-tuning?"
+
+        ??? question "How to build a domain evaluation set?"
+
+        ??? question "Is vocabulary expansion necessary? Why?"
+
+        ??? question "How to train your own LLM?"
+
+        ??? question "What are the benefits of instruction fine-tuning?"
+
+        ??? question "During which stage — pretraining or fine-tuning — is knowledge injected?"
+
+
+    ??? tip "SFT Tricks"
+
+        ??? question "What’s the typical SFT workflow?"
+
+        ??? question "What are key aspects of training data?"
+
+        ??? question "How to choose between large and small models?"
+
+        ??? question "How to ensure multi-task training balance?"
+
+        ??? question "Can SFT learn knowledge at all?"
+
+        ??? question "How to select datasets effectively?
+
+    ??? tip "Training Experience"
+
+        ??? question "How to choose a distributed training framework?"
+
+        ??? question "What are key LLM training tips?"
+
+        ??? question "How to choose model size?"
+
+        ??? question "How to select GPU accelerators?"
+
+
+
+    - <span class="def-mono-red">LangChain and Agent-Based Systems</span>
+
+
+    ??? tip "LangChain Core"
+
+        ??? question "What is LangChain?"
+
+        ??? question "What are its core concepts?"
+
+        ??? question "Components and Chains"
+
+        ??? question "Prompt Templates and Values"
+
+        ??? question "Example Selectors"
+
+        ??? question "Output Parsers"
+
+        ??? question "Indexes and Retrievers"
+
+        ??? question "Chat Message History"
+
+        ??? question "Agents and Toolkits"
+
+    ??? tip "Long-Term Memory in Multi-Turn Conversations"
+
+        ??? question "How can Agents access conversation context?"
+
+        ??? question "Retrieve full history"
+
+        ??? question "Use sliding window for recent context"
+
+        ??? question "
+
+    ??? tip "Practical RAG Q&A using LangChain"
+
+        ??? question "(Practical implementation questions about RAG apps in LangChain)"
+
+
+    - <span class="def-mono-red">Retrieval-Augmented Generation (RAG)</span>
+
+
+    ??? tip "RAG Basics"
+
+        ??? question "Why do LLMs need an external (vector) knowledge base?"
+
+        ??? question "What’s the overall workflow of LLM+VectorDB document chat?"
+
+        ??? question "What are the core technologies?"
+
+        ??? question "How to build an effective prompt template?"
+
+    ??? tip " RAG Concepts"
+
+        ??? question "What are the limitations of base LLMs that RAG solves?"
+
+        ??? question "What is RAG?"
+
+        ??? question "How to obtain accurate semantic representations?"
+
+        ??? question "How to align query/document semantic spaces?"
+
+        ??? question "How to match retrieval model output with LLM preferences?"
+
+        ??? question "How to improve results via post-retrieval processing?"
+
+        ??? question "How to optimize generator adaptation to inputs?"
+
+        ??? question "What are the benefits of using RAG?"
+
+    ??? tip "RAG Layout Analysis"
+
+        ??? question "Why is PDF parsing necessary?"
+
+        ??? question "What are common methods and their differences?"
+
+        ??? question "What problems exist in PDF parsing?"
+
+        ??? question "Why is table recognition important?"
+
+        ??? question "What are the main methods?"
+
+        ??? question "Traditional methods"
+
+        ??? question "pdfplumber extraction techniques"
+
+        ??? question "Why do we need text chunking?"
+
+        ??? question "What are common chunking strategies (regex, Spacy, LangChain, etc.)?"
+
+
+
+    ??? tip "RAG Retrieval Strategies"
+
+        ??? question "Why use LLMs to assist recall?"
+
+        ??? question "HYDE approach: idea and issues"
+
+        ??? question "FLARE approach: idea and recall strategies"
+
+        ??? question "Why construct hard negative samples?"
+
+        ??? question "Random sampling vs. Top-K hard negative sampling"
+
+
+    ??? tip "RAG Evaluation"
+
+        ??? question "Why evaluate RAG?"
+
+        ??? question "What are the evaluation methods, metrics, and frameworks?"
+
+
+
+    ??? tip "RAG Optimization"
+
+        ??? question "What are the optimization strategies for retrieval and generation modules?"
+
+        ??? question "How to enhance context using knowledge graphs (KGs)?"
+
+        ??? question "What are the problems with vector-based context augmentation?"
+
+        ??? question "How can KG-based methods improve it?"
+
+        ??? question "What are the main pain points in RAG and their solutions?"
+
+        ??? question "Content missing"
+
+        ??? question "Top-ranked docs missed"
+
+        ??? question "Context loss"
+
+        ??? question "Failure to extract answers"
+
+        ??? question "Explain RAG-Fusion. Why it’s needed,Core technologies,Workflow, and Advantages"
+
+        ??? question ""
+
+
+    ??? tip "Graph RAG"
+
+        ??? question "Why do we need Graph RAG?"
+
+        ??? question "What is Graph RAG and how does it work? Show a code example and use case."
+
+        ??? question "How to improve ranking optimization in Graph RAG?"
+
+
+    - <span class="def-mono-red">Parameter-Efficient Fine-Tuning (PEFT)</span>
+
+    ??? tip "PEFT Fundamentals"
+
+        ??? question "What is fine-tuning, and how is it performed?"
+
+        ??? question "Why do we need PEFT?"
+
+        ??? question "What is PEFT and its advantages?"
+
+
+    ??? tip "Adapter Tuning"
+
+        ??? question "Why use adapter-tuning?"
+
+        ??? question "What’s the core idea behind adapter-tuning?"
+
+        ??? question "How does it differ from full fine-tuning?"
+
+
 
