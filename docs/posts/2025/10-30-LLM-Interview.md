@@ -505,9 +505,43 @@ categories:
 
         ??? question "What’s the formula for the FFN (Feed-Forward Network) block?"
 
+            - <span class="def-mono-red">Standard FFN Formula</span>
+
+                $$\text{FFN}(x) = W_2 \, \sigma(W_1 x + b_1) + b_2$$
+
+                $$W_1 \in \mathbb{R}^{d_{\text{ff}} \times d_{\text{mode$$l}}}$$
+
+                $$b_1 \in \mathbb{R}^{d_{\text{ff}}}$$
+
+                $$W_2 \in \mathbb{R}^{d_{\text{model}} \times d_{\text{ff}}}$$
+
+                $$b_2 \in \mathbb{R}^{d_{\text{model}}}$$
+
+                $$\sigma = \text{activation} \text{ }  \text{function} \text{(ReLU in original Transformer, GELU in GPT, SwiGLU/GeLU-linear in modern LLMs)}$$
+
+            - <span class="def-mono-blue">Gated FFN in LLMs</span>
+
+                $$\text{FFN}(x) = W_3 \left( \text{Swish}(W_1x) \odot W_2x \right)$$
+
+                $$\text{Swish}(u) = u \cdot \sigma(u)$$
+
+                $$W_1, W_2 \in \mathbb{R}^{d_{\text{ff}} \times d_{\text{model}}}$$
+
+                $$W_3 \in \mathbb{R}^{d_{\text{model}} \times d_{\text{ff}}}$$
+
+
         ??? question "What’s the GeLU formula?"
+            **Gaussian Error Linear Unit (GeLU)**
+
+            $$\text{GeLU}(x) = \frac{x}{2}\left(1 + \operatorname{erf}\left(\frac{x}{\sqrt{2}}\right)\right)$$
+
+            $$\operatorname{erf}(x) = \frac{2}{\sqrt{\pi}} \int_0^x e^{-t^2} \, dt$$
 
         ??? question "What’s the Swish formula?"
+
+            **Swish is a smooth, non-monotonic activation.**
+
+            $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
         ??? question "What’s the formula of an FFN block with GLU (Gated Linear Unit)?"
 

@@ -50,3 +50,36 @@ body {
     /* font-weight: 600; */
     color: goldenrod;
 }
+
+
+
+
+/* Main body content */
+/* body, .markdown-body {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #1a202c;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem;
+} */
+
+/* General text elements */
+/* p, ul, ol, dl, blockquote, address {
+  font-family: var(--font-paragraph);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+} */
+
+/* Optimized paragraphs */
+/* p {
+  font-family: var(--font-paragraph);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin: 1.5rem 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
