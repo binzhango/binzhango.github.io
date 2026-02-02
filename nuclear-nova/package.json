@@ -1,0 +1,41 @@
+{
+  "name": "nuclear-nova",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.37.6",
+    "astro": "^5.17.1",
+    "sharp": "^0.34.5",
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/vercel": "^9.0.4",
+    "@expressive-code/plugin-line-numbers": "^0.41.6",
+    "@fontsource/inter": "^5.2.8",
+    "@shikijs/transformers": "^3.21.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro-og-canvas": "^0.10.0",
+    "glightbox": "^3.3.1",
+    "gray-matter": "^4.0.3",
+    "rehype-mathjax": "^7.1.0",
+    "rehype-mermaid": "^3.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  },
+    "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@vitest/ui": "^4.0.18",
+    "fast-check": "^4.5.3",
+    "playwright": "^1.58.0",
+    "vitest": "^4.0.18"
+  }
+}

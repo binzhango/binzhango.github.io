@@ -1,0 +1,322 @@
+---
+import { getPostsByCategory, type Post } from '../../utils/post-utils';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import CategoryBadge from '../../components/CategoryBadge.astro';
+
+// Define allowed categories as per requirements
+const allowedCategories = ['python', 'k8s', 'spark', 'ML', 'airflow', 'LLM', 'Azure', 'Snowflake', 'Scala', 'rust'] as const;
+
+export async function getStaticPaths() {
+    const postsByCategory = await getPostsByCategory();
+    const categories = Object.keys(postsByCategory);
+    
+    // Generate paths for each category
+    const paths = categories.map(category => ({
+        params: { category },
+        props: { 
+            category,
+            posts: postsByCategory[category],
+            allCategories: categories.sort()
+        }
+    }));
+    
+    return paths;
+}
+
+interface Props {
+    category: string;
+    posts: Post[];
+    allCategories: string[];
+}
+
+const { category, posts, allCategories } = Astro.props;
+
+// Determine page title and description
+const pageTitle = `Category: ${category}`;
+const pageDescription = `Blog posts in the ${category} category`;
+
+// Format date for display
+function formatDate(date: Date | undefined): string {
+    if (!date) return '';
+    return new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Generate excerpt from post content
+function getExcerpt(post: Post): string {
+    if (post.data.excerpt) return post.data.excerpt;
+    // Fallback to first 150 characters of body
+    const plainText = post.body.replace(/[#*`\[\]]/g, '').trim();
+    return plainText.length > 150 
+        ? plainText.substring(0, 150) + '...' 
+        : plainText;
+}
+
+// Sort posts by date (newest first)
+const sortedPosts = [...posts].sort((a, b) => {
+    const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
+    const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
+    return dateB - dateA;
+});
+---
+
+<StarlightPage 
+    frontmatter={{
+        title: pageTitle,
+        description: pageDescription,
+        template: 'splash'
+    }}
+>
+    <div class="category-container">
+        <!-- Sidebar with all categories -->
+        <aside class="category-sidebar">
+            <h2>Categories</h2>
+            <nav>
+                <ul>
+                    {allCategories.map(cat => (
+                        <li>
+                            <a 
+                                href={`/categories/${cat}/`} 
+                                class:list={[{ active: category === cat }]}
+                            >
+                                {cat}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main content area -->
+        <main class="category-content">
+            <div class="category-header">
+                <h1 class="category-title">
+                    <CategoryBadge category={category} link={false} />
+                </h1>
+                <p class="category-count">
+                    {sortedPosts.length} {sortedPosts.length === 1 ? 'post' : 'posts'}
+                </p>
+            </div>
+
+            <div class="posts-list">
+                {sortedPosts.map(post => (
+                    <article class="post-item">
+                        <div class="post-header">
+                            <h3 class="post-title">
+                                <a href={`/${post.id}/`}>
+                                    {post.data.title}
+                                </a>
+                            </h3>
+                            <time class="post-date" datetime={post.data.date?.toISOString()}>
+                                {formatDate(post.data.date)}
+                            </time>
+                        </div>
+                        
+                        {post.data.categories && post.data.categories.length > 0 && (
+                            <div class="post-categories">
+                                {post.data.categories.map(cat => (
+                                    <CategoryBadge category={cat} link={true} />
+                                ))}
+                            </div>
+                        )}
+                        
+                        <p class="post-excerpt">
+                            {getExcerpt(post)}
+                        </p>
+                    </article>
+                ))}
+            </div>
+        </main>
+    </div>
+</StarlightPage>
+
+<style>
+    .category-container {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .category-sidebar {
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+    }
+
+    .category-sidebar h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: var(--sl-color-text-accent);
+    }
+
+    .category-sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .category-sidebar nav li {
+        margin-bottom: 0.5rem;
+    }
+
+    .category-sidebar nav a {
+        display: block;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        text-decoration: none;
+        color: var(--sl-color-text);
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .category-sidebar nav a:hover {
+        background-color: var(--sl-color-gray-6);
+        color: var(--sl-color-text-accent);
+    }
+
+    .category-sidebar nav a.active {
+        background-color: var(--sl-color-accent);
+        color: var(--sl-color-white);
+        font-weight: 600;
+    }
+
+    .category-content {
+        min-width: 0;
+    }
+
+    .category-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--sl-color-accent);
+    }
+
+    .category-title {
+        font-size: 2rem;
+        margin: 0 0 0.5rem 0;
+        color: var(--sl-color-text-accent);
+    }
+
+    .category-count {
+        font-size: 1rem;
+        color: var(--sl-color-gray-3);
+        margin: 0;
+    }
+
+    .posts-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .post-item {
+        padding: 2rem;
+        border: none;
+        border-radius: 12px;
+        background: var(--sl-color-bg);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+
+    .post-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--sl-color-accent);
+        border-radius: 12px 0 0 12px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .post-item:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .post-item:hover::before {
+        opacity: 1;
+    }
+
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+        margin: 0;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .post-title a {
+        color: var(--sl-color-text-accent);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .post-title a:hover {
+        color: var(--sl-color-accent);
+    }
+
+    .post-date {
+        font-size: 0.875rem;
+        color: var(--sl-color-gray-3);
+        white-space: nowrap;
+    }
+
+    .post-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .post-excerpt {
+        color: var(--sl-color-gray-2);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .category-container {
+            grid-template-columns: 1fr;
+        }
+
+        .category-sidebar {
+            position: static;
+            margin-bottom: 2rem;
+        }
+
+        .category-sidebar nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .category-sidebar nav li {
+            margin-bottom: 0;
+        }
+
+        .post-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .post-title {
+            font-size: 1.25rem;
+        }
+    }
+</style>

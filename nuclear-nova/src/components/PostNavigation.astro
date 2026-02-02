@@ -1,0 +1,45 @@
+---
+// Post Navigation Component
+// Displays previous and next post links at the bottom of blog posts
+// Requirements: 1.10 - Footer navigation with previous/next post links
+
+interface Props {
+    prevPost?: {
+        slug: string;
+        title: string;
+    };
+    nextPost?: {
+        slug: string;
+        title: string;
+    };
+}
+
+const { prevPost, nextPost } = Astro.props;
+
+// Only render if we have at least one navigation link
+if (!prevPost && !nextPost) {
+    return null;
+}
+---
+
+<nav class="post-navigation" aria-label="Post navigation">
+    {prevPost && (
+        <div class="nav-item prev">
+            <a href={`/${prevPost.slug}`} class="nav-link">
+                <span class="nav-label">Previous</span>
+                <span class="nav-title">{prevPost.title}</span>
+            </a>
+        </div>
+    )}
+    
+    {!prevPost && <div class="nav-item"></div>}
+    
+    {nextPost && (
+        <div class="nav-item next">
+            <a href={`/${nextPost.slug}`} class="nav-link">
+                <span class="nav-label">Next</span>
+                <span class="nav-title">{nextPost.title}</span>
+            </a>
+        </div>
+    )}
+</nav>

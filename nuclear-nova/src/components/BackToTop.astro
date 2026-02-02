@@ -1,0 +1,144 @@
+---
+// Back to Top Button Component
+// Provides a floating button to scroll back to the top of the page
+// Also handles auto-hide header behavior on scroll
+---
+
+<button class="back-to-top" aria-label="Back to top" title="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 4l-8 8h5v8h6v-8h5z"/>
+    </svg>
+</button>
+
+<style>
+    .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--sl-color-accent);
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        z-index: 999;
+    }
+
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-to-top svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    @media (max-width: 50rem) {
+        .back-to-top {
+            bottom: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+        }
+
+        .back-to-top svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+</style>
+
+<script>
+    // Back to top button functionality
+    function initBackToTop() {
+        const backToTopButton = document.querySelector('.back-to-top');
+        const header = document.querySelector('.header-wrapper');
+        
+        if (!backToTopButton) return;
+        
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        
+        // Show/hide button based on scroll position
+        function updateBackToTop() {
+            const scrollY = window.scrollY;
+            
+            // Show button after scrolling down 300px
+            if (scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+            
+            // Auto-hide header on scroll down
+            if (header) {
+                if (scrollY > lastScrollY && scrollY > 100) {
+                    // Scrolling down
+                    header.classList.add('hidden');
+                } else {
+                    // Scrolling up
+                    header.classList.remove('hidden');
+                }
+                
+                // Add scrolled class for shadow effect
+                if (scrollY > 10) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+            
+            lastScrollY = scrollY;
+            ticking = false;
+        }
+        
+        // Throttle scroll events using requestAnimationFrame
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateBackToTop);
+                ticking = true;
+            }
+        }
+        
+        // Scroll to top smoothly
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Event listeners
+        window.addEventListener('scroll', onScroll, { passive: true });
+        backToTopButton.addEventListener('click', scrollToTop);
+        
+        // Initial check
+        updateBackToTop();
+    }
+    
+    // Initialize on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBackToTop);
+    } else {
+        initBackToTop();
+    }
+    
+    // Re-initialize on Astro view transitions
+    document.addEventListener('astro:page-load', initBackToTop);
+</script>

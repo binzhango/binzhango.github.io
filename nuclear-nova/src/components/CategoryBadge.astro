@@ -1,0 +1,78 @@
+---
+interface Props {
+    category: string;
+    link?: boolean;
+}
+
+const { category, link = true } = Astro.props;
+
+// Generate category page URL
+const categoryUrl = `/categories/${category.toLowerCase()}`;
+
+// Category color mapping for visual distinction
+const categoryColors: Record<string, string> = {
+    python: '#3776ab',
+    k8s: '#326ce5',
+    spark: '#e25a1c',
+    ML: '#ff6f00',
+    airflow: '#017cee',
+    LLM: '#10a37f',
+    Azure: '#0078d4',
+    Snowflake: '#29b5e8',
+    Scala: '#dc322f',
+    rust: '#ce422b',
+};
+
+const categoryColor = categoryColors[category] || '#6b7280';
+---
+
+{link ? (
+    <a href={categoryUrl} class="category-badge" style={`--category-color: ${categoryColor}`}>
+        {category}
+    </a>
+) : (
+    <span class="category-badge" style={`--category-color: ${categoryColor}`}>
+        {category}
+    </span>
+)}
+
+<style>
+    .category-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        background-color: color-mix(in srgb, var(--category-color) 15%, transparent);
+        color: var(--category-color);
+        border: 2px solid var(--category-color) !important;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    a.category-badge:hover {
+        background-color: var(--category-color);
+        color: #ffffff;
+        border-color: var(--category-color) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    a.category-badge:active {
+        transform: translateY(0);
+    }
+
+    /* Dark mode adjustments */
+    :root[data-theme='dark'] .category-badge {
+        background-color: color-mix(in srgb, var(--category-color) 20%, transparent);
+        border-color: var(--category-color) !important;
+    }
+
+    :root[data-theme='dark'] a.category-badge:hover {
+        background-color: var(--category-color);
+        color: #ffffff;
+        border-color: var(--category-color) !important;
+    }
+</style>

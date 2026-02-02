@@ -1,0 +1,125 @@
+---
+// Custom theme toggle with weather icons (sun/moon)
+// Uses window.theme API from ThemeManager
+---
+
+<button
+	id="theme-toggle"
+	type="button"
+	aria-label="Toggle theme"
+	class="theme-toggle"
+>
+	<svg class="sun-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="12" cy="12" r="5"></circle>
+		<line x1="12" y1="1" x2="12" y2="3"></line>
+		<line x1="12" y1="21" x2="12" y2="23"></line>
+		<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+		<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+		<line x1="1" y1="12" x2="3" y2="12"></line>
+		<line x1="21" y1="12" x2="23" y2="12"></line>
+		<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+		<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+	</svg>
+	<svg class="moon-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+	</svg>
+</button>
+
+<style>
+	.theme-toggle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: 0.5rem;
+		background: var(--sl-color-bg) !important;
+		border: 2px solid #e5e7eb !important;
+		border-radius: 12px !important;
+		color: var(--sl-color-text);
+		cursor: pointer;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+	}
+
+	.theme-toggle:hover {
+		background: #f0f9ff !important;
+		border-color: #3b82f6 !important;
+		color: #3b82f6 !important;
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
+	}
+
+	.theme-toggle:active {
+		transform: translateY(0) scale(0.95);
+	}
+
+	/* Dark mode theme toggle */
+	:root[data-theme='dark'] .theme-toggle {
+		border-color: #4b5563 !important;
+		background: var(--sl-color-bg) !important;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+	}
+
+	:root[data-theme='dark'] .theme-toggle:hover {
+		background: #1e3a8a !important;
+		border-color: #3b82f6 !important;
+		color: #60a5fa !important;
+		box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
+	}
+
+	/* Icon visibility based on theme */
+	.sun-icon,
+	.moon-icon {
+		position: absolute;
+		transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	/* Light mode: show moon icon (to switch to dark) */
+	:root:not([data-theme='dark']) .theme-toggle .sun-icon {
+		opacity: 0;
+		transform: rotate(90deg) scale(0.8);
+	}
+
+	:root:not([data-theme='dark']) .theme-toggle .moon-icon {
+		opacity: 1;
+		transform: rotate(0deg) scale(1);
+	}
+
+	/* Dark mode: show sun icon (to switch to light) */
+	:root[data-theme='dark'] .theme-toggle .sun-icon {
+		opacity: 1;
+		transform: rotate(0deg) scale(1);
+	}
+
+	:root[data-theme='dark'] .theme-toggle .moon-icon {
+		opacity: 0;
+		transform: rotate(-90deg) scale(0.8);
+	}
+</style>
+
+<script>
+	// Theme toggle functionality using window.theme API
+	function setupThemeToggle() {
+		const button = document.getElementById('theme-toggle');
+		if (!button) return;
+
+		button.addEventListener('click', () => {
+			if (window.theme) {
+				const currentTheme = window.theme.getTheme();
+				const resolvedTheme = currentTheme === 'auto' ? window.theme.getSystemTheme() : currentTheme;
+				const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+				window.theme.setTheme(newTheme);
+			}
+		});
+	}
+
+	// Initialize on page load
+	setupThemeToggle();
+
+	// Re-initialize after Astro view transitions
+	document.addEventListener('astro:after-swap', () => {
+		setupThemeToggle();
+	});
+</script>

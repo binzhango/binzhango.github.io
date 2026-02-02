@@ -1,0 +1,96 @@
+---
+interface Props {
+    data: string[][];
+}
+
+const { data } = Astro.props;
+const headers = data[0];
+const rows = data.slice(1);
+---
+
+<div class="table-wrapper">
+    <table class="custom-table">
+        <thead>
+            <tr>
+                {headers.map(header => (
+                    <th>{header}</th>
+                ))}
+            </tr>
+        </thead>
+        <tbody>
+            {rows.map(row => (
+                <tr>
+                    {row.map(cell => (
+                        <td>{cell}</td>
+                    ))}
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        margin: 2rem 0;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid #cbd5e1;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .custom-table thead {
+        background: #3b82f6;
+        color: white;
+    }
+
+    .custom-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #2563eb;
+    }
+
+    .custom-table tbody tr {
+        border-bottom: 1px solid #e5e7eb;
+        transition: background-color 0.2s ease;
+    }
+
+    .custom-table tbody tr:hover {
+        background-color: #f0f9ff;
+    }
+
+    .custom-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .custom-table td {
+        padding: 0.875rem 1rem;
+        color: var(--sl-color-text);
+    }
+
+    :root[data-theme='dark'] .custom-table {
+        border-color: #475569;
+    }
+
+    :root[data-theme='dark'] .custom-table thead {
+        background: #1e40af;
+    }
+
+    :root[data-theme='dark'] .custom-table th {
+        border-bottom-color: #3b82f6;
+    }
+
+    :root[data-theme='dark'] .custom-table tbody tr {
+        border-bottom-color: #374151;
+    }
+
+    :root[data-theme='dark'] .custom-table tbody tr:hover {
+        background-color: #1e3a8a;
+    }
+</style>

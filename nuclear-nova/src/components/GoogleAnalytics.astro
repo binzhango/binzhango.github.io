@@ -1,0 +1,32 @@
+---
+// Google Analytics component with gtag.js integration
+// Supports Astro view transitions for SPA-like navigation
+const measurementId = 'G-HLMVZHNEWM';
+---
+
+<!-- Google Analytics gtag.js -->
+<script is:inline define:vars={{ measurementId }}>
+  // Load gtag.js script
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', measurementId);
+
+  // Support for Astro view transitions
+  // Re-track page views when navigating with view transitions
+  document.addEventListener('astro:page-load', () => {
+    gtag('config', measurementId, {
+      page_path: window.location.pathname,
+    });
+  });
+</script>
+
+<!-- Load gtag.js library -->
+<script is:inline define:vars={{ measurementId }}>
+  (function() {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+    document.head.appendChild(script);
+  })();
+</script>

@@ -1,0 +1,100 @@
+---
+// Lightbox component using GLightbox library
+// Automatically wraps images in the content with lightbox functionality
+// Initializes GLightbox on the client-side for interactive image viewing
+---
+
+<!-- Load GLightbox CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css" />
+
+<!-- Load GLightbox JavaScript and initialize -->
+<script>
+  // Import GLightbox from CDN
+  import GLightbox from 'https://cdn.jsdelivr.net/npm/glightbox@3.3.1/+esm';
+
+  function initializeLightbox() {
+    // Find all images in the content area that aren't already wrapped
+    const contentImages = document.querySelectorAll('.sl-markdown-content img:not(.no-lightbox)');
+    
+    contentImages.forEach((img) => {
+      // Skip if already wrapped in a lightbox link
+      if (img.parentElement?.classList.contains('glightbox-wrapper')) {
+        return;
+      }
+
+      // Create wrapper link for lightbox
+      const link = document.createElement('a');
+      link.href = img.src;
+      link.classList.add('glightbox');
+      link.setAttribute('data-gallery', 'content-gallery');
+      
+      // Add alt text as description if available
+      if (img.alt) {
+        link.setAttribute('data-description', img.alt);
+      }
+
+      // Wrap the image with the link
+      img.parentNode?.insertBefore(link, img);
+      link.appendChild(img);
+      
+      // Add wrapper class to prevent re-wrapping
+      link.classList.add('glightbox-wrapper');
+    });
+
+    // Initialize GLightbox with configuration
+    const lightbox = GLightbox({
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: true,
+      closeButton: true,
+      zoomable: true,
+      draggable: true,
+      dragToleranceX: 40,
+      dragToleranceY: 65,
+      preload: true,
+    });
+  }
+
+  // Initialize on page load
+  initializeLightbox();
+
+  // Re-initialize on Astro view transitions (for SPA-like navigation)
+  document.addEventListener('astro:page-load', () => {
+    initializeLightbox();
+  });
+</script>
+
+<style is:global>
+  /* Lightbox wrapper styling */
+  .glightbox-wrapper {
+    display: inline-block;
+    cursor: zoom-in;
+    transition: opacity 0.2s ease;
+  }
+
+  .glightbox-wrapper:hover {
+    opacity: 0.9;
+  }
+
+  /* Ensure images within lightbox links maintain their styling */
+  .glightbox-wrapper img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Custom GLightbox theme adjustments for dark mode */
+  :root[data-theme='dark'] .gslide-description {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+  }
+
+  :root[data-theme='dark'] .gslide-title {
+    color: #fff;
+  }
+
+  /* Ensure lightbox works well with Starlight's content area */
+  .sl-markdown-content .glightbox-wrapper {
+    margin: 1rem 0;
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+interface Props {
+    tag: string;
+    link?: boolean;
+}
+
+const { tag, link = true } = Astro.props;
+const tagUrl = `/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`;
+---
+
+{link ? (
+    <a href={tagUrl} class="tag-badge">{tag}</a>
+) : (
+    <span class="tag-badge">{tag}</span>
+)}
+
+<style>
+    .tag-badge {
+        display: inline-block;
+        padding: 6px 16px;
+        font-size: 13px;
+        font-weight: 700;
+        border-radius: 20px;
+        background: #3b82f6;
+        color: #ffffff !important;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+        white-space: nowrap;
+    }
+
+    a.tag-badge:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+        color: #ffffff !important;
+    }
+
+    :root[data-theme='dark'] .tag-badge {
+        background: #3b82f6;
+        color: #ffffff !important;
+    }
+
+    :root[data-theme='dark'] a.tag-badge:hover {
+        background: #2563eb;
+        color: #ffffff !important;
+    }
+</style>

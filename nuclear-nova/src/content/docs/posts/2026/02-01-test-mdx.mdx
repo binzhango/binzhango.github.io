@@ -1,0 +1,20 @@
+---
+title: "Test MDX Blog Post"
+author: BZ
+date: 2026-02-01
+categories: 
+  - LLM
+tags:
+  - test
+  - mdx
+---
+
+import Table from '../../../../components/Table.astro'
+
+export const data = [
+    ['Name', 'Age', 'City'],
+    ['John', '25', 'NYC'],
+    ['Jane', '30', 'LA']
+]
+
+<Table data={data} />

@@ -1,0 +1,109 @@
+---
+// Sidebar toggle button component
+---
+
+<button id="sidebar-toggle" class="sidebar-toggle-btn" aria-label="Toggle sidebar" style="visibility: hidden;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+        <path d="M3 6h14M3 10h14M3 14h14" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+</button>
+
+<script>
+    function initSidebarToggle() {
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const sidebar = document.querySelector('[data-starlight-sidebar]') || document.querySelector('.sidebar');
+        
+        if (!toggleBtn) return;
+        
+        // Only show if sidebar exists
+        if (!sidebar) {
+            toggleBtn.style.visibility = 'hidden';
+            toggleBtn.style.display = 'none';
+            return;
+        }
+        
+        // Show the button
+        toggleBtn.style.visibility = 'visible';
+        toggleBtn.style.display = 'flex';
+
+        // Check localStorage for saved state
+        const savedState = localStorage.getItem('sidebar-hidden');
+        if (savedState === 'true') {
+            document.body.classList.add('sidebar-hidden');
+            toggleBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"><path d="M8 5l5 5-5 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = document.body.classList.toggle('sidebar-hidden');
+            
+            // Update button icon
+            if (isHidden) {
+                toggleBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"><path d="M8 5l5 5-5 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            } else {
+                toggleBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"><path d="M3 6h14M3 10h14M3 14h14" stroke-width="2" stroke-linecap="round"/></svg>';
+            }
+            
+            // Save state
+            localStorage.setItem('sidebar-hidden', isHidden.toString());
+        });
+    }
+
+    // Initialize on page load
+    initSidebarToggle();
+    
+    // Re-initialize on navigation (for SPA-like behavior)
+    document.addEventListener('astro:page-load', initSidebarToggle);
+</script>
+
+<style>
+    .sidebar-toggle-btn {
+        position: fixed;
+        left: var(--sl-sidebar-width, 18rem);
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        background: white;
+        color: #333;
+        border: 2px solid #e5e7eb;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: none; /* Hidden by default, shown by JS when sidebar exists */
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-toggle-btn:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        border-color: #3b82f6;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    body.sidebar-hidden .sidebar-toggle-btn {
+        left: 0;
+        transform: translate(50%, -50%);
+    }
+
+    body.sidebar-hidden .sidebar-toggle-btn:hover {
+        transform: translate(50%, -50%) scale(1.1);
+    }
+
+    :root[data-theme='dark'] .sidebar-toggle-btn {
+        background: #2a2a2a;
+        color: white;
+        border-color: #444;
+    }
+
+    :root[data-theme='dark'] .sidebar-toggle-btn:hover {
+        border-color: #60a5fa;
+    }
+
+    @media (max-width: 50rem) {
+        .sidebar-toggle-btn {
+            display: none;
+        }
+    }
+</style>

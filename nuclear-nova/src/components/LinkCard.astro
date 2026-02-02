@@ -1,0 +1,28 @@
+---
+import Default from '@astrojs/starlight/components/LinkCard.astro';
+---
+
+<div class="custom-link-card-wrapper">
+  <Default {...Astro.props}><slot /></Default>
+</div>
+
+<style>
+  .custom-link-card-wrapper :global(.sl-link-card),
+  .custom-link-card-wrapper :global([class*="link-card"]) {
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .custom-link-card-wrapper :global(time),
+  .custom-link-card-wrapper :global([datetime]) {
+    color: #333333 !important;
+    opacity: 0.8 !important;
+  }
+
+  :global([data-theme='dark']) .custom-link-card-wrapper :global(time),
+  :global([data-theme='dark']) .custom-link-card-wrapper :global([datetime]) {
+    color: #e0e0e0 !important;
+  }
+</style>

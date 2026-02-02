@@ -1,0 +1,72 @@
+---
+// Theme Manager Component - Handles theme initialization and persistence
+// Based on Astro best practices from astro-tips.dev
+type Props = {
+  defaultTheme?: "auto" | "dark" | "light" | undefined;
+};
+
+const { defaultTheme = "light" } = Astro.props;
+---
+
+<script is:inline data-default-theme={defaultTheme}>
+  window.theme ??= (() => {
+    const defaultTheme = document.currentScript.getAttribute("data-default-theme");
+    const storageKey = "starlight-theme";
+    const store =
+      typeof localStorage !== "undefined"
+        ? localStorage
+        : { getItem: () => null, setItem: () => {} };
+    
+    const mediaMatcher = window.matchMedia("(prefers-color-scheme: light)");
+    let systemTheme = mediaMatcher.matches ? "light" : "dark";
+    
+    mediaMatcher.addEventListener("change", (event) => {
+      systemTheme = event.matches ? "light" : "dark";
+      applyTheme(getTheme());
+    });
+    
+    function applyTheme(theme) {
+      const resolvedTheme = theme === "auto" ? systemTheme : theme;
+      document.documentElement.dataset.theme = resolvedTheme;
+      document.documentElement.setAttribute("data-theme", resolvedTheme);
+      document.documentElement.style.colorScheme = resolvedTheme;
+      
+      document.dispatchEvent(
+        new CustomEvent("theme-changed", {
+          detail: { theme, systemTheme, defaultTheme },
+        })
+      );
+    }
+    
+    function setTheme(theme = defaultTheme) {
+      store.setItem(storageKey, theme);
+      applyTheme(theme);
+    }
+    
+    function getTheme() {
+      return store.getItem(storageKey) || defaultTheme;
+    }
+    
+    function getSystemTheme() {
+      return systemTheme;
+    }
+    
+    function getDefaultTheme() {
+      return defaultTheme;
+    }
+    
+    return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
+  })();
+  
+  // Set initial theme
+  theme.setTheme(theme.getTheme());
+</script>
+
+<script>
+  // Re-apply theme after Astro view transitions
+  document.addEventListener("astro:after-swap", () => {
+    if (window.theme) {
+      window.theme.setTheme(window.theme.getTheme());
+    }
+  });
+</script>

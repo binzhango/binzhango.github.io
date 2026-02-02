@@ -1,0 +1,35 @@
+---
+title: B~~~~~Z
+description: Bin Zhang's personal blog and knowledge base.
+template: splash
+hero:
+  tagline: Exploring Data, AI, and Engineering.
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Featured Post
+
+<LinkCard
+  title="ChatGPT in 2025: A Year in Review"
+  description="A comprehensive look back at the evolution of ChatGPT and AI in 2025. Explore the growth, statistics, and impact."
+  href="/posts/2026/chatgpt-2025-summary"
+  target="_self"
+/>
+
+## Recent Topics
+
+<CardGrid>
+	<Card title="Machine Learning" icon="pencil">
+		Deep dives into Gradient Descent, Batch Norm, and optimization.
+	</Card>
+	<Card title="Data Engineering" icon="setting">
+		Spark, Airflow, and Snowflake patterns and best practices.
+	</Card>
+	<Card title="Kubernetes" icon="rocket">
+		Container orchestration and devops notes.
+	</Card>
+	<Card title="LLMs" icon="open-book">
+		Summaries and updates on Large Language Models.
+	</Card>
+</CardGrid>

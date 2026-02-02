@@ -1,0 +1,197 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/ContentPanel.astro';
+import PageTitle from '@astrojs/starlight/components/PageTitle.astro';
+import BackToTop from './BackToTop.astro';
+import { getEntry } from 'astro:content';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import matter from 'gray-matter';
+
+const pathname = Astro.url.pathname;
+const entryId = pathname.replace(/^\/|\/$/g, '').replace(/\//g, '/');
+
+// Try to get the entry and read raw frontmatter
+let entry;
+let rawFrontmatter: any = {};
+try {
+  entry = await getEntry('docs', entryId);
+  
+  if (entry && entry.filePath) {
+    // Read the raw file to get the frontmatter (Starlight strips custom fields)
+    const fullPath = join(process.cwd(), entry.filePath);
+    const fileContent = readFileSync(fullPath, 'utf-8');
+    const parsed = matter(fileContent);
+    rawFrontmatter = parsed.data;
+  }
+} catch (e) {
+  // Silently fail for non-post pages
+}
+
+// Get date from raw frontmatter
+let date = rawFrontmatter.date;
+if (date && typeof date === 'object' && date.created) {
+  date = new Date(date.created);
+} else if (date && typeof date === 'string') {
+  date = new Date(date);
+} else if (date instanceof Date) {
+  // already a date
+} else {
+  date = null;
+}
+
+const hasValidDate = date && date instanceof Date && !isNaN(date.getTime()) && date.getTime() > 0;
+
+// Handle both 'author' and 'authors' fields
+let author = rawFrontmatter.author;
+if (!author && rawFrontmatter.authors) {
+  const authors = rawFrontmatter.authors;
+  author = Array.isArray(authors) ? authors.join(', ') : String(authors);
+}
+if (!author) {
+  author = 'Bin Zhang';
+}
+
+// Format date as yyyy-mm-dd
+const formattedDate = hasValidDate ? date.toISOString().split('T')[0] : null;
+
+// Check if this is a post page (has date and author)
+const isPostPage = hasValidDate && formattedDate;
+
+// Check if this ContentPanel contains PageTitle by checking the slot
+const slotContent = await Astro.slots.render('default');
+const hasPageTitle = slotContent.includes('class="page-title"');
+
+// Only show metadata if this panel contains the main article content
+// Check for common markdown elements that indicate main content
+const isMainContent = slotContent.includes('<article') || 
+                      slotContent.includes('sl-markdown-content') ||
+                      (slotContent.includes('<p>') && slotContent.includes('<h'));
+                      
+const shouldShowMetadata = !hasPageTitle && isPostPage && isMainContent;
+---
+
+{shouldShowMetadata ? (
+  <div class="content-panel">
+    <div class="sl-container">
+      <div class="post-metadata-inline">
+        <span class="metadata-item">
+          <span class="metadata-label">author:</span>
+          <span class="metadata-value">{author}</span>
+        </span>
+        <span class="metadata-item">
+          <span class="metadata-label">date:</span>
+          <span class="metadata-value">{formattedDate}</span>
+        </span>
+      </div>
+      <slot />
+    </div>
+    <BackToTop />
+  </div>
+) : (
+  <>
+    <Default {...Astro.props}><slot /></Default>
+    <BackToTop />
+  </>
+)}
+
+<style>
+  .content-panel {
+    padding: 1.5rem var(--sl-content-pad-x);
+    background: transparent;
+  }
+  
+  .content-panel + .content-panel {
+    border-top: none;
+    background: transparent;
+  }
+  
+  .sl-container {
+    max-width: var(--sl-content-width);
+  }
+  
+  .sl-container > :global(* + *) {
+    margin-top: 1.5rem;
+  }
+  
+  @media (min-width: 72rem) {
+    .sl-container {
+      margin-inline: var(--sl-content-margin-inline, auto);
+    }
+  }
+  
+  .post-metadata-inline {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0;
+    background: transparent;
+    border-radius: 8px;
+    font-size: var(--sl-text-sm);
+    flex-wrap: wrap;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  
+  .post-metadata-inline:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  
+  .metadata-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .metadata-label {
+    color: var(--sl-color-accent);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .metadata-value {
+    color: var(--sl-color-text);
+    font-weight: 500;
+    font-family: var(--font-maple-mono);
+    font-size: 0.9rem;
+    padding: 0.25rem 0.75rem;
+    background: transparent;
+    border-radius: 6px;
+    transition: none;
+  }
+  
+  .metadata-item:hover .metadata-value {
+    background: transparent;
+    transform: none;
+  }
+  
+  /* Dark mode metadata */
+  :root[data-theme='dark'] .post-metadata-inline {
+    background: transparent;
+  }
+  
+  :root[data-theme='dark'] .post-metadata-inline:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  
+  :root[data-theme='dark'] .metadata-value {
+    color: rgba(255, 255, 255, 0.9);
+    background: transparent;
+  }
+  
+  :root[data-theme='dark'] .metadata-item:hover .metadata-value {
+    background: transparent;
+  }
+  
+  @media (max-width: 50rem) {
+    .post-metadata-inline {
+      font-size: var(--sl-text-xs);
+      gap: 1rem;
+      justify-content: flex-start;
+    }
+  }
+</style>

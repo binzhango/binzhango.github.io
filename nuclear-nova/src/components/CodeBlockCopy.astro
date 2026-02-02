@@ -1,0 +1,98 @@
+---
+// Component to add copy buttons to code blocks
+---
+
+<script>
+  function addCopyButtons() {
+    // Find all code blocks (both astro-code and pre elements)
+    const codeBlocks = document.querySelectorAll('pre[data-language], .astro-code');
+    
+    codeBlocks.forEach((codeBlock) => {
+      // Skip if already wrapped
+      if (codeBlock.parentElement?.classList.contains('code-block-wrapper')) {
+        return;
+      }
+      
+      // Create wrapper
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      
+      // Create copy button
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-button';
+      copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+      
+      // Add icon and text
+      copyButton.innerHTML = `
+        <svg class="copy-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span class="copy-text">Copy</span>
+      `;
+      
+      // Add click handler
+      copyButton.addEventListener('click', async () => {
+        const code = codeBlock.querySelector('code');
+        if (!code) return;
+        
+        // Get text content
+        // Handle both Starlight's ec-line structure and standard Shiki .line structure
+        const lines = code.querySelectorAll('.line, .ec-line');
+        let text;
+        
+        if (lines.length > 0) {
+          text = Array.from(lines)
+            .map(line => {
+              // For ec-line, get the .code element's text
+              const codeEl = line.querySelector('.code');
+              return codeEl ? codeEl.textContent || '' : line.textContent || '';
+            })
+            .join('\n');
+        } else {
+          // Fallback to entire code block text
+          text = code.textContent || '';
+        }
+        
+        try {
+          await navigator.clipboard.writeText(text);
+          const textSpan = copyButton.querySelector('.copy-text');
+          if (textSpan) {
+            textSpan.textContent = 'Copied!';
+          }
+          copyButton.classList.add('copied');
+          
+          setTimeout(() => {
+            if (textSpan) {
+              textSpan.textContent = 'Copy';
+            }
+            copyButton.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy code:', err);
+          const textSpan = copyButton.querySelector('.copy-text');
+          if (textSpan) {
+            textSpan.textContent = 'Failed';
+          }
+          
+          setTimeout(() => {
+            if (textSpan) {
+              textSpan.textContent = 'Copy';
+            }
+          }, 2000);
+        }
+      });
+      
+      // Wrap code block and add button
+      codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+      wrapper.appendChild(copyButton);
+    });
+  }
+  
+  // Run on initial load
+  addCopyButtons();
+  
+  // Run after view transitions (for Astro's client-side navigation)
+  document.addEventListener('astro:page-load', addCopyButtons);
+</script>

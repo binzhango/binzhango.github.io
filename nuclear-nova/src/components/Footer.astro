@@ -1,0 +1,48 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+---
+<footer class="sl-flex">
+    <div class="meta sl-flex">
+        <p class="copyright">
+            &copy; {new Date().getFullYear()} Bin Zhang. All rights reserved.
+        </p>
+    </div>
+    <div class="socials sl-flex">
+        <a href="https://github.com/binzhango" rel="me">
+            <Icon name="github" />
+        </a>
+        <a href="https://discord.com/invite/binzhango" rel="me">
+            <Icon name="discord" />
+        </a>
+        <a href="https://www.threads.net/@binzhango" rel="me">
+            <Icon name="threads" />
+        </a>
+    </div>
+</footer>
+
+<style>
+    footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--sl-color-hairline);
+    }
+    .meta {
+        font-size: var(--sl-text-sm);
+        color: var(--sl-color-gray-3);
+    }
+    .socials {
+        gap: 1rem;
+    }
+    .socials a {
+        color: var(--sl-color-gray-3);
+        text-decoration: none;
+    }
+    .socials a:hover {
+        color: var(--sl-color-text-accent);
+    }
+    .sl-flex {
+        display: flex;
+        align-items: center;
+    }
+</style>

@@ -1,0 +1,149 @@
+---
+interface Props {
+    title: string;
+    icon?: string;
+}
+
+const { title, icon } = Astro.props;
+---
+
+<div class="card-wrapper">
+    <div class="card-container">
+        {icon && (
+            <div class="card-icon-wrapper">
+                <span class="card-icon">{icon}</span>
+            </div>
+        )}
+        <div class="card-text-section">
+            <h3 class="card-title">{title}</h3>
+            <div class="card-description">
+                <slot />
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Outer wrapper - ensures isolation from global styles */
+    .card-wrapper {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Main card container */
+    .card-container {
+        background: var(--sl-color-bg);
+        border: 2px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--sl-color-bg);
+        z-index: -1;
+    }
+
+    .card-container:hover {
+        border-color: #3b82f6;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+    }
+
+    /* Icon wrapper */
+    .card-icon-wrapper {
+        background: transparent;
+        margin-bottom: 1rem;
+        padding: 0;
+    }
+
+    .card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        background: transparent;
+        border: 2px solid #3b82f6;
+        border-radius: 12px;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .card-container:hover .card-icon {
+        transform: scale(1.1) rotate(5deg);
+        border-color: #2563eb;
+    }
+
+    /* Text section - explicit background override */
+    .card-text-section {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+    }
+
+    .card-title {
+        background: transparent;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0 0 0.75rem 0;
+        padding: 0;
+        color: var(--sl-color-text);
+        line-height: 1.4;
+    }
+
+    .card-description {
+        background: transparent;
+        color: var(--sl-color-text);
+        opacity: 0.8;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Force all slotted content to be transparent */
+    .card-description :global(*) {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    .card-description :global(p),
+    .card-description :global(span),
+    .card-description :global(div),
+    .card-description :global(a) {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    /* Dark mode */
+    :root[data-theme='dark'] .card-container {
+        background: var(--sl-color-bg);
+        border-color: #374151;
+    }
+
+    :root[data-theme='dark'] .card-container::before {
+        background: var(--sl-color-bg);
+    }
+
+    :root[data-theme='dark'] .card-container:hover {
+        border-color: #60a5fa;
+        box-shadow: 0 12px 24px rgba(96, 165, 250, 0.2);
+    }
+
+    :root[data-theme='dark'] .card-icon {
+        border-color: #60a5fa;
+    }
+
+    :root[data-theme='dark'] .card-container:hover .card-icon {
+        border-color: #3b82f6;
+    }
+</style>
