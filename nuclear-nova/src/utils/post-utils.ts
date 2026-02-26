@@ -124,7 +124,7 @@ export async function getAdjacentPosts(currentSlug: string): Promise<{
     next: Post | null;
 }> {
     const posts = await getAllPosts();
-    const currentIndex = posts.findIndex(post => post.id === currentSlug || post.slug === currentSlug);
+    const currentIndex = posts.findIndex((post) => post.id === currentSlug);
     
     if (currentIndex === -1) {
         return { prev: null, next: null };

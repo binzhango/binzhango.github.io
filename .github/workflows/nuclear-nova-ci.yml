@@ -1,0 +1,36 @@
+name: Nuclear Nova CI
+
+on:
+  push:
+    paths:
+      - 'nuclear-nova/**'
+      - '.github/workflows/nuclear-nova-ci.yml'
+  pull_request:
+    paths:
+      - 'nuclear-nova/**'
+      - '.github/workflows/nuclear-nova-ci.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nuclear-nova
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: nuclear-nova/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Run Astro checks and build
+        run: npx astro check && npm run build

@@ -63,10 +63,15 @@ const { defaultTheme = "light" } = Astro.props;
 </script>
 
 <script>
-  // Re-apply theme after Astro view transitions
-  document.addEventListener("astro:after-swap", () => {
-    if (window.theme) {
-      window.theme.setTheme(window.theme.getTheme());
-    }
-  });
+  const state = window as Window & { __themeAfterSwapBound?: boolean };
+
+  if (!state.__themeAfterSwapBound) {
+    document.addEventListener("astro:after-swap", () => {
+      const themeApi = window.theme;
+      if (themeApi) {
+        themeApi.setTheme(themeApi.getTheme());
+      }
+    });
+    state.__themeAfterSwapBound = true;
+  }
 </script>

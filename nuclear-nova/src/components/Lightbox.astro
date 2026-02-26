@@ -1,48 +1,42 @@
 ---
-// Lightbox component using GLightbox library
-// Automatically wraps images in the content with lightbox functionality
-// Initializes GLightbox on the client-side for interactive image viewing
+import 'glightbox/dist/css/glightbox.min.css';
 ---
 
-<!-- Load GLightbox CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css" />
-
-<!-- Load GLightbox JavaScript and initialize -->
 <script>
-  // Import GLightbox from CDN
-  import GLightbox from 'https://cdn.jsdelivr.net/npm/glightbox@3.3.1/+esm';
+  import GLightbox from 'glightbox';
+
+  type LightboxWindow = Window & {
+    __glightbox?: { destroy?: () => void };
+    __glightboxBound?: boolean;
+  };
 
   function initializeLightbox() {
-    // Find all images in the content area that aren't already wrapped
-    const contentImages = document.querySelectorAll('.sl-markdown-content img:not(.no-lightbox)');
-    
-    contentImages.forEach((img) => {
-      // Skip if already wrapped in a lightbox link
-      if (img.parentElement?.classList.contains('glightbox-wrapper')) {
-        return;
-      }
+    const contentImages = document.querySelectorAll<HTMLImageElement>(
+      '.sl-markdown-content img:not(.no-lightbox)'
+    );
 
-      // Create wrapper link for lightbox
+    contentImages.forEach((img) => {
+      if (img.closest('a.glightbox-wrapper')) return;
+
       const link = document.createElement('a');
       link.href = img.src;
-      link.classList.add('glightbox');
+      link.classList.add('glightbox', 'glightbox-wrapper');
       link.setAttribute('data-gallery', 'content-gallery');
-      
-      // Add alt text as description if available
+
       if (img.alt) {
         link.setAttribute('data-description', img.alt);
       }
 
-      // Wrap the image with the link
-      img.parentNode?.insertBefore(link, img);
+      const parent = img.parentNode;
+      if (!parent) return;
+
+      parent.insertBefore(link, img);
       link.appendChild(img);
-      
-      // Add wrapper class to prevent re-wrapping
-      link.classList.add('glightbox-wrapper');
     });
 
-    // Initialize GLightbox with configuration
-    const lightbox = GLightbox({
+    const state = window as LightboxWindow;
+    state.__glightbox?.destroy?.();
+    state.__glightbox = GLightbox({
       touchNavigation: true,
       loop: true,
       autoplayVideos: true,
@@ -52,16 +46,19 @@
       dragToleranceX: 40,
       dragToleranceY: 65,
       preload: true,
-    });
+    }) as unknown as { destroy?: () => void };
   }
 
-  // Initialize on page load
   initializeLightbox();
 
-  // Re-initialize on Astro view transitions (for SPA-like navigation)
-  document.addEventListener('astro:page-load', () => {
-    initializeLightbox();
-  });
+  const state = window as LightboxWindow;
+  if (!state.__glightboxBound) {
+    document.addEventListener('astro:page-load', initializeLightbox);
+    document.addEventListener('astro:before-swap', () => {
+      state.__glightbox?.destroy?.();
+    });
+    state.__glightboxBound = true;
+  }
 </script>
 
 <style is:global>

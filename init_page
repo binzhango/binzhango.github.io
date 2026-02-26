@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  init_page -t "Blog Title" [--dry-run]
+
+Options:
+  -t, --title     Blog post title (required)
+  -n, --dry-run   Print target file without creating it
+  -h, --help      Show this help message
+USAGE
+}
+
+error() {
+  echo "Error: $*" >&2
+  echo >&2
+  usage >&2
+  exit 1
+}
+
+title=""
+dry_run=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -t|--title)
+      shift
+      [[ $# -gt 0 ]] || error "Missing value for --title"
+      title="$1"
+      ;;
+    -n|--dry-run)
+      dry_run=true
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      error "Unknown argument: $1"
+      ;;
+  esac
+  shift
+done
+
+[[ -n "$title" ]] || error "Title is required. Use -t \"...\""
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+resolve_posts_root() {
+  local candidates=(
+    "$script_dir/nuclear-nova/src/content/docs/posts"
+    "$script_dir/src/content/docs/posts"
+    "$(cd "$script_dir/.." && pwd)/nuclear-nova/src/content/docs/posts"
+  )
+
+  local candidate
+  for candidate in "${candidates[@]}"; do
+    if [[ -d "$candidate" ]]; then
+      echo "$candidate"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+posts_root="$(resolve_posts_root || true)"
+if [[ -z "$posts_root" ]]; then
+  error "Posts directory not found. Checked relative to: $script_dir"
+fi
+
+today="$(date +%F)"
+year="$(date +%Y)"
+month_day="$(date +%m-%d)"
+
+slug="$(printf '%s' "$title" \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed -E "s/[’']//g; s/&/ and /g; s/[^a-z0-9]+/-/g; s/^-+|-+$//g; s/-+/-/g")"
+
+[[ -n "$slug" ]] || slug="new-post"
+
+year_dir="$posts_root/$year"
+base_name="${month_day}-${slug}"
+ext="md"
+file_path="$year_dir/${base_name}.${ext}"
+
+counter=1
+while [[ -e "$file_path" ]]; do
+  file_path="$year_dir/${base_name}-${counter}.${ext}"
+  counter=$((counter + 1))
+done
+
+if [[ "$dry_run" == true ]]; then
+  echo "Would create: $file_path"
+  exit 0
+fi
+
+mkdir -p "$year_dir"
+
+escaped_title="${title//\"/\\\"}"
+
+cat > "$file_path" <<EOF_MD
+---
+title: "$escaped_title"
+author: BZ
+date: $today
+categories:
+  - LLM
+tags:
+  - draft
+---
+
+<!-- more -->
+
+# $escaped_title
+
+EOF_MD
+
+relative_path="${file_path#"$script_dir/"}"
+echo "Created: $relative_path"

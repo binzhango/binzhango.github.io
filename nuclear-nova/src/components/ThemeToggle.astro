@@ -103,15 +103,18 @@
 	// Theme toggle functionality using window.theme API
 	function setupThemeToggle() {
 		const button = document.getElementById('theme-toggle');
-		if (!button) return;
+		if (!(button instanceof HTMLButtonElement)) return;
+		if (button.dataset.themeToggleBound === 'true') return;
 
+		button.dataset.themeToggleBound = 'true';
 		button.addEventListener('click', () => {
-			if (window.theme) {
-				const currentTheme = window.theme.getTheme();
-				const resolvedTheme = currentTheme === 'auto' ? window.theme.getSystemTheme() : currentTheme;
-				const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
-				window.theme.setTheme(newTheme);
-			}
+			const themeApi = window.theme;
+			if (!themeApi) return;
+
+			const currentTheme = themeApi.getTheme();
+			const resolvedTheme = currentTheme === 'auto' ? themeApi.getSystemTheme() : currentTheme;
+			const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+			themeApi.setTheme(newTheme);
 		});
 	}
 
@@ -119,7 +122,9 @@
 	setupThemeToggle();
 
 	// Re-initialize after Astro view transitions
-	document.addEventListener('astro:after-swap', () => {
-		setupThemeToggle();
-	});
+	const state = window as Window & { __themeToggleSwapBound?: boolean };
+	if (!state.__themeToggleSwapBound) {
+		document.addEventListener('astro:after-swap', setupThemeToggle);
+		state.__themeToggleSwapBound = true;
+	}
 </script>

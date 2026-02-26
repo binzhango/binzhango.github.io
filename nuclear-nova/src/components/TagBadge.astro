@@ -1,11 +1,13 @@
 ---
+import { slugifyTag } from '../utils/taxonomy';
+
 interface Props {
     tag: string;
     link?: boolean;
 }
 
 const { tag, link = true } = Astro.props;
-const tagUrl = `/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`;
+const tagUrl = `/tags/${slugifyTag(tag)}/`;
 ---
 
 {link ? (

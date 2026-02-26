@@ -2,34 +2,60 @@
 import { getPostsByCategory, type Post } from '../../utils/post-utils';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
+import { getPostExcerpt } from '../../utils/excerpt';
+import { normalizeCategory, slugifyCategory } from '../../utils/taxonomy';
 
-// Define allowed categories as per requirements
-const allowedCategories = ['python', 'k8s', 'spark', 'ML', 'airflow', 'LLM', 'Azure', 'Snowflake', 'Scala', 'rust'] as const;
+interface CategoryLink {
+    slug: string;
+    label: string;
+}
 
 export async function getStaticPaths() {
     const postsByCategory = await getPostsByCategory();
-    const categories = Object.keys(postsByCategory);
-    
-    // Generate paths for each category
-    const paths = categories.map(category => ({
-        params: { category },
-        props: { 
-            category,
-            posts: postsByCategory[category],
-            allCategories: categories.sort()
+    const categoriesBySlug = new Map<string, { label: string; posts: Post[] }>();
+
+    for (const [rawCategory, posts] of Object.entries(postsByCategory)) {
+        const label = normalizeCategory(rawCategory);
+        const slug = slugifyCategory(label);
+        if (!slug) continue;
+
+        const existing = categoriesBySlug.get(slug);
+        if (!existing) {
+            categoriesBySlug.set(slug, { label, posts: [...posts] });
+            continue;
         }
+
+        const mergedPosts = new Map(existing.posts.map((post) => [post.id, post]));
+        for (const post of posts) {
+            mergedPosts.set(post.id, post);
+        }
+        existing.posts = [...mergedPosts.values()];
+    }
+
+    const categories = [...categoriesBySlug.entries()]
+        .map(([slug, value]) => ({ slug, label: value.label, posts: value.posts }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+    const allCategories: CategoryLink[] = categories.map(({ slug, label }) => ({ slug, label }));
+
+    return categories.map(({ slug, label, posts }) => ({
+        params: { category: slug },
+        props: {
+            category: label,
+            categorySlug: slug,
+            posts,
+            allCategories,
+        },
     }));
-    
-    return paths;
 }
 
 interface Props {
     category: string;
+    categorySlug: string;
     posts: Post[];
-    allCategories: string[];
+    allCategories: CategoryLink[];
 }
 
-const { category, posts, allCategories } = Astro.props;
+const { category, categorySlug, posts, allCategories } = Astro.props;
 
 // Determine page title and description
 const pageTitle = `Category: ${category}`;
@@ -43,16 +69,6 @@ function formatDate(date: Date | undefined): string {
         month: 'long',
         day: 'numeric'
     });
-}
-
-// Generate excerpt from post content
-function getExcerpt(post: Post): string {
-    if (post.data.excerpt) return post.data.excerpt;
-    // Fallback to first 150 characters of body
-    const plainText = post.body.replace(/[#*`\[\]]/g, '').trim();
-    return plainText.length > 150 
-        ? plainText.substring(0, 150) + '...' 
-        : plainText;
 }
 
 // Sort posts by date (newest first)
@@ -76,13 +92,13 @@ const sortedPosts = [...posts].sort((a, b) => {
             <h2>Categories</h2>
             <nav>
                 <ul>
-                    {allCategories.map(cat => (
+                    {allCategories.map((cat) => (
                         <li>
                             <a 
-                                href={`/categories/${cat}/`} 
-                                class:list={[{ active: category === cat }]}
+                                href={`/categories/${cat.slug}/`} 
+                                class:list={[{ active: categorySlug === cat.slug }]}
                             >
-                                {cat}
+                                {cat.label}
                             </a>
                         </li>
                     ))}
@@ -124,7 +140,7 @@ const sortedPosts = [...posts].sort((a, b) => {
                         )}
                         
                         <p class="post-excerpt">
-                            {getExcerpt(post)}
+                            {getPostExcerpt(post)}
                         </p>
                     </article>
                 ))}
