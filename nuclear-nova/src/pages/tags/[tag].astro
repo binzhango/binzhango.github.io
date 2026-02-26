@@ -3,31 +3,59 @@ import { getPostsByTag, type Post } from '../../utils/post-utils';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import TagBadge from '../../components/TagBadge.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
+import { getPostExcerpt } from '../../utils/excerpt';
+import { slugifyTag } from '../../utils/taxonomy';
+
+interface TagLink {
+    slug: string;
+    label: string;
+}
 
 export async function getStaticPaths() {
     const postsByTag = await getPostsByTag();
-    const tags = Object.keys(postsByTag);
-    
-    // Generate paths for each tag
-    const paths = tags.map(tag => ({
-        params: { tag },
-        props: { 
-            tag,
-            posts: postsByTag[tag],
-            allTags: tags.sort()
+    const tagsBySlug = new Map<string, { label: string; posts: Post[] }>();
+
+    for (const [rawTag, posts] of Object.entries(postsByTag)) {
+        const slug = slugifyTag(rawTag);
+        if (!slug) continue;
+
+        const existing = tagsBySlug.get(slug);
+        if (!existing) {
+            tagsBySlug.set(slug, { label: rawTag, posts: [...posts] });
+            continue;
         }
+
+        const mergedPosts = new Map(existing.posts.map((post) => [post.id, post]));
+        for (const post of posts) {
+            mergedPosts.set(post.id, post);
+        }
+        existing.posts = [...mergedPosts.values()];
+    }
+
+    const tags = [...tagsBySlug.entries()]
+        .map(([slug, value]) => ({ slug, label: value.label, posts: value.posts }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+    const allTags: TagLink[] = tags.map(({ slug, label }) => ({ slug, label }));
+
+    return tags.map(({ slug, label, posts }) => ({
+        params: { tag: slug },
+        props: {
+            tag: label,
+            tagSlug: slug,
+            posts,
+            allTags,
+        },
     }));
-    
-    return paths;
 }
 
 interface Props {
     tag: string;
+    tagSlug: string;
     posts: Post[];
-    allTags: string[];
+    allTags: TagLink[];
 }
 
-const { tag, posts, allTags } = Astro.props;
+const { tag, tagSlug, posts, allTags } = Astro.props;
 
 // Determine page title and description
 const pageTitle = `Tag: ${tag}`;
@@ -41,16 +69,6 @@ function formatDate(date: Date | undefined): string {
         month: 'long',
         day: 'numeric'
     });
-}
-
-// Generate excerpt from post content
-function getExcerpt(post: Post): string {
-    if (post.data.excerpt) return post.data.excerpt;
-    // Fallback to first 150 characters of body
-    const plainText = post.body.replace(/[#*`\[\]]/g, '').trim();
-    return plainText.length > 150 
-        ? plainText.substring(0, 150) + '...' 
-        : plainText;
 }
 
 // Sort posts by date (newest first)
@@ -74,13 +92,13 @@ const sortedPosts = [...posts].sort((a, b) => {
             <h2>Tags</h2>
             <nav>
                 <ul>
-                    {allTags.map(t => (
+                    {allTags.map((t) => (
                         <li>
                             <a 
-                                href={`/tags/${t}/`} 
-                                class:list={[{ active: tag === t }]}
+                                href={`/tags/${t.slug}/`} 
+                                class:list={[{ active: tagSlug === t.slug }]}
                             >
-                                #{t}
+                                #{t.label}
                             </a>
                         </li>
                     ))}
@@ -130,7 +148,7 @@ const sortedPosts = [...posts].sort((a, b) => {
                         )}
                         
                         <p class="post-excerpt">
-                            {getExcerpt(post)}
+                            {getPostExcerpt(post)}
                         </p>
                     </article>
                 ))}

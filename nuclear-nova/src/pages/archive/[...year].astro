@@ -1,15 +1,29 @@
 ---
-import { getCollection } from 'astro:content';
-import { getPostsByYear, getPostsByTag, generatePostUrl, type Post } from '../../utils/post-utils';
+import { getPostsByYear, getPostsByTag, type Post } from '../../utils/post-utils';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
 import TagBadge from '../../components/TagBadge.astro';
+import { getPostExcerpt } from '../../utils/excerpt';
+import { slugifyTag } from '../../utils/taxonomy';
+
+interface TagLink {
+    slug: string;
+    label: string;
+}
 
 export async function getStaticPaths() {
     const postsByYear = await getPostsByYear();
     const postsByTag = await getPostsByTag();
     const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a));
-    const tags = Object.keys(postsByTag).sort();
+    const tagsBySlug = new Map<string, string>();
+    for (const tag of Object.keys(postsByTag)) {
+        const slug = slugifyTag(tag);
+        if (!slug || tagsBySlug.has(slug)) continue;
+        tagsBySlug.set(slug, tag);
+    }
+    const tags = [...tagsBySlug.entries()]
+        .map(([slug, label]) => ({ slug, label }))
+        .sort((a, b) => a.label.localeCompare(b.label));
     
     // Generate paths for each year and an "all years" page
     const paths = [
@@ -43,7 +57,7 @@ interface Props {
     posts?: Post[];
     postsByYear?: { [year: string]: Post[] };
     years: string[];
-    tags: string[];
+    tags: TagLink[];
 }
 
 const { year, posts, postsByYear, years, tags } = Astro.props;
@@ -64,15 +78,6 @@ function formatDate(date: Date | undefined): string {
     });
 }
 
-// Generate excerpt from post content
-function getExcerpt(post: Post): string {
-    if (post.data.excerpt) return post.data.excerpt;
-    // Fallback to first 150 characters of body
-    const plainText = post.body.replace(/[#*`\[\]]/g, '').trim();
-    return plainText.length > 150 
-        ? plainText.substring(0, 150) + '...' 
-        : plainText;
-}
 ---
 
 <StarlightPage 
@@ -111,9 +116,9 @@ function getExcerpt(post: Post): string {
             <div class="toc-section">
                 <h2>Tags</h2>
                 <div class="tags-cloud">
-                    {tags.map(tag => (
-                        <a href={`/tags/${tag}/`} class="tag-link">
-                            {tag}
+                    {tags.map((tag) => (
+                        <a href={`/tags/${tag.slug}/`} class="tag-link">
+                            {tag.label}
                         </a>
                     ))}
                 </div>
@@ -157,7 +162,7 @@ function getExcerpt(post: Post): string {
                                 )}
                                 
                                 <p class="post-excerpt">
-                                    {getExcerpt(post)}
+                                    {getPostExcerpt(post)}
                                 </p>
                             </article>
                         ))}
@@ -202,7 +207,7 @@ function getExcerpt(post: Post): string {
                                         )}
                                         
                                         <p class="post-excerpt">
-                                            {getExcerpt(post)}
+                                            {getPostExcerpt(post)}
                                         </p>
                                     </article>
                                 ))}

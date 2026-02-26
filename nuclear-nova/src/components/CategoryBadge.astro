@@ -1,13 +1,14 @@
 ---
+import { normalizeCategory, slugifyCategory } from '../utils/taxonomy';
+
 interface Props {
     category: string;
     link?: boolean;
 }
 
 const { category, link = true } = Astro.props;
-
-// Generate category page URL
-const categoryUrl = `/categories/${category.toLowerCase()}`;
+const normalizedCategory = normalizeCategory(category);
+const categoryUrl = `/categories/${slugifyCategory(normalizedCategory)}/`;
 
 // Category color mapping for visual distinction
 const categoryColors: Record<string, string> = {
@@ -23,16 +24,16 @@ const categoryColors: Record<string, string> = {
     rust: '#ce422b',
 };
 
-const categoryColor = categoryColors[category] || '#6b7280';
+const categoryColor = categoryColors[normalizedCategory] || '#6b7280';
 ---
 
 {link ? (
     <a href={categoryUrl} class="category-badge" style={`--category-color: ${categoryColor}`}>
-        {category}
+        {normalizedCategory}
     </a>
 ) : (
     <span class="category-badge" style={`--category-color: ${categoryColor}`}>
-        {category}
+        {normalizedCategory}
     </span>
 )}
 

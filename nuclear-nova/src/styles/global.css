@@ -6,7 +6,6 @@
     font-weight: 400;
     font-display: swap;
     src: local('Roboto Regular'), local('Roboto-Regular'),
-        url('/fonts/roboto/Roboto-Regular.woff2') format('woff2'),
         url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2') format('woff2');
 }
 
@@ -16,7 +15,6 @@
     font-weight: 500;
     font-display: swap;
     src: local('Roboto Medium'), local('Roboto-Medium'),
-        url('/fonts/roboto/Roboto-Medium.woff2') format('woff2'),
         url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9fBBc4.woff2') format('woff2');
 }
 
@@ -26,7 +24,6 @@
     font-weight: 700;
     font-display: swap;
     src: local('Roboto Bold'), local('Roboto-Bold'),
-        url('/fonts/roboto/Roboto-Bold.woff2') format('woff2'),
         url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.woff2') format('woff2');
 }
 
@@ -36,7 +33,6 @@
     font-weight: 400;
     font-display: swap;
     src: local('Roboto Italic'), local('Roboto-Italic'),
-        url('/fonts/roboto/Roboto-Italic.woff2') format('woff2'),
         url('https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1Mu51xIIzI.woff2') format('woff2');
 }
 
@@ -47,7 +43,6 @@
     font-weight: 400;
     font-display: swap;
     src: local('Fira Code Regular'), local('FiraCode-Regular'),
-        url('/fonts/fira-code/FiraCode-Regular.woff2') format('woff2'),
         url('https://fonts.gstatic.com/s/firacode/v21/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sJVD7MOzlojwUKaJO.woff2') format('woff2');
 }
 
@@ -57,7 +52,6 @@
     font-weight: 500;
     font-display: swap;
     src: local('Fira Code Medium'), local('FiraCode-Medium'),
-        url('/fonts/fira-code/FiraCode-Medium.woff2') format('woff2'),
         url('https://fonts.gstatic.com/s/firacode/v21/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A1sJVD7MOzlojwUKaJO.woff2') format('woff2');
 }
 
@@ -67,36 +61,7 @@
     font-weight: 700;
     font-display: swap;
     src: local('Fira Code Bold'), local('FiraCode-Bold'),
-        url('/fonts/fira-code/FiraCode-Bold.woff2') format('woff2'),
         url('https://fonts.gstatic.com/s/firacode/v21/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_GZsJVD7MOzlojwUKaJO.woff2') format('woff2');
-}
-
-/* Maple Mono Font Family */
-@font-face {
-    font-family: 'Maple Mono';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local('Maple Mono'), local('MapleMono-Regular'),
-        url('/fonts/maple-mono/MapleMono-Regular.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Maple Mono';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: local('Maple Mono Medium'), local('MapleMono-Medium'),
-        url('/fonts/maple-mono/MapleMono-Medium.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Maple Mono';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local('Maple Mono Bold'), local('MapleMono-Bold'),
-        url('/fonts/maple-mono/MapleMono-Bold.woff2') format('woff2');
 }
 
 /* Custom styles and overrides */
@@ -105,7 +70,7 @@
     /* Font family variables */
     --font-roboto: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-fira-code: 'Fira Code', 'Courier New', Courier, monospace;
-    --font-maple-mono: 'Maple Mono', 'Courier New', Courier, monospace;
+    --font-maple-mono: var(--font-fira-code);
 
     /* Apply Roboto to body text */
     --sl-font: var(--font-roboto);
@@ -446,6 +411,26 @@ pre[data-language] code,
     color: #3b82f6;
 }
 
+/* Question callouts - light green */
+.sl-markdown-content aside.question-note,
+.sl-markdown-content .starlight-aside.question-note,
+.sl-markdown-content .starlight-aside--note:has(+ details) {
+    border-color: #22c55e;
+    background-color: #dcfce7;
+}
+
+:root[data-theme='dark'] .sl-markdown-content aside.question-note,
+:root[data-theme='dark'] .sl-markdown-content .starlight-aside.question-note,
+:root[data-theme='dark'] .sl-markdown-content .starlight-aside--note:has(+ details) {
+    border-color: #4ade80;
+    background-color: rgba(34, 197, 94, 0.2);
+}
+
+.sl-markdown-content aside.question-note .starlight-aside__title,
+.sl-markdown-content .starlight-aside.question-note .starlight-aside__title {
+    color: #15803d;
+}
+
 /* Tip admonition - Green */
 .sl-markdown-content aside.tip,
 .starlight-aside--tip {
@@ -461,6 +446,24 @@ pre[data-language] code,
 .sl-markdown-content aside.tip .starlight-aside__title,
 .starlight-aside--tip .starlight-aside__title {
     color: #22c55e;
+}
+
+/* Answer callouts (tips inside details) - light purple */
+.sl-markdown-content details .starlight-aside--tip,
+.sl-markdown-content details aside.tip {
+    border-color: #a855f7;
+    background-color: #f3e8ff;
+}
+
+:root[data-theme='dark'] .sl-markdown-content details .starlight-aside--tip,
+:root[data-theme='dark'] .sl-markdown-content details aside.tip {
+    border-color: #c084fc;
+    background-color: rgba(168, 85, 247, 0.2);
+}
+
+.sl-markdown-content details .starlight-aside--tip .starlight-aside__title,
+.sl-markdown-content details aside.tip .starlight-aside__title {
+    color: #7e22ce;
 }
 
 /* Warning/Caution admonition - Yellow/Orange */
@@ -505,6 +508,17 @@ pre[data-language] code,
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+/* Keep aside icons a consistent size across all note/tip blocks */
+.starlight-aside__title .sl-icon,
+.starlight-aside__title svg {
+    width: 1rem !important;
+    height: 1rem !important;
+    min-width: 1rem;
+    min-height: 1rem;
+    flex: 0 0 1rem;
+    --sl-icon-size: 1rem;
 }
 
 /* Admonition content */
@@ -1255,6 +1269,31 @@ header nav a {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+/* Ensure markdown <details><summary> toggles are visible in both themes */
+.sl-markdown-content details>summary {
+    list-style: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--sl-color-text) !important;
+}
+
+.sl-markdown-content details>summary::-webkit-details-marker {
+    display: none;
+}
+
+.sl-markdown-content details>summary::before {
+    content: "▸";
+    color: var(--sl-color-accent);
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+.sl-markdown-content details[open]>summary::before {
+    content: "▾";
+}
+
 /* Fix LinkCard date visibility */
 .sl-link-card time,
 .sl-link-card .date,
@@ -1627,6 +1666,24 @@ site-search input::placeholder,
 starlight-search input::placeholder {
     color: #9ca3af !important;
     opacity: 1 !important;
+}
+
+/* Search shortcut keys in light theme */
+:root:not([data-theme='dark']) site-search button[data-open-modal] > kbd,
+:root:not([data-theme='dark']) starlight-search button[data-open-modal] > kbd {
+    background: #f1f5f9 !important;
+    color: #334155 !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+}
+
+:root:not([data-theme='dark']) site-search button[data-open-modal] > kbd kbd,
+:root:not([data-theme='dark']) starlight-search button[data-open-modal] > kbd kbd {
+    background: #ffffff !important;
+    color: #334155 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.25rem !important;
+    padding: 0.05rem 0.35rem !important;
 }
 
 /* Dark mode header search */

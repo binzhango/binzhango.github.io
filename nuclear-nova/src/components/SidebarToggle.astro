@@ -13,7 +13,7 @@
         const toggleBtn = document.getElementById('sidebar-toggle');
         const sidebar = document.querySelector('[data-starlight-sidebar]') || document.querySelector('.sidebar');
         
-        if (!toggleBtn) return;
+        if (!(toggleBtn instanceof HTMLButtonElement)) return;
         
         // Only show if sidebar exists
         if (!sidebar) {
@@ -33,7 +33,7 @@
             toggleBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"><path d="M8 5l5 5-5 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         }
 
-        toggleBtn.addEventListener('click', () => {
+        toggleBtn.onclick = () => {
             const isHidden = document.body.classList.toggle('sidebar-hidden');
             
             // Update button icon
@@ -45,14 +45,18 @@
             
             // Save state
             localStorage.setItem('sidebar-hidden', isHidden.toString());
-        });
+        };
     }
 
     // Initialize on page load
     initSidebarToggle();
     
     // Re-initialize on navigation (for SPA-like behavior)
-    document.addEventListener('astro:page-load', initSidebarToggle);
+    const state = window as Window & { __sidebarToggleBound?: boolean };
+    if (!state.__sidebarToggleBound) {
+        document.addEventListener('astro:page-load', initSidebarToggle);
+        state.__sidebarToggleBound = true;
+    }
 </script>
 
 <style>

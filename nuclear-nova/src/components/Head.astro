@@ -1,50 +1,84 @@
 ---
-import type { Props } from '@astrojs/starlight/props';
-import Default from '@astrojs/starlight/components/Head.astro';
+import { getCollection } from 'astro:content';
 import CodeBlockCopy from './CodeBlockCopy.astro';
 import Lightbox from './Lightbox.astro';
 import ThemeManager from './ThemeManager.astro';
 
-// Get route data and entry from Astro.locals
-const { id, entry } = Astro.locals.starlightRoute;
+const route = Astro.locals.starlightRoute;
+const { id, entry, head: headEntries } = route;
+const docsEntries = await getCollection('docs');
+const docsIds = new Set(docsEntries.map((doc) => doc.id));
 
-// Generate OG image URL for this page
-const ogImageUrl = new URL(`/og/${id}.png`, Astro.site);
+const fallbackDescription =
+  'A blog about Python, Kubernetes, Spark, Machine Learning, and more';
+const fallbackOgImagePath = '/assets/images/2025/ollama.png';
 
-// Get page URL
-const pageUrl = new URL(Astro.url.pathname, Astro.site);
+function toIsoDate(value: unknown): string | undefined {
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? undefined : value.toISOString();
+  }
 
-// Extract metadata from entry
-const title = entry.data.title || 'B~~~~~Z';
-const description = entry.data.description || entry.data.excerpt || 'A blog about Python, Kubernetes, Spark, Machine Learning, and more';
-const author = entry.data.author || (Array.isArray(entry.data.authors) ? entry.data.authors[0] : entry.data.authors) || 'Bin Zhang';
+  if (typeof value === 'string' || typeof value === 'number') {
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
+  }
 
-// Determine content type (article for posts, website for other pages)
-const isPost = id.startsWith('posts/');
+  return undefined;
+}
+
+function isManagedMetaTag(tag: {
+  tag: string;
+  attrs?: Record<string, string | boolean | undefined>;
+}): boolean {
+  const attrs = tag.attrs ?? {};
+
+  if (tag.tag === 'link' && attrs.rel === 'canonical') {
+    return true;
+  }
+
+  if (tag.tag !== 'meta') {
+    return false;
+  }
+
+  const metaName = String(attrs.name ?? '');
+  const metaProperty = String(attrs.property ?? '');
+
+  return (
+    metaName === 'description' ||
+    metaName.startsWith('twitter:') ||
+    metaProperty.startsWith('og:') ||
+    metaProperty.startsWith('article:')
+  );
+}
+
+const filteredHead = headEntries.filter((tag) => !isManagedMetaTag(tag));
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const isOgGeneratable = typeof id === 'string' && docsIds.has(id);
+const ogImagePath = isOgGeneratable ? `/og/${id}.png` : fallbackOgImagePath;
+const ogImageUrl = new URL(ogImagePath, Astro.site ?? Astro.url);
+
+const title = entry?.data.title ?? 'B~~~~~Z';
+const description = entry?.data.description ?? entry?.data.excerpt ?? fallbackDescription;
+const author =
+  entry?.data.author ??
+  (Array.isArray(entry?.data.authors) ? entry?.data.authors[0] : entry?.data.authors) ??
+  'Bin Zhang';
+const isPost = typeof id === 'string' && id.startsWith('posts/');
 const ogType = isPost ? 'article' : 'website';
-
-// Get publish date for articles
-const publishDate = entry.data.date ? new Date(entry.data.date).toISOString() : undefined;
-
-// Get categories and tags for articles
-const categories = entry.data.categories || [];
-const tags = entry.data.tags || [];
+const publishDate = toIsoDate(entry?.data.date);
+const dateModified = toIsoDate(entry?.data.lastUpdated) ?? publishDate;
+const categories = Array.isArray(entry?.data.categories) ? entry.data.categories : [];
+const tags = Array.isArray(entry?.data.tags) ? entry.data.tags : [];
 ---
 
-<Default {...Astro.props}>
-    <slot />
-</Default>
+{filteredHead.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
 
-<!-- Theme Manager - handles theme initialization and persistence -->
 <ThemeManager defaultTheme="light" />
 
-<!-- Meta description -->
 <meta name="description" content={description} />
-
-<!-- Canonical URL -->
 <link rel="canonical" href={pageUrl.toString()} />
 
-<!-- Open Graph meta tags -->
 <meta property="og:type" content={ogType} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -57,19 +91,18 @@ const tags = entry.data.tags || [];
 <meta property="og:locale" content="en_US" />
 
 {isPost && publishDate && (
-    <>
-        <meta property="article:published_time" content={publishDate} />
-        <meta property="article:author" content={author} />
-        {categories.map((category: string) => (
-            <meta property="article:section" content={category} />
-        ))}
-        {tags.map((tag: string) => (
-            <meta property="article:tag" content={tag} />
-        ))}
-    </>
+  <>
+    <meta property="article:published_time" content={publishDate} />
+    <meta property="article:author" content={author} />
+    {categories.map((category: string) => (
+      <meta property="article:section" content={category} />
+    ))}
+    {tags.map((tag: string) => (
+      <meta property="article:tag" content={tag} />
+    ))}
+  </>
 )}
 
-<!-- Twitter Card meta tags -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
@@ -81,74 +114,71 @@ const tags = entry.data.tags || [];
 <CodeBlockCopy />
 <Lightbox />
 
-<!-- Load Starlight Tabs script -->
-<script type="module" src="/node_modules/@astrojs/starlight/user-components/Tabs.astro?astro&type=script&index=0&lang.ts"></script>
-
-<!-- Force theme colors to load after Starlight's CSS -->
 <style is:inline>
-    /* Force light theme background colors */
-    :root[data-theme='light'],
-    :root[data-theme='light'] body,
-    :root[data-theme='light'] html {
-        --sl-color-bg: #f9fafb !important;
-        --sl-color-white: #f9fafb !important;
-        background-color: #f9fafb !important;
-    }
-    
-    :root[data-theme='light'] .page,
-    :root[data-theme='light'] main.main {
-        background-color: #f9fafb !important;
-    }
-    
-    /* White content areas in light mode */
-    :root[data-theme='light'] .content-panel,
-    :root[data-theme='light'] article,
-    :root[data-theme='light'] .sl-container {
-        background-color: #ffffff !important;
-    }
-    
-    /* Force dark theme background colors */
-    :root[data-theme='dark'],
-    :root[data-theme='dark'] body,
-    :root[data-theme='dark'] html {
-        --sl-color-bg: #0a0a0a !important;
-        --sl-color-white: #0a0a0a !important;
-        background-color: #0a0a0a !important;
-    }
-    
-    :root[data-theme='dark'] .page,
-    :root[data-theme='dark'] main.main {
-        background-color: #0a0a0a !important;
-    }
+  :root[data-theme='light'],
+  :root[data-theme='light'] body,
+  :root[data-theme='light'] html {
+    --sl-color-bg: #f9fafb !important;
+    --sl-color-white: #f9fafb !important;
+    background-color: #f9fafb !important;
+  }
+
+  :root[data-theme='light'] .page,
+  :root[data-theme='light'] main.main {
+    background-color: #f9fafb !important;
+  }
+
+  :root[data-theme='light'] .content-panel,
+  :root[data-theme='light'] article,
+  :root[data-theme='light'] .sl-container {
+    background-color: #ffffff !important;
+  }
+
+  :root[data-theme='dark'],
+  :root[data-theme='dark'] body,
+  :root[data-theme='dark'] html {
+    --sl-color-bg: #0a0a0a !important;
+    --sl-color-white: #0a0a0a !important;
+    background-color: #0a0a0a !important;
+  }
+
+  :root[data-theme='dark'] .page,
+  :root[data-theme='dark'] main.main {
+    background-color: #0a0a0a !important;
+  }
 </style>
 
 {isPost && publishDate && (
-    <script type="application/ld+json" set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": title,
-        "description": description,
-        "author": {
-            "@type": "Person",
-            "name": author
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description,
+      author: {
+        '@type': 'Person',
+        name: author,
+      },
+      datePublished: publishDate,
+      dateModified,
+      image: ogImageUrl.toString(),
+      url: pageUrl.toString(),
+      publisher: {
+        '@type': 'Organization',
+        name: 'B~~~~~Z',
+        logo: {
+          '@type': 'ImageObject',
+          url: new URL('/assets/favicon.ico', Astro.site ?? Astro.url).toString(),
         },
-        "datePublished": publishDate,
-        "dateModified": entry.data.lastUpdated ? new Date(entry.data.lastUpdated).toISOString() : publishDate,
-        "image": ogImageUrl.toString(),
-        "url": pageUrl.toString(),
-        "publisher": {
-            "@type": "Organization",
-            "name": "B~~~~~Z",
-            "logo": {
-                "@type": "ImageObject",
-                "url": new URL('/assets/favicon.ico', Astro.site).toString()
-            }
-        },
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": pageUrl.toString()
-        },
-        "keywords": tags.join(', '),
-        "articleSection": categories.join(', ')
-    })} />
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': pageUrl.toString(),
+      },
+      keywords: tags.join(', '),
+      articleSection: categories.join(', '),
+    })}
+  />
 )}

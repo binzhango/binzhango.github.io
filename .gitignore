@@ -2,3 +2,6 @@
 .cache
 site
 .vscode
+analysis
+nuclear-nova/scripts/phase0-build-artifact-scan.sh
+nuclear-nova/ADMONITION_PLAYBOOK.md

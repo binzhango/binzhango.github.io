@@ -65,80 +65,75 @@
 </style>
 
 <script>
-    // Back to top button functionality
+    type BackToTopWindow = Window & {
+        __backToTopCleanup?: () => void;
+        __backToTopHandlersBound?: boolean;
+    };
+
     function initBackToTop() {
-        const backToTopButton = document.querySelector('.back-to-top');
-        const header = document.querySelector('.header-wrapper');
-        
+        const backToTopButton = document.querySelector<HTMLButtonElement>('.back-to-top');
+        const header = document.querySelector<HTMLElement>('.header-wrapper');
+
         if (!backToTopButton) return;
-        
+        const button = backToTopButton;
+
+        const state = window as BackToTopWindow;
+        state.__backToTopCleanup?.();
+
         let lastScrollY = window.scrollY;
         let ticking = false;
-        
-        // Show/hide button based on scroll position
+
         function updateBackToTop() {
             const scrollY = window.scrollY;
-            
-            // Show button after scrolling down 300px
-            if (scrollY > 300) {
-                backToTopButton.classList.add('visible');
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
-            
-            // Auto-hide header on scroll down
+
+            button.classList.toggle('visible', scrollY > 300);
+
             if (header) {
-                if (scrollY > lastScrollY && scrollY > 100) {
-                    // Scrolling down
-                    header.classList.add('hidden');
-                } else {
-                    // Scrolling up
-                    header.classList.remove('hidden');
-                }
-                
-                // Add scrolled class for shadow effect
-                if (scrollY > 10) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
+                header.classList.toggle('hidden', scrollY > lastScrollY && scrollY > 100);
+                header.classList.toggle('scrolled', scrollY > 10);
             }
-            
+
             lastScrollY = scrollY;
             ticking = false;
         }
-        
-        // Throttle scroll events using requestAnimationFrame
+
         function onScroll() {
             if (!ticking) {
                 window.requestAnimationFrame(updateBackToTop);
                 ticking = true;
             }
         }
-        
-        // Scroll to top smoothly
+
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth'
+                behavior: 'smooth',
             });
         }
-        
-        // Event listeners
+
         window.addEventListener('scroll', onScroll, { passive: true });
-        backToTopButton.addEventListener('click', scrollToTop);
-        
-        // Initial check
+        button.addEventListener('click', scrollToTop);
+
+        state.__backToTopCleanup = () => {
+            window.removeEventListener('scroll', onScroll);
+            button.removeEventListener('click', scrollToTop);
+        };
+
         updateBackToTop();
     }
-    
-    // Initialize on page load
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBackToTop);
+        document.addEventListener('DOMContentLoaded', initBackToTop, { once: true });
     } else {
         initBackToTop();
     }
-    
-    // Re-initialize on Astro view transitions
-    document.addEventListener('astro:page-load', initBackToTop);
+
+    const state = window as BackToTopWindow;
+    if (!state.__backToTopHandlersBound) {
+        document.addEventListener('astro:page-load', initBackToTop);
+        document.addEventListener('astro:before-swap', () => {
+            state.__backToTopCleanup?.();
+        });
+        state.__backToTopHandlersBound = true;
+    }
 </script>
