@@ -174,35 +174,41 @@ const hideToggle = isHomePage || isArchivePage || isTagsPage || isCategoriesPage
 		}
 
 		.header {
-			display: grid;
-			grid-template-columns: minmax(0, 1fr) auto;
-			align-items: center;
-			column-gap: 0.75rem;
-			row-gap: 0.6rem;
+			align-items: flex-start;
+			gap: 0.75rem;
 		}
 
 		.header-right {
-			display: contents;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			justify-content: flex-start;
+			gap: 0.35rem;
+			flex: 1;
+			min-width: 0;
 		}
 
 		.header-controls {
-			grid-column: 2;
-			justify-self: end;
+			order: 1;
 			gap: 0.65rem;
+			flex-wrap: nowrap;
 		}
 
 		.search-wrapper {
-			display: none;
+			display: none !important;
 		}
 
 		.header-nav {
-			grid-column: 1 / -1;
+			order: 2;
 			display: flex;
-			gap: 0.75rem;
+			align-self: stretch;
+			justify-content: flex-start;
+			gap: 0.7rem;
 			overflow-x: auto;
 			scrollbar-width: none;
 			-webkit-overflow-scrolling: touch;
 			white-space: nowrap;
+			padding-bottom: 0.1rem;
 		}
 
 		.header-nav::-webkit-scrollbar {
@@ -215,13 +221,17 @@ const hideToggle = isHomePage || isArchivePage || isTagsPage || isCategoriesPage
 		}
 
 		.site-name {
-			font-size: 1.1rem;
+			font-size: 1rem;
 		}
 
 		.nav-link {
-			font-size: 0.82rem;
+			font-size: 0.8rem;
 			text-transform: none !important;
 			letter-spacing: 0.02em !important;
+		}
+
+		.header-controls [data-open-modal] {
+			display: none !important;
 		}
 	}
 
