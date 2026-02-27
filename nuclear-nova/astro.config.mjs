@@ -65,6 +65,7 @@ export default defineConfig({
                     href: 'https://www.threads.net/@binzhango',
                 },
             ],
+            tableOfContents: false,
             sidebar: getSortedPosts(),
             components: {
                 Header: './src/components/Header.astro',
