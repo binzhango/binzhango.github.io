@@ -40,7 +40,7 @@ const hideToggle = isHomePage || isArchivePage || isTagsPage || isCategoriesPage
 					<Search {...Astro.props} />
 				</div>
 				
-				{Astro.props.hasSidebar && (
+				{!hideToggle && (
 					<starlight-menu-button>
 						<button
 							aria-expanded="false"
@@ -231,6 +231,19 @@ const hideToggle = isHomePage || isArchivePage || isTagsPage || isCategoriesPage
 		}
 
 		.header-controls [data-open-modal] {
+			display: none !important;
+		}
+
+		.header-controls site-search {
+			display: none !important;
+		}
+
+		.header-controls starlight-menu-button {
+			display: inline-flex;
+			align-items: center;
+		}
+
+		:global(nav.sidebar > starlight-menu-button) {
 			display: none !important;
 		}
 	}
