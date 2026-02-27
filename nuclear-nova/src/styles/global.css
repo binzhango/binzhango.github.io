@@ -1481,6 +1481,51 @@ body.sidebar-hidden main {
     max-width: 100% !important;
 }
 
+/* Mobile sidebar contrast fix */
+@media (max-width: 50rem) {
+    nav.sidebar,
+    nav.sidebar .sidebar-pane,
+    nav.sidebar .sidebar-content,
+    nav.sidebar [data-starlight-sidebar],
+    nav.sidebar [data-starlight-sidebar] * {
+        color: #111827 !important;
+        background-color: #ffffff !important;
+    }
+
+    nav.sidebar a,
+    nav.sidebar summary,
+    nav.sidebar .group-label {
+        color: #111827 !important;
+    }
+
+    nav.sidebar a[aria-current="page"] {
+        color: #0f172a !important;
+        background: #e2e8f0 !important;
+        border-left-color: #0ea5e9 !important;
+    }
+
+    :root[data-theme='dark'] nav.sidebar,
+    :root[data-theme='dark'] nav.sidebar .sidebar-pane,
+    :root[data-theme='dark'] nav.sidebar .sidebar-content,
+    :root[data-theme='dark'] nav.sidebar [data-starlight-sidebar],
+    :root[data-theme='dark'] nav.sidebar [data-starlight-sidebar] * {
+        color: #e5e7eb !important;
+        background-color: #111827 !important;
+    }
+
+    :root[data-theme='dark'] nav.sidebar a,
+    :root[data-theme='dark'] nav.sidebar summary,
+    :root[data-theme='dark'] nav.sidebar .group-label {
+        color: #e5e7eb !important;
+    }
+
+    :root[data-theme='dark'] nav.sidebar a[aria-current="page"] {
+        color: #bfdbfe !important;
+        background: #1f2937 !important;
+        border-left-color: #60a5fa !important;
+    }
+}
+
 /* Markdown Table Styling */
 .sl-markdown-content table {
     width: 100%;
