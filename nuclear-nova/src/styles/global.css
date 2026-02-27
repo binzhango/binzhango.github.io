@@ -1441,28 +1441,6 @@ time,
 }
 
 
-/* Sidebar toggle and resize functionality */
-.sidebar-toggle-btn {
-    position: fixed;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1000;
-    background: var(--sl-color-accent);
-    color: white;
-    border: none;
-    border-radius: 0 8px 8px 0;
-    padding: 1rem 0.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-}
-
-.sidebar-toggle-btn:hover {
-    padding-left: 0.75rem;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
-}
-
 /* Sidebar resizable */
 .sidebar,
 [data-starlight-sidebar] {

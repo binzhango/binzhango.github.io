@@ -9,14 +9,17 @@
 </button>
 
 <script>
+    const MOBILE_BREAKPOINT = '(max-width: 50rem)';
+
     function initSidebarToggle() {
         const toggleBtn = document.getElementById('sidebar-toggle');
         const sidebar = document.querySelector('[data-starlight-sidebar]') || document.querySelector('.sidebar');
+        const isMobile = window.matchMedia(MOBILE_BREAKPOINT).matches;
         
         if (!(toggleBtn instanceof HTMLButtonElement)) return;
         
-        // Only show if sidebar exists
-        if (!sidebar) {
+        // Hide toggle on mobile and pages without sidebar.
+        if (isMobile || !sidebar) {
             toggleBtn.style.visibility = 'hidden';
             toggleBtn.style.display = 'none';
             return;
@@ -52,10 +55,15 @@
     initSidebarToggle();
     
     // Re-initialize on navigation (for SPA-like behavior)
-    const state = window as Window & { __sidebarToggleBound?: boolean };
+    const state = window as Window & { __sidebarToggleBound?: boolean; __sidebarToggleResizeBound?: boolean };
     if (!state.__sidebarToggleBound) {
         document.addEventListener('astro:page-load', initSidebarToggle);
         state.__sidebarToggleBound = true;
+    }
+
+    if (!state.__sidebarToggleResizeBound) {
+        window.addEventListener('resize', initSidebarToggle, { passive: true });
+        state.__sidebarToggleResizeBound = true;
     }
 </script>
 
@@ -107,7 +115,8 @@
 
     @media (max-width: 50rem) {
         .sidebar-toggle-btn {
-            display: none;
+            display: none !important;
+            visibility: hidden !important;
         }
     }
 </style>
