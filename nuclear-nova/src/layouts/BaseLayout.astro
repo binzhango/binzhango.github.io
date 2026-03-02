@@ -1,0 +1,157 @@
+---
+import ThemeManager from '../components/ThemeManager.astro';
+import Lightbox from '../components/Lightbox.astro';
+import CodeBlockCopy from '../components/CodeBlockCopy.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'B~~~~~Z',
+  description = 'A blog about Python, Kubernetes, Spark, Machine Learning, and more.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <ThemeManager defaultTheme="light" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-shell">
+        <a class="brand" href="/">
+          <img src="/assets/favicon.ico" alt="B~~~~~Z" width="28" height="28" />
+          <span>B~~~~~Z</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/posts/">Blog</a>
+          <a href="/archive/">Archive</a>
+          <button type="button" id="theme-toggle" class="theme-toggle">Theme</button>
+        </nav>
+      </div>
+    </header>
+    <main class="site-shell page">
+      <div class="sl-markdown-content">
+        <slot />
+      </div>
+    </main>
+    <footer class="site-shell site-footer">
+      <span>&copy; {new Date().getFullYear()} Bin Zhang. All rights reserved.</span>
+    </footer>
+
+    <CodeBlockCopy />
+    <Lightbox />
+
+    <script is:inline>
+      const toggle = document.getElementById('theme-toggle');
+      const themeApi = window['theme'];
+      if (toggle && themeApi) {
+        toggle.addEventListener('click', () => {
+          const current = themeApi.getTheme();
+          const next = current === 'dark' ? 'light' : 'dark';
+          themeApi.setTheme(next);
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .site-shell {
+    width: min(1120px, 100% - 2rem);
+    margin-inline: auto;
+  }
+
+  .site-header {
+    border-bottom: 1px solid var(--sl-color-hairline);
+    background: var(--sl-color-bg-nav);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .site-header .site-shell {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: var(--sl-color-text-accent);
+    font-weight: 700;
+  }
+
+  .site-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .site-nav a,
+  .theme-toggle {
+    color: var(--sl-color-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+  }
+
+  .site-nav a:hover,
+  .theme-toggle:hover {
+    color: var(--sl-color-text-accent);
+    border-color: var(--sl-color-hairline);
+  }
+
+  .page {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--sl-color-hairline);
+    padding: 1.25rem 0 2rem;
+    color: var(--sl-color-gray-5);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 640px) {
+    .site-header .site-shell {
+      min-height: 56px;
+      flex-direction: column;
+      justify-content: center;
+      padding-block: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .site-nav {
+      gap: 0.5rem;
+    }
+
+    .site-nav a,
+    .theme-toggle {
+      padding: 0.3rem 0.45rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>

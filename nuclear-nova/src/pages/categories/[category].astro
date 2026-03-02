@@ -1,6 +1,6 @@
 ---
-import { getPostsByCategory, type Post } from '../../utils/post-utils';
-import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getPostsByCategory, getPostPath, type Post } from '../../utils/post-utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
 import { getPostExcerpt } from '../../utils/excerpt';
 import { normalizeCategory, slugifyCategory } from '../../utils/taxonomy';
@@ -79,13 +79,7 @@ const sortedPosts = [...posts].sort((a, b) => {
 });
 ---
 
-<StarlightPage 
-    frontmatter={{
-        title: pageTitle,
-        description: pageDescription,
-        template: 'splash'
-    }}
->
+<BaseLayout title={pageTitle} description={pageDescription}>
     <div class="category-container">
         <!-- Sidebar with all categories -->
         <aside class="category-sidebar">
@@ -122,7 +116,7 @@ const sortedPosts = [...posts].sort((a, b) => {
                     <article class="post-item">
                         <div class="post-header">
                             <h3 class="post-title">
-                                <a href={`/${post.id}/`}>
+                                <a href={getPostPath(post)}>
                                     {post.data.title}
                                 </a>
                             </h3>
@@ -147,7 +141,7 @@ const sortedPosts = [...posts].sort((a, b) => {
             </div>
         </main>
     </div>
-</StarlightPage>
+</BaseLayout>
 
 <style>
     .category-container {

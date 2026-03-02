@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryBadge from '../components/CategoryBadge.astro';
+import { getAllPosts, getPostPath } from '../utils/post-utils';
+import { getPostExcerpt } from '../utils/excerpt';
+
+const posts = await getAllPosts();
+const featured = posts[0];
+const recentPosts = posts.slice(1, 9);
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout title="B~~~~~Z" description="Bin Zhang's personal blog and knowledge base.">
+  <section class="hero">
+    <h1>B~~~~~Z</h1>
+    <p>Exploring Data, AI, and Engineering.</p>
+  </section>
+
+  {featured && (
+    <section class="featured">
+      <h2>Featured</h2>
+      <article class="post-card featured-card">
+        <h3><a href={getPostPath(featured)}>{featured.data.title}</a></h3>
+        <p class="meta">{formatDate(featured.data.date)}</p>
+        {featured.data.categories && featured.data.categories.length > 0 && (
+          <div class="categories">
+            {featured.data.categories.map((category) => (
+              <CategoryBadge category={category} link={true} />
+            ))}
+          </div>
+        )}
+        <p>{getPostExcerpt(featured, 180)}</p>
+      </article>
+    </section>
+  )}
+
+  <section>
+    <h2>Recent Posts</h2>
+    <div class="grid">
+      {recentPosts.map((post) => (
+        <article class="post-card">
+          <h3><a href={getPostPath(post)}>{post.data.title}</a></h3>
+          <p class="meta">{formatDate(post.data.date)}</p>
+          <p>{getPostExcerpt(post)}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+  }
+
+  .hero p {
+    color: var(--sl-color-gray-6);
+  }
+
+  .featured {
+    margin-bottom: 2rem;
+  }
+
+  .grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .post-card {
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 12px;
+    padding: 1rem;
+    background: var(--sl-color-bg);
+  }
+
+  .featured-card {
+    padding: 1.25rem;
+  }
+
+  .post-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-card h3 a {
+    text-decoration: none;
+  }
+
+  .meta {
+    margin-top: 0;
+    color: var(--sl-color-gray-5);
+    font-size: 0.9rem;
+  }
+
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+  }
+</style>

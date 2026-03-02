@@ -1,6 +1,6 @@
 ---
-import { getPostsByYear, getPostsByTag, type Post } from '../../utils/post-utils';
-import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getPostsByYear, getPostsByTag, getPostPath, type Post } from '../../utils/post-utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
 import TagBadge from '../../components/TagBadge.astro';
 import { getPostExcerpt } from '../../utils/excerpt';
@@ -80,13 +80,7 @@ function formatDate(date: Date | undefined): string {
 
 ---
 
-<StarlightPage 
-    frontmatter={{
-        title: pageTitle,
-        description: pageDescription,
-        template: 'splash'
-    }}
->
+<BaseLayout title={pageTitle} description={pageDescription}>
     <div class="archive-container">
         <!-- Table of Contents for years and tags -->
         <aside class="archive-toc">
@@ -136,7 +130,7 @@ function formatDate(date: Date | undefined): string {
                             <article class="post-item">
                                 <div class="post-header">
                                     <h3 class="post-title">
-                                        <a href={`/${post.id}/`}>
+                                        <a href={getPostPath(post)}>
                                             {post.data.title}
                                         </a>
                                     </h3>
@@ -181,7 +175,7 @@ function formatDate(date: Date | undefined): string {
                                     <article class="post-item">
                                         <div class="post-header">
                                             <h3 class="post-title">
-                                                <a href={`/${post.id}/`}>
+                                                <a href={getPostPath(post)}>
                                                     {post.data.title}
                                                 </a>
                                             </h3>
@@ -218,7 +212,7 @@ function formatDate(date: Date | undefined): string {
             )}
         </main>
     </div>
-</StarlightPage>
+</BaseLayout>
 
 <style>
     .archive-container {

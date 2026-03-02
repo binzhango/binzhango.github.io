@@ -1,8 +1,9 @@
 import { getCollection } from 'astro:content';
 import { OGImageRoute } from 'astro-og-canvas';
+import { slugifyId } from '../../utils/post-utils';
 
-const entries = await getCollection('docs');
-const pages = Object.fromEntries(entries.map(({ data, id }) => [id, { data }]));
+const entries = await getCollection('blog');
+const pages = Object.fromEntries(entries.map(({ data, id }) => [slugifyId(id), { data }]));
 const localFonts = [
     './src/assets/fonts/inter-latin-400-normal.woff2',
     './src/assets/fonts/inter-latin-700-normal.woff2',

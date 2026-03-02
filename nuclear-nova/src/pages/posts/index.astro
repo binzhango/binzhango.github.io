@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryBadge from '../../components/CategoryBadge.astro';
+import TagBadge from '../../components/TagBadge.astro';
+import { getAllPosts, getPostPath } from '../../utils/post-utils';
+import { getPostExcerpt } from '../../utils/excerpt';
+
+const posts = await getAllPosts();
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout title="Blog Posts" description="All blog posts">
+  <h1>Blog Posts</h1>
+  <div class="posts-list">
+    {posts.map((post) => (
+      <article class="post-item">
+        <div class="post-header">
+          <h2><a href={getPostPath(post)}>{post.data.title}</a></h2>
+          <time datetime={post.data.date?.toISOString()}>{formatDate(post.data.date)}</time>
+        </div>
+        {post.data.categories && post.data.categories.length > 0 && (
+          <div class="post-categories">
+            {post.data.categories.map((category) => (
+              <CategoryBadge category={category} link={true} />
+            ))}
+          </div>
+        )}
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="post-tags">
+            {post.data.tags.map((tag) => (
+              <TagBadge tag={tag} link={true} />
+            ))}
+          </div>
+        )}
+        <p>{getPostExcerpt(post, 180)}</p>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .post-item {
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 12px;
+    padding: 1rem;
+    background: var(--sl-color-bg);
+  }
+
+  .post-header {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+
+  .post-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  .post-header h2 a {
+    text-decoration: none;
+  }
+
+  .post-header time {
+    color: var(--sl-color-gray-5);
+    font-size: 0.9rem;
+  }
+
+  .post-categories,
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+  }
+</style>

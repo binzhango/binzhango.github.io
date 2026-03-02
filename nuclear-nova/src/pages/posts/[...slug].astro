@@ -1,0 +1,170 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryBadge from '../../components/CategoryBadge.astro';
+import TagBadge from '../../components/TagBadge.astro';
+import { getAdjacentPosts, getPostPath, getAllPosts, slugifyId, type Post } from '../../utils/post-utils';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: slugifyId(post.id) },
+    props: { postId: post.id },
+  }));
+}
+
+interface Props {
+  postId: string;
+}
+
+const { postId } = Astro.props as Props;
+const post = await getEntry('blog', postId);
+
+if (!post) {
+  throw new Error(`Post not found for id: ${postId}`);
+}
+
+const { Content } = await render(post);
+const adjacent = await getAdjacentPosts(post.id);
+
+const pageTitle = post.data.title;
+const pageDescription = post.data.excerpt ?? post.data.description ?? '';
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+function toNav(postEntry: Post | null) {
+  if (!postEntry) return null;
+  return {
+    href: getPostPath(postEntry),
+    title: postEntry.data.title,
+  };
+}
+
+const prevPost = toNav(adjacent.prev);
+const nextPost = toNav(adjacent.next);
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <article class="post">
+    <header class="post-header">
+      <h1>{post.data.title}</h1>
+      <div class="post-meta">
+        <span>{formatDate(post.data.date)}</span>
+        {post.data.author && <span>By {post.data.author}</span>}
+      </div>
+      {post.data.categories && post.data.categories.length > 0 && (
+        <div class="post-categories">
+          {post.data.categories.map((category) => (
+            <CategoryBadge category={category} link={true} />
+          ))}
+        </div>
+      )}
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="post-tags">
+          {post.data.tags.map((tag) => (
+            <TagBadge tag={tag} link={true} />
+          ))}
+        </div>
+      )}
+    </header>
+
+    <section class="post-content">
+      <Content />
+    </section>
+
+    {(prevPost || nextPost) && (
+      <nav class="post-nav" aria-label="Post navigation">
+        <div>
+          {prevPost && (
+            <a href={prevPost.href}>
+              <small>Previous</small>
+              <strong>{prevPost.title}</strong>
+            </a>
+          )}
+        </div>
+        <div>
+          {nextPost && (
+            <a href={nextPost.href}>
+              <small>Next</small>
+              <strong>{nextPost.title}</strong>
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: 860px;
+    margin-inline: auto;
+  }
+
+  .post-header h1 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--sl-color-gray-5);
+    margin-bottom: 0.75rem;
+  }
+
+  .post-categories,
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+  }
+
+  .post-content {
+    border-top: 1px solid var(--sl-color-hairline);
+    padding-top: 1rem;
+    line-height: 1.7;
+  }
+
+  .post-nav {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .post-nav a {
+    display: block;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-decoration: none;
+    background: var(--sl-color-bg);
+  }
+
+  .post-nav small,
+  .post-nav strong {
+    display: block;
+  }
+
+  .post-nav small {
+    color: var(--sl-color-gray-5);
+  }
+
+  @media (max-width: 640px) {
+    .post-nav {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
