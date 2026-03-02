@@ -68,11 +68,8 @@ export default defineConfig({
             tableOfContents: false,
             sidebar: getSortedPosts(),
             components: {
-                Header: './src/components/Header.astro',
-                Footer: './src/components/Footer.astro',
+                SiteTitle: './src/components/SiteTitle.astro',
                 Head: './src/components/Head.astro',
-                ContentPanel: './src/components/ContentPanel.astro',
-                Search: './src/components/Search.astro',
             },
         }),
         mdx(),
