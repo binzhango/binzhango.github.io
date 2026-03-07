@@ -82,6 +82,11 @@ const showSecondary = hasSecondary || reserveSecondary;
     min-height: 0;
     overflow-y: auto;
     padding-bottom: 5.5rem;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease,
+      max-height 0.22s ease,
+      padding 0.22s ease;
   }
 
   :global(.blog-sidebar__footer) {
@@ -448,41 +453,96 @@ const showSecondary = hasSecondary || reserveSecondary;
 
   @media (max-width: 720px) {
     .blog-layout {
+      --blog-mobile-sidebar-width: min(18rem, calc(100vw - 1.25rem));
       display: block;
       width: auto;
       margin-left: 0;
     }
 
     :global(.blog-sidebar) {
-      position: static;
-      top: auto;
-      height: auto;
-      width: auto;
+      position: fixed;
+      top: 4.25rem;
+      left: 0;
+      height: calc(100dvh - 4.25rem);
+      width: var(--blog-mobile-sidebar-width);
       min-width: 0;
-      border-right: 0;
-      border-bottom: 1px solid var(--sl-color-hairline);
-      margin-bottom: 1rem;
+      max-width: var(--blog-mobile-sidebar-width);
+      border-bottom: 0;
+      margin-bottom: 0;
+      z-index: 35;
+      box-shadow: 0 22px 56px rgba(15, 23, 42, 0.16);
+      transform: translateX(0);
+      transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        background-color 0.22s ease;
     }
 
     :global(.blog-sidebar__inner) {
-      position: static;
-      top: auto;
-      height: auto;
-      padding: 0 0 1rem;
+      height: 100%;
+      padding: 0.75rem 1rem 0;
+    }
+
+    :global(.blog-sidebar__content) {
+      padding-bottom: 5.5rem;
     }
 
     :global(.blog-sidebar__footer) {
-      position: static;
-      left: auto;
+      position: absolute;
+      left: 0;
+      bottom: 0;
       width: 100%;
-      padding-top: 0.75rem;
-      padding-bottom: 0;
-      z-index: auto;
+      padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)) 1rem;
+      z-index: 1;
     }
 
     :global(.blog-sidebar__footer::before) {
-      left: 0;
-      right: 0;
+      left: 1rem;
+      right: 1rem;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar) {
+      overflow: visible;
+      border-right-color: transparent;
+      background: transparent;
+      box-shadow: none;
+      transform: translateX(calc(-1 * var(--blog-mobile-sidebar-width)));
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar__content) {
+      max-height: 0;
+      padding-bottom: 0;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar__footer) {
+      width: auto;
+      background: transparent;
+      transform: translateX(var(--blog-mobile-sidebar-width));
+      justify-content: center;
+      padding: 0 0 1rem 0.75rem;
+      pointer-events: none;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar__footer::before) {
+      display: none;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar-toggle) {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      pointer-events: auto;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar-toggle:hover) {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar-toggle:focus-visible) {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sl-color-text-accent) 20%, transparent);
     }
 
     .blog-main {
