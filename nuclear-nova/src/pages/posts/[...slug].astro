@@ -372,17 +372,27 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
 </style>
 
 <script>
+  type TocEntry = {
+    id: string;
+    heading: HTMLElement;
+    link: HTMLAnchorElement;
+  };
+
+  type TocWindow = Window & {
+    __blogPostTocCleanup?: () => void;
+  };
+
   function initPostToc() {
-    const state = window;
+    const state = window as TocWindow;
     state.__blogPostTocCleanup?.();
 
-    const toc = document.querySelector('[data-post-toc]');
+    const toc = document.querySelector<HTMLElement>('[data-post-toc]');
     if (!toc) {
       return;
     }
 
-    const links = Array.from(toc.querySelectorAll('[data-toc-link]'));
-    const entries = links
+    const links = Array.from(toc.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+    const entries: TocEntry[] = links
       .map((link) => {
         const href = link.getAttribute('href');
         if (!href?.startsWith('#')) return null;
@@ -391,13 +401,13 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
         if (!heading) return null;
         return { id, heading, link };
       })
-      .filter(Boolean);
+      .filter((entry): entry is TocEntry => entry !== null);
 
     if (!entries.length) {
       return;
     }
 
-    const setActive = (id) => {
+    const setActive = (id: string) => {
       for (const entry of entries) {
         const isActive = entry.id === id;
         entry.link.classList.toggle('is-active', isActive);
