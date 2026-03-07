@@ -1,0 +1,49 @@
+---
+import { getAllPosts, getPostPath, getPostsByYear } from '../utils/post-utils';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+const postsByYear = await getPostsByYear();
+const yearGroups = Object.entries(postsByYear).sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
+const currentYear = new Date().getFullYear().toString();
+
+function shouldOpen(year: string, paths: string[]): boolean {
+  return year === currentYear || paths.includes(currentPath);
+}
+---
+
+<aside class="blog-sidebar" aria-label="Blog archive by year">
+  <div class="blog-sidebar__inner">
+    <a class="blog-sidebar__home" href="/posts/" aria-current={currentPath === '/posts/' ? 'page' : undefined}>Blog</a>
+    <nav class="blog-year-groups" aria-label="Posts by year">
+      {yearGroups.map(([year, yearlyPosts]) => {
+        const paths = yearlyPosts.map((post) => getPostPath(post));
+        return (
+          <details open={shouldOpen(year, paths)}>
+            <summary>
+              <span>{year}</span>
+              <span>{yearlyPosts.length}</span>
+            </summary>
+            <ul>
+              {yearlyPosts.map((post) => {
+                const href = getPostPath(post);
+                const isActive = href === currentPath;
+
+                return (
+                  <li>
+                    <a href={href} aria-current={isActive ? 'page' : undefined} class:list={{ active: isActive }}>
+                      {post.data.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        );
+      })}
+    </nav>
+  </div>
+</aside>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogShell from '../../components/BlogShell.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
 import TagBadge from '../../components/TagBadge.astro';
 import { getAllPosts, getPostPath } from '../../utils/post-utils';
@@ -18,51 +19,80 @@ function formatDate(date: Date | undefined): string {
 ---
 
 <BaseLayout title="Blog Posts" description="All blog posts">
-  <h1>Blog Posts</h1>
-  <div class="posts-list">
-    {posts.map((post) => (
-      <article class="post-item">
-        <div class="post-header">
-          <h2><a href={getPostPath(post)}>{post.data.title}</a></h2>
-          <time datetime={post.data.date?.toISOString()}>{formatDate(post.data.date)}</time>
-        </div>
-        {post.data.categories && post.data.categories.length > 0 && (
-          <div class="post-categories">
-            {post.data.categories.map((category) => (
-              <CategoryBadge category={category} link={true} />
-            ))}
+  <BlogShell currentPath={Astro.url.pathname}>
+    <header class="posts-header">
+      <p class="posts-eyebrow">Blog</p>
+      <h1>All posts</h1>
+      <p class="posts-description">Notes on LLMs, machine learning, data engineering, and systems work.</p>
+    </header>
+    <div class="posts-list">
+      {posts.map((post) => (
+        <article class="post-item">
+          <div class="post-header">
+            <h2><a href={getPostPath(post)}>{post.data.title}</a></h2>
+            <time datetime={post.data.date?.toISOString()}>{formatDate(post.data.date)}</time>
           </div>
-        )}
-        {post.data.tags && post.data.tags.length > 0 && (
-          <div class="post-tags">
-            {post.data.tags.map((tag) => (
-              <TagBadge tag={tag} link={true} />
-            ))}
-          </div>
-        )}
-        <p>{getPostExcerpt(post, 180)}</p>
-      </article>
-    ))}
-  </div>
+          {post.data.categories && post.data.categories.length > 0 && (
+            <div class="post-categories">
+              {post.data.categories.map((category) => (
+                <CategoryBadge category={category} link={true} />
+              ))}
+            </div>
+          )}
+          {post.data.tags && post.data.tags.length > 0 && (
+            <div class="post-tags">
+              {post.data.tags.map((tag) => (
+                <TagBadge tag={tag} link={true} />
+              ))}
+            </div>
+          )}
+          <p>{getPostExcerpt(post, 180)}</p>
+        </article>
+      ))}
+    </div>
+  </BlogShell>
 </BaseLayout>
 
 <style>
-  h1 {
+  .posts-header {
     margin-top: 0;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .posts-eyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--sl-color-gray-5);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.05;
+  }
+
+  .posts-description {
+    margin: 0.65rem 0 0;
+    color: var(--sl-color-gray-6);
+    max-width: 42rem;
   }
 
   .posts-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0;
   }
 
   .post-item {
-    border: 1px solid var(--sl-color-hairline);
-    border-radius: 12px;
-    padding: 1rem;
-    background: var(--sl-color-bg);
+    border-top: 1px solid var(--sl-color-hairline);
+    padding: 1.25rem 0;
+  }
+
+  .post-item:last-child {
+    border-bottom: 1px solid var(--sl-color-hairline);
   }
 
   .post-header {
@@ -75,16 +105,19 @@ function formatDate(date: Date | undefined): string {
 
   .post-header h2 {
     margin: 0;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    line-height: 1.25;
   }
 
   .post-header h2 a {
     text-decoration: none;
+    color: var(--sl-color-text);
   }
 
   .post-header time {
-    color: var(--sl-color-gray-5);
-    font-size: 0.9rem;
+    color: var(--sl-color-gray-6);
+    font-size: 0.82rem;
+    white-space: nowrap;
   }
 
   .post-categories,
@@ -92,6 +125,11 @@ function formatDate(date: Date | undefined): string {
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
-    margin-top: 0.75rem;
+    margin-top: 0.65rem;
+  }
+
+  .post-item p:last-child {
+    margin: 0.8rem 0 0;
+    color: var(--sl-color-gray-6);
   }
 </style>

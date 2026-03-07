@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogShell from '../../components/BlogShell.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
 import TagBadge from '../../components/TagBadge.astro';
 import { getAdjacentPosts, getPostPath, getAllPosts, slugifyId, type Post } from '../../utils/post-utils';
@@ -24,7 +25,7 @@ if (!post) {
   throw new Error(`Post not found for id: ${postId}`);
 }
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const adjacent = await getAdjacentPosts(post.id);
 
 const pageTitle = post.data.title;
@@ -49,76 +50,106 @@ function toNav(postEntry: Post | null) {
 
 const prevPost = toNav(adjacent.prev);
 const nextPost = toNav(adjacent.next);
+const currentPath = getPostPath(post);
+const sectionHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
+const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filter((heading) => heading.depth === 1);
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
-  <article class="post">
-    <header class="post-header">
-      <h1>{post.data.title}</h1>
-      <div class="post-meta">
-        <span>{formatDate(post.data.date)}</span>
-        {post.data.author && <span>By {post.data.author}</span>}
-      </div>
-      {post.data.categories && post.data.categories.length > 0 && (
-        <div class="post-categories">
-          {post.data.categories.map((category) => (
-            <CategoryBadge category={category} link={true} />
-          ))}
-        </div>
-      )}
-      {post.data.tags && post.data.tags.length > 0 && (
-        <div class="post-tags">
-          {post.data.tags.map((tag) => (
-            <TagBadge tag={tag} link={true} />
-          ))}
-        </div>
-      )}
-    </header>
-
-    <section class="post-content">
-      <Content />
-    </section>
-
-    {(prevPost || nextPost) && (
-      <nav class="post-nav" aria-label="Post navigation">
-        <div>
-          {prevPost && (
-            <a href={prevPost.href}>
-              <small>Previous</small>
-              <strong>{prevPost.title}</strong>
-            </a>
-          )}
-        </div>
-        <div>
-          {nextPost && (
-            <a href={nextPost.href}>
-              <small>Next</small>
-              <strong>{nextPost.title}</strong>
-            </a>
-          )}
-        </div>
-      </nav>
+  <BlogShell currentPath={currentPath} reserveSecondary={true}>
+    {tocHeadings.length > 0 && (
+      <Fragment slot="secondary">
+        <nav class="post-toc" aria-label="On this page" data-post-toc>
+          <p class="post-toc__title">On this page</p>
+          <ul class="post-toc__list">
+            {tocHeadings.map((heading) => (
+              <li class:list={['post-toc__item', { 'post-toc__item--nested': heading.depth > 2 }]}>
+                <a
+                  class="post-toc__link"
+                  href={`#${heading.slug}`}
+                  data-toc-link
+                  data-depth={heading.depth}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Fragment>
     )}
-  </article>
+
+    <article class="post">
+      <header class="post-header">
+        <h1>{post.data.title}</h1>
+        <div class="post-meta">
+          <span>{formatDate(post.data.date)}</span>
+          {post.data.author && <span>By {post.data.author}</span>}
+        </div>
+        {post.data.categories && post.data.categories.length > 0 && (
+          <div class="post-categories">
+            {post.data.categories.map((category) => (
+              <CategoryBadge category={category} link={true} />
+            ))}
+          </div>
+        )}
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="post-tags">
+            {post.data.tags.map((tag) => (
+              <TagBadge tag={tag} link={true} />
+            ))}
+          </div>
+        )}
+      </header>
+
+      <section class="post-content">
+        <Content />
+      </section>
+
+      {(prevPost || nextPost) && (
+        <nav class="post-nav" aria-label="Post navigation">
+          <div>
+            {prevPost && (
+              <a href={prevPost.href}>
+                <small>Previous</small>
+                <strong>{prevPost.title}</strong>
+              </a>
+            )}
+          </div>
+          <div>
+            {nextPost && (
+              <a href={nextPost.href}>
+                <small>Next</small>
+                <strong>{nextPost.title}</strong>
+              </a>
+            )}
+          </div>
+        </nav>
+      )}
+    </article>
+  </BlogShell>
 </BaseLayout>
 
 <style>
   .post {
-    max-width: 860px;
+    max-width: 48rem;
     margin-inline: auto;
   }
 
   .post-header h1 {
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    line-height: 1.05;
   }
 
   .post-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    color: var(--sl-color-gray-5);
-    margin-bottom: 0.75rem;
+    color: var(--sl-color-gray-6);
+    font-size: 0.92rem;
+    margin-bottom: 1rem;
   }
 
   .post-categories,
@@ -131,12 +162,12 @@ const nextPost = toNav(adjacent.next);
 
   .post-content {
     border-top: 1px solid var(--sl-color-hairline);
-    padding-top: 1rem;
-    line-height: 1.7;
+    padding-top: 1.15rem;
+    line-height: 1.72;
   }
 
   .post-nav {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--sl-color-hairline);
     display: grid;
@@ -146,11 +177,10 @@ const nextPost = toNav(adjacent.next);
 
   .post-nav a {
     display: block;
-    border: 1px solid var(--sl-color-hairline);
-    border-radius: 10px;
-    padding: 0.75rem;
+    border-top: 2px solid var(--sl-color-hairline);
+    padding: 0.8rem 0 0;
     text-decoration: none;
-    background: var(--sl-color-bg);
+    background: transparent;
   }
 
   .post-nav small,
@@ -162,9 +192,143 @@ const nextPost = toNav(adjacent.next);
     color: var(--sl-color-gray-5);
   }
 
+  .post-toc {
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--sl-color-text);
+    max-height: calc(100vh - 6rem);
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+
+  .post-toc__title {
+    margin: 0 0 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .post-toc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .post-toc__item--nested {
+    margin-left: 0;
+  }
+
+  .post-toc__link {
+    display: block;
+    padding: 0.2rem 0;
+    text-decoration: none;
+    color: #6b7280 !important;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: color 0.16s ease;
+  }
+
+  .post-toc__item--nested .post-toc__link {
+    font-size: 0.78rem;
+    color: #98a2b3 !important;
+    padding-left: 0.9rem;
+  }
+
+  .post-toc__link:hover {
+    color: #111827 !important;
+  }
+
+  .post-toc__link.is-active,
+  .post-toc__link[aria-current='location'] {
+    color: #2563eb !important;
+    font-weight: 600;
+  }
+
+  :root[data-theme='dark'] .post-toc__link.is-active,
+  :root[data-theme='dark'] .post-toc__link[aria-current='location'] {
+    color: #60a5fa !important;
+  }
+
   @media (max-width: 640px) {
     .post-nav {
       grid-template-columns: 1fr;
     }
   }
 </style>
+
+<script>
+  function initPostToc() {
+    const state = window;
+    state.__blogPostTocCleanup?.();
+
+    const toc = document.querySelector('[data-post-toc]');
+    if (!toc) {
+      return;
+    }
+
+    const links = Array.from(toc.querySelectorAll('[data-toc-link]'));
+    const entries = links
+      .map((link) => {
+        const href = link.getAttribute('href');
+        if (!href?.startsWith('#')) return null;
+        const id = decodeURIComponent(href.slice(1));
+        const heading = document.getElementById(id);
+        if (!heading) return null;
+        return { id, heading, link };
+      })
+      .filter(Boolean);
+
+    if (!entries.length) {
+      return;
+    }
+
+    const setActive = (id) => {
+      for (const entry of entries) {
+        const isActive = entry.id === id;
+        entry.link.classList.toggle('is-active', isActive);
+        if (isActive) {
+          entry.link.setAttribute('aria-current', 'location');
+        } else {
+          entry.link.removeAttribute('aria-current');
+        }
+      }
+    };
+
+    const syncActive = () => {
+      let currentId = entries[0].id;
+      for (const entry of entries) {
+        if (entry.heading.getBoundingClientRect().top <= 140) {
+          currentId = entry.id;
+        } else {
+          break;
+        }
+      }
+      setActive(currentId);
+    };
+
+    for (const entry of entries) {
+      entry.link.addEventListener('click', () => setActive(entry.id));
+    }
+
+    syncActive();
+    window.addEventListener('scroll', syncActive, { passive: true });
+    window.addEventListener('resize', syncActive);
+
+    state.__blogPostTocCleanup = () => {
+      window.removeEventListener('scroll', syncActive);
+      window.removeEventListener('resize', syncActive);
+    };
+  }
+
+  initPostToc();
+  document.addEventListener('astro:page-load', initPostToc);
+</script>

@@ -3,11 +3,13 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import remarkDirective from 'remark-directive';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
-import rehypeMathJax from 'rehype-mathjax';
+import rehypeMathJax from 'rehype-mathjax/chtml';
 import rehypeMermaid from 'rehype-mermaid';
 import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers';
+import remarkStarlightAdmonitions from './src/plugins/remark-starlight-admonitions.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,7 +21,7 @@ export default defineConfig({
         sitemap(),
     ],
     markdown: {
-        remarkPlugins: [remarkMath, remarkGfm],
+        remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkStarlightAdmonitions],
         rehypePlugins: [
             [
                 rehypeMathJax,
@@ -28,8 +30,8 @@ export default defineConfig({
                         inlineMath: [['$', '$']],
                         displayMath: [['$$', '$$'], ['\\[', '\\]']],
                     },
-                    svg: {
-                        fontCache: 'global',
+                    chtml: {
+                        fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
                     },
                 },
             ],
