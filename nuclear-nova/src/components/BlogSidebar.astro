@@ -26,8 +26,10 @@ function shouldOpen(year: string, paths: string[]): boolean {
           return (
             <details open={shouldOpen(year, paths)}>
               <summary>
-                <span>{year}</span>
-                <span>{yearlyPosts.length}</span>
+                <span class="blog-year-label">{year}</span>
+                <span class="blog-year-count" aria-label={`${yearlyPosts.length} posts in ${year}`}>
+                  {yearlyPosts.length}
+                </span>
               </summary>
               <ul>
                 {yearlyPosts.map((post) => {

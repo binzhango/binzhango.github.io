@@ -15,6 +15,9 @@ import remarkStarlightAdmonitions from './src/plugins/remark-starlight-admonitio
 export default defineConfig({
     site: 'https://binzhango.com', // Update with actual custom domain
     output: 'static',
+    devToolbar: {
+        enabled: false,
+    },
     adapter: vercel(),
     integrations: [
         mdx(),

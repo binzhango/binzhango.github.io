@@ -81,22 +81,33 @@ const showSecondary = hasSecondary || reserveSecondary;
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
-    padding-bottom: 0.5rem;
+    padding-bottom: 5.5rem;
   }
 
   :global(.blog-sidebar__footer) {
-    width: 100%;
-    margin-top: auto;
-    position: sticky;
+    position: fixed;
+    left: 0;
     bottom: 0;
-    padding-top: 1rem;
-    padding-bottom: max(0, env(safe-area-inset-bottom));
-    border-top: 1px solid var(--sl-color-hairline);
+    width: 18rem;
+    margin-top: auto;
+    padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom)) 1rem;
     background: var(--blog-ref-panel);
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
+    z-index: 25;
+  }
+
+  :global(.blog-sidebar__footer::before) {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    right: calc(1rem + 1px);
+    height: 1px;
+    background: var(--sl-color-hairline);
   }
 
   :global(.blog-sidebar__home) {
@@ -141,6 +152,7 @@ const showSecondary = hasSecondary || reserveSecondary;
 
   :global(.blog-year-groups summary) {
     width: 100%;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -168,12 +180,14 @@ const showSecondary = hasSecondary || reserveSecondary;
     content: none !important;
   }
 
-  :global(.blog-year-groups summary span:first-child) {
+  :global(.blog-year-label) {
+    flex: 1 1 auto;
+    min-width: 0;
     position: relative;
     padding-right: 1.25rem;
   }
 
-  :global(.blog-year-groups summary span:first-child)::after {
+  :global(.blog-year-label::after) {
     content: '';
     position: absolute;
     top: 50%;
@@ -190,13 +204,25 @@ const showSecondary = hasSecondary || reserveSecondary;
     color: var(--blog-ref-text-strong);
   }
 
-  :global(.blog-year-groups details[open] summary span:first-child::after) {
+  :global(.blog-year-groups details[open] .blog-year-label::after) {
     transform: translateY(-35%) rotate(225deg);
   }
 
-  :global(.blog-year-groups summary span:last-child) {
+  :global(.blog-year-count) {
+    margin-left: auto;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.65rem;
+    padding: 0.1rem 0.42rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--blog-ref-text-soft) 14%, transparent);
     color: var(--blog-ref-text-soft);
-    font-size: 0.8rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
   }
 
   :global(.blog-year-groups summary:hover) {
@@ -290,6 +316,11 @@ const showSecondary = hasSecondary || reserveSecondary;
     color: #f9fafb;
   }
 
+  :global(:root[data-theme='dark'] .blog-year-count) {
+    background: rgba(148, 163, 184, 0.14);
+    color: #cbd5e1;
+  }
+
   :global(:root[data-theme='dark'] .blog-layout) {
     --blog-ref-text: #9aa4b2;
     --blog-ref-text-strong: #f3f4f6;
@@ -319,11 +350,16 @@ const showSecondary = hasSecondary || reserveSecondary;
   }
 
   :global(body.blog-sidebar-collapsed .blog-sidebar__footer) {
-    border-top-color: transparent;
+    width: 4.5rem;
     justify-content: center;
+    padding-inline: 0.75rem;
   }
 
   :global(body.blog-sidebar-collapsed .blog-sidebar__footer .theme-control) {
+    display: none;
+  }
+
+  :global(body.blog-sidebar-collapsed .blog-sidebar__footer::before) {
     display: none;
   }
 
@@ -437,9 +473,16 @@ const showSecondary = hasSecondary || reserveSecondary;
 
     :global(.blog-sidebar__footer) {
       position: static;
-      bottom: auto;
+      left: auto;
+      width: 100%;
       padding-top: 0.75rem;
       padding-bottom: 0;
+      z-index: auto;
+    }
+
+    :global(.blog-sidebar__footer::before) {
+      left: 0;
+      right: 0;
     }
 
     .blog-main {
