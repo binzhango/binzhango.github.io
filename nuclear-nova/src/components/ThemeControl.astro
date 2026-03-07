@@ -1,0 +1,325 @@
+---
+interface Props {
+  variant?: 'floating' | 'default';
+}
+
+const { variant = 'default' } = Astro.props;
+---
+
+<div class="theme-control" data-theme-control data-variant={variant}>
+  <details class="theme-dropdown" data-theme-choice="light">
+    <summary class="theme-trigger" aria-label="Open theme menu">
+      <span class="theme-trigger__icon" aria-hidden="true">
+        <svg class="theme-icon theme-icon--light" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4.25" fill="currentColor"></circle>
+          <path
+            d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.77 1.77M17.48 17.48l1.77 1.77M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.77-1.77M17.48 6.52l1.77-1.77"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-width="1.75"
+          ></path>
+        </svg>
+        <svg class="theme-icon theme-icon--dark" viewBox="0 0 24 24">
+          <path
+            d="M15.25 3.5a8.75 8.75 0 1 0 5.25 15.75A9.5 9.5 0 0 1 15.25 3.5Z"
+            fill="currentColor"
+          ></path>
+        </svg>
+        <svg class="theme-icon theme-icon--system" viewBox="0 0 24 24">
+          <rect x="4" y="5" width="16" height="11" rx="2.25" fill="none" stroke="currentColor" stroke-width="1.8"></rect>
+          <path d="M9 19h6M12 16.2V19" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+        </svg>
+      </span>
+      <span class="theme-trigger__label" data-theme-label>Light</span>
+    </summary>
+    <div class="theme-menu" role="menu" aria-label="Theme mode">
+      <button type="button" class="theme-option" data-theme-choice="light" role="menuitemradio" aria-checked="true">
+        <span>Light</span>
+        <span class="theme-option__check" aria-hidden="true">✓</span>
+      </button>
+      <button type="button" class="theme-option" data-theme-choice="dark" role="menuitemradio" aria-checked="false">
+        <span>Dark</span>
+        <span class="theme-option__check" aria-hidden="true">✓</span>
+      </button>
+      <button type="button" class="theme-option" data-theme-choice="auto" role="menuitemradio" aria-checked="false">
+        <span>System</span>
+        <span class="theme-option__check" aria-hidden="true">✓</span>
+      </button>
+    </div>
+  </details>
+</div>
+
+<script is:inline>
+  function syncThemeControl(control) {
+    const themeApi = window.theme;
+    const dropdown = control.querySelector('.theme-dropdown');
+    const label = control.querySelector('[data-theme-label]');
+    if (!(dropdown instanceof HTMLDetailsElement) || !(label instanceof HTMLElement) || !themeApi) return;
+
+    const labels = { light: 'Light', dark: 'Dark', auto: 'System' };
+    const options = Array.from(control.querySelectorAll('.theme-option'));
+    const currentTheme = themeApi.getTheme();
+    dropdown.dataset.themeChoice = currentTheme;
+    label.textContent = labels[currentTheme] ?? 'Light';
+
+    options.forEach((option) => {
+      const isSelected = option.dataset.themeChoice === currentTheme;
+      option.setAttribute('aria-checked', String(isSelected));
+      option.dataset.selected = String(isSelected);
+    });
+  }
+
+  function setupThemeControls() {
+    const controls = Array.from(document.querySelectorAll('[data-theme-control]'));
+    controls.forEach((control) => {
+      if (!(control instanceof HTMLElement)) return;
+
+      if (control.dataset.bound !== 'true') {
+        control.dataset.bound = 'true';
+
+        control.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+
+          const option = target.closest('.theme-option');
+          if (!(option instanceof HTMLButtonElement)) return;
+
+          const themeApi = window.theme;
+          const dropdown = control.querySelector('.theme-dropdown');
+          const nextTheme = option.dataset.themeChoice;
+          if (!(dropdown instanceof HTMLDetailsElement) || !themeApi) return;
+
+          if (nextTheme === 'light' || nextTheme === 'dark' || nextTheme === 'auto') {
+            themeApi.setTheme(nextTheme);
+            dropdown.open = false;
+            syncThemeControl(control);
+          }
+        });
+      }
+
+      syncThemeControl(control);
+    });
+  }
+
+  setupThemeControls();
+
+  if (!window.__themeControlsBound) {
+    document.addEventListener('theme-changed', () => {
+      document.querySelectorAll('[data-theme-control]').forEach((control) => {
+        if (control instanceof HTMLElement) syncThemeControl(control);
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      document.querySelectorAll('[data-theme-control] .theme-dropdown').forEach((dropdown) => {
+        if (!(dropdown instanceof HTMLDetailsElement) || !dropdown.open) return;
+        if (event.target instanceof Node && !dropdown.contains(event.target)) {
+          dropdown.open = false;
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      document.querySelectorAll('[data-theme-control] .theme-dropdown').forEach((dropdown) => {
+        if (dropdown instanceof HTMLDetailsElement) dropdown.open = false;
+      });
+    });
+
+    document.addEventListener('astro:after-swap', setupThemeControls);
+    window.addEventListener('resize', setupThemeControls, { passive: true });
+    window.__themeControlsBound = true;
+  }
+</script>
+
+<style>
+  .theme-control {
+    color: var(--sl-color-text);
+    --control-bg: color-mix(in srgb, var(--sl-color-bg-nav) 90%, var(--sl-color-text-accent) 4%);
+    --control-bg-hover: color-mix(in srgb, var(--sl-color-bg-nav) 84%, var(--sl-color-text-accent) 10%);
+    --control-border: color-mix(in srgb, var(--sl-color-text) 8%, transparent);
+    --control-border-hover: color-mix(in srgb, var(--sl-color-text-accent) 16%, transparent);
+    --control-shadow:
+      0 10px 30px rgba(15, 23, 42, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      inset 0 0 0 1px color-mix(in srgb, var(--sl-color-text) 4%, transparent);
+    --control-shadow-hover:
+      0 14px 32px rgba(15, 23, 42, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.42),
+      inset 0 0 0 1px color-mix(in srgb, var(--sl-color-text-accent) 8%, transparent);
+    --control-icon-bg: color-mix(in srgb, var(--sl-color-text-accent) 12%, var(--sl-color-bg) 88%);
+    --control-menu-bg: color-mix(in srgb, var(--sl-color-bg) 94%, var(--sl-color-bg-nav) 6%);
+  }
+
+  .theme-control[data-variant='floating'] {
+    position: fixed;
+    left: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 30;
+  }
+
+  .theme-dropdown {
+    position: relative;
+  }
+
+  .theme-dropdown summary {
+    list-style: none;
+  }
+
+  .theme-dropdown summary::marker {
+    content: '';
+  }
+
+  .theme-dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .theme-dropdown summary::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  .theme-trigger {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--sl-color-text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: 1px solid var(--control-border);
+    background: var(--control-bg);
+    border-radius: 999px;
+    padding: 0.42rem 0.72rem 0.42rem 0.48rem;
+    cursor: pointer;
+    box-shadow: var(--control-shadow);
+    backdrop-filter: blur(16px) saturate(1.15);
+    transition:
+      border-color 0.18s ease,
+      background-color 0.18s ease,
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .theme-trigger:hover {
+    color: var(--sl-color-text-accent);
+    border-color: var(--control-border-hover);
+    background: var(--control-bg-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--control-shadow-hover);
+  }
+
+  .theme-trigger:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--sl-color-text-accent) 20%, transparent),
+      var(--control-shadow-hover);
+  }
+
+  .theme-trigger:active {
+    transform: translateY(0);
+  }
+
+  .theme-trigger__icon {
+    width: 1.45rem;
+    height: 1.45rem;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    border-radius: 999px;
+    background: var(--control-icon-bg);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  }
+
+  .theme-icon {
+    width: 0.82rem;
+    height: 0.82rem;
+    display: none;
+  }
+
+  .theme-dropdown[data-theme-choice='light'] .theme-icon--light,
+  .theme-dropdown[data-theme-choice='dark'] .theme-icon--dark,
+  .theme-dropdown[data-theme-choice='auto'] .theme-icon--system {
+    display: block;
+  }
+
+  .theme-menu {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 0.55rem);
+    min-width: 8.9rem;
+    display: none;
+    padding: 0.42rem;
+    background: var(--control-menu-bg);
+    border: 1px solid color-mix(in srgb, var(--sl-color-text) 6%, transparent);
+    border-radius: 1rem;
+    box-shadow:
+      0 18px 40px rgba(15, 23, 42, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      inset 0 0 0 1px color-mix(in srgb, var(--sl-color-text) 4%, transparent);
+    backdrop-filter: blur(18px) saturate(1.08);
+  }
+
+  .theme-dropdown[open] .theme-menu {
+    display: grid;
+    gap: 0.16rem;
+  }
+
+  .theme-option {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--sl-color-text);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: left;
+    border: 0;
+    background: transparent;
+    border-radius: 0.72rem;
+    padding: 0.52rem 0.62rem;
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease;
+  }
+
+  .theme-option:hover {
+    color: var(--sl-color-text-accent);
+    background: color-mix(in srgb, var(--sl-color-text-accent) 8%, transparent);
+  }
+
+  .theme-option[data-selected='true'] {
+    background: color-mix(in srgb, var(--sl-color-text-accent) 10%, transparent);
+  }
+
+  .theme-option__check {
+    opacity: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .theme-option[data-selected='true'] .theme-option__check {
+    opacity: 1;
+  }
+
+  @media (max-width: 720px) {
+    .theme-control[data-variant='floating'] {
+      left: 0.75rem;
+      bottom: max(0.75rem, env(safe-area-inset-bottom));
+    }
+
+    .theme-trigger {
+      padding: 0.4rem 0.66rem 0.4rem 0.46rem;
+    }
+
+    .theme-menu {
+      min-width: 8.2rem;
+    }
+  }
+</style>

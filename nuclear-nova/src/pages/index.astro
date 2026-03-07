@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryBadge from '../components/CategoryBadge.astro';
+import { getAllPosts, getPostPath } from '../utils/post-utils';
+import { getPostExcerpt } from '../utils/excerpt';
+
+const posts = await getAllPosts();
+const featured = posts[0];
+const recentPosts = posts.slice(1, 4);
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout title="B~~~~~Z" description="Bin Zhang's personal blog and knowledge base.">
+  <section class="hero">
+    <h1>B~~~~~Z</h1>
+    <p>Exploring Data, AI, and Engineering.</p>
+  </section>
+
+  {featured && (
+    <section class="featured">
+      <h2>Featured</h2>
+      <article class="post-card featured-card">
+        <h3><a href={getPostPath(featured)}>{featured.data.title}</a></h3>
+        <p class="meta">{formatDate(featured.data.date)}</p>
+        {featured.data.categories && featured.data.categories.length > 0 && (
+          <div class="categories">
+            {featured.data.categories.map((category) => (
+              <CategoryBadge category={category} link={true} />
+            ))}
+          </div>
+        )}
+        <p>{getPostExcerpt(featured, 180)}</p>
+      </article>
+    </section>
+  )}
+
+  <section>
+    <h2>Recent Posts</h2>
+    <div class="grid">
+      {recentPosts.map((post) => (
+        <article class="post-card">
+          <h3><a href={getPostPath(post)}>{post.data.title}</a></h3>
+          <p class="meta">{formatDate(post.data.date)}</p>
+          <p>{getPostExcerpt(post)}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    margin-bottom: 2.5rem;
+  }
+
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+
+  .hero p {
+    margin: 0.75rem 0 0;
+    max-width: 42rem;
+    color: var(--sl-color-gray-6);
+    font-size: 1.05rem;
+  }
+
+  .featured {
+    margin-bottom: 2.5rem;
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .post-card {
+    position: relative;
+    border-radius: 18px;
+    padding: 1.15rem 1.2rem 1.25rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.98) 100%);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--sl-color-hairline) 90%, white),
+      0 10px 30px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .featured-card {
+    padding: 1.4rem 1.45rem 1.5rem;
+    background:
+      radial-gradient(circle at top right, rgba(3, 169, 244, 0.12), transparent 28%),
+      linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(148, 163, 184, 0.28),
+      0 14px 36px rgba(14, 165, 233, 0.08);
+  }
+
+  .post-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.55rem;
+    font-size: 1.08rem;
+    line-height: 1.22;
+  }
+
+  .post-card h3 a {
+    text-decoration: none;
+    color: var(--sl-color-text) !important;
+    transition: color 0.2s ease;
+  }
+
+  .meta {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    color: var(--sl-color-gray-5);
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .post-card p:last-child {
+    margin-bottom: 0;
+    color: var(--sl-color-gray-7);
+  }
+
+  .post-card:hover {
+    transform: translateY(-6px);
+    background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(56, 189, 248, 0.55),
+      0 20px 44px rgba(14, 165, 233, 0.18);
+  }
+
+  .post-card:hover h3 a {
+    color: #0369a1 !important;
+  }
+
+  :root[data-theme='dark'] .post-card {
+    background: linear-gradient(180deg, rgba(35, 38, 47, 0.96) 0%, rgba(26, 29, 35, 0.98) 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(84, 88, 97, 0.72),
+      0 12px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  :root[data-theme='dark'] .featured-card {
+    background:
+      radial-gradient(circle at top right, rgba(79, 195, 247, 0.14), transparent 30%),
+      linear-gradient(180deg, rgba(46, 48, 57, 0.98) 0%, rgba(26, 29, 35, 0.98) 100%);
+  }
+
+  :root[data-theme='dark'] .post-card:hover {
+    background: linear-gradient(180deg, rgba(42, 48, 59, 1) 0%, rgba(24, 28, 36, 1) 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(56, 189, 248, 0.6),
+      0 22px 46px rgba(2, 132, 199, 0.24);
+  }
+
+  :root[data-theme='dark'] .post-card:hover h3 a {
+    color: #7dd3fc !important;
+  }
+
+  @media (max-width: 640px) {
+    .post-card,
+    .featured-card {
+      border-radius: 14px;
+      padding: 1rem;
+    }
+  }
+</style>

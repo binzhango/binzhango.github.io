@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-export type Post = CollectionEntry<'docs'>;
+export type Post = CollectionEntry<'blog'>;
 
 export interface PostsByYear {
     [year: string]: Post[];
@@ -19,13 +19,8 @@ export interface PostsByTag {
  * Filters for posts in the /posts/ directory and sorts by date
  */
 export async function getAllPosts(): Promise<Post[]> {
-    const allDocs = await getCollection('docs');
-    
-    // Filter for posts (entries in posts/ directory)
-    // Use id instead of slug
-    const posts = allDocs.filter(doc => doc.id && doc.id.startsWith('posts/'));
-    
-    // Sort by date (newest first)
+    const posts = await getCollection('blog');
+
     return posts.sort((a, b) => {
         const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
         const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
@@ -42,13 +37,12 @@ export async function getPostsByYear(): Promise<PostsByYear> {
     const postsByYear: PostsByYear = {};
     
     for (const post of posts) {
-        if (post.data.date) {
-            const year = new Date(post.data.date).getFullYear().toString();
-            if (!postsByYear[year]) {
-                postsByYear[year] = [];
-            }
-            postsByYear[year].push(post);
-        }
+        const dateYear = post.data.date ? new Date(post.data.date).getFullYear().toString() : '';
+        const idYear = post.id.split('/')[0] ?? '';
+        const year = /\d{4}/.test(dateYear) ? dateYear : idYear;
+        if (!/\d{4}/.test(year)) continue;
+        if (!postsByYear[year]) postsByYear[year] = [];
+        postsByYear[year].push(post);
     }
     
     return postsByYear;
@@ -106,12 +100,7 @@ export async function getPostsByTag(): Promise<PostsByTag> {
  */
 export function generatePostUrl(date: Date, slug: string): string {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    
-    // Remove 'posts/' prefix if present
-    const cleanSlug = slug.replace(/^posts\//, '');
-    
-    return `/posts/${year}/${month}/${cleanSlug}`;
+    return `/posts/${year}/${slugifyId(slug)}`;
 }
 
 /**
@@ -136,4 +125,20 @@ export async function getAdjacentPosts(currentSlug: string): Promise<{
         // Next post is the one after in the sorted array (older)
         next: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null,
     };
+}
+
+function slugifySegment(segment: string): string {
+    return segment.trim().toLowerCase().replace(/\s+/g, '-');
+}
+
+export function slugifyId(id: string): string {
+    return id
+        .split('/')
+        .map((segment) => slugifySegment(segment))
+        .filter(Boolean)
+        .join('/');
+}
+
+export function getPostPath(post: Pick<Post, 'id'>): string {
+    return `/posts/${slugifyId(post.id)}/`;
 }

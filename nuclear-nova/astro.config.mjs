@@ -1,85 +1,30 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
-import { getSortedPosts } from './src/sidebar-utils.mjs';
 import mdx from '@astrojs/mdx';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import remarkDirective from 'remark-directive';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
-import rehypeMathJax from 'rehype-mathjax';
+import rehypeMathJax from 'rehype-mathjax/chtml';
 import rehypeMermaid from 'rehype-mermaid';
 import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers';
-import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
+import remarkStarlightAdmonitions from './src/plugins/remark-starlight-admonitions.mjs';
 
 // https://astro.build/config
 export default defineConfig({
     site: 'https://binzhango.com', // Update with actual custom domain
     output: 'static',
+    devToolbar: {
+        enabled: false,
+    },
     adapter: vercel(),
     integrations: [
-        starlight({
-            title: 'B~~~~~Z',
-            defaultLocale: 'root',
-            locales: {
-                root: {
-                    label: 'English',
-                    lang: 'en',
-                },
-            },
-            customCss: ['./src/styles/global.css'],
-            expressiveCode: {
-                themes: ['github-dark', 'github-light'],
-                plugins: [pluginLineNumbers()],
-                defaultProps: {
-                    // Enable line numbers by default
-                    showLineNumbers: true,
-                    // Start line numbers at 1
-                    startLineNumber: 1,
-                    // Enable word wrap
-                    wrap: true,
-                },
-                // Disable copy button
-                frames: {
-                    showCopyToClipboardButton: false,
-                },
-                styleOverrides: {
-                    // Ensure line numbers are visible
-                    codePaddingInline: '1rem',
-                },
-            },
-            social: [
-                {
-                    icon: 'github',
-                    label: 'GitHub',
-                    href: 'https://github.com/binzhango',
-                },
-                {
-                    icon: 'discord',
-                    label: 'Discord',
-                    href: 'https://discord.com/invite/binzhango',
-                },
-                {
-                    icon: 'threads',
-                    label: 'Threads',
-                    href: 'https://www.threads.net/@binzhango',
-                },
-            ],
-            tableOfContents: false,
-            sidebar: getSortedPosts(),
-            components: {
-                Header: './src/components/Header.astro',
-                Footer: './src/components/Footer.astro',
-                Head: './src/components/Head.astro',
-                ContentPanel: './src/components/ContentPanel.astro',
-                Search: './src/components/Search.astro',
-            },
-        }),
         mdx(),
         sitemap(),
     ],
     markdown: {
-        remarkPlugins: [remarkMath, remarkGfm],
+        remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkStarlightAdmonitions],
         rehypePlugins: [
             [
                 rehypeMathJax,
@@ -88,8 +33,8 @@ export default defineConfig({
                         inlineMath: [['$', '$']],
                         displayMath: [['$$', '$$'], ['\\[', '\\]']],
                     },
-                    svg: {
-                        fontCache: 'global',
+                    chtml: {
+                        fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
                     },
                 },
             ],

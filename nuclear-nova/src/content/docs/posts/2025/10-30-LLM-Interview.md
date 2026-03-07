@@ -15,7 +15,7 @@ categories:
 <details>
 <summary>Machine Learning Concepts</summary>
 
-:::tip
+::::tip
 :::note[Question: How would you describe the concept of machine learning in your own words?]{.question-note}
 :::
 
@@ -167,7 +167,7 @@ If you tune hyperparameters using the test set, you risk overfitting to that spe
 
 </details>
 
-:::
+::::
 
 </details>
 
@@ -356,13 +356,13 @@ That’s hard — and it exacerbates the curse of dimensionality because:
 :::tip
 Training a neural LM (like a Transformer) by minimizing the negative log-likelihood (NLL) is the same as maximizing the likelihood:
 
-$$\boxed{
+$$
 \text{Maximizing likelihood} 
 \;\; \Leftrightarrow \;\; 
 \text{Maximizing log-likelihood} 
 \;\; \Leftrightarrow \;\; 
 \text{Minimizing negative log-likelihood}
-}$$
+$$
 
 **Example**
 > Sentence: "The cat sat on the mat."
@@ -380,19 +380,16 @@ $$\boxed{
 <summary>Answer</summary>
 
 :::tip
-$$\boxed{
-    \ell(\theta) = \sum_{t=1}^T \log P(x_t \mid x_{<t}; \theta)
-}
+$$
+\ell(\theta) = \sum_{t=1}^T \log P(x_t \mid x_{<t}; \theta)
 $$
 
-$$\boxed{
-    \text{NLL}(\theta) = -\ell(\theta)
-}
+$$
+\text{NLL}(\theta) = -\ell(\theta)
 $$
 
-$$\boxed{
-    \text{NLL}(\theta) = -\sum_{t=1}^T \log P(x_t \mid x_{<t}; \theta)
-}
+$$
+\text{NLL}(\theta) = -\sum_{t=1}^T \log P(x_t \mid x_{<t}; \theta)
 $$
 
 **where** $x_{<t}$ means **All tokens** before $t$: $x_1, \dots, x_{t-1}$
@@ -488,13 +485,13 @@ This changes the loss from the usual “−log p(correct token)” to a mix of:
 
 ## Fundamentals of Large Language Models (LLMs)
 
-:::note[Question Bank]
+::::note[Question Bank]
 - <span class="def-mono-red">Fundamentals of Large Language Models (LLMs)</span>
 
 <details>
 <summary>LLM Basic</summary>
 
-:::tip
+::::tip
 :::note[Question: What are the main open-source LLM families currently available?]{.question-note}
 :::
 
@@ -651,14 +648,14 @@ Below is the full reasoning, broken into the fundamental, engineering, and use-c
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Layer Normalization Variants</summary>
 
-:::tip
+::::tip
 :::note[Question: Comparison of LayerNorm vs BatchNorm vs RMSNorm?]{.question-note}
 :::
 
@@ -764,14 +761,14 @@ Below is the full reasoning, broken into the fundamental, engineering, and use-c
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Activation Functions in LLMs</summary>
 
-:::tip
+::::tip
 :::note[Question: What’s the formula for the FFN (Feed-Forward Network) block?]{.question-note}
 :::
 
@@ -891,14 +888,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Attention Mechanisms — Advanced Topics</summary>
 
-:::tip
+::::tip
 :::note[Question: What are the problems with traditional attention?]{.question-note}
 :::
 
@@ -1053,14 +1050,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Cross-Attention</summary>
 
-:::tip
+::::tip
 :::note[Question: Why do we need Cross-Attention?]{.question-note}
 :::
 
@@ -1127,14 +1124,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Transformer Operations</summary>
 
-:::tip
+::::tip
 :::note[Question: How to load a BERT model using transformers?]{.question-note}
 :::
 
@@ -1168,14 +1165,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>LLM Loss Functions</summary>
 
-:::tip
+::::tip
 :::note[Question: What is KL divergence?]{.question-note}
 :::
 
@@ -1264,14 +1261,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Similarity & Contrastive Learning</summary>
 
-:::tip
+::::tip
 :::note[Question: Besides cosine similarity, what other similarity metrics exist?]{.question-note}
 :::
 
@@ -1305,7 +1302,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
@@ -1314,7 +1311,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 <details>
 <summary>Advanced LLM</summary>
 
-:::tip
+::::tip
 :::note[Question: What is a generative large model?]{.question-note}
 :::
 
@@ -1392,7 +1389,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
@@ -1401,7 +1398,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 <details>
 <summary>General Fine-Tuning</summary>
 
-:::tip
+::::tip
 :::note[Question: Why does the loss drop suddenly in the second epoch during SFT?]{.question-note}
 :::
 
@@ -1578,14 +1575,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>SFT Tricks</summary>
 
-:::tip
+::::tip
 :::note[Question: What’s the typical SFT workflow?]{.question-note}
 :::
 
@@ -1652,14 +1649,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Training Experience</summary>
 
-:::tip
+::::tip
 :::note[Question: How to choose a distributed training framework?]{.question-note}
 :::
 
@@ -1704,7 +1701,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
@@ -1714,7 +1711,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 <details>
 <summary>LangChain Core</summary>
 
-:::tip
+::::tip
 :::note[Question: What is LangChain?]{.question-note}
 :::
 
@@ -1814,14 +1811,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Long-Term Memory in Multi-Turn Conversations</summary>
 
-:::tip
+::::tip
 :::note[Question: How can Agents access conversation context?]{.question-note}
 :::
 
@@ -1866,14 +1863,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Practical RAG Q&A using LangChain</summary>
 
-:::tip
+::::tip
 :::note[Question: (Practical implementation questions about RAG apps in LangChain)]{.question-note}
 :::
 
@@ -1885,7 +1882,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
@@ -1895,7 +1892,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 <details>
 <summary>RAG Basics</summary>
 
-:::tip
+::::tip
 :::note[Question: Why do LLMs need an external (vector) knowledge base?]{.question-note}
 :::
 
@@ -1940,14 +1937,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>RAG Concepts</summary>
 
-:::tip
+::::tip
 :::note[Question: What are the limitations of base LLMs that RAG solves?]{.question-note}
 :::
 
@@ -2036,14 +2033,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>RAG Layout Analysis</summary>
 
-:::tip
+::::tip
 :::note[Question: Why is PDF parsing necessary?]{.question-note}
 :::
 
@@ -2143,14 +2140,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>RAG Retrieval Strategies</summary>
 
-:::tip
+::::tip
 :::note[Question: Why use LLMs to assist recall?]{.question-note}
 :::
 
@@ -2206,14 +2203,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>RAG Evaluation</summary>
 
-:::tip
+::::tip
 :::note[Question: Why evaluate RAG?]{.question-note}
 :::
 
@@ -2236,14 +2233,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>RAG Optimization</summary>
 
-:::tip
+::::tip
 :::note[Question: What are the optimization strategies for retrieval and generation modules?]{.question-note}
 :::
 
@@ -2365,14 +2362,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Graph RAG</summary>
 
-:::tip
+::::tip
 :::note[Question: Why do we need Graph RAG?]{.question-note}
 :::
 
@@ -2406,7 +2403,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
@@ -2415,7 +2412,7 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 <details>
 <summary>PEFT Fundamentals</summary>
 
-:::tip
+::::tip
 :::note[Question: What is fine-tuning, and how is it performed?]{.question-note}
 :::
 
@@ -2449,14 +2446,14 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
 <details>
 <summary>Adapter Tuning</summary>
 
-:::tip
+::::tip
 :::note[Question: Why use adapter-tuning?]{.question-note}
 :::
 
@@ -2490,8 +2487,8 @@ $$\text{Swish}(x) = \frac{x}{1 + e^{-x}}$$
 
 </details>
 
-:::
+::::
 
 </details>
 
-:::
+::::
