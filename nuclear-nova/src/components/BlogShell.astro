@@ -428,12 +428,30 @@ const showSecondary = hasSecondary || reserveSecondary;
 
   .blog-main {
     min-width: 0;
+    display: flex;
+    justify-content: center;
     padding: 0;
+    transition: padding 0.22s ease;
   }
 
   .blog-main__inner {
     width: min(100%, 48rem);
-    padding-right: 1rem;
+    margin-inline: 0;
+    padding-inline: clamp(1rem, 2.2vw, 2rem);
+    transition:
+      margin 0.22s ease,
+      padding 0.22s ease,
+      width 0.22s ease;
+  }
+
+  :global(body.blog-sidebar-collapsed .blog-main) {
+    padding-inline: clamp(0.5rem, 1.5vw, 1.5rem);
+  }
+
+  :global(body.blog-sidebar-collapsed .blog-main__inner) {
+    margin-inline: auto;
+    width: min(100%, 50rem);
+    padding-inline: clamp(1rem, 2.4vw, 2.25rem);
   }
 
   .blog-secondary {
