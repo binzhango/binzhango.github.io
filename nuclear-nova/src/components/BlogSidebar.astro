@@ -73,23 +73,19 @@ function shouldOpen(year: string, paths: string[]): boolean {
   function syncBlogSidebarToggle() {
     const toggle = document.querySelector('.blog-sidebar [data-blog-sidebar-toggle]');
     if (!(toggle instanceof HTMLButtonElement)) return;
-
     const isMobile = window.matchMedia('(max-width: 720px)').matches;
-    if (isMobile) {
-      document.body.classList.remove('blog-sidebar-collapsed');
-      toggle.hidden = true;
-      return;
-    }
+    const viewport = isMobile ? 'mobile' : 'desktop';
 
-    if (toggle.dataset.initialized !== 'true') {
-      document.body.classList.remove('blog-sidebar-collapsed');
+    if (toggle.dataset.initialized !== 'true' || toggle.dataset.viewport !== viewport) {
+      document.body.classList.toggle('blog-sidebar-collapsed', isMobile);
       toggle.dataset.initialized = 'true';
+      toggle.dataset.viewport = viewport;
     }
 
     const collapsed = document.body.classList.contains('blog-sidebar-collapsed');
     toggle.hidden = false;
-    toggle.setAttribute('aria-pressed', String(collapsed));
-    toggle.setAttribute('aria-label', collapsed ? 'Expand blog sidebar' : 'Collapse blog sidebar');
+    toggle.setAttribute('aria-pressed', String(!collapsed));
+    toggle.setAttribute('aria-label', collapsed ? 'Open blog sidebar' : 'Collapse blog sidebar');
     toggle.dataset.collapsed = String(collapsed);
   }
 
