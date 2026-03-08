@@ -3,6 +3,7 @@ import ThemeManager from '../components/ThemeManager.astro';
 import Lightbox from '../components/Lightbox.astro';
 import CodeBlockCopy from '../components/CodeBlockCopy.astro';
 import ThemeControl from '../components/ThemeControl.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -28,6 +29,7 @@ const isBlogPage = Astro.url.pathname === '/posts/' || Astro.url.pathname.starts
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/assets/favicon.ico" />
     <ThemeManager defaultTheme="light" />
+    <GoogleAnalytics />
   </head>
   <body>
     <header class="site-header">
