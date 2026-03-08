@@ -8,6 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "new:post": "node ./scripts/init-blog-post.mjs",
+    "new:post:sh": "bash ./scripts/init-blog-post.sh",
     "test": "vitest run"
   },
   "dependencies": {
