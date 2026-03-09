@@ -112,7 +112,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
         {pageDescription && <p class="post-header__summary">{pageDescription}</p>}
         <div class="post-meta">
           <span class="post-meta__item" aria-label="Published date">
-            <time class="post-meta__value" dateTime={formatDateTime(post.data.date)}>{formatDate(post.data.date)}</time>
+            <time class="post-meta__value" datetime={formatDateTime(post.data.date)}>{formatDate(post.data.date)}</time>
           </span>
           {post.data.author && (
             <span class="post-meta__item" aria-label="Author">
