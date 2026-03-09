@@ -952,39 +952,9 @@ h1.page-title {
     margin-bottom: 1.5rem !important;
 }
 
-/* Remove any blockquote-style left borders */
-.sl-container,
-.content-panel .sl-container {
-    border-left: none !important;
-}
-
-/* Remove left sidebar border/line */
-main,
-.main-frame,
-[data-page],
-.sl-flex,
-.content-panel,
-article {
-    border-left: none !important;
-    border-right: none !important;
-}
-
-/* Remove any vertical dividers */
-.sl-markdown-content,
-.content,
-main>* {
-    border-left: none !important;
-    border-right: none !important;
-}
-
 /* Ensure no borders on main content area */
 .page {
     border: none !important;
-}
-
-/* Aggressive removal of all possible left borders and dividers */
-* {
-    border-left: none !important;
 }
 
 /* Re-enable borders only where needed */
@@ -1248,27 +1218,6 @@ header nav a {
 }
 
 
-/* Remove visible left/right borders from LinkCard */
-.sl-link-card,
-.sl-link-card::before,
-.sl-link-card::after {
-    border-left: none !important;
-    border-right: none !important;
-}
-
-/* Ensure only top and bottom borders if needed */
-.sl-link-card {
-    border: none !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
-:root[data-theme='dark'] .sl-link-card {
-    border: none !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
 /* Ensure markdown <details><summary> toggles are visible in both themes */
 .sl-markdown-content details>summary {
     list-style: none;
@@ -1319,14 +1268,6 @@ header nav a {
 }
 
 
-
-/* AGGRESSIVE FIX - Remove all borders from cards and fix all text visibility */
-.card,
-[class*="card"],
-[class*="link-card"] {
-    border-left: none !important;
-    border-right: none !important;
-}
 
 /* Make ALL text in cards visible */
 .card *,
