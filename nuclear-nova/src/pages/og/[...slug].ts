@@ -14,7 +14,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     param: 'slug',
     getImageOptions: (_id, page: (typeof pages)[string]) => {
         return {
-            title: page.data.title || 'B~~~~~Z',
+            title: page.data.title || "Bin Zhang's Blog",
             description: page.data.excerpt || page.data.description || '',
             bgGradient: [[3, 169, 244]], // Light blue (#03a9f4)
             border: { color: [255, 152, 0], width: 20 }, // Orange (#ff9800)
