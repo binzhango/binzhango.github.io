@@ -12,7 +12,7 @@ interface Props {
 }
 
 const {
-  title = 'B~~~~~Z',
+  title = "Bin Zhang's Blog",
   description = 'A blog about Python, Kubernetes, Spark, Machine Learning, and more.',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
@@ -35,8 +35,8 @@ const isBlogPage = Astro.url.pathname === '/posts/' || Astro.url.pathname.starts
     <header class="site-header">
       <div class="site-shell">
         <a class="brand" href="/">
-          <img src="/assets/favicon.ico" alt="B~~~~~Z" width="28" height="28" />
-          <span>B~~~~~Z</span>
+          <img src="/assets/favicon.ico" alt="Bin Zhang's Blog" width="28" height="28" />
+          <span>Bin Zhang's Blog</span>
         </a>
         <nav class="site-nav" aria-label="Primary">
           <a class="nav-link" href="/">Home</a>
