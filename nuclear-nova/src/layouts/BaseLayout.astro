@@ -327,6 +327,46 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString(
     :global(html:root[data-theme='light']) .site-footer {
       background: rgba(243, 234, 220, 0.78) !important;
     }
+
+    :global(html:root[data-theme='dark']) .site-header {
+      background: #15120f !important;
+    }
+
+    :global(html:root[data-theme='dark']) .site-header__bar {
+      border-color: color-mix(in srgb, var(--clay-border) 58%, var(--clay-slushie-500) 42%) !important;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(248, 204, 101, 0.08), transparent 28%),
+        linear-gradient(145deg, #1f1b18 0%, #13262c 100%) !important;
+      box-shadow:
+        0 22px 46px rgba(0, 0, 0, 0.46),
+        0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+        0 1px 0 rgba(255, 255, 255, 0.07) inset,
+        0 0 26px color-mix(in srgb, var(--clay-slushie-500) 8%, transparent) !important;
+    }
+
+    :global(html:root[data-theme='dark']) .brand__mark {
+      border-color: color-mix(in srgb, var(--clay-border) 58%, var(--clay-lemon-400) 42%) !important;
+      background: #2a2117 !important;
+      box-shadow:
+        0 12px 22px rgba(0, 0, 0, 0.38),
+        0 0 18px rgba(248, 204, 101, 0.08);
+    }
+
+    :global(html:root[data-theme='dark']) .nav-link,
+    :global(html:root[data-theme='dark']) .social-link {
+      border-color: color-mix(in srgb, var(--clay-border) 64%, var(--clay-slushie-500) 36%) !important;
+      background: rgba(24, 29, 29, 0.72) !important;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.055) inset;
+    }
+
+    :global(html:root[data-theme='dark']) .site-footer {
+      border-color: color-mix(in srgb, var(--clay-border) 62%, var(--clay-slushie-500) 38%) !important;
+      background:
+        linear-gradient(145deg, rgba(31, 27, 24, 0.84) 0%, rgba(19, 38, 44, 0.78) 100%) !important;
+      box-shadow:
+        0 20px 38px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.035) inset !important;
+    }
   }
 
   @media (max-width: 840px) {
