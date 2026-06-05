@@ -95,13 +95,6 @@ const sortedPosts = [...posts].sort((a, b) => {
         </aside>
 
         <main class="listing-content">
-            <header class="listing-header">
-                <h1 class="listing-title">
-                    <CategoryBadge category={category} link={false} />
-                </h1>
-                <p class="listing-count">{sortedPosts.length} {sortedPosts.length === 1 ? 'post' : 'posts'}</p>
-            </header>
-
             <div class="listing-posts">
                 {sortedPosts.map(post => (
                     <article class="listing-post">
@@ -144,11 +137,10 @@ const sortedPosts = [...posts].sort((a, b) => {
     }
 
     .listing-sidebar__card,
-    .listing-header,
     .listing-post {
         border: 1px solid var(--clay-border);
         border-radius: 28px;
-        background: rgba(255, 255, 255, 0.84);
+        background: color-mix(in srgb, var(--clay-paper) 88%, transparent);
         box-shadow: var(--clay-shadow);
     }
 
@@ -176,41 +168,26 @@ const sortedPosts = [...posts].sort((a, b) => {
         display: block;
         padding: 0.6rem 0.75rem;
         border-radius: 18px;
-        color: var(--sl-color-text);
+        color: var(--sl-color-text) !important;
         text-decoration: none;
         transition: background-color 0.18s ease, transform 0.18s ease;
     }
 
     .listing-sidebar a:hover {
-        background: rgba(248, 204, 101, 0.34);
+        background: color-mix(in srgb, var(--clay-lemon-400) 26%, var(--clay-paper) 74%) !important;
         transform: translateY(-1px);
     }
 
     .listing-sidebar a.active {
-        background: rgba(59, 211, 253, 0.24);
+        background: color-mix(in srgb, var(--clay-slushie-500) 18%, var(--clay-paper) 82%) !important;
+        color: var(--sl-color-text) !important;
+        font-weight: 700;
     }
 
     .listing-content {
         min-width: 0;
         display: grid;
         gap: 1rem;
-    }
-
-    .listing-header {
-        padding: 1.2rem 1.3rem;
-    }
-
-    .listing-title {
-        margin: 0 0 0.45rem;
-    }
-
-    .listing-count {
-        margin: 0;
-        color: var(--clay-muted);
-        font-family: var(--font-space-mono);
-        font-size: 0.8rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
     }
 
     .listing-posts {

@@ -34,55 +34,49 @@ function formatDate(date: Date | undefined): string {
 <BaseLayout title="Bin Zhang's Blog" description="Bin Zhang's personal blog and knowledge base.">
   <section class="home-hero" aria-label="Homepage introduction">
     <div class="home-hero__copy">
-      <p class="eyebrow">Bin Zhang's Field Notes</p>
-      <h1>Modern notes for data, AI, and engineering systems.</h1>
-      <p class="lede">
-        Practical essays, implementation notes, and mental models for LLMs, infrastructure,
-        data platforms, and the craft of building durable software.
-      </p>
-      <div class="hero-actions">
-        <a class="action-button action-button--primary" href="/posts/">Browse posts</a>
-        <a class="action-button action-button--secondary" href="/archive/">View archive</a>
+      <div class="home-hero__intro">
+        <p class="eyebrow">Bin Zhang's Field Notes</p>
+        <h1>Modern notes for data, AI, and engineering systems.</h1>
+        <p class="lede">
+          Practical essays, implementation notes, and mental models for LLMs, infrastructure,
+          data platforms, and the craft of building durable software.
+        </p>
+        <div class="hero-actions">
+          <a class="action-button action-button--primary" href="/posts/">Browse posts</a>
+          <a class="action-button action-button--secondary" href="/archive/">View archive</a>
+        </div>
       </div>
+
+      <aside class="home-hero__panel" aria-label="Blog summary">
+        <p class="panel-label">Notebook summary</p>
+
+        <div class="metric-grid" aria-label="Publication metrics">
+          <div class="metric">
+            <span>Posts</span>
+            <strong>{totalPosts}</strong>
+          </div>
+          <div class="metric">
+            <span>Topics</span>
+            <strong>{categoryCounts.size}</strong>
+          </div>
+          <div class="metric metric--wide">
+            <span>Latest</span>
+            <strong>{featured ? formatDate(featured.data.date) : 'Coming soon'}</strong>
+          </div>
+        </div>
+
+        {topCategories.length > 0 && (
+          <div class="topic-cloud" aria-label="Top categories">
+            {topCategories.map(([category, count]) => (
+              <span class="topic-chip">
+                <CategoryBadge category={category} />
+                <span>{count}</span>
+              </span>
+            ))}
+          </div>
+        )}
+      </aside>
     </div>
-
-    <aside class="home-hero__panel" aria-label="Blog summary">
-      <div class="panel-brand">
-        <span class="panel-brand__mark" aria-hidden="true">
-          <img src="/assets/favicon.ico" alt="" width="34" height="34" />
-        </span>
-        <span>
-          <span class="panel-brand__label">Knowledge base</span>
-          <strong>Technical notes in motion</strong>
-        </span>
-      </div>
-
-      <div class="metric-grid" aria-label="Publication metrics">
-        <div class="metric">
-          <span>Posts</span>
-          <strong>{totalPosts}</strong>
-        </div>
-        <div class="metric">
-          <span>Topics</span>
-          <strong>{categoryCounts.size}</strong>
-        </div>
-        <div class="metric metric--wide">
-          <span>Latest</span>
-          <strong>{featured ? formatDate(featured.data.date) : 'Coming soon'}</strong>
-        </div>
-      </div>
-
-      {topCategories.length > 0 && (
-        <div class="topic-cloud" aria-label="Top categories">
-          {topCategories.map(([category, count]) => (
-            <span class="topic-chip">
-              <CategoryBadge category={category} />
-              <span>{count}</span>
-            </span>
-          ))}
-        </div>
-      )}
-    </aside>
   </section>
 
   <main class="home-board" aria-label="Homepage posts">
@@ -154,37 +148,58 @@ function formatDate(date: Date | undefined): string {
 </BaseLayout>
 
 <style>
+  @layer overrides {
+    :global(html:root[data-theme='light']) {
+      --sl-color-bg: #f3eee7 !important;
+      --sl-color-bg-nav: rgba(243, 238, 231, 0.92) !important;
+      background: #f3eee7 !important;
+    }
+
+    :global(html:root[data-theme='light'] body) {
+      background: #f3eee7 !important;
+    }
+
+    :global(html:root[data-theme='light'] .page),
+    :global(html:root[data-theme='light'] .sl-markdown-content) {
+      background: #f3eee7 !important;
+    }
+
+    :global(html:root[data-theme='light']) .home-board,
+    :global(html:root[data-theme='light']) .featured-section,
+    :global(html:root[data-theme='light']) .recent-section {
+      background: #f3eee7 !important;
+    }
+  }
+
   .home-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
-    gap: clamp(1rem, 2.6vw, 2rem);
-    align-items: stretch;
     margin-bottom: clamp(1.3rem, 3vw, 2.3rem);
   }
 
   .home-hero__copy,
-  .home-hero__panel,
   .featured-card,
   .post-card {
     position: relative;
     overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--clay-border) 82%, white 18%);
-    background: color-mix(in srgb, var(--clay-paper) 92%, transparent);
+    border: 1px solid color-mix(in srgb, var(--clay-border) 88%, #bfae93 12%);
+    background: color-mix(in srgb, var(--clay-paper) 86%, var(--clay-cream) 14%);
     box-shadow:
-      0 18px 44px rgba(18, 27, 48, 0.08),
-      0 1px 0 rgba(255, 255, 255, 0.74) inset;
+      0 22px 48px rgba(58, 44, 24, 0.11),
+      0 8px 18px rgba(1, 65, 141, 0.045),
+      0 1px 0 rgba(255, 255, 255, 0.8) inset;
   }
 
   .home-hero__copy {
-    min-height: clamp(24rem, 42vw, 34rem);
+    min-height: clamp(18rem, 27vw, 23rem);
     display: grid;
-    align-content: end;
-    gap: 1rem;
-    padding: clamp(1.2rem, 4vw, 3rem);
+    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
+    align-items: stretch;
+    gap: clamp(1.1rem, 3vw, 2.2rem);
+    padding: clamp(1.1rem, 3vw, 2rem);
     border-radius: 28px;
     background:
-      linear-gradient(120deg, rgba(248, 204, 101, 0.28), transparent 34%),
-      linear-gradient(145deg, color-mix(in srgb, var(--clay-paper) 95%, white 5%) 0%, color-mix(in srgb, var(--clay-cream) 90%, var(--clay-slushie-500) 10%) 100%);
+      radial-gradient(circle at 12% 12%, rgba(248, 204, 101, 0.18), transparent 32%),
+      linear-gradient(300deg, rgba(193, 176, 255, 0.1), transparent 42%),
+      linear-gradient(145deg, #f3eadc 0%, #dfece9 100%);
   }
 
   .home-hero__copy::before {
@@ -193,12 +208,12 @@ function formatDate(date: Date | undefined): string {
     inset: auto 1.1rem 1.1rem auto;
     width: min(28rem, 42%);
     aspect-ratio: 1;
-    border: 1px solid color-mix(in srgb, var(--clay-border) 76%, transparent);
+    border: 1px solid color-mix(in srgb, var(--clay-border) 82%, transparent);
     background:
-      linear-gradient(90deg, color-mix(in srgb, var(--clay-blueberry-800) 18%, transparent) 1px, transparent 1px),
-      linear-gradient(color-mix(in srgb, var(--clay-blueberry-800) 14%, transparent) 1px, transparent 1px);
+      linear-gradient(90deg, color-mix(in srgb, var(--clay-blueberry-800) 13%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in srgb, var(--clay-slushie-800) 11%, transparent) 1px, transparent 1px);
     background-size: 18px 18px;
-    opacity: 0.42;
+    opacity: 0.34;
     transform: rotate(-4deg);
     pointer-events: none;
   }
@@ -208,10 +223,18 @@ function formatDate(date: Date | undefined): string {
     z-index: 1;
   }
 
+  .home-hero__intro {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+    min-width: 0;
+    padding-block: clamp(0.35rem, 1vw, 1rem);
+  }
+
   .eyebrow,
   .meta,
   .metric span,
-  .panel-brand__label {
+  .panel-label {
     margin: 0;
     color: var(--clay-muted);
     font-family: var(--font-space-mono, var(--font-fira-code));
@@ -222,20 +245,20 @@ function formatDate(date: Date | undefined): string {
   }
 
   .home-hero h1 {
-    max-width: 13ch;
+    max-width: 17ch;
     margin: 0;
     color: var(--sl-color-text);
-    font-size: clamp(3.1rem, 7vw, 7.3rem);
-    line-height: 0.88;
+    font-size: clamp(2.4rem, 4.5vw, 4.55rem);
+    line-height: 0.96;
     text-wrap: balance;
   }
 
   .lede {
-    max-width: 46rem;
+    max-width: 42rem;
     margin: 0;
     color: var(--clay-charcoal);
-    font-size: clamp(1rem, 1.4vw, 1.22rem);
-    line-height: 1.62;
+    font-size: clamp(0.98rem, 1.25vw, 1.1rem);
+    line-height: 1.58;
   }
 
   .hero-actions {
@@ -271,15 +294,17 @@ function formatDate(date: Date | undefined): string {
     background: var(--clay-blueberry-800) !important;
     background-color: var(--clay-blueberry-800) !important;
     color: #ffffff !important;
-    box-shadow: 0 12px 26px rgba(1, 65, 141, 0.18);
+    box-shadow:
+      0 14px 28px rgba(1, 65, 141, 0.2),
+      0 1px 0 rgba(255, 255, 255, 0.22) inset;
   }
 
   .action-button--secondary,
   .section-link,
   .post-card__link {
-    border: 1px solid color-mix(in srgb, var(--clay-border) 76%, white 24%);
-    background: color-mix(in srgb, var(--clay-paper) 84%, transparent) !important;
-    background-color: color-mix(in srgb, var(--clay-paper) 84%, transparent) !important;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 86%, #bfae93 14%);
+    background: rgba(247, 241, 230, 0.86) !important;
+    background-color: rgba(247, 241, 230, 0.86) !important;
     color: var(--sl-color-text) !important;
   }
 
@@ -295,22 +320,19 @@ function formatDate(date: Date | undefined): string {
   }
 
   .home-hero__panel {
+    position: relative;
     display: grid;
     align-content: space-between;
-    gap: 1.05rem;
-    min-height: 100%;
-    padding: clamp(1rem, 2.2vw, 1.45rem);
-    border-radius: 24px;
+    box-sizing: border-box;
+    gap: 1rem;
+    min-height: auto;
+    height: 100%;
+    padding: clamp(0.35rem, 1.4vw, 1rem) 0 clamp(0.35rem, 1.4vw, 1rem) clamp(1rem, 2.2vw, 1.6rem);
+    border-left: 1px solid color-mix(in srgb, var(--clay-border) 82%, var(--clay-slushie-800) 18%);
   }
 
   .home-hero__panel::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(135deg, color-mix(in srgb, var(--clay-slushie-500) 18%, transparent), transparent 42%),
-      linear-gradient(315deg, color-mix(in srgb, var(--clay-ube-300) 22%, transparent), transparent 48%);
-    pointer-events: none;
+    content: none;
   }
 
   .home-hero__panel > * {
@@ -318,54 +340,35 @@ function formatDate(date: Date | undefined): string {
     z-index: 1;
   }
 
-  .panel-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    min-width: 0;
-  }
-
-  .panel-brand__mark {
-    width: 3.4rem;
-    height: 3.4rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-    border: 1px solid var(--clay-border);
-    border-radius: 18px;
-    background: var(--clay-lemon-400);
-    box-shadow: 0 10px 20px rgba(18, 27, 48, 0.08);
-  }
-
-  .panel-brand strong {
-    display: block;
-    margin-top: 0.16rem;
-    color: var(--sl-color-text);
-    font-size: clamp(1rem, 1.6vw, 1.25rem);
-    line-height: 1.15;
+  .panel-label {
+    align-self: start;
   }
 
   .metric-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
+    gap: 0;
+    align-content: stretch;
+    border-block: 1px solid color-mix(in srgb, var(--clay-border) 82%, var(--clay-slushie-800) 18%);
   }
 
   .metric {
-    min-height: 7.1rem;
+    min-height: 5.2rem;
     display: grid;
     align-content: end;
     gap: 0.35rem;
-    padding: 0.9rem;
-    border: 1px solid color-mix(in srgb, var(--clay-border) 72%, white 28%);
-    border-radius: 18px;
-    background: color-mix(in srgb, var(--clay-paper) 74%, transparent);
+    padding: 0.9rem 0;
   }
 
   .metric--wide {
     grid-column: 1 / -1;
-    min-height: 6rem;
+    min-height: 4.6rem;
+    border-top: 1px solid color-mix(in srgb, var(--clay-border) 82%, var(--clay-slushie-800) 18%);
+  }
+
+  .metric:nth-child(2) {
+    padding-left: 1rem;
+    border-left: 1px solid color-mix(in srgb, var(--clay-border) 82%, var(--clay-slushie-800) 18%);
   }
 
   .metric strong {
@@ -381,7 +384,9 @@ function formatDate(date: Date | undefined): string {
   .topic-cloud {
     display: flex;
     flex-wrap: wrap;
+    align-content: end;
     gap: 0.48rem;
+    min-height: auto;
   }
 
   .topic-chip {
@@ -398,7 +403,7 @@ function formatDate(date: Date | undefined): string {
     justify-content: center;
     border: 1px solid var(--clay-border);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--clay-paper) 86%, transparent);
+    background: rgba(247, 241, 230, 0.74);
     color: var(--clay-charcoal);
     font-size: 0.76rem;
     font-weight: 700;
@@ -433,7 +438,8 @@ function formatDate(date: Date | undefined): string {
     min-height: 25rem;
     border-radius: 28px;
     background:
-      linear-gradient(140deg, color-mix(in srgb, var(--clay-paper) 96%, white 4%) 0%, color-mix(in srgb, var(--clay-paper) 86%, var(--clay-cream) 14%) 100%);
+      radial-gradient(circle at 16% 15%, rgba(248, 204, 101, 0.14), transparent 30%),
+      linear-gradient(145deg, #f3eadc 0%, #dfece9 100%) !important;
   }
 
   .featured-card::after,
@@ -450,10 +456,10 @@ function formatDate(date: Date | undefined): string {
     align-content: start;
     gap: 0.65rem;
     padding: 1.35rem;
-    border-right: 1px solid color-mix(in srgb, var(--clay-border) 66%, white 34%);
+    border-right: 1px solid color-mix(in srgb, var(--clay-border) 82%, var(--clay-slushie-800) 18%);
     background:
-      linear-gradient(180deg, color-mix(in srgb, var(--clay-blueberry-800) 12%, transparent), transparent),
-      color-mix(in srgb, var(--clay-paper) 66%, transparent);
+      linear-gradient(180deg, rgba(1, 65, 141, 0.08), transparent),
+      rgba(239, 230, 216, 0.72) !important;
   }
 
   .featured-card__chrome span {
@@ -527,6 +533,9 @@ function formatDate(date: Date | undefined): string {
     gap: 0.75rem;
     padding: 1rem;
     border-radius: 20px;
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.38), transparent 32%),
+      #f3eadf !important;
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease,
@@ -537,8 +546,8 @@ function formatDate(date: Date | undefined): string {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(140deg, color-mix(in srgb, var(--card-tone, var(--clay-lemon-400)) 18%, transparent), transparent 44%);
-    opacity: 0.9;
+    background: linear-gradient(140deg, color-mix(in srgb, var(--card-tone, var(--clay-lemon-400)) 14%, transparent), transparent 44%);
+    opacity: 0.74;
     pointer-events: none;
   }
 
@@ -608,34 +617,90 @@ function formatDate(date: Date | undefined): string {
   }
 
   :root[data-theme='dark'] .home-hero__copy,
-  :root[data-theme='dark'] .home-hero__panel,
   :root[data-theme='dark'] .featured-card,
   :root[data-theme='dark'] .post-card {
-    border-color: color-mix(in srgb, var(--clay-border) 78%, black 22%);
+    border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
     box-shadow:
-      0 18px 44px rgba(0, 0, 0, 0.26),
-      0 1px 0 rgba(255, 255, 255, 0.04) inset;
+      0 24px 52px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 0 30px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
   }
 
   :root[data-theme='dark'] .home-hero__copy {
     background:
-      linear-gradient(120deg, rgba(248, 204, 101, 0.14), transparent 34%),
-      linear-gradient(145deg, color-mix(in srgb, var(--clay-paper) 92%, black 8%) 0%, color-mix(in srgb, var(--clay-cream) 88%, var(--clay-slushie-800) 12%) 100%);
+      linear-gradient(120deg, rgba(248, 204, 101, 0.12), transparent 34%),
+      linear-gradient(300deg, color-mix(in srgb, var(--clay-ube-300) 9%, transparent), transparent 44%),
+      linear-gradient(145deg, color-mix(in srgb, var(--clay-paper) 92%, #29313a 8%) 0%, color-mix(in srgb, var(--clay-cream) 82%, var(--clay-slushie-800) 18%) 100%);
+  }
+
+  :root[data-theme='dark'] .home-hero__copy::before {
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 22%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--clay-slushie-500) 16%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in srgb, var(--clay-lemon-400) 9%, transparent) 1px, transparent 1px);
+    opacity: 0.34;
+  }
+
+  :root[data-theme='dark'] .home-hero__panel {
+    border-left-color: color-mix(in srgb, var(--clay-border) 58%, var(--clay-slushie-500) 42%);
+  }
+
+  :root[data-theme='dark'] .metric-grid,
+  :root[data-theme='dark'] .metric--wide,
+  :root[data-theme='dark'] .metric:nth-child(2) {
+    border-color: color-mix(in srgb, var(--clay-border) 64%, var(--clay-slushie-500) 36%);
   }
 
   :root[data-theme='dark'] .featured-card {
     background:
-      linear-gradient(140deg, color-mix(in srgb, var(--clay-paper) 94%, black 6%) 0%, color-mix(in srgb, var(--clay-paper) 86%, var(--clay-cream) 14%) 100%);
+      radial-gradient(circle at 18% 16%, rgba(248, 204, 101, 0.13), transparent 30%),
+      linear-gradient(145deg, #211d1a 0%, #17252b 100%) !important;
+  }
+
+  :root[data-theme='dark'] .featured-card__chrome {
+    border-right-color: color-mix(in srgb, var(--clay-border) 62%, var(--clay-slushie-500) 38%);
+    background:
+      linear-gradient(180deg, rgba(1, 65, 141, 0.26), transparent),
+      rgba(27, 23, 20, 0.72) !important;
+  }
+
+  :root[data-theme='dark'] .post-card {
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%),
+      #1c1816 !important;
+  }
+
+  :root[data-theme='dark'] .post-card::before {
+    opacity: 0.42;
+  }
+
+  :root[data-theme='dark'] .topic-chip > span:last-child,
+  :root[data-theme='dark'] .action-button--secondary,
+  :root[data-theme='dark'] .section-link,
+  :root[data-theme='dark'] .post-card__link {
+    border-color: color-mix(in srgb, var(--clay-border) 70%, var(--clay-slushie-500) 30%);
+    background: color-mix(in srgb, var(--clay-paper) 82%, #2b3440 18%) !important;
+    background-color: color-mix(in srgb, var(--clay-paper) 82%, #2b3440 18%) !important;
+  }
+
+  :root[data-theme='dark'] .post-card:hover {
+    border-color: color-mix(in srgb, var(--card-tone) 50%, var(--clay-border));
+    box-shadow:
+      0 22px 42px rgba(0, 0, 0, 0.5),
+      0 0 0 1px color-mix(in srgb, var(--card-tone) 30%, transparent) inset,
+      0 0 28px color-mix(in srgb, var(--card-tone) 12%, transparent);
   }
 
   @media (max-width: 980px) {
-    .home-hero,
+    .home-hero__copy,
     .featured-card {
       grid-template-columns: 1fr;
     }
 
     .home-hero__copy {
-      min-height: 25rem;
+      align-items: start;
+      min-height: auto;
     }
 
     .featured-card__chrome {
@@ -657,14 +722,16 @@ function formatDate(date: Date | undefined): string {
 
   @media (max-width: 680px) {
     .home-hero__copy,
-    .home-hero__panel,
     .featured-card,
     .post-card {
       border-radius: 18px;
     }
 
+    .home-hero__panel {
+      border-radius: 16px;
+    }
+
     .home-hero__copy {
-      min-height: 25rem;
       padding: 1.15rem;
     }
 
