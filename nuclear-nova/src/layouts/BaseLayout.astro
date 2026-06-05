@@ -293,6 +293,42 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString(
     font-size: 0.88rem;
   }
 
+  @layer overrides {
+    :global(html:root[data-theme='light']) .site-header {
+      background: #f3eee7 !important;
+    }
+
+    :global(html:root[data-theme='light']) .site-header__bar {
+      border-color: color-mix(in srgb, var(--clay-border) 90%, #bfae93 10%) !important;
+      background:
+        radial-gradient(circle at 8% 20%, rgba(248, 204, 101, 0.12), transparent 30%),
+        linear-gradient(145deg, #f3eadc 0%, #e5eee9 100%) !important;
+      box-shadow:
+        0 20px 44px rgba(58, 44, 24, 0.1),
+        0 7px 16px rgba(1, 65, 141, 0.035),
+        0 1px 0 rgba(255, 255, 255, 0.74) inset;
+    }
+
+    :global(html:root[data-theme='light']) .brand__mark {
+      border-color: color-mix(in srgb, var(--clay-border) 86%, #bfae93 14%) !important;
+      background: #f2e0c5 !important;
+      box-shadow:
+        0 10px 20px rgba(58, 44, 24, 0.12),
+        0 1px 0 rgba(255, 255, 255, 0.7) inset;
+    }
+
+    :global(html:root[data-theme='light']) .nav-link,
+    :global(html:root[data-theme='light']) .social-link {
+      border-color: color-mix(in srgb, var(--clay-border) 88%, #bfae93 12%) !important;
+      background: rgba(243, 234, 220, 0.78) !important;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.62) inset;
+    }
+
+    :global(html:root[data-theme='light']) .site-footer {
+      background: rgba(243, 234, 220, 0.78) !important;
+    }
+  }
+
   @media (max-width: 840px) {
     .site-header__bar {
       border-radius: 22px;
