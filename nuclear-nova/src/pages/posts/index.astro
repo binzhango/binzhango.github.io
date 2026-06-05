@@ -28,9 +28,9 @@ function formatDate(date: Date | undefined): string {
     <div class="posts-list">
       {posts.map((post) => (
         <article class="post-item">
-          <div class="post-header">
+          <div class="post-item__top">
+            <p class="post-item__date">{formatDate(post.data.date)}</p>
             <h2><a href={getPostPath(post)}>{post.data.title}</a></h2>
-            <time datetime={post.data.date?.toISOString()}>{formatDate(post.data.date)}</time>
           </div>
           {post.data.categories && post.data.categories.length > 0 && (
             <div class="post-categories">
@@ -55,69 +55,90 @@ function formatDate(date: Date | undefined): string {
 
 <style>
   .posts-header {
+    display: grid;
+    gap: 0.45rem;
     margin-top: 0;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
+    padding: 1.3rem 1.35rem;
+    border: 1px solid var(--clay-border);
+    border-radius: 32px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--clay-paper) 90%, transparent) 0%,
+      color-mix(in srgb, var(--clay-cream) 95%, transparent) 100%
+    );
+    box-shadow: var(--clay-shadow);
   }
 
   .posts-eyebrow {
-    margin: 0 0 0.35rem;
-    color: var(--sl-color-gray-5);
+    margin: 0;
+    color: var(--clay-muted);
     font-size: 0.76rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   h1 {
     margin: 0;
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    line-height: 1.05;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
   }
 
   .posts-description {
-    margin: 0.65rem 0 0;
-    color: var(--sl-color-gray-6);
+    margin: 0;
+    color: var(--clay-charcoal);
     max-width: 42rem;
   }
 
   .posts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    display: grid;
+    gap: 1rem;
   }
 
   .post-item {
-    border-top: 1px solid var(--sl-color-hairline);
-    padding: 1.25rem 0;
+    display: grid;
+    gap: 0.8rem;
+    padding: 1.2rem;
+    border: 1px solid var(--clay-border);
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--clay-paper) 86%, transparent);
+    box-shadow: var(--clay-shadow);
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease;
   }
 
-  .post-item:last-child {
-    border-bottom: 1px solid var(--sl-color-hairline);
+  .post-item:hover {
+    transform: translateY(-0.18rem);
+    box-shadow: var(--clay-shadow-hard);
   }
 
-  .post-header {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
+  .post-item__top {
+    display: grid;
+    gap: 0.45rem;
   }
 
-  .post-header h2 {
+  .post-item h2 {
     margin: 0;
-    font-size: 1.2rem;
-    line-height: 1.25;
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
   }
 
-  .post-header h2 a {
+  .post-item h2 a {
     text-decoration: none;
     color: var(--sl-color-text);
   }
 
-  .post-header time {
-    color: var(--sl-color-gray-6);
-    font-size: 0.82rem;
-    white-space: nowrap;
+  .post-item__date {
+    margin: 0;
+    color: var(--clay-muted);
+    font-family: var(--font-space-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .post-categories,
@@ -125,11 +146,10 @@ function formatDate(date: Date | undefined): string {
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
-    margin-top: 0.65rem;
   }
 
   .post-item p:last-child {
-    margin: 0.8rem 0 0;
-    color: var(--sl-color-gray-6);
+    margin: 0;
+    color: var(--clay-charcoal);
   }
 </style>

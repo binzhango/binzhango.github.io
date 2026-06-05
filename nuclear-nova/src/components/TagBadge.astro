@@ -18,32 +18,46 @@ const tagUrl = `/tags/${slugifyTag(tag)}/`;
 
 <style>
     .tag-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        font-size: 13px;
-        font-weight: 700;
-        border-radius: 20px;
-        background: #3b82f6;
-        color: #ffffff !important;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.38rem 0.78rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--clay-slushie-500) 18%, var(--clay-paper) 82%);
+        border: 1px solid color-mix(in srgb, var(--clay-slushie-800) 30%, var(--clay-border));
+        color: var(--clay-blueberry-800) !important;
         text-decoration: none;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition:
+            transform 0.22s ease,
+            box-shadow 0.22s ease,
+            background-color 0.22s ease,
+            color 0.22s ease;
         white-space: nowrap;
     }
 
+    .tag-badge::before {
+        content: '#';
+        margin-right: 0.18rem;
+        font-family: var(--font-space-mono);
+        font-weight: 700;
+    }
+
     a.tag-badge:hover {
-        background: #2563eb;
+        background: var(--clay-slushie-500);
+        border-color: var(--clay-slushie-800);
         transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
-        color: #ffffff !important;
+        box-shadow: var(--clay-shadow-hard);
+        color: var(--sl-color-text) !important;
     }
 
     :root[data-theme='dark'] .tag-badge {
-        background: #3b82f6;
-        color: #ffffff !important;
+        background: color-mix(in srgb, var(--clay-slushie-800) 28%, var(--clay-paper) 72%);
+        color: color-mix(in srgb, var(--clay-slushie-500) 35%, var(--clay-ink)) !important;
     }
 
     :root[data-theme='dark'] a.tag-badge:hover {
-        background: #2563eb;
-        color: #ffffff !important;
+        background: var(--clay-slushie-500);
+        color: var(--sl-color-text) !important;
     }
 </style>

@@ -16,7 +16,6 @@ const {
   description = 'A blog about Python, Kubernetes, Spark, Machine Learning, and more.',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
-const isBlogPage = Astro.url.pathname === '/posts/' || Astro.url.pathname.startsWith('/posts/');
 ---
 
 <!doctype html>
@@ -34,82 +33,94 @@ const isBlogPage = Astro.url.pathname === '/posts/' || Astro.url.pathname.starts
   <body>
     <header class="site-header">
       <div class="site-shell">
-        <a class="brand" href="/">
-          <img src="/assets/favicon.ico" alt="Bin Zhang's Blog" width="28" height="28" />
-          <span>Bin Zhang's Blog</span>
-        </a>
-        <nav class="site-nav" aria-label="Primary">
-          <a class="nav-link" href="/">Home</a>
-          <a class="nav-link" href="/posts/">Blog</a>
-          <a class="nav-link" href="/archive/">Archive</a>
-          <a
-            class="social-link"
-            href="https://github.com/binzhango"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-            title="GitHub"
-          >
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
-                0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
-                -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52
-                .28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02
-                .08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 4.38c.68 0 1.36.09 2 .27 1.53-1.04
-                2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65
-                3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0
-                16 8c0-4.42-3.58-8-8-8Z"
-              />
-            </svg>
+        <div class="site-header__bar">
+          <a class="brand" href="/">
+            <span class="brand__mark" aria-hidden="true">
+              <img src="/assets/favicon.ico" alt="" width="28" height="28" />
+            </span>
+            <span class="brand__text">
+              <span class="brand__title">Bin Zhang</span>
+              <span class="brand__subtitle">Data, AI, and engineering notes</span>
+            </span>
           </a>
-          <a
-            class="social-link social-link--x"
-            href="https://x.com/binzhangtw"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="X"
-            title="X"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.585-6.64 7.585H.473l8.6-9.83L0 1.153h7.594l5.243 6.932 6.064-6.932Zm-1.291 19.492h2.039L6.486 3.24H4.298L17.61 20.645Z"
-              />
-            </svg>
-          </a>
-          <a
-            class="social-link social-link--discord"
-            href="https://discord.com/users/804799744467140649"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Discord"
-            title="Discord"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M20.317 4.369A19.791 19.791 0 0 0 15.56 3c-.206.37-.444.87-.608 1.258a18.27 18.27 0 0 0-5.904 0A12.64 12.64 0 0 0 8.44 3a19.736 19.736 0 0 0-4.759 1.369C.674 8.874-.141 13.268.266 17.6a19.9 19.9 0 0 0 5.844 2.943c.473-.648.894-1.334 1.257-2.053a12.915 12.915 0 0 1-1.98-.96c.166-.121.329-.248.487-.379 3.822 1.793 7.966 1.793 11.742 0 .16.131.322.258.488.379-.63.373-1.293.695-1.98.96.363.719.784 1.405 1.257 2.053a19.857 19.857 0 0 0 5.846-2.943c.478-5.02-.816-9.374-3.91-13.231ZM8.02 14.973c-1.148 0-2.09-1.054-2.09-2.35 0-1.295.923-2.349 2.09-2.349 1.177 0 2.11 1.063 2.09 2.35 0 1.295-.923 2.349-2.09 2.349Zm7.96 0c-1.148 0-2.09-1.054-2.09-2.35 0-1.295.923-2.349 2.09-2.349 1.177 0 2.11 1.063 2.09 2.35 0 1.295-.913 2.349-2.09 2.349Z"
-              />
-            </svg>
-          </a>
-          <a
-            class="social-link social-link--threads"
-            href="https://www.threads.com/@zhangbin_ig"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Threads"
-            title="Threads"
-          >
-            <svg viewBox="0 0 192 192" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"
-              />
-            </svg>
-          </a>
-        </nav>
+          <nav class="site-nav" aria-label="Primary">
+            <div class="site-nav__links">
+              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link" href="/posts/">Blog</a>
+              <a class="nav-link" href="/archive/">Archive</a>
+            </div>
+            <div class="site-nav__socials">
+              <a
+                class="social-link"
+                href="https://github.com/binzhango"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                title="GitHub"
+              >
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                    0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                    -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52
+                    .28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02
+                    .08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 4.38c.68 0 1.36.09 2 .27 1.53-1.04
+                    2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65
+                    3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0
+                    16 8c0-4.42-3.58-8-8-8Z"
+                  />
+                </svg>
+              </a>
+              <a
+                class="social-link"
+                href="https://x.com/binzhangtw"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="X"
+                title="X"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.585-6.64 7.585H.473l8.6-9.83L0 1.153h7.594l5.243 6.932 6.064-6.932Zm-1.291 19.492h2.039L6.486 3.24H4.298L17.61 20.645Z"
+                  />
+                </svg>
+              </a>
+              <a
+                class="social-link"
+                href="https://discord.com/users/804799744467140649"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Discord"
+                title="Discord"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M20.317 4.369A19.791 19.791 0 0 0 15.56 3c-.206.37-.444.87-.608 1.258a18.27 18.27 0 0 0-5.904 0A12.64 12.64 0 0 0 8.44 3a19.736 19.736 0 0 0-4.759 1.369C.674 8.874-.141 13.268.266 17.6a19.9 19.9 0 0 0 5.844 2.943c.473-.648.894-1.334 1.257-2.053a12.915 12.915 0 0 1-1.98-.96c.166-.121.329-.248.487-.379 3.822 1.793 7.966 1.793 11.742 0 .16.131.322.258.488.379-.63.373-1.293.695-1.98.96.363.719.784 1.405 1.257 2.053a19.857 19.857 0 0 0 5.846-2.943c.478-5.02-.816-9.374-3.91-13.231ZM8.02 14.973c-1.148 0-2.09-1.054-2.09-2.35 0-1.295.923-2.349 2.09-2.349 1.177 0 2.11 1.063 2.09 2.35 0 1.295-.923 2.349-2.09 2.349Zm7.96 0c-1.148 0-2.09-1.054-2.09-2.35 0-1.295.923-2.349 2.09-2.349 1.177 0 2.11 1.063 2.09 2.35 0 1.295-.913 2.349-2.09 2.349Z"
+                  />
+                </svg>
+              </a>
+              <a
+                class="social-link"
+                href="https://www.threads.com/@zhangbin_ig"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Threads"
+                title="Threads"
+              >
+                <svg viewBox="0 0 192 192" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"
+                  />
+                </svg>
+              </a>
+            </div>
+            <ThemeControl variant="header" />
+          </nav>
+        </div>
       </div>
     </header>
     <main class="site-shell page">
@@ -120,8 +131,6 @@ const isBlogPage = Astro.url.pathname === '/posts/' || Astro.url.pathname.starts
     <footer class="site-shell site-footer">
       <span>&copy; {new Date().getFullYear()} Bin Zhang. All rights reserved.</span>
     </footer>
-    {!isBlogPage && <ThemeControl variant="floating" />}
-
     <CodeBlockCopy />
     <Lightbox />
   </body>
@@ -129,123 +138,206 @@ const isBlogPage = Astro.url.pathname === '/posts/' || Astro.url.pathname.starts
 
 <style>
   .site-shell {
-    width: min(1120px, 100% - 2rem);
-    margin-inline: auto;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 1rem;
+    box-sizing: border-box;
   }
 
   .site-header {
-    border-bottom: 1px solid var(--sl-color-hairline);
-    background: var(--sl-color-bg-nav);
+    padding-top: 0.75rem;
+    background: transparent;
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 40;
   }
 
-  .site-header .site-shell {
-    min-height: 64px;
+  .site-header__bar {
+    min-height: 58px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 72%, white 28%);
+    border-radius: 24px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--clay-paper) 94%, transparent) 0%,
+      color-mix(in srgb, var(--clay-cream) 88%, transparent) 100%
+    );
+    box-shadow: 0 10px 24px rgba(18, 27, 48, 0.05);
+    backdrop-filter: blur(12px);
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.65rem;
     text-decoration: none;
-    color: var(--sl-color-text-accent);
-    font-weight: 700;
+    color: var(--sl-color-text);
+  }
+
+  .brand__mark {
+    width: 2.35rem;
+    height: 2.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 72%, white 28%);
+    border-radius: 14px;
+    background: var(--clay-lemon-400);
+    box-shadow: 0 6px 14px rgba(18, 27, 48, 0.06);
+    flex: none;
+  }
+
+  .brand__text {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .brand__title {
+    font-size: 0.98rem;
+    font-weight: 600;
+  }
+
+  .brand__subtitle {
+    color: var(--clay-muted);
+    font-size: 0.74rem;
+    line-height: 1.2;
   }
 
   .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .site-nav__links,
+  .site-nav__socials {
     display: inline-flex;
     align-items: center;
-    gap: 0.9rem;
+    gap: 0.45rem;
     flex-wrap: wrap;
   }
 
   .nav-link {
-    color: var(--sl-color-text);
+    color: var(--sl-color-text) !important;
     text-decoration: none;
-    font-size: 0.95rem;
-    border: 0;
-    background: transparent;
-    border-radius: 8px;
-    padding: 0.4rem 0.6rem;
+    font-size: 0.86rem;
+    font-weight: 500;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 68%, white 32%);
+    background: color-mix(in srgb, var(--clay-paper) 78%, transparent);
+    border-radius: 999px;
+    padding: 0.38rem 0.78rem;
     cursor: pointer;
     transition:
-      color 0.18s ease,
-      background-color 0.18s ease,
-      box-shadow 0.18s ease;
+      color 0.22s ease,
+      background-color 0.22s ease,
+      transform 0.22s ease,
+      box-shadow 0.22s ease;
   }
 
   .nav-link:hover {
-    color: var(--sl-color-text-accent);
-    background: color-mix(in srgb, var(--sl-color-hairline-light) 65%, transparent);
-    box-shadow: inset 0 0 0 1px var(--sl-color-hairline);
+    color: #ffffff !important;
+    background: var(--clay-blueberry-800);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(18, 27, 48, 0.08);
   }
 
   .social-link {
-    width: 2rem;
-    height: 2rem;
+    width: 2.1rem;
+    height: 2.1rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--sl-color-text);
+    color: var(--sl-color-text) !important;
     text-decoration: none;
-    border-radius: 999px;
+    border: 1px dashed var(--clay-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--clay-paper) 80%, transparent);
     transition:
-      color 0.18s ease,
-      background-color 0.18s ease,
-      transform 0.18s ease;
+      color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .social-link svg {
-    width: 1.35rem;
-    height: 1.35rem;
+    width: 1rem;
+    height: 1rem;
     display: block;
   }
 
   .social-link:hover {
-    color: var(--sl-color-text-accent);
-    background: color-mix(in srgb, var(--sl-color-hairline-light) 45%, transparent);
+    color: #ffffff !important;
+    background: var(--clay-pomegranate-400);
     transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(18, 27, 48, 0.08);
   }
 
   .page {
-    padding-block: 1.5rem 2rem;
+    padding-block: 1.35rem 2.5rem;
   }
 
   .site-footer {
-    border-top: 1px solid var(--sl-color-hairline);
-    padding: 1.25rem 0 2rem;
-    color: var(--sl-color-gray-5);
-    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--clay-border);
+    border-radius: 40px;
+    background: color-mix(in srgb, var(--clay-paper) 72%, transparent);
+    box-shadow: var(--clay-shadow);
+    color: var(--clay-muted);
+    font-size: 0.88rem;
   }
 
-  @media (max-width: 640px) {
-    .site-header .site-shell {
-      min-height: 56px;
-      flex-direction: column;
-      justify-content: center;
-      padding-block: 0.5rem;
+  @media (max-width: 840px) {
+    .site-header__bar {
+      border-radius: 22px;
       align-items: flex-start;
+      flex-direction: column;
     }
 
     .site-nav {
-      gap: 0.5rem;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .site-header {
+      padding-top: 0.75rem;
+    }
+
+    .site-header__bar {
+      min-height: 56px;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 0.85rem;
+      align-items: flex-start;
+      border-radius: 22px;
+    }
+
+    .site-nav {
+      gap: 0.7rem;
+      justify-content: flex-start;
+    }
+
+    .site-nav__links,
+    .site-nav__socials {
+      gap: 0.55rem;
     }
 
     .nav-link {
-      padding: 0.3rem 0.45rem;
+      padding: 0.42rem 0.82rem;
       font-size: 0.9rem;
     }
 
     .social-link {
-      width: 1.8rem;
-      height: 1.8rem;
+      width: 2.1rem;
+      height: 2.1rem;
     }
-
   }
 </style>

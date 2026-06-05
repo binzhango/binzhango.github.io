@@ -24,42 +24,47 @@ const { title, icon } = Astro.props;
 </div>
 
 <style>
-    /* Outer wrapper - ensures isolation from global styles */
     .card-wrapper {
         background: transparent;
         padding: 0;
         margin: 0;
     }
 
-    /* Main card container */
     .card-container {
-        background: var(--sl-color-bg);
-        border: 2px solid #e5e7eb;
-        border-radius: 16px;
+        background: color-mix(in srgb, var(--clay-paper) 88%, transparent);
+        border: 1px solid var(--clay-border);
+        border-radius: 24px;
         padding: 1.5rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+            transform 0.22s ease,
+            box-shadow 0.22s ease,
+            background-color 0.22s ease,
+            border-color 0.22s ease;
         position: relative;
         overflow: hidden;
+        box-shadow: var(--clay-shadow);
     }
 
     .card-container::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: var(--sl-color-bg);
-        z-index: -1;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(248, 204, 101, 0.16) 0%, transparent 40%);
+        opacity: 0;
+        transition: opacity 0.22s ease;
+        pointer-events: none;
     }
 
     .card-container:hover {
-        border-color: #3b82f6;
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+        border-color: color-mix(in srgb, var(--clay-blueberry-800) 28%, var(--clay-border));
+        transform: translateY(-0.18rem);
+        box-shadow: var(--clay-shadow-hard);
     }
 
-    /* Icon wrapper */
+    .card-container:hover::before {
+        opacity: 1;
+    }
+
     .card-icon-wrapper {
         background: transparent;
         margin-bottom: 1rem;
@@ -72,19 +77,20 @@ const { title, icon } = Astro.props;
         justify-content: center;
         width: 3rem;
         height: 3rem;
-        background: transparent;
-        border: 2px solid #3b82f6;
-        border-radius: 12px;
+        background: var(--clay-slushie-500);
+        border: 1px solid var(--clay-border);
+        border-radius: 18px;
         font-size: 1.5rem;
-        transition: all 0.3s ease;
+        box-shadow: var(--clay-shadow);
+        transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
     }
 
     .card-container:hover .card-icon {
-        transform: scale(1.1) rotate(5deg);
-        border-color: #2563eb;
+        transform: rotate(-7deg) translateY(-0.15rem);
+        background: var(--clay-pomegranate-400);
+        box-shadow: var(--clay-shadow-hard);
     }
 
-    /* Text section - explicit background override */
     .card-text-section {
         background: transparent;
         padding: 0;
@@ -93,24 +99,23 @@ const { title, icon } = Astro.props;
 
     .card-title {
         background: transparent;
-        font-size: 1.25rem;
+        font-size: 1.35rem;
         font-weight: 600;
         margin: 0 0 0.75rem 0;
         padding: 0;
         color: var(--sl-color-text);
-        line-height: 1.4;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
     }
 
     .card-description {
         background: transparent;
-        color: var(--sl-color-text);
-        opacity: 0.8;
-        line-height: 1.6;
+        color: var(--clay-charcoal);
+        line-height: 1.7;
         margin: 0;
         padding: 0;
     }
 
-    /* Force all slotted content to be transparent */
     .card-description :global(*) {
         background: transparent !important;
         background-color: transparent !important;
@@ -124,26 +129,7 @@ const { title, icon } = Astro.props;
         background-color: transparent !important;
     }
 
-    /* Dark mode */
-    :root[data-theme='dark'] .card-container {
-        background: var(--sl-color-bg);
-        border-color: #374151;
-    }
-
-    :root[data-theme='dark'] .card-container::before {
-        background: var(--sl-color-bg);
-    }
-
     :root[data-theme='dark'] .card-container:hover {
-        border-color: #60a5fa;
-        box-shadow: 0 12px 24px rgba(96, 165, 250, 0.2);
-    }
-
-    :root[data-theme='dark'] .card-icon {
-        border-color: #60a5fa;
-    }
-
-    :root[data-theme='dark'] .card-container:hover .card-icon {
-        border-color: #3b82f6;
+        border-color: color-mix(in srgb, var(--clay-slushie-500) 40%, var(--clay-border));
     }
 </style>
