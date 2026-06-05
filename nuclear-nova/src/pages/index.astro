@@ -169,6 +169,27 @@ function formatDate(date: Date | undefined): string {
     :global(html:root[data-theme='light']) .recent-section {
       background: #f3eee7 !important;
     }
+
+    :global(html:root[data-theme='dark']) {
+      --sl-color-bg: #15120f !important;
+      --sl-color-bg-nav: rgba(21, 18, 15, 0.94) !important;
+      background: #15120f !important;
+    }
+
+    :global(html:root[data-theme='dark'] body) {
+      background:
+        radial-gradient(circle at 8% 0%, rgba(248, 204, 101, 0.06), transparent 26%),
+        radial-gradient(circle at 92% 8%, rgba(59, 211, 253, 0.07), transparent 30%),
+        linear-gradient(180deg, #15120f 0%, #111415 100%) !important;
+    }
+
+    :global(html:root[data-theme='dark'] .page),
+    :global(html:root[data-theme='dark'] .sl-markdown-content),
+    :global(html:root[data-theme='dark']) .home-board,
+    :global(html:root[data-theme='dark']) .featured-section,
+    :global(html:root[data-theme='dark']) .recent-section {
+      background: #15120f !important;
+    }
   }
 
   .home-hero {
