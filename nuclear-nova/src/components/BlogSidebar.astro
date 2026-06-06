@@ -15,10 +15,10 @@ function shouldOpen(year: string, paths: string[]): boolean {
 }
 ---
 
-<aside class="blog-sidebar" aria-label="Blog archive by year">
+<aside class="blog-sidebar" aria-label="Blog posts by year">
   <div class="blog-sidebar__inner">
     <div class="blog-sidebar__header">
-      <p class="blog-sidebar__eyebrow">Archive</p>
+      <p class="blog-sidebar__eyebrow">Posts</p>
 
       <button
         type="button"
@@ -34,6 +34,7 @@ function shouldOpen(year: string, paths: string[]): boolean {
             <path d="M11.75 7.25 9.25 10l2.5 2.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
           </svg>
         </span>
+        <span class="blog-sidebar-toggle__label" aria-hidden="true">Posts</span>
       </button>
     </div>
 
