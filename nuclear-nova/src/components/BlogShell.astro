@@ -725,13 +725,21 @@ const showSecondary = hasSecondary || reserveSecondary;
       width: 0;
       height: 0;
       transform: none;
-      border-color: transparent;
+      border: 0;
       background: transparent !important;
       box-shadow: none;
     }
 
     :global(body.blog-sidebar-collapsed .blog-sidebar__header) {
       padding: 0;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-sidebar__content) {
+      display: none;
+    }
+
+    :global(body.blog-sidebar-collapsed .blog-year-groups) {
+      display: none;
     }
 
     :global(body.blog-sidebar-collapsed .blog-sidebar-toggle) {
