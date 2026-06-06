@@ -932,6 +932,24 @@ const showSecondary = hasSecondary || reserveSecondary;
       summary.addEventListener('click', (event) => {
         if (!document.body.classList.contains('blog-sidebar-collapsed')) return;
         event.preventDefault();
+
+        const parentDetail = summary.closest('details');
+        document.querySelectorAll('.blog-year-groups > details').forEach((detail) => {
+          if (!(detail instanceof HTMLDetailsElement)) return;
+
+          const isClickedYear = detail === parentDetail;
+          detail.dataset.openBeforeCollapse = String(isClickedYear);
+          detail.open = isClickedYear;
+        });
+
+        document.body.classList.remove('blog-sidebar-collapsed');
+        saveBlogSidebarState(false);
+        syncBlogSidebarToggle();
+
+        window.setTimeout(() => {
+          summary.focus({ preventScroll: true });
+          summary.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }, 120);
       });
     });
   }
