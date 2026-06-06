@@ -1,4 +1,0 @@
-interface:
-  display_name: "Blog Style Formatting"
-  short_description: "Format technical posts with restrained clarity."
-  default_prompt: "Use $blog-style-formatting to improve this blog post's readability while preserving its original content and tone."
