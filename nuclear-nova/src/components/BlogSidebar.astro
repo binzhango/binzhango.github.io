@@ -29,9 +29,14 @@ function shouldOpen(year: string, paths: string[]): boolean {
       >
         <span class="blog-sidebar-toggle__icon-wrap" aria-hidden="true">
           <svg class="blog-sidebar-toggle__icon" viewBox="0 0 20 20">
-            <rect x="2.25" y="3" width="15.5" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"></rect>
-            <path d="M7.25 4.5v11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-            <path d="M11.75 7.25 9.25 10l2.5 2.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+            <path
+              d="M12.25 5.75 8 10l4.25 4.25"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
           </svg>
         </span>
         <span class="blog-sidebar-toggle__label" aria-hidden="true">Posts</span>
@@ -46,8 +51,19 @@ function shouldOpen(year: string, paths: string[]): boolean {
 
           return (
             <details open={shouldOpen(year, paths)}>
-              <summary aria-current={currentYearGroup ? 'true' : undefined}>
+              <summary
+                aria-current={currentYearGroup ? 'true' : undefined}
+                data-year={year}
+                title={`${year} (${yearlyPosts.length} posts)`}
+              >
                 <span class="blog-year-summary">
+                  <span class="blog-year-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="4.5" y="5.5" width="15" height="15" rx="3.25" fill="none" stroke="currentColor" stroke-width="1.7"></rect>
+                      <path d="M8 3.75v3.4M16 3.75v3.4M5 10h14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                    </svg>
+                    <span>{year.slice(-2)}</span>
+                  </span>
                   <span class="blog-year-meta">
                     <span class="blog-year-label">{year}</span>
                     <span class="blog-year-count" aria-label={`${yearlyPosts.length} posts in ${year}`}>
