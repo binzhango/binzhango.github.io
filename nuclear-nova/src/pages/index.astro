@@ -292,6 +292,14 @@ function formatDate(date: Date | undefined): string {
   .action-button,
   .section-link,
   .post-card__link {
+    --button-hover-bg:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.28), rgba(59, 211, 253, 0.18)),
+      rgba(243, 234, 220, 0.96);
+    --button-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 34%, var(--clay-border));
+    --button-hover-color: var(--sl-color-text);
+    --button-hover-shadow:
+      0 12px 24px rgba(58, 44, 24, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.56) inset;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -304,13 +312,26 @@ function formatDate(date: Date | undefined): string {
     line-height: 1;
     text-decoration: none;
     transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
-      background-color 0.2s ease,
-      border-color 0.2s ease;
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      background 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
   }
 
   .action-button--primary {
+    --button-hover-bg:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--clay-blueberry-800) 88%, #0f172a 12%),
+        color-mix(in srgb, var(--clay-slushie-800) 52%, var(--clay-blueberry-800) 48%)
+      );
+    --button-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 72%, var(--clay-slushie-500) 28%);
+    --button-hover-color: #ffffff;
+    --button-hover-shadow:
+      0 16px 30px rgba(1, 65, 141, 0.24),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+      0 0 18px color-mix(in srgb, var(--clay-slushie-500) 12%, transparent);
     border: 1px solid color-mix(in srgb, var(--clay-blueberry-800) 84%, black 16%);
     background: var(--clay-blueberry-800) !important;
     background-color: var(--clay-blueberry-800) !important;
@@ -332,12 +353,26 @@ function formatDate(date: Date | undefined): string {
   .action-button:hover,
   .section-link:hover,
   .post-card__link:hover {
-    color: #ffffff !important;
-    background: var(--clay-pomegranate-400) !important;
-    background-color: var(--clay-pomegranate-400) !important;
-    border-color: var(--clay-pomegranate-400);
-    box-shadow: var(--clay-shadow-hard);
-    transform: translateY(-2px);
+    color: var(--button-hover-color) !important;
+    background: var(--button-hover-bg) !important;
+    border-color: var(--button-hover-border) !important;
+    box-shadow: var(--button-hover-shadow);
+    transform: translateY(-0.12rem);
+  }
+
+  .action-button:focus-visible,
+  .section-link:focus-visible,
+  .post-card__link:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--clay-slushie-500) 28%, transparent),
+      var(--button-hover-shadow);
+  }
+
+  .action-button:active,
+  .section-link:active,
+  .post-card__link:active {
+    transform: translateY(0);
   }
 
   .home-hero__panel {
@@ -703,6 +738,44 @@ function formatDate(date: Date | undefined): string {
     border-color: color-mix(in srgb, var(--clay-border) 70%, var(--clay-slushie-500) 30%);
     background: color-mix(in srgb, var(--clay-paper) 82%, #2b3440 18%) !important;
     background-color: color-mix(in srgb, var(--clay-paper) 82%, #2b3440 18%) !important;
+  }
+
+  :root[data-theme='dark'] .action-button,
+  :root[data-theme='dark'] .section-link,
+  :root[data-theme='dark'] .post-card__link {
+    --button-hover-bg:
+      linear-gradient(135deg, rgba(59, 211, 253, 0.16), rgba(248, 204, 101, 0.08)),
+      rgba(24, 33, 35, 0.92);
+    --button-hover-border: color-mix(in srgb, var(--clay-border) 54%, var(--clay-slushie-500) 46%);
+    --button-hover-color: var(--clay-ink);
+    --button-hover-shadow:
+      0 16px 28px rgba(0, 0, 0, 0.36),
+      0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+      0 0 22px color-mix(in srgb, var(--clay-slushie-500) 11%, transparent);
+  }
+
+  :root[data-theme='dark'] .action-button--primary {
+    --button-hover-bg:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--clay-blueberry-800) 72%, #1a2529 28%),
+        color-mix(in srgb, var(--clay-slushie-800) 44%, #253037 56%)
+      );
+    --button-hover-border: color-mix(in srgb, var(--clay-border) 42%, var(--clay-slushie-500) 58%);
+    --button-hover-color: #ffffff;
+    --button-hover-shadow:
+      0 18px 32px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.075) inset,
+      0 0 22px color-mix(in srgb, var(--clay-slushie-500) 16%, transparent);
+  }
+
+  :root[data-theme='dark'] .action-button:hover,
+  :root[data-theme='dark'] .section-link:hover,
+  :root[data-theme='dark'] .post-card__link:hover {
+    color: var(--button-hover-color) !important;
+    background: var(--button-hover-bg) !important;
+    border-color: var(--button-hover-border) !important;
+    box-shadow: var(--button-hover-shadow);
   }
 
   :root[data-theme='dark'] .post-card:hover {

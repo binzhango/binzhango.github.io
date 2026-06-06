@@ -148,7 +148,8 @@ const sortedPosts = [...posts].sort((a, b) => {
     .listing-post {
         border: 1px solid var(--clay-border);
         border-radius: 28px;
-        background: color-mix(in srgb, var(--clay-paper) 88%, transparent);
+        background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.26), transparent 34%) !important;
+        background-color: rgba(246, 238, 225, 0.94) !important;
         box-shadow: var(--clay-shadow);
     }
 
@@ -173,21 +174,37 @@ const sortedPosts = [...posts].sort((a, b) => {
     }
 
     .listing-sidebar a {
+        --listing-control-hover-bg:
+            linear-gradient(135deg, rgba(248, 204, 101, 0.22), rgba(59, 211, 253, 0.14)),
+            color-mix(in srgb, var(--clay-paper) 76%, transparent);
+        --listing-control-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 28%, var(--clay-border));
+        --listing-control-hover-shadow:
+            0 10px 20px rgba(58, 44, 24, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.52) inset;
         display: block;
         padding: 0.6rem 0.75rem;
+        border: 1px solid transparent;
         border-radius: 18px;
         color: var(--sl-color-text) !important;
         text-decoration: none;
-        transition: background-color 0.18s ease, transform 0.18s ease;
+        transition:
+            background 0.18s ease,
+            border-color 0.18s ease,
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
     }
 
     .listing-sidebar a:hover {
-        background: color-mix(in srgb, var(--clay-lemon-400) 26%, var(--clay-paper) 74%) !important;
-        transform: translateY(-1px);
+        color: var(--sl-color-text) !important;
+        background: var(--listing-control-hover-bg) !important;
+        border-color: var(--listing-control-hover-border) !important;
+        box-shadow: var(--listing-control-hover-shadow);
+        transform: translateY(-0.08rem);
     }
 
     .listing-sidebar a.active {
         background: color-mix(in srgb, var(--clay-slushie-500) 18%, var(--clay-paper) 82%) !important;
+        border-color: color-mix(in srgb, var(--clay-slushie-500) 38%, var(--clay-border));
         color: var(--sl-color-text) !important;
         font-weight: 700;
     }
@@ -205,12 +222,18 @@ const sortedPosts = [...posts].sort((a, b) => {
 
     .listing-post {
         padding: 1.2rem;
-        transition: transform 0.22s ease, box-shadow 0.22s ease;
+        transition:
+            transform 0.22s ease,
+            box-shadow 0.22s ease,
+            border-color 0.22s ease;
     }
 
     .listing-post:hover {
-        transform: translateY(-0.18rem);
-        box-shadow: var(--clay-shadow-hard);
+        border-color: color-mix(in srgb, var(--clay-blueberry-800) 24%, var(--clay-border));
+        transform: translateY(-0.12rem);
+        box-shadow:
+            0 14px 28px rgba(58, 44, 24, 0.12),
+            0 0 0 1px rgba(255, 255, 255, 0.5) inset;
     }
 
     .listing-post__top {
@@ -253,6 +276,48 @@ const sortedPosts = [...posts].sort((a, b) => {
     .listing-post__excerpt {
         margin: 0;
         color: var(--clay-charcoal);
+    }
+
+    :root[data-theme='dark'] .listing-sidebar a {
+        --listing-control-hover-bg:
+            linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+            rgba(24, 33, 35, 0.86);
+        --listing-control-hover-border: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+        --listing-control-hover-shadow:
+            0 14px 26px rgba(0, 0, 0, 0.34),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
+    }
+
+    :root[data-theme='dark'] .listing-sidebar__card,
+    :root[data-theme='dark'] .listing-post {
+        border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+        background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%) !important;
+        background-color: #1c1816 !important;
+        box-shadow:
+            0 24px 52px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+            0 1px 0 rgba(255, 255, 255, 0.08) inset,
+            0 0 30px color-mix(in srgb, var(--clay-slushie-500) 8%, transparent);
+    }
+
+    :root[data-theme='dark'] .listing-sidebar a:hover {
+        color: var(--clay-ink) !important;
+        background: var(--listing-control-hover-bg) !important;
+        border-color: var(--listing-control-hover-border) !important;
+        box-shadow: var(--listing-control-hover-shadow);
+    }
+
+    :root[data-theme='dark'] .listing-sidebar a.active {
+        border-color: color-mix(in srgb, var(--clay-border) 48%, var(--clay-slushie-500) 52%);
+    }
+
+    :root[data-theme='dark'] .listing-post:hover {
+        border-color: color-mix(in srgb, var(--clay-border) 50%, var(--clay-slushie-500) 50%);
+        box-shadow:
+            0 18px 32px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 24px color-mix(in srgb, var(--clay-slushie-500) 9%, transparent);
     }
 
     @media (max-width: 860px) {

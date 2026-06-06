@@ -215,23 +215,33 @@ function formatDate(date: Date | undefined): string {
         min-width: 0;
         height: calc(100vh - 6rem);
         border-right: 1px solid color-mix(in srgb, var(--clay-border) 70%, white 30%);
-        background: linear-gradient(
-            180deg,
-            color-mix(in srgb, var(--clay-paper) 96%, white 4%) 0%,
-            color-mix(in srgb, var(--clay-paper) 94%, var(--clay-cream) 6%) 100%
-        );
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 38%),
+            linear-gradient(
+                180deg,
+                rgba(246, 238, 225, 0.96) 0%,
+                rgba(239, 228, 210, 0.94) 100%
+            ) !important;
     }
 
     .archive-content {
         min-width: 0;
     }
 
-    .year-header,
+    .year-header.year-header,
     .archive-post {
+        --page-surface-bg:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.26), transparent 34%),
+            linear-gradient(rgba(246, 238, 225, 0.94), rgba(246, 238, 225, 0.94));
         border: 1px solid var(--clay-border);
         border-radius: 20px;
-        background: color-mix(in srgb, var(--clay-paper) 84%, transparent);
+        background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.26), transparent 34%) !important;
+        background-color: rgba(246, 238, 225, 0.94) !important;
         box-shadow: var(--clay-shadow);
+    }
+
+    .year-header.year-header {
+        background-color: rgba(246, 238, 225, 0.96) !important;
     }
 
     .archive-sidebar__card {
@@ -274,16 +284,32 @@ function formatDate(date: Date | undefined): string {
     }
 
     .archive-sidebar__list a {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(248, 204, 101, 0.22), rgba(59, 211, 253, 0.14)),
+            color-mix(in srgb, var(--clay-paper) 76%, transparent);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 28%, var(--clay-border));
+        --archive-control-hover-shadow:
+            0 10px 20px rgba(58, 44, 24, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.52) inset;
         display: block;
         padding: 0.52rem 0.62rem;
+        border: 1px solid transparent;
         border-radius: 0.55rem;
         color: var(--sl-color-text);
         text-decoration: none;
-        transition: background-color 0.18s ease, transform 0.18s ease;
+        transition:
+            background 0.18s ease,
+            border-color 0.18s ease,
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
     }
 
     .archive-sidebar__list a:hover {
-        background: rgba(248, 204, 101, 0.2);
+        color: var(--sl-color-text) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
+        transform: translateY(-0.08rem);
     }
 
     .archive-sidebar__list a.active {
@@ -291,7 +317,9 @@ function formatDate(date: Date | undefined): string {
             135deg,
             rgba(59, 211, 253, 0.2) 0%,
             color-mix(in srgb, rgba(59, 211, 253, 0.2) 48%, #ffffff 52%) 100%
-        );
+        ) !important;
+        border-color: color-mix(in srgb, var(--clay-slushie-500) 38%, var(--clay-border));
+        color: var(--sl-color-text) !important;
         box-shadow: inset 3px 0 0 rgba(1, 65, 141, 0.14);
     }
 
@@ -302,6 +330,13 @@ function formatDate(date: Date | undefined): string {
     }
 
     .archive-tag-link {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(248, 204, 101, 0.22), rgba(59, 211, 253, 0.14)),
+            color-mix(in srgb, var(--clay-paper) 76%, transparent);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 28%, var(--clay-border));
+        --archive-control-hover-shadow:
+            0 10px 20px rgba(58, 44, 24, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.52) inset;
         display: inline-flex;
         align-items: center;
         padding: 0.3rem 0.55rem;
@@ -311,11 +346,33 @@ function formatDate(date: Date | undefined): string {
         color: var(--sl-color-text) !important;
         text-decoration: none;
         font-size: 0.74rem;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease,
+            background 0.18s ease,
+            border-color 0.18s ease;
     }
 
     .archive-tag-link:hover {
-        background: rgba(248, 204, 101, 0.2);
+        color: var(--sl-color-text) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
+        transform: translateY(-0.08rem);
+    }
+
+    .archive-sidebar__list a:focus-visible,
+    .archive-tag-link:focus-visible {
+        outline: none;
+        border-color: var(--archive-control-hover-border);
+        box-shadow:
+            0 0 0 3px color-mix(in srgb, var(--clay-slushie-500) 24%, transparent),
+            var(--archive-control-hover-shadow);
+    }
+
+    .archive-sidebar__list a:active,
+    .archive-tag-link:active {
+        transform: translateY(0);
     }
 
     .archive-content {
@@ -330,6 +387,9 @@ function formatDate(date: Date | undefined): string {
 
     .year-header {
         padding: 1.05rem 1.15rem;
+        box-shadow:
+            inset 0 0 0 9999px rgba(246, 238, 225, 0.72),
+            var(--clay-shadow);
     }
 
     .year-header h1,
@@ -351,12 +411,18 @@ function formatDate(date: Date | undefined): string {
 
     .archive-post {
         padding: 1.05rem;
-        transition: transform 0.22s ease, box-shadow 0.22s ease;
+        transition:
+            transform 0.22s ease,
+            box-shadow 0.22s ease,
+            border-color 0.22s ease;
     }
 
     .archive-post:hover {
-        transform: translateY(-0.18rem);
-        box-shadow: var(--clay-shadow-hard);
+        border-color: color-mix(in srgb, var(--clay-blueberry-800) 24%, var(--clay-border));
+        transform: translateY(-0.12rem);
+        box-shadow:
+            0 14px 28px rgba(58, 44, 24, 0.12),
+            0 0 0 1px rgba(255, 255, 255, 0.5) inset;
     }
 
     .archive-post__top {
@@ -402,29 +468,81 @@ function formatDate(date: Date | undefined): string {
 
     :root[data-theme='dark'] .year-header,
     :root[data-theme='dark'] .archive-post {
-        background: color-mix(in srgb, var(--clay-paper) 92%, transparent);
+        --page-surface-bg:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%),
+            linear-gradient(#1c1816, #1c1816);
+        border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+        background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%) !important;
+        background-color: #1c1816 !important;
+        box-shadow:
+            0 24px 52px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+            0 1px 0 rgba(255, 255, 255, 0.08) inset,
+            0 0 30px color-mix(in srgb, var(--clay-slushie-500) 8%, transparent);
+    }
+
+    :root[data-theme='dark'] .year-header {
+        background-color: #1c1816 !important;
     }
 
     :root[data-theme='dark'] .archive-sidebar {
-        background: color-mix(in srgb, var(--clay-paper) 94%, var(--clay-cream) 6%);
+        border-right-color: color-mix(in srgb, var(--clay-border) 58%, var(--clay-slushie-500) 42%);
+        background:
+            linear-gradient(180deg, rgba(59, 211, 253, 0.08), transparent 30%),
+            linear-gradient(180deg, color-mix(in srgb, var(--clay-paper) 90%, #29313a 10%) 0%, color-mix(in srgb, var(--clay-cream) 88%, var(--clay-slushie-800) 12%) 100%) !important;
     }
 
     :root[data-theme='dark'] .archive-sidebar__list a {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+            rgba(24, 33, 35, 0.86);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+        --archive-control-hover-shadow:
+            0 14px 26px rgba(0, 0, 0, 0.34),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
         color: var(--clay-ink);
     }
 
     :root[data-theme='dark'] .archive-sidebar__list a:hover {
-        background: rgba(248, 204, 101, 0.14);
+        color: var(--clay-ink) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
     }
 
     :root[data-theme='dark'] .archive-sidebar__list a.active {
-        background: rgba(59, 211, 253, 0.24);
-        color: #fff7ef;
+        background: rgba(59, 211, 253, 0.24) !important;
+        border-color: color-mix(in srgb, var(--clay-border) 48%, var(--clay-slushie-500) 52%);
+        color: #fff7ef !important;
     }
 
     :root[data-theme='dark'] .archive-tag-link {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+            rgba(24, 33, 35, 0.86);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+        --archive-control-hover-shadow:
+            0 14px 26px rgba(0, 0, 0, 0.34),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
         background: transparent;
         color: var(--clay-ink) !important;
+    }
+
+    :root[data-theme='dark'] .archive-tag-link:hover {
+        color: var(--clay-ink) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
+    }
+
+    :root[data-theme='dark'] .archive-post:hover {
+        border-color: color-mix(in srgb, var(--clay-border) 50%, var(--clay-slushie-500) 50%);
+        box-shadow:
+            0 18px 32px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 24px color-mix(in srgb, var(--clay-slushie-500) 9%, transparent);
     }
 
     :root[data-theme='dark'] .archive-post__title a {

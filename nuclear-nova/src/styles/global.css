@@ -110,12 +110,11 @@
     --sl-color-text: #212529;
     /* Dark text */
     --sl-color-text-accent: var(--primary-color);
-    --sl-color-bg: #ffffff;
-    /* White background */
-    --sl-color-bg-nav: #ffffff;
-    /* Changed from #f8f9fa to white */
-    --sl-color-bg-sidebar: #ffffff;
-    --sl-color-bg-inline-code: #f8f9fa;
+    --sl-color-bg: #f4efe7;
+    /* Warm canvas background */
+    --sl-color-bg-nav: #f4efe7;
+    --sl-color-bg-sidebar: #f4efe7;
+    --sl-color-bg-inline-code: #efe6d8;
     --sl-color-hairline: #dee2e6;
     --sl-color-hairline-light: #e9ecef;
     --sl-color-hairline-shade: #ced4da;
@@ -124,12 +123,12 @@
     color-scheme: light;
 }
 
-/* AGGRESSIVE OVERRIDE: Force white backgrounds everywhere in light mode */
+/* Light mode canvas */
 :root[data-theme='light'],
 :root[data-theme='light'] html,
 :root[data-theme='light'] body {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
+    background: #f4efe7 !important;
+    background-color: #f4efe7 !important;
 }
 
 :root[data-theme='dark'] {
@@ -1042,8 +1041,8 @@ html {
 /* Ensure consistent background throughout */
 .sl-markdown-content,
 .content-panel>*,
-main>*,
-main>*:not(code):not(pre):not(.sl-link-card):not(.card):not(.sl-card):not(.custom-card) {
+main>*:not(.posts-header):not(.post-header):not(.post-content):not(.year-header):not(.post-item):not(.archive-post):not(.listing-post):not(.listing-sidebar__card):not(.post-toc):not(.post-nav__link),
+main>*:not(code):not(pre):not(.sl-link-card):not(.card):not(.sl-card):not(.custom-card):not(.posts-header):not(.post-header):not(.post-content):not(.year-header):not(.post-item):not(.archive-post):not(.listing-post):not(.listing-sidebar__card):not(.post-toc):not(.post-nav__link) {
     background: var(--sl-color-bg) !important;
 }
 
@@ -1062,7 +1061,7 @@ main>*:not(code):not(pre):not(.sl-link-card):not(.card):not(.sl-card):not(.custo
 /* Force remove all gray/colored backgrounds from content areas */
 .sl-container>*,
 .content-panel>*>*,
-main>*>* {
+main>*>*:not(.posts-header):not(.post-header):not(.post-content):not(.year-header):not(.post-item):not(.archive-post):not(.listing-post):not(.listing-sidebar__card):not(.post-toc):not(.post-nav__link) {
     background-color: transparent !important;
 }
 
@@ -1074,13 +1073,13 @@ div[class*="content"] {
 }
 
 /* Ensure header and title areas match content background */
-header,
+header:not(.posts-header):not(.post-header):not(.year-header),
 .page-header,
 .title-wrapper,
 [data-page-title],
 .sl-container:first-child,
-main> :first-child {
-    background: var(--sl-color-bg) !important;
+main> :first-child:not(.posts-header):not(.post-header):not(.post-content):not(.year-header) {
+    background: var(--page-surface-bg, var(--sl-color-bg)) !important;
 }
 
 /* Remove background from Starlight's internal panels */
@@ -1090,9 +1089,9 @@ main> :first-child {
 }
 
 /* Ensure no background color differences between sections */
-main>div,
-main>section,
-main>article {
+main>div:not(.listing-sidebar__card),
+main>section:not(.post-content):not(.post-toc),
+main>article:not(.post):not(.post-item):not(.archive-post):not(.listing-post):not(.post-nav__link) {
     background: var(--sl-color-bg) !important;
 }
 
@@ -1299,19 +1298,19 @@ time,
     color: #e0e0e0 !important;
 }
 
-/* FINAL OVERRIDE: Force pure white background for light theme */
+/* Final light theme canvas */
 @layer overrides {
 
     :root[data-theme='light'],
     :root[data-theme='light'] html,
     :root[data-theme='light'] body {
-        --sl-color-bg: #ffffff !important;
-        --sl-color-bg-nav: #ffffff !important;
-        --sl-color-bg-sidebar: #ffffff !important;
-        --sl-color-gray-1: #ffffff !important;
-        --sl-color-gray-2: #ffffff !important;
-        background: #ffffff !important;
-        background-color: #ffffff !important;
+        --sl-color-bg: #f4efe7 !important;
+        --sl-color-bg-nav: #f4efe7 !important;
+        --sl-color-bg-sidebar: #f4efe7 !important;
+        --sl-color-gray-1: #f4efe7 !important;
+        --sl-color-gray-2: #efe6d8 !important;
+        background: #f4efe7 !important;
+        background-color: #f4efe7 !important;
     }
 
     :root[data-theme='light'] main,
@@ -1325,8 +1324,8 @@ time,
     :root[data-theme='light'] header,
     :root[data-theme='light'] .page-header,
     :root[data-theme='light'] .sl-container {
-        background: #ffffff !important;
-        background-color: #ffffff !important;
+        background: #f4efe7 !important;
+        background-color: #f4efe7 !important;
     }
 }
 
@@ -2085,7 +2084,7 @@ starlight-search input::placeholder {
     --sl-font-mono: var(--font-space-mono);
     --sl-font-family: var(--font-roobert);
 
-    --clay-cream: #faf9f7;
+    --clay-cream: #f4efe7;
     --clay-paper: #ffffff;
     --clay-border: #dad4c8;
     --clay-border-light: #eee9df;
@@ -2110,8 +2109,8 @@ starlight-search input::placeholder {
     --sl-color-accent-low: rgba(1, 65, 141, 0.08);
     --sl-color-accent-high: var(--clay-pomegranate-400);
     --sl-color-white: var(--clay-paper);
-    --sl-color-gray-1: #f6f1e8;
-    --sl-color-gray-2: #eee9df;
+    --sl-color-gray-1: #f4efe7;
+    --sl-color-gray-2: #efe6d8;
     --sl-color-gray-3: #dad4c8;
     --sl-color-gray-4: #c7c0b4;
     --sl-color-gray-5: #9f9b93;
@@ -2121,8 +2120,8 @@ starlight-search input::placeholder {
     --sl-color-text: #000000;
     --sl-color-text-accent: var(--clay-blueberry-800);
     --sl-color-bg: var(--clay-cream);
-    --sl-color-bg-nav: rgba(250, 249, 247, 0.9);
-    --sl-color-bg-sidebar: rgba(255, 255, 255, 0.72);
+    --sl-color-bg-nav: rgba(244, 239, 231, 0.92);
+    --sl-color-bg-sidebar: rgba(244, 239, 231, 0.8);
     --sl-color-bg-inline-code: #f6f1e8;
     --sl-color-hairline: var(--clay-border);
     --sl-color-hairline-light: var(--clay-border-light);
@@ -2300,10 +2299,31 @@ pre[data-language],
 }
 
 .post-content {
-    background: rgba(255, 255, 255, 0.84);
+    background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.3), transparent 34%) !important;
+    background-color: rgba(246, 238, 225, 0.92) !important;
     border: 1px solid var(--clay-border);
     border-radius: 32px;
     box-shadow: var(--clay-shadow);
+}
+
+:root[data-theme='light'] body,
+:root[data-theme='light'] main.page,
+:root[data-theme='light'] .sl-markdown-content {
+    background-color: #f4efe7 !important;
+}
+
+:root[data-theme='light'] .year-header.year-header,
+:root[data-theme='light'] .post-header.post-header,
+:root[data-theme='light'] .post-content.post-content {
+    background-image:
+        linear-gradient(150deg, rgba(255, 255, 255, 0.28), transparent 34%) !important;
+    background-color: rgba(246, 238, 225, 0.94) !important;
+}
+
+:root[data-theme='dark'] .post-content.post-content {
+    background-image:
+        linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%) !important;
+    background-color: #1c1816 !important;
 }
 
 .post-content h2::before {

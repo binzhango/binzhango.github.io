@@ -184,27 +184,40 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
   }
 
   .post-header,
+  .post-content,
   .post-toc,
   .post-nav__link {
     border: 1px solid var(--clay-border);
     box-shadow: var(--clay-shadow);
   }
 
-  .post-header {
+  .post-header.post-header {
+    --page-surface-bg:
+      radial-gradient(circle at top right, rgba(193, 176, 255, 0.22), transparent 24%),
+      radial-gradient(circle at bottom left, rgba(248, 204, 101, 0.18), transparent 24%),
+      linear-gradient(
+        180deg,
+        rgba(246, 238, 225, 0.98) 0%,
+        rgba(239, 228, 210, 0.96) 100%
+      );
     position: relative;
     display: grid;
     gap: 0.75rem;
     margin-bottom: 1.15rem;
     padding: clamp(1.05rem, 1.8vw, 1.35rem);
     border-radius: 26px;
-    background:
-      radial-gradient(circle at top right, rgba(193, 176, 255, 0.36), transparent 24%),
-      radial-gradient(circle at bottom left, rgba(132, 231, 165, 0.24), transparent 22%),
+    background-image:
+      radial-gradient(circle at top right, rgba(193, 176, 255, 0.22), transparent 24%),
+      radial-gradient(circle at bottom left, rgba(248, 204, 101, 0.18), transparent 24%),
       linear-gradient(
         180deg,
-        color-mix(in srgb, var(--clay-paper) 94%, transparent) 0%,
-        color-mix(in srgb, var(--clay-cream) 96%, transparent) 100%
-      );
+        rgba(246, 238, 225, 0.98) 0%,
+        rgba(239, 228, 210, 0.96) 100%
+      ) !important;
+    background-color: rgba(246, 238, 225, 0.96) !important;
+    box-shadow:
+      inset 0 0 0 9999px rgba(246, 238, 225, 0.72),
+      var(--clay-shadow);
   }
 
   .post-header__eyebrow {
@@ -234,7 +247,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
 
   .post-header__eyebrow-topic {
     border: 1px dashed var(--clay-border);
-    background: color-mix(in srgb, var(--clay-paper) 70%, transparent);
+    background: rgba(246, 238, 225, 0.88) !important;
   }
 
   .post-header h1 {
@@ -266,7 +279,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
     padding: 0.4rem 0.62rem;
     border: 1px solid var(--clay-border);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--clay-paper) 72%, transparent);
+    background: rgba(246, 238, 225, 0.88) !important;
   }
 
   .post-meta__value {
@@ -302,6 +315,9 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
 
   .post-content {
     padding: clamp(1.05rem, 1.75vw, 1.5rem);
+    border-radius: 26px;
+    background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.3), transparent 34%) !important;
+    background-color: rgba(246, 238, 225, 0.92) !important;
   }
 
   .post-nav {
@@ -320,16 +336,29 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
   }
 
   .post-nav__link {
+    --post-control-hover-bg:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.22), rgba(59, 211, 253, 0.16)),
+      color-mix(in srgb, var(--clay-paper) 78%, transparent);
+    --post-control-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 28%, var(--clay-border));
+    --post-control-hover-shadow:
+      0 12px 24px rgba(58, 44, 24, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.54) inset;
     min-height: 6.2rem;
     display: grid;
     gap: 0.45rem;
     align-content: start;
     padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 86%, white 14%);
     border-radius: 24px;
-    background: color-mix(in srgb, var(--clay-paper) 84%, transparent);
+    background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.24), transparent 34%) !important;
+    background-color: rgba(246, 238, 225, 0.94) !important;
     color: var(--sl-color-text) !important;
     text-decoration: none;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease,
+      background 0.22s ease,
+      border-color 0.22s ease;
   }
 
   .post-nav__link--next {
@@ -337,9 +366,23 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
   }
 
   .post-nav__link:hover {
-    background: rgba(248, 204, 101, 0.22);
-    transform: translateY(-0.18rem);
-    box-shadow: var(--clay-shadow-hard);
+    color: var(--sl-color-text) !important;
+    background: var(--post-control-hover-bg);
+    border-color: var(--post-control-hover-border);
+    transform: translateY(-0.12rem);
+    box-shadow: var(--post-control-hover-shadow);
+  }
+
+  .post-nav__link:focus-visible {
+    outline: none;
+    border-color: var(--post-control-hover-border);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--clay-slushie-500) 24%, transparent),
+      var(--post-control-hover-shadow);
+  }
+
+  .post-nav__link:active {
+    transform: translateY(0);
   }
 
   .post-nav__eyebrow {
@@ -358,11 +401,12 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
     padding: 0.9rem;
     border-radius: 20px;
     background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.32), transparent 36%),
       linear-gradient(
         180deg,
-        color-mix(in srgb, var(--clay-paper) 90%, white 10%) 0%,
-        color-mix(in srgb, var(--clay-paper) 84%, var(--clay-cream) 16%) 100%
-      );
+        rgba(246, 238, 225, 0.96) 0%,
+        rgba(239, 228, 210, 0.94) 100%
+      ) !important;
   }
 
   .post-toc__title {
@@ -382,23 +426,31 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
   }
 
   .post-toc__link {
+    --toc-hover-bg:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.16), rgba(59, 211, 253, 0.14)),
+      color-mix(in srgb, var(--clay-paper) 74%, transparent);
     display: block;
     padding: 0.44rem 0.58rem;
+    border: 1px solid transparent;
     border-radius: 12px;
     color: color-mix(in srgb, var(--sl-color-text) 82%, white 18%) !important;
     text-decoration: none;
     font-size: 0.8rem;
     line-height: 1.32;
     transition:
-      background-color 0.18s ease,
+      background 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
       color 0.18s ease,
       transform 0.18s ease;
   }
 
   .post-toc__link:hover {
-    background: rgba(59, 211, 253, 0.16);
+    background: var(--toc-hover-bg);
+    border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+    box-shadow: 0 8px 16px rgba(58, 44, 24, 0.08);
     color: var(--sl-color-text) !important;
-    transform: translateY(-1px);
+    transform: translateY(-0.08rem);
   }
 
   .post-toc__item--nested .post-toc__link {
@@ -414,6 +466,78 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
     );
     color: var(--sl-color-text) !important;
     box-shadow: inset 2px 0 0 rgba(1, 65, 141, 0.42);
+  }
+
+  :root[data-theme='dark'] .post-nav__link {
+    --post-control-hover-bg:
+      linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+      rgba(24, 33, 35, 0.86);
+    --post-control-hover-border: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+    --post-control-hover-shadow:
+      0 16px 28px rgba(0, 0, 0, 0.36),
+      0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+      0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
+    border-color: color-mix(in srgb, var(--clay-border) 64%, var(--clay-slushie-500) 36%);
+    background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%) !important;
+    background-color: #1c1816 !important;
+  }
+
+  :root[data-theme='dark'] .post-header,
+  :root[data-theme='dark'] .post-content,
+  :root[data-theme='dark'] .post-toc,
+  :root[data-theme='dark'] .post-nav__link {
+    border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+    box-shadow:
+      0 24px 52px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 0 30px color-mix(in srgb, var(--clay-slushie-500) 8%, transparent);
+  }
+
+  :root[data-theme='dark'] .post-header {
+    --page-surface-bg:
+      linear-gradient(120deg, rgba(248, 204, 101, 0.11), transparent 34%),
+      linear-gradient(300deg, color-mix(in srgb, var(--clay-ube-300) 8%, transparent), transparent 44%),
+      linear-gradient(145deg, color-mix(in srgb, var(--clay-paper) 92%, #29313a 8%) 0%, color-mix(in srgb, var(--clay-cream) 84%, var(--clay-slushie-800) 16%) 100%);
+    background-image:
+      linear-gradient(120deg, rgba(248, 204, 101, 0.11), transparent 34%),
+      linear-gradient(300deg, color-mix(in srgb, var(--clay-ube-300) 8%, transparent), transparent 44%),
+      linear-gradient(145deg, color-mix(in srgb, var(--clay-paper) 92%, #29313a 8%) 0%, color-mix(in srgb, var(--clay-cream) 84%, var(--clay-slushie-800) 16%) 100%) !important;
+    background-color: #1c1816 !important;
+  }
+
+  :root[data-theme='dark'] .post-toc {
+    background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%) !important;
+    background-color: #1c1816 !important;
+  }
+
+  :root[data-theme='dark'] .post-content {
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%),
+      #1c1816 !important;
+  }
+
+  :root[data-theme='dark'] .post-header__eyebrow-topic,
+  :root[data-theme='dark'] .post-meta__item {
+    border-color: color-mix(in srgb, var(--clay-border) 62%, var(--clay-slushie-500) 38%);
+    background: rgba(24, 33, 35, 0.72) !important;
+  }
+
+  :root[data-theme='dark'] .post-toc__link {
+    --toc-hover-bg:
+      linear-gradient(135deg, rgba(59, 211, 253, 0.14), rgba(248, 204, 101, 0.07)),
+      rgba(24, 33, 35, 0.82);
+  }
+
+  :root[data-theme='dark'] .post-toc__link:hover {
+    border-color: color-mix(in srgb, var(--clay-border) 50%, var(--clay-slushie-500) 50%);
+    box-shadow:
+      0 12px 22px rgba(0, 0, 0, 0.28),
+      0 0 16px color-mix(in srgb, var(--clay-slushie-500) 8%, transparent);
+  }
+
+  :root[data-theme='dark'] .post-nav__link:hover {
+    color: var(--clay-ink) !important;
   }
 
   @media (max-width: 720px) {
