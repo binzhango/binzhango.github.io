@@ -13,7 +13,7 @@ import remarkStarlightAdmonitions from './src/plugins/remark-starlight-admonitio
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://binzhango.com', // Update with actual custom domain
+    site: process.env.SITE_URL ?? 'https://binzhango.net',
     output: 'static',
     devToolbar: {
         enabled: false,
