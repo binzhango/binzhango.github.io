@@ -223,8 +223,13 @@ const isHeader = variant === 'header';
 
   .theme-switch:hover {
     border-color: color-mix(in srgb, var(--clay-border) 55%, var(--sl-color-text) 45%);
-    background: color-mix(in srgb, var(--clay-paper) 58%, var(--clay-lemon-400) 42%);
-    transform: translateY(-1px);
+    background:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.24), rgba(59, 211, 253, 0.14)),
+      color-mix(in srgb, var(--clay-paper) 74%, transparent);
+    box-shadow:
+      0 10px 20px rgba(58, 44, 24, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transform: translateY(-0.1rem);
   }
 
   .theme-switch:focus-visible {
@@ -329,16 +334,21 @@ const isHeader = variant === 'header';
 
   .theme-trigger:hover {
     color: var(--sl-color-text);
-    background: var(--control-bg-hover);
-    transform: rotate(-5deg) translateY(-0.12rem);
-    box-shadow: var(--clay-shadow-hard);
+    background:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.24), rgba(59, 211, 253, 0.14)),
+      var(--control-bg);
+    border-color: color-mix(in srgb, var(--control-border) 58%, var(--clay-slushie-500) 42%);
+    transform: translateY(-0.1rem);
+    box-shadow:
+      0 10px 20px rgba(58, 44, 24, 0.11),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   }
 
   .theme-trigger:focus-visible {
     outline: none;
     box-shadow:
       0 0 0 3px rgba(20, 110, 245, 0.18),
-      var(--clay-shadow-hard);
+      0 10px 20px rgba(58, 44, 24, 0.11);
   }
 
   .theme-trigger:active {
@@ -441,7 +451,9 @@ const isHeader = variant === 'header';
 
   .theme-option:hover {
     color: var(--sl-color-text);
-    background: rgba(248, 204, 101, 0.48);
+    background:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.18), rgba(59, 211, 253, 0.12)),
+      color-mix(in srgb, var(--clay-paper) 72%, transparent);
     transform: translateY(-1px);
   }
 
@@ -472,6 +484,24 @@ const isHeader = variant === 'header';
 
   :root[data-theme='dark'] .theme-trigger__icon {
     background: rgba(247, 241, 234, 0.08);
+  }
+
+  :root[data-theme='dark'] .theme-switch:hover,
+  :root[data-theme='dark'] .theme-trigger:hover {
+    background:
+      linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+      rgba(24, 33, 35, 0.86);
+    border-color: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+    box-shadow:
+      0 14px 26px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+      0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
+  }
+
+  :root[data-theme='dark'] .theme-option:hover {
+    background:
+      linear-gradient(135deg, rgba(59, 211, 253, 0.14), rgba(248, 204, 101, 0.08)),
+      rgba(24, 33, 35, 0.82);
   }
 
   :root[data-theme='dark'] .theme-option[data-selected='true'] {

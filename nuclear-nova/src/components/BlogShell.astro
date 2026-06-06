@@ -40,10 +40,11 @@ const showSecondary = hasSecondary || reserveSecondary;
     --blog-sidebar-active: rgba(59, 211, 253, 0.2);
     --blog-sidebar-active-strong: rgba(1, 65, 141, 0.1);
     --blog-sidebar-flyout-bg:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 38%),
       linear-gradient(
         180deg,
-        color-mix(in srgb, var(--clay-paper) 96%, #ffffff 4%) 0%,
-        color-mix(in srgb, var(--clay-paper) 89%, var(--clay-cream) 11%) 100%
+        rgba(246, 238, 225, 0.96) 0%,
+        rgba(239, 228, 210, 0.94) 100%
       );
     display: grid;
     grid-template-columns: var(--blog-sidebar-width) minmax(0, 1fr);
@@ -70,10 +71,11 @@ const showSecondary = hasSecondary || reserveSecondary;
     border-right: 1px solid color-mix(in srgb, var(--clay-border) 70%, white 30%);
     border-radius: 0;
     background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 38%),
       linear-gradient(
         180deg,
-        color-mix(in srgb, var(--clay-paper) 96%, white 4%) 0%,
-        color-mix(in srgb, var(--clay-paper) 94%, var(--clay-cream) 6%) 100%
+        rgba(246, 238, 225, 0.96) 0%,
+        rgba(239, 228, 210, 0.94) 100%
       );
     box-shadow: none;
     overflow: visible;
@@ -551,15 +553,19 @@ const showSecondary = hasSecondary || reserveSecondary;
     --blog-sidebar-active: rgba(59, 211, 253, 0.22);
     --blog-sidebar-active-strong: rgba(247, 241, 234, 0.08);
     --blog-sidebar-flyout-bg:
+      linear-gradient(180deg, rgba(59, 211, 253, 0.08), transparent 30%),
       linear-gradient(
         180deg,
-        color-mix(in srgb, var(--clay-paper) 95%, transparent) 0%,
-        color-mix(in srgb, var(--clay-paper) 90%, var(--clay-cream) 10%) 100%
+        color-mix(in srgb, var(--clay-paper) 90%, #29313a 10%) 0%,
+        color-mix(in srgb, var(--clay-cream) 88%, var(--clay-slushie-800) 12%) 100%
       );
   }
 
   :global(:root[data-theme='dark'] .blog-sidebar) {
-    background: color-mix(in srgb, var(--clay-paper) 94%, var(--clay-cream) 6%);
+    border-right-color: color-mix(in srgb, var(--clay-border) 58%, var(--clay-slushie-500) 42%);
+    background:
+      linear-gradient(180deg, rgba(59, 211, 253, 0.08), transparent 30%),
+      linear-gradient(180deg, color-mix(in srgb, var(--clay-paper) 90%, #29313a 10%) 0%, color-mix(in srgb, var(--clay-cream) 88%, var(--clay-slushie-800) 12%) 100%);
   }
 
   :global(:root[data-theme='dark'] .blog-year-groups summary),
