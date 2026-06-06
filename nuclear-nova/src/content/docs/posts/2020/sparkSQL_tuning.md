@@ -4,10 +4,12 @@ title: Spark SQL
 date: 
   created: 2020-02-21 14:10:36
 
-tags: 
-  - Data Engineer
-categories: 
-  - Spark
+tags:
+  - spark
+  - sql
+  - optimization
+categories:
+  - DATA ENGINEERING
 ---
 
 <!-- more -->

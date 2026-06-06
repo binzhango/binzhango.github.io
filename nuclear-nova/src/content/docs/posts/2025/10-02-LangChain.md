@@ -3,8 +3,10 @@ title: LangGraph Sample Project
 authors:
   - BZ
 date: 2025-10-02
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - langgraph
 ---
 
 <!-- more -->

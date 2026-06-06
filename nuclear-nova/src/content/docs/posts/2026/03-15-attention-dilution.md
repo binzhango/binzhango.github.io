@@ -3,8 +3,11 @@ title: "Attention Dilution"
 date: 2026-03-15
 author: BZ
 description: "Why longer LLM context windows can make answers worse: softmax dilution, positional bias, and attention sinks."
-categories: ["LLM"]
-tags: ["attention", "context", "transformers", "agents", "rag"]
+categories:
+  - LARGE LANGUAGE MODELS
+tags:
+  - llm fundamentals
+  - rag
 ---
 
 <!-- more -->

@@ -3,8 +3,10 @@ title: Training LLM From Zero
 authors:
   - BZ
 date: 2025-08-10
-categories: 
-  - LLM
+categories:
+  - LARGE LANGUAGE MODELS
+tags:
+  - model training
 ---
 
 1. [Objective](#objective)

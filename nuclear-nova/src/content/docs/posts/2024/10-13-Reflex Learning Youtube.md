@@ -3,8 +3,11 @@ title: Reflex Learning
 authors:
   - BZ
 date: 2024-10-13
-categories: 
+categories:
+  - SOFTWARE ENGINEERING
+tags:
   - python
+  - web development
 ---
 
 # Reflex (pynecone)

@@ -5,7 +5,9 @@ authors:
 date: 
   created: 2024-08-12
 categories:
-  - ML
+  - MACHINE LEARNING
+tags:
+  - mlops
 ---
 <!-- more -->
 

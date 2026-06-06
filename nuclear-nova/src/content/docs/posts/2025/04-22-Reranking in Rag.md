@@ -3,8 +3,10 @@ title: RAG-Reranking
 authors:
   - BZ
 date: 2025-04-22
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - rag
 ---
 
 <!-- more -->

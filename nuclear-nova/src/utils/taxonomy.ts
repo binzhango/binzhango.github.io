@@ -1,19 +1,29 @@
 const KNOWN_CATEGORIES = [
-  'python',
-  'k8s',
-  'spark',
-  'ML',
-  'airflow',
-  'LLM',
-  'Azure',
-  'Snowflake',
-  'Scala',
-  'rust',
+  'AI ENGINEERING',
+  'DATA ENGINEERING',
+  'DATA SCIENCE',
+  'DEVOPS',
+  'LARGE LANGUAGE MODELS',
+  'MACHINE LEARNING',
+  'SOFTWARE ENGINEERING',
 ] as const;
 
 const CATEGORY_LOOKUP = new Map(
   KNOWN_CATEGORIES.map((category) => [category.toLowerCase(), category])
 );
+
+const LEGACY_CATEGORY_LOOKUP = new Map([
+  ['airflow', 'DATA ENGINEERING'],
+  ['azure', 'DATA ENGINEERING'],
+  ['k8s', 'DEVOPS'],
+  ['llm', 'LARGE LANGUAGE MODELS'],
+  ['ml', 'MACHINE LEARNING'],
+  ['python', 'SOFTWARE ENGINEERING'],
+  ['rust', 'SOFTWARE ENGINEERING'],
+  ['scala', 'SOFTWARE ENGINEERING'],
+  ['snowflake', 'DATA SCIENCE'],
+  ['spark', 'DATA ENGINEERING'],
+]);
 
 function slugify(value: string): string {
   return value
@@ -29,7 +39,8 @@ function slugify(value: string): string {
 export function normalizeCategory(name: string): string {
   const trimmed = name.trim();
   if (!trimmed) return trimmed;
-  return CATEGORY_LOOKUP.get(trimmed.toLowerCase()) ?? trimmed;
+  const lower = trimmed.toLowerCase();
+  return CATEGORY_LOOKUP.get(lower) ?? LEGACY_CATEGORY_LOOKUP.get(lower) ?? trimmed;
 }
 
 export function slugifyCategory(name: string): string {

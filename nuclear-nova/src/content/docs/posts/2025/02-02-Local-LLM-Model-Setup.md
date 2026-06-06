@@ -3,8 +3,10 @@ title: Local LLM Setup
 authors:
   - BZ
 date: 2025-02-02
-categories: 
-  - LLM
+categories:
+  - LARGE LANGUAGE MODELS
+tags:
+  - llmops
 ---
 
 # Local LLM Setup

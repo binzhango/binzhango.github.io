@@ -24,23 +24,20 @@ export async function getStaticPaths() {
     const tags = [...tagsBySlug.entries()]
         .map(([slug, label]) => ({ slug, label }))
         .sort((a, b) => a.label.localeCompare(b.label));
-    
-    // Generate paths for each year and an "all years" page
+
     const paths = [
-        // All years archive page
         {
             params: { year: undefined },
-            props: { 
+            props: {
                 year: null,
                 postsByYear,
                 years,
                 tags
             }
         },
-        // Individual year pages
         ...years.map(year => ({
             params: { year },
-            props: { 
+            props: {
                 year,
                 posts: postsByYear[year],
                 years,
@@ -48,7 +45,7 @@ export async function getStaticPaths() {
             }
         }))
     ];
-    
+
     return paths;
 }
 
@@ -61,14 +58,9 @@ interface Props {
 }
 
 const { year, posts, postsByYear, years, tags } = Astro.props;
-
-// Determine page title and description
 const pageTitle = year ? `Archive - ${year}` : 'Archive';
-const pageDescription = year 
-    ? `Blog posts from ${year}` 
-    : 'Browse all blog posts organized by year';
+const pageDescription = year ? `Blog posts from ${year}` : 'Browse all blog posts organized by year';
 
-// Format date for display
 function formatDate(date: Date | undefined): string {
     if (!date) return '';
     return new Date(date).toLocaleDateString('en-US', {
@@ -77,70 +69,62 @@ function formatDate(date: Date | undefined): string {
         day: 'numeric'
     });
 }
-
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
-    <div class="archive-container">
-        <!-- Table of Contents for years and tags -->
-        <aside class="archive-toc">
-            <div class="toc-section">
-                <h2>Years</h2>
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="/archive/" class:list={[{ active: !year }]}>
-                                All Posts
-                            </a>
-                        </li>
-                        {years.map(y => (
+    <div class="archive-layout">
+        <aside class="archive-sidebar">
+            <div class="archive-sidebar__card">
+                <div class="archive-sidebar__section">
+                    <p class="archive-sidebar__eyebrow">Years</p>
+                    <nav>
+                        <ul class="archive-sidebar__list">
                             <li>
-                                <a 
-                                    href={`/archive/${y}/`} 
-                                    class:list={[{ active: year === y }]}
-                                >
-                                    {y}
-                                </a>
+                                <a href="/archive/" class:list={[{ active: !year }]}>All Posts</a>
                             </li>
-                        ))}
-                    </ul>
-                </nav>
-            </div>
+                            {years.map(y => (
+                                <li>
+                                    <a href={`/archive/${y}/`} class:list={[{ active: year === y }]}>{y}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
 
-            <div class="toc-section">
-                <h2>Tags</h2>
-                <div class="tags-cloud">
-                    {tags.map((tag) => (
-                        <a href={`/tags/${tag.slug}/`} class="tag-link">
-                            {tag.label}
-                        </a>
-                    ))}
+                <div class="archive-sidebar__section">
+                    <p class="archive-sidebar__eyebrow">Tags</p>
+                    <div class="archive-tags">
+                        {tags.map((tag) => (
+                            <a href={`/tags/${tag.slug}/`} class="archive-tag-link">
+                                {tag.label}
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main content area -->
         <main class="archive-content">
             {year ? (
-                <!-- Single year view -->
                 <section class="year-section">
-                    <h2 class="year-heading">{year}</h2>
-                    <div class="posts-list">
+                    <header class="year-header">
+                        <p class="year-header__eyebrow">Archive year</p>
+                        <h1>{year}</h1>
+                    </header>
+                    <div class="archive-posts">
                         {posts && posts.map(post => (
-                            <article class="post-item">
-                                <div class="post-header">
-                                    <h3 class="post-title">
-                                        <a href={getPostPath(post)}>
-                                            {post.data.title}
-                                        </a>
-                                    </h3>
-                                    <time class="post-date" datetime={post.data.date?.toISOString()}>
+                            <article class="archive-post">
+                                <div class="archive-post__top">
+                                    <h2 class="archive-post__title">
+                                        <a href={getPostPath(post)}>{post.data.title}</a>
+                                    </h2>
+                                    <time class="archive-post__date" datetime={post.data.date?.toISOString()}>
                                         {formatDate(post.data.date)}
                                     </time>
                                 </div>
-                                
+
                                 {post.data.categories && post.data.categories.length > 0 && (
-                                    <div class="post-categories">
+                                    <div class="archive-post__tags">
                                         {post.data.categories.map(category => (
                                             <CategoryBadge category={category} link={true} />
                                         ))}
@@ -148,44 +132,40 @@ function formatDate(date: Date | undefined): string {
                                 )}
 
                                 {post.data.tags && post.data.tags.length > 0 && (
-                                    <div class="post-tags">
+                                    <div class="archive-post__tags">
                                         {post.data.tags.map(tag => (
                                             <TagBadge tag={tag} link={true} />
                                         ))}
                                     </div>
                                 )}
-                                
-                                <p class="post-excerpt">
-                                    {getPostExcerpt(post)}
-                                </p>
+
+                                <p class="archive-post__excerpt">{getPostExcerpt(post)}</p>
                             </article>
                         ))}
                     </div>
                 </section>
             ) : (
-                <!-- All years view -->
                 <>
                     {postsByYear && years.map(y => (
                         <section class="year-section">
-                            <h2 class="year-heading">
-                                <a href={`/archive/${y}/`}>{y}</a>
-                            </h2>
-                            <div class="posts-list">
+                            <header class="year-header">
+                                <p class="year-header__eyebrow">Archive year</p>
+                                <h2><a href={`/archive/${y}/`}>{y}</a></h2>
+                            </header>
+                            <div class="archive-posts">
                                 {postsByYear[y].map(post => (
-                                    <article class="post-item">
-                                        <div class="post-header">
-                                            <h3 class="post-title">
-                                                <a href={getPostPath(post)}>
-                                                    {post.data.title}
-                                                </a>
+                                    <article class="archive-post">
+                                        <div class="archive-post__top">
+                                            <h3 class="archive-post__title">
+                                                <a href={getPostPath(post)}>{post.data.title}</a>
                                             </h3>
-                                            <time class="post-date" datetime={post.data.date?.toISOString()}>
+                                            <time class="archive-post__date" datetime={post.data.date?.toISOString()}>
                                                 {formatDate(post.data.date)}
                                             </time>
                                         </div>
-                                        
+
                                         {post.data.categories && post.data.categories.length > 0 && (
-                                            <div class="post-categories">
+                                            <div class="archive-post__tags">
                                                 {post.data.categories.map(category => (
                                                     <CategoryBadge category={category} link={true} />
                                                 ))}
@@ -193,16 +173,14 @@ function formatDate(date: Date | undefined): string {
                                         )}
 
                                         {post.data.tags && post.data.tags.length > 0 && (
-                                            <div class="post-tags">
+                                            <div class="archive-post__tags">
                                                 {post.data.tags.map(tag => (
                                                     <TagBadge tag={tag} link={true} />
                                                 ))}
                                             </div>
                                         )}
-                                        
-                                        <p class="post-excerpt">
-                                            {getPostExcerpt(post)}
-                                        </p>
+
+                                        <p class="archive-post__excerpt">{getPostExcerpt(post)}</p>
                                     </article>
                                 ))}
                             </div>
@@ -215,296 +193,421 @@ function formatDate(date: Date | undefined): string {
 </BaseLayout>
 
 <style>
-    .archive-container {
+    .archive-layout {
+        --archive-sidebar-width: clamp(14.5rem, 18vw, 17rem);
+        --archive-sidebar-surface:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.28), transparent 34%),
+            linear-gradient(
+                180deg,
+                rgba(246, 238, 225, 0.96) 0%,
+                rgba(239, 228, 210, 0.94) 100%
+            );
         display: grid;
-        grid-template-columns: 200px 1fr;
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
+        grid-template-columns: var(--archive-sidebar-width) minmax(0, 68rem);
+        gap: clamp(1rem, 1.6vw, 1.45rem);
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+        padding-inline: 0;
+        box-sizing: border-box;
+        justify-content: start;
+        align-items: start;
     }
 
-    .archive-toc {
+    .archive-sidebar {
         position: sticky;
-        top: 2rem;
-        height: fit-content;
-    }
-
-    .toc-section {
-        margin-bottom: 2rem;
-    }
-
-    .toc-section:last-child {
-        margin-bottom: 0;
-    }
-
-    .archive-toc h2 {
-        font-size: 1.25rem;
-        margin-bottom: 1rem;
-        color: var(--sl-color-text-accent);
-    }
-
-    .archive-toc nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .archive-toc nav li {
-        margin-bottom: 0.5rem;
-    }
-
-    .archive-toc nav a {
-        display: block;
-        padding: 0.875rem 1.25rem;
-        border-radius: 12px;
-        text-decoration: none;
-        color: var(--sl-color-text);
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 2px solid #e5e7eb;
-        background: var(--sl-color-bg);
-        position: relative;
+        top: 5.45rem;
+        align-self: start;
+        width: var(--archive-sidebar-width);
+        min-width: 0;
+        max-height: calc(100vh - 6rem);
+        border: 1px solid color-mix(in srgb, var(--clay-border) 82%, white 18%);
+        border-radius: 26px;
+        background: var(--archive-sidebar-surface) !important;
+        box-shadow:
+            0 16px 32px rgba(58, 44, 24, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.38) inset;
         overflow: hidden;
-    }
-
-    .archive-toc nav a::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 4px;
-        height: 100%;
-        background: #3b82f6;
-        transform: scaleY(0);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .archive-toc nav a:hover {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        color: #1e40af;
-        border-color: #3b82f6;
-        transform: translateX(4px);
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-    }
-
-    .archive-toc nav a:hover::before {
-        transform: scaleY(1);
-    }
-
-    .archive-toc nav a.active {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        color: #ffffff;
-        border-color: #2563eb;
-        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-    }
-
-    .archive-toc nav a.active::before {
-        transform: scaleY(1);
-        background: #1e40af;
-    }
-
-    /* Dark mode navigation */
-    :root[data-theme='dark'] .archive-toc nav a {
-        border-color: #374151;
-        background: var(--sl-color-bg);
-    }
-
-    :root[data-theme='dark'] .archive-toc nav a:hover {
-        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-        color: #bfdbfe;
-        border-color: #3b82f6;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
-    }
-
-    :root[data-theme='dark'] .archive-toc nav a.active {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        color: #ffffff;
-        border-color: #60a5fa;
-        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
-    }
-
-    /* Tags Cloud */
-    .tags-cloud {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .tag-link {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #1e40af !important;
-        background-color: #dbeafe;
-        border: 2px solid #3b82f6 !important;
-        border-radius: 1rem;
-        text-decoration: none;
-        transition: all 0.2s ease;
-    }
-
-    .tag-link:hover {
-        background-color: #3b82f6;
-        color: #ffffff !important;
-        border-color: #2563eb !important;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
-    }
-
-    :root[data-theme='dark'] .tag-link {
-        background-color: #1e3a8a;
-        color: #bfdbfe !important;
-        border-color: #3b82f6 !important;
-    }
-
-    :root[data-theme='dark'] .tag-link:hover {
-        background-color: #3b82f6;
-        color: #ffffff !important;
-        border-color: #60a5fa !important;
     }
 
     .archive-content {
         min-width: 0;
     }
 
-    .year-section {
-        margin-bottom: 3rem;
+    .year-header.year-header,
+    .archive-post {
+        --page-surface-bg:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.26), transparent 34%),
+            linear-gradient(rgba(246, 238, 225, 0.94), rgba(246, 238, 225, 0.94));
+        border: 1px solid var(--clay-border);
+        border-radius: 20px;
+        background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.26), transparent 34%) !important;
+        background-color: rgba(246, 238, 225, 0.94) !important;
+        box-shadow: var(--clay-shadow);
     }
 
-    .year-heading {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid var(--sl-color-accent);
-        color: var(--sl-color-text-accent);
+    .year-header.year-header {
+        background-color: rgba(246, 238, 225, 0.96) !important;
     }
 
-    .year-heading a {
-        color: inherit;
+    .archive-sidebar__card {
+        max-height: calc(100vh - 6rem);
+        box-sizing: border-box;
+        padding: 0.95rem;
+        display: grid;
+        align-content: start;
+        gap: 0.9rem;
+        overflow: auto;
+        scrollbar-width: thin;
+    }
+
+    .archive-sidebar__section {
+        display: grid;
+        gap: 0.6rem;
+    }
+
+    .archive-sidebar__eyebrow,
+    .year-header__eyebrow {
+        margin: 0;
+        color: var(--clay-muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .archive-sidebar__section + .archive-sidebar__section {
+        padding-top: 0.9rem;
+        border-top: 1px solid color-mix(in srgb, var(--clay-border) 54%, transparent);
+    }
+
+    .archive-sidebar__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.35rem;
+    }
+
+    .archive-sidebar__list a {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(248, 204, 101, 0.22), rgba(59, 211, 253, 0.14)),
+            color-mix(in srgb, var(--clay-paper) 76%, transparent);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 28%, var(--clay-border));
+        --archive-control-hover-shadow:
+            0 10px 20px rgba(58, 44, 24, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.52) inset;
+        display: block;
+        padding: 0.58rem 0.68rem;
+        border: 1px solid transparent;
+        border-radius: 14px;
+        color: var(--sl-color-text);
         text-decoration: none;
-        transition: color 0.2s;
+        transition:
+            background 0.18s ease,
+            border-color 0.18s ease,
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
     }
 
-    .year-heading a:hover {
-        color: var(--sl-color-accent);
+    .archive-sidebar__list a:hover {
+        color: var(--sl-color-text) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
+        transform: translateY(-0.08rem);
     }
 
-    .posts-list {
+    .archive-sidebar__list a.active {
+        background: linear-gradient(
+            135deg,
+            rgba(59, 211, 253, 0.2) 0%,
+            color-mix(in srgb, rgba(59, 211, 253, 0.2) 48%, #ffffff 52%) 100%
+        ) !important;
+        border-color: color-mix(in srgb, var(--clay-slushie-500) 38%, var(--clay-border));
+        color: var(--sl-color-text) !important;
+        box-shadow:
+            inset 3px 0 0 rgba(1, 65, 141, 0.14),
+            0 6px 16px rgba(58, 44, 24, 0.05);
+    }
+
+    .archive-tags {
         display: flex;
-        flex-direction: column;
-        gap: 2rem;
+        flex-wrap: wrap;
+        gap: 0.4rem;
     }
 
-    .post-item {
-        padding: 2rem;
-        border: 2px solid #e5e7eb !important;
-        border-radius: 12px;
-        background: var(--sl-color-bg);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
+    .archive-tag-link {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(248, 204, 101, 0.22), rgba(59, 211, 253, 0.14)),
+            color-mix(in srgb, var(--clay-paper) 76%, transparent);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-blueberry-800) 28%, var(--clay-border));
+        --archive-control-hover-shadow:
+            0 10px 20px rgba(58, 44, 24, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.52) inset;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.34rem 0.58rem;
+        border: 1px solid var(--clay-border);
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--clay-paper) 42%, transparent);
+        color: var(--sl-color-text) !important;
+        text-decoration: none;
+        font-size: 0.74rem;
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease,
+            background 0.18s ease,
+            border-color 0.18s ease;
     }
 
-    .post-item:hover {
-        border-color: #3b82f6 !important;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        transform: translateY(-2px);
+    .archive-tag-link:hover {
+        color: var(--sl-color-text) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
+        transform: translateY(-0.08rem);
     }
 
-    .post-header {
+    .archive-sidebar__list a:focus-visible,
+    .archive-tag-link:focus-visible {
+        outline: none;
+        border-color: var(--archive-control-hover-border);
+        box-shadow:
+            0 0 0 3px color-mix(in srgb, var(--clay-slushie-500) 24%, transparent),
+            var(--archive-control-hover-shadow);
+    }
+
+    .archive-sidebar__list a:active,
+    .archive-tag-link:active {
+        transform: translateY(0);
+    }
+
+    .archive-content {
+        display: grid;
+        gap: 1.05rem;
+    }
+
+    .year-section {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .year-header {
+        padding: 1.05rem 1.15rem;
+        box-shadow:
+            inset 0 0 0 9999px rgba(246, 238, 225, 0.72),
+            var(--clay-shadow);
+    }
+
+    .year-header h1,
+    .year-header h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.25rem);
+        line-height: 1;
+    }
+
+    .year-header h2 a {
+        color: var(--sl-color-text);
+        text-decoration: none;
+    }
+
+    .archive-posts {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .archive-post {
+        padding: 1.05rem;
+        transition:
+            transform 0.22s ease,
+            box-shadow 0.22s ease,
+            border-color 0.22s ease;
+    }
+
+    .archive-post:hover {
+        border-color: color-mix(in srgb, var(--clay-blueberry-800) 24%, var(--clay-border));
+        transform: translateY(-0.12rem);
+        box-shadow:
+            0 14px 28px rgba(58, 44, 24, 0.12),
+            0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    }
+
+    .archive-post__top {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         gap: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
         flex-wrap: wrap;
     }
 
-    .post-title {
-        font-size: 1.5rem;
-        font-weight: 600;
+    .archive-post__title {
         margin: 0;
-        flex: 1;
-        min-width: 200px;
+        font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+        line-height: 1.08;
     }
 
-    .post-title a {
+    .archive-post__title a {
         color: var(--sl-color-text);
         text-decoration: none;
-        transition: color 0.2s;
     }
 
-    .post-title a:hover {
-        color: var(--sl-color-accent);
-    }
-
-    .post-date {
-        font-size: 0.875rem;
-        color: var(--sl-color-text);
-        opacity: 0.6;
+    .archive-post__date {
+        color: var(--clay-muted);
+        font-family: var(--font-space-mono);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
         white-space: nowrap;
-        font-family: var(--font-maple-mono);
     }
 
-    .post-categories {
+    .archive-post__tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 0.45rem;
         margin-bottom: 0.75rem;
     }
 
-    .post-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .post-excerpt {
-        color: var(--sl-color-text);
-        opacity: 0.8;
-        line-height: 1.6;
+    .archive-post__excerpt {
         margin: 0;
+        color: var(--clay-charcoal);
     }
 
-    /* Dark mode post-item border */
-    :root[data-theme='dark'] .post-item {
-        border-color: #374151 !important;
+    :root[data-theme='dark'] .year-header,
+    :root[data-theme='dark'] .archive-post {
+        --page-surface-bg:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%),
+            linear-gradient(#1c1816, #1c1816);
+        border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+        background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%) !important;
+        background-color: #1c1816 !important;
+        box-shadow:
+            0 24px 52px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+            0 1px 0 rgba(255, 255, 255, 0.08) inset,
+            0 0 30px color-mix(in srgb, var(--clay-slushie-500) 8%, transparent);
     }
 
-    :root[data-theme='dark'] .post-item:hover {
-        border-color: #60a5fa !important;
+    :root[data-theme='dark'] .year-header {
+        background-color: #1c1816 !important;
     }
 
-    @media (max-width: 768px) {
-        .archive-container {
+    :root[data-theme='dark'] .archive-sidebar {
+        --archive-sidebar-surface:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%),
+            linear-gradient(
+                180deg,
+                color-mix(in srgb, var(--clay-paper) 90%, #29313a 10%) 0%,
+                color-mix(in srgb, var(--clay-cream) 88%, var(--clay-slushie-800) 12%) 100%
+            );
+        border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+        background: var(--archive-sidebar-surface) !important;
+        box-shadow:
+            0 24px 52px rgba(0, 0, 0, 0.32),
+            0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+            0 1px 0 rgba(255, 255, 255, 0.08) inset,
+            0 0 26px color-mix(in srgb, var(--clay-slushie-500) 7%, transparent);
+    }
+
+    :root[data-theme='dark'] .archive-sidebar__list a {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+            rgba(24, 33, 35, 0.86);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+        --archive-control-hover-shadow:
+            0 14px 26px rgba(0, 0, 0, 0.34),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
+        color: var(--clay-ink);
+    }
+
+    :root[data-theme='dark'] .archive-sidebar__list a:hover {
+        color: var(--clay-ink) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
+    }
+
+    :root[data-theme='dark'] .archive-sidebar__list a.active {
+        background: rgba(59, 211, 253, 0.24) !important;
+        border-color: color-mix(in srgb, var(--clay-border) 48%, var(--clay-slushie-500) 52%);
+        color: #fff7ef !important;
+    }
+
+    :root[data-theme='dark'] .archive-tag-link {
+        --archive-control-hover-bg:
+            linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+            rgba(24, 33, 35, 0.86);
+        --archive-control-hover-border: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+        --archive-control-hover-shadow:
+            0 14px 26px rgba(0, 0, 0, 0.34),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
+        background: transparent;
+        color: var(--clay-ink) !important;
+    }
+
+    :root[data-theme='dark'] .archive-tag-link:hover {
+        color: var(--clay-ink) !important;
+        background: var(--archive-control-hover-bg) !important;
+        border-color: var(--archive-control-hover-border) !important;
+        box-shadow: var(--archive-control-hover-shadow);
+    }
+
+    :root[data-theme='dark'] .archive-post:hover {
+        border-color: color-mix(in srgb, var(--clay-border) 50%, var(--clay-slushie-500) 50%);
+        box-shadow:
+            0 18px 32px rgba(0, 0, 0, 0.42),
+            0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+            0 0 24px color-mix(in srgb, var(--clay-slushie-500) 9%, transparent);
+    }
+
+    :root[data-theme='dark'] .archive-post__title a {
+        color: var(--clay-slushie-500);
+    }
+
+    :root[data-theme='dark'] .archive-post__excerpt {
+        color: var(--clay-ink);
+    }
+
+    @media (max-width: 920px) {
+        .archive-layout {
             grid-template-columns: 1fr;
         }
 
-        .archive-toc {
+        .archive-sidebar {
             position: static;
-            margin-bottom: 2rem;
+            width: 100%;
+            height: auto;
+            max-height: none;
         }
 
-        .archive-toc nav ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+        .archive-sidebar__card {
+            max-height: none;
+            grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            gap: 1rem;
+            overflow: visible;
         }
 
-        .archive-toc nav li {
-            margin-bottom: 0;
+        .archive-sidebar__section + .archive-sidebar__section {
+            padding-top: 0;
+            border-top: 0;
+            border-left: 1px solid color-mix(in srgb, var(--clay-border) 55%, white 45%);
+            padding-left: 1rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .archive-sidebar__card {
+            grid-template-columns: 1fr;
         }
 
-        .post-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .post-title {
-            font-size: 1.25rem;
+        .archive-sidebar__section + .archive-sidebar__section {
+            padding-top: 0.85rem;
+            padding-left: 0;
+            border-left: 0;
+            border-top: 1px solid color-mix(in srgb, var(--clay-border) 55%, white 45%);
         }
     }
 </style>

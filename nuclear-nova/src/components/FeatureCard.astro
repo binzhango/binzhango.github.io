@@ -20,33 +20,33 @@ const { icon, title, variant = 'default' } = Astro.props;
 
 <style>
   .feature-card {
-    background: linear-gradient(135deg, rgba(30, 30, 35, 0.95) 0%, rgba(25, 25, 30, 0.95) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
+    background: color-mix(in srgb, var(--clay-paper) 88%, transparent);
+    border: 1px solid var(--clay-border);
+    border-radius: 24px;
     padding: 1.5rem;
     margin: 1.5rem 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease,
+      border-color 0.22s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--clay-shadow);
   }
 
   .feature-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);
+    inset: 0;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--clay-paper) 18%, transparent) 0%, transparent 100%);
     opacity: 0;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.22s ease;
     pointer-events: none;
   }
 
   .feature-card:hover {
-    border-color: rgba(59, 130, 246, 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15), 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.18rem);
+    box-shadow: var(--clay-shadow-hard);
   }
 
   .feature-card:hover::before {
@@ -54,21 +54,27 @@ const { icon, title, variant = 'default' } = Astro.props;
   }
 
   .feature-card--purple {
-    background: linear-gradient(135deg, rgba(30, 30, 35, 0.95) 0%, rgba(25, 25, 30, 0.95) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(193, 176, 255, 0.34) 0%,
+      color-mix(in srgb, var(--clay-paper) 92%, transparent) 100%
+    );
   }
 
   .feature-card--purple:hover {
-    border-color: rgba(147, 51, 234, 0.4);
-    box-shadow: 0 12px 40px rgba(147, 51, 234, 0.2), 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: color-mix(in srgb, var(--clay-ube-800) 30%, var(--clay-border));
   }
 
   .feature-card--green {
-    background: linear-gradient(135deg, rgba(30, 30, 35, 0.95) 0%, rgba(25, 25, 30, 0.95) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(132, 231, 165, 0.34) 0%,
+      color-mix(in srgb, var(--clay-paper) 92%, transparent) 100%
+    );
   }
 
   .feature-card--green:hover {
-    border-color: rgba(34, 197, 94, 0.4);
-    box-shadow: 0 12px 40px rgba(34, 197, 94, 0.2), 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: color-mix(in srgb, var(--clay-matcha-600) 30%, var(--clay-border));
   }
 
   .feature-card__header {
@@ -84,49 +90,52 @@ const { icon, title, variant = 'default' } = Astro.props;
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 8px;
+    background: var(--clay-slushie-500);
+    border: 1px solid var(--clay-border);
+    border-radius: 18px;
     font-size: 1.25rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--clay-shadow);
+    transition: transform 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease;
   }
 
   .feature-card:hover .feature-card__icon {
-    background: rgba(59, 130, 246, 0.2);
-    transform: scale(1.05);
+    background: var(--clay-blueberry-800);
+    transform: rotate(-7deg) translateY(-0.12rem);
+    box-shadow: var(--clay-shadow-hard);
   }
 
   .feature-card--purple .feature-card__icon {
-    background: rgba(147, 51, 234, 0.1);
+    background: var(--clay-ube-300);
   }
 
   .feature-card--purple:hover .feature-card__icon {
-    background: rgba(147, 51, 234, 0.2);
+    background: var(--clay-ube-800);
   }
 
   .feature-card--green .feature-card__icon {
-    background: rgba(34, 197, 94, 0.1);
+    background: var(--clay-matcha-300);
   }
 
   .feature-card--green:hover .feature-card__icon {
-    background: rgba(34, 197, 94, 0.2);
+    background: var(--clay-matcha-600);
   }
 
   .feature-card__title {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--sl-color-text);
+    letter-spacing: -0.04em;
   }
 
   .feature-card__content {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--clay-charcoal);
   }
 
-  /* Code block styling within cards */
   .feature-card :global(pre) {
-    background: rgba(0, 0, 0, 0.4) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    background: color-mix(in srgb, var(--clay-paper) 72%, transparent) !important;
+    border: 1px solid var(--clay-border);
+    border-radius: 18px;
     padding: 1rem !important;
     margin: 1rem 0;
   }
@@ -135,7 +144,6 @@ const { icon, title, variant = 'default' } = Astro.props;
     margin: 1rem 0;
   }
 
-  /* Link list styling */
   .feature-card :global(ul) {
     list-style: none;
     padding: 0;
@@ -144,7 +152,7 @@ const { icon, title, variant = 'default' } = Astro.props;
 
   .feature-card :global(li) {
     padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px dashed color-mix(in srgb, var(--clay-border) 86%, transparent);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -157,11 +165,11 @@ const { icon, title, variant = 'default' } = Astro.props;
 
   .feature-card :global(li:hover) {
     padding-left: 0.5rem;
-    color: #ffffff;
+    color: var(--sl-color-text);
   }
 
   .feature-card :global(li a) {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--sl-color-text);
     text-decoration: none;
     flex: 1;
     display: flex;
@@ -170,11 +178,11 @@ const { icon, title, variant = 'default' } = Astro.props;
   }
 
   .feature-card :global(li a:hover) {
-    color: #ffffff;
+    color: var(--clay-blueberry-800);
   }
 
   .feature-card :global(li a::after) {
-    content: '→';
+    content: '->';
     opacity: 0;
     transition: opacity 0.2s ease;
     margin-left: auto;
@@ -184,85 +192,7 @@ const { icon, title, variant = 'default' } = Astro.props;
     opacity: 1;
   }
 
-  /* Light mode adjustments */
-  :root[data-theme='light'] .feature-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-    border-color: rgba(0, 0, 0, 0.08);
-  }
-
-  :root[data-theme='light'] .feature-card::before {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(147, 51, 234, 0.03) 100%);
-  }
-
-  :root[data-theme='light'] .feature-card:hover {
-    border-color: rgba(59, 130, 246, 0.3);
-    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  :root[data-theme='light'] .feature-card--purple {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-  }
-
-  :root[data-theme='light'] .feature-card--purple:hover {
-    border-color: rgba(147, 51, 234, 0.3);
-    box-shadow: 0 12px 40px rgba(147, 51, 234, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  :root[data-theme='light'] .feature-card--green {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-  }
-
-  :root[data-theme='light'] .feature-card--green:hover {
-    border-color: rgba(34, 197, 94, 0.3);
-    box-shadow: 0 12px 40px rgba(34, 197, 94, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  :root[data-theme='light'] .feature-card__icon {
-    background: rgba(59, 130, 246, 0.08);
-  }
-
-  :root[data-theme='light'] .feature-card:hover .feature-card__icon {
-    background: rgba(59, 130, 246, 0.15);
-  }
-
-  :root[data-theme='light'] .feature-card--purple .feature-card__icon {
-    background: rgba(147, 51, 234, 0.08);
-  }
-
-  :root[data-theme='light'] .feature-card--purple:hover .feature-card__icon {
-    background: rgba(147, 51, 234, 0.15);
-  }
-
-  :root[data-theme='light'] .feature-card--green .feature-card__icon {
-    background: rgba(34, 197, 94, 0.08);
-  }
-
-  :root[data-theme='light'] .feature-card--green:hover .feature-card__icon {
-    background: rgba(34, 197, 94, 0.15);
-  }
-
-  :root[data-theme='light'] .feature-card__title {
-    color: #1a1a1a;
-  }
-
-  :root[data-theme='light'] .feature-card__content {
-    color: rgba(0, 0, 0, 0.85);
-  }
-
-  :root[data-theme='light'] .feature-card :global(pre) {
-    background: rgba(0, 0, 0, 0.05) !important;
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-
-  :root[data-theme='light'] .feature-card :global(li) {
-    border-bottom-color: rgba(0, 0, 0, 0.05);
-  }
-
-  :root[data-theme='light'] .feature-card :global(li a) {
-    color: rgba(0, 0, 0, 0.85);
-  }
-
-  :root[data-theme='light'] .feature-card :global(li:hover a) {
-    color: #1a1a1a;
+  :root[data-theme='dark'] .feature-card :global(li a:hover) {
+    color: var(--clay-slushie-500);
   }
 </style>
