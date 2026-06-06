@@ -4,10 +4,11 @@ title: Spark Optimization
 date: 
   created: 2020-02-21 14:10:36
 
-tags: 
-  - Data Engineer
-categories: 
-  - Spark
+tags:
+  - spark
+  - optimization
+categories:
+  - DATA ENGINEERING
 ---
 
 # Spark run faster and faster

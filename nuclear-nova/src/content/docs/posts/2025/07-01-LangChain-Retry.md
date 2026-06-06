@@ -3,8 +3,10 @@ title: LangChain Retry Logic
 authors:
   - BZ
 date: 2025-07-01
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - langchain
 ---
 
 <!-- more -->

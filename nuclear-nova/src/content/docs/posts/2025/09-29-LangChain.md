@@ -3,8 +3,11 @@ title: LangChain/LangGraph Q&A
 authors:
   - BZ
 date: 2025-09-29
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - langchain
+  - langgraph
 ---
 
 <!-- more -->

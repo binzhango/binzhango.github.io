@@ -1,58 +1,95 @@
 ---
 interface Props {
-  variant?: 'floating' | 'default';
+  variant?: 'floating' | 'default' | 'header';
 }
 
 const { variant = 'default' } = Astro.props;
+const isHeader = variant === 'header';
 ---
 
 <div class="theme-control" data-theme-control data-variant={variant}>
-  <details class="theme-dropdown" data-theme-choice="light">
-    <summary class="theme-trigger" aria-label="Open theme menu">
-      <span class="theme-trigger__icon" aria-hidden="true">
-        <svg class="theme-icon theme-icon--light" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="4.25" fill="currentColor"></circle>
-          <path
-            d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.77 1.77M17.48 17.48l1.77 1.77M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.77-1.77M17.48 6.52l1.77-1.77"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-width="1.75"
-          ></path>
-        </svg>
-        <svg class="theme-icon theme-icon--dark" viewBox="0 0 24 24">
-          <path
-            d="M15.25 3.5a8.75 8.75 0 1 0 5.25 15.75A9.5 9.5 0 0 1 15.25 3.5Z"
-            fill="currentColor"
-          ></path>
-        </svg>
-        <svg class="theme-icon theme-icon--system" viewBox="0 0 24 24">
-          <rect x="4" y="5" width="16" height="11" rx="2.25" fill="none" stroke="currentColor" stroke-width="1.8"></rect>
-          <path d="M9 19h6M12 16.2V19" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
-        </svg>
+  {isHeader ? (
+    <button type="button" class="theme-switch" data-theme-switch aria-label="Switch to dark theme" aria-pressed="false">
+      <span class="theme-switch__track" aria-hidden="true">
+        <span class="theme-switch__icon theme-switch__icon--light">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4.25" fill="currentColor"></circle>
+            <path
+              d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.77 1.77M17.48 17.48l1.77 1.77M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.77-1.77M17.48 6.52l1.77-1.77"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="1.75"
+            ></path>
+          </svg>
+        </span>
+        <span class="theme-switch__icon theme-switch__icon--dark">
+          <svg viewBox="0 0 24 24">
+            <path d="M15.25 3.5a8.75 8.75 0 1 0 5.25 15.75A9.5 9.5 0 0 1 15.25 3.5Z" fill="currentColor"></path>
+          </svg>
+        </span>
+        <span class="theme-switch__thumb"></span>
       </span>
-      <span class="theme-trigger__label" data-theme-label>Light</span>
-    </summary>
-    <div class="theme-menu" role="menu" aria-label="Theme mode">
-      <button type="button" class="theme-option" data-theme-choice="light" role="menuitemradio" aria-checked="true">
-        <span>Light</span>
-        <span class="theme-option__check" aria-hidden="true">✓</span>
-      </button>
-      <button type="button" class="theme-option" data-theme-choice="dark" role="menuitemradio" aria-checked="false">
-        <span>Dark</span>
-        <span class="theme-option__check" aria-hidden="true">✓</span>
-      </button>
-      <button type="button" class="theme-option" data-theme-choice="auto" role="menuitemradio" aria-checked="false">
-        <span>System</span>
-        <span class="theme-option__check" aria-hidden="true">✓</span>
-      </button>
-    </div>
-  </details>
+    </button>
+  ) : (
+    <details class="theme-dropdown" data-theme-choice="light">
+      <summary class="theme-trigger" aria-label="Open theme menu">
+        <span class="theme-trigger__icon" aria-hidden="true">
+          <svg class="theme-icon theme-icon--light" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4.25" fill="currentColor"></circle>
+            <path
+              d="M12 1.75v2.5M12 19.75v2.5M4.75 4.75l1.77 1.77M17.48 17.48l1.77 1.77M1.75 12h2.5M19.75 12h2.5M4.75 19.25l1.77-1.77M17.48 6.52l1.77-1.77"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="1.75"
+            ></path>
+          </svg>
+          <svg class="theme-icon theme-icon--dark" viewBox="0 0 24 24">
+            <path
+              d="M15.25 3.5a8.75 8.75 0 1 0 5.25 15.75A9.5 9.5 0 0 1 15.25 3.5Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          <svg class="theme-icon theme-icon--system" viewBox="0 0 24 24">
+            <rect x="4" y="5" width="16" height="11" rx="2.25" fill="none" stroke="currentColor" stroke-width="1.8"></rect>
+            <path d="M9 19h6M12 16.2V19" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+          </svg>
+        </span>
+        <span class="theme-trigger__label" data-theme-label>Light</span>
+      </summary>
+      <div class="theme-menu" role="menu" aria-label="Theme mode">
+        <button type="button" class="theme-option" data-theme-choice="light" role="menuitemradio" aria-checked="true">
+          <span>Light</span>
+          <span class="theme-option__check" aria-hidden="true">+</span>
+        </button>
+        <button type="button" class="theme-option" data-theme-choice="dark" role="menuitemradio" aria-checked="false">
+          <span>Dark</span>
+          <span class="theme-option__check" aria-hidden="true">+</span>
+        </button>
+        <button type="button" class="theme-option" data-theme-choice="auto" role="menuitemradio" aria-checked="false">
+          <span>System</span>
+          <span class="theme-option__check" aria-hidden="true">+</span>
+        </button>
+      </div>
+    </details>
+  )}
 </div>
 
 <script is:inline>
   function syncThemeControl(control) {
     const themeApi = window.theme;
+    const switchButton = control.querySelector('[data-theme-switch]');
+    if (switchButton instanceof HTMLButtonElement && themeApi) {
+      const currentTheme = themeApi.getTheme();
+      const resolvedTheme = currentTheme === 'auto' ? themeApi.getSystemTheme() : currentTheme;
+      const isDark = resolvedTheme === 'dark';
+      switchButton.dataset.themeChoice = resolvedTheme;
+      switchButton.setAttribute('aria-pressed', String(isDark));
+      switchButton.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+      return;
+    }
+
     const dropdown = control.querySelector('.theme-dropdown');
     const label = control.querySelector('[data-theme-label]');
     if (!(dropdown instanceof HTMLDetailsElement) || !(label instanceof HTMLElement) || !themeApi) return;
@@ -81,6 +118,18 @@ const { variant = 'default' } = Astro.props;
         control.addEventListener('click', (event) => {
           const target = event.target;
           if (!(target instanceof Element)) return;
+
+          const switchButton = target.closest('[data-theme-switch]');
+          if (switchButton instanceof HTMLButtonElement) {
+            const themeApi = window.theme;
+            if (!themeApi) return;
+
+            const currentTheme = themeApi.getTheme();
+            const resolvedTheme = currentTheme === 'auto' ? themeApi.getSystemTheme() : currentTheme;
+            themeApi.setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+            syncThemeControl(control);
+            return;
+          }
 
           const option = target.closest('.theme-option');
           if (!(option instanceof HTMLButtonElement)) return;
@@ -136,20 +185,10 @@ const { variant = 'default' } = Astro.props;
 <style>
   .theme-control {
     color: var(--sl-color-text);
-    --control-bg: color-mix(in srgb, var(--sl-color-bg-nav) 90%, var(--sl-color-text-accent) 4%);
-    --control-bg-hover: color-mix(in srgb, var(--sl-color-bg-nav) 84%, var(--sl-color-text-accent) 10%);
-    --control-border: color-mix(in srgb, var(--sl-color-text) 8%, transparent);
-    --control-border-hover: color-mix(in srgb, var(--sl-color-text-accent) 16%, transparent);
-    --control-shadow:
-      0 10px 30px rgba(15, 23, 42, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.34),
-      inset 0 0 0 1px color-mix(in srgb, var(--sl-color-text) 4%, transparent);
-    --control-shadow-hover:
-      0 14px 32px rgba(15, 23, 42, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.42),
-      inset 0 0 0 1px color-mix(in srgb, var(--sl-color-text-accent) 8%, transparent);
-    --control-icon-bg: color-mix(in srgb, var(--sl-color-text-accent) 12%, var(--sl-color-bg) 88%);
-    --control-menu-bg: color-mix(in srgb, var(--sl-color-bg) 94%, var(--sl-color-bg-nav) 6%);
+    --control-bg: color-mix(in srgb, var(--clay-paper) 88%, transparent);
+    --control-bg-hover: var(--clay-lemon-400);
+    --control-border: var(--clay-border);
+    --control-menu-bg: color-mix(in srgb, var(--clay-paper) 94%, transparent);
   }
 
   .theme-control[data-variant='floating'] {
@@ -157,6 +196,97 @@ const { variant = 'default' } = Astro.props;
     left: 1rem;
     bottom: max(1rem, env(safe-area-inset-bottom));
     z-index: 30;
+  }
+
+  .theme-control[data-variant='header'] {
+    flex: none;
+  }
+
+  .theme-switch {
+    width: 4.35rem;
+    height: 2.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--sl-color-text);
+    border: 1px solid var(--clay-border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--clay-paper) 72%, transparent);
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .theme-switch:hover {
+    border-color: color-mix(in srgb, var(--clay-border) 55%, var(--sl-color-text) 45%);
+    background:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.24), rgba(59, 211, 253, 0.14)),
+      color-mix(in srgb, var(--clay-paper) 74%, transparent);
+    box-shadow:
+      0 10px 20px rgba(58, 44, 24, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transform: translateY(-0.1rem);
+  }
+
+  .theme-switch:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(20, 110, 245, 0.18);
+  }
+
+  .theme-switch__track {
+    position: relative;
+    width: 3.75rem;
+    height: 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    border-radius: 999px;
+  }
+
+  .theme-switch__icon {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    color: color-mix(in srgb, var(--sl-color-text) 72%, white 28%);
+    transition: color 0.18s ease;
+  }
+
+  .theme-switch__icon svg {
+    width: 0.86rem;
+    height: 0.86rem;
+    display: block;
+  }
+
+  .theme-switch__thumb {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 999px;
+    background: var(--clay-lemon-400);
+    border: 1px solid color-mix(in srgb, var(--clay-border) 70%, white 30%);
+    box-shadow:
+      0 6px 14px rgba(18, 27, 48, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .theme-switch[data-theme-choice='light'] .theme-switch__icon--light,
+  .theme-switch[data-theme-choice='dark'] .theme-switch__icon--dark {
+    color: var(--sl-color-text);
+  }
+
+  .theme-switch[data-theme-choice='dark'] .theme-switch__thumb {
+    transform: translateX(2rem);
+    background: color-mix(in srgb, var(--clay-blueberry-800) 84%, #111827 16%);
   }
 
   .theme-dropdown {
@@ -192,12 +322,10 @@ const { variant = 'default' } = Astro.props;
     border: 1px solid var(--control-border);
     background: var(--control-bg);
     border-radius: 999px;
-    padding: 0.42rem 0.72rem 0.42rem 0.48rem;
+    padding: 0.44rem 0.76rem 0.44rem 0.48rem;
     cursor: pointer;
-    box-shadow: var(--control-shadow);
-    backdrop-filter: blur(16px) saturate(1.15);
+    box-shadow: var(--clay-shadow);
     transition:
-      border-color 0.18s ease,
       background-color 0.18s ease,
       transform 0.18s ease,
       box-shadow 0.18s ease,
@@ -205,18 +333,22 @@ const { variant = 'default' } = Astro.props;
   }
 
   .theme-trigger:hover {
-    color: var(--sl-color-text-accent);
-    border-color: var(--control-border-hover);
-    background: var(--control-bg-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--control-shadow-hover);
+    color: var(--sl-color-text);
+    background:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.24), rgba(59, 211, 253, 0.14)),
+      var(--control-bg);
+    border-color: color-mix(in srgb, var(--control-border) 58%, var(--clay-slushie-500) 42%);
+    transform: translateY(-0.1rem);
+    box-shadow:
+      0 10px 20px rgba(58, 44, 24, 0.11),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   }
 
   .theme-trigger:focus-visible {
     outline: none;
     box-shadow:
-      0 0 0 3px color-mix(in srgb, var(--sl-color-text-accent) 20%, transparent),
-      var(--control-shadow-hover);
+      0 0 0 3px rgba(20, 110, 245, 0.18),
+      0 10px 20px rgba(58, 44, 24, 0.11);
   }
 
   .theme-trigger:active {
@@ -230,8 +362,8 @@ const { variant = 'default' } = Astro.props;
     place-items: center;
     flex: none;
     border-radius: 999px;
-    background: var(--control-icon-bg);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    background: color-mix(in srgb, var(--clay-paper) 90%, transparent);
+    border: 1px solid var(--clay-border);
   }
 
   .theme-icon {
@@ -254,13 +386,40 @@ const { variant = 'default' } = Astro.props;
     display: none;
     padding: 0.42rem;
     background: var(--control-menu-bg);
-    border: 1px solid color-mix(in srgb, var(--sl-color-text) 6%, transparent);
-    border-radius: 1rem;
-    box-shadow:
-      0 18px 40px rgba(15, 23, 42, 0.14),
-      inset 0 1px 0 rgba(255, 255, 255, 0.28),
-      inset 0 0 0 1px color-mix(in srgb, var(--sl-color-text) 4%, transparent);
+    border: 1px solid var(--clay-border);
+    border-radius: 24px;
+    box-shadow: var(--clay-shadow);
     backdrop-filter: blur(18px) saturate(1.08);
+  }
+
+  .theme-control[data-variant='header'] .theme-trigger {
+    width: 2.35rem;
+    min-height: 2.35rem;
+    justify-content: center;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .theme-control[data-variant='header'] .theme-trigger:hover {
+    transform: translateY(-1px);
+  }
+
+  .theme-control[data-variant='header'] .theme-trigger__label {
+    display: none;
+  }
+
+  .theme-control[data-variant='header'] .theme-trigger__icon {
+    width: 1.45rem;
+    height: 1.45rem;
+    border: 0;
+    background: transparent;
+  }
+
+  .theme-control[data-variant='header'] .theme-menu {
+    left: auto;
+    right: 0;
+    top: calc(100% + 0.55rem);
+    bottom: auto;
   }
 
   .theme-dropdown[open] .theme-menu {
@@ -281,21 +440,25 @@ const { variant = 'default' } = Astro.props;
     text-align: left;
     border: 0;
     background: transparent;
-    border-radius: 0.72rem;
-    padding: 0.52rem 0.62rem;
+    border-radius: 18px;
+    padding: 0.55rem 0.68rem;
     cursor: pointer;
     transition:
       color 0.18s ease,
-      background-color 0.18s ease;
+      background-color 0.18s ease,
+      transform 0.18s ease;
   }
 
   .theme-option:hover {
-    color: var(--sl-color-text-accent);
-    background: color-mix(in srgb, var(--sl-color-text-accent) 8%, transparent);
+    color: var(--sl-color-text);
+    background:
+      linear-gradient(135deg, rgba(248, 204, 101, 0.18), rgba(59, 211, 253, 0.12)),
+      color-mix(in srgb, var(--clay-paper) 72%, transparent);
+    transform: translateY(-1px);
   }
 
   .theme-option[data-selected='true'] {
-    background: color-mix(in srgb, var(--sl-color-text-accent) 10%, transparent);
+    background: rgba(59, 211, 253, 0.26);
   }
 
   .theme-option__check {
@@ -308,14 +471,47 @@ const { variant = 'default' } = Astro.props;
     opacity: 1;
   }
 
+  :root[data-theme='dark'] .theme-control {
+    color: var(--clay-ink);
+    --control-bg: color-mix(in srgb, var(--clay-paper) 94%, transparent);
+    --control-menu-bg: color-mix(in srgb, var(--clay-paper) 98%, transparent);
+  }
+
+  :root[data-theme='dark'] .theme-trigger,
+  :root[data-theme='dark'] .theme-option {
+    color: var(--clay-ink);
+  }
+
+  :root[data-theme='dark'] .theme-trigger__icon {
+    background: rgba(247, 241, 234, 0.08);
+  }
+
+  :root[data-theme='dark'] .theme-switch:hover,
+  :root[data-theme='dark'] .theme-trigger:hover {
+    background:
+      linear-gradient(135deg, rgba(59, 211, 253, 0.15), rgba(248, 204, 101, 0.07)),
+      rgba(24, 33, 35, 0.86);
+    border-color: color-mix(in srgb, var(--clay-border) 52%, var(--clay-slushie-500) 48%);
+    box-shadow:
+      0 14px 26px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+      0 0 20px color-mix(in srgb, var(--clay-slushie-500) 10%, transparent);
+  }
+
+  :root[data-theme='dark'] .theme-option:hover {
+    background:
+      linear-gradient(135deg, rgba(59, 211, 253, 0.14), rgba(248, 204, 101, 0.08)),
+      rgba(24, 33, 35, 0.82);
+  }
+
+  :root[data-theme='dark'] .theme-option[data-selected='true'] {
+    background: rgba(59, 211, 253, 0.22);
+  }
+
   @media (max-width: 720px) {
     .theme-control[data-variant='floating'] {
       left: 0.75rem;
       bottom: max(0.75rem, env(safe-area-inset-bottom));
-    }
-
-    .theme-trigger {
-      padding: 0.4rem 0.66rem 0.4rem 0.46rem;
     }
 
     .theme-menu {

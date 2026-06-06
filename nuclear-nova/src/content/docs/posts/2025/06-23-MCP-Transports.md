@@ -3,8 +3,10 @@ title: MCP Transports
 authors:
   - BZ
 date: 2025-06-23
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - mcp
 ---
 
 <!-- more -->

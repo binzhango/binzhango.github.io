@@ -3,7 +3,9 @@ title: Python Decorator
 authors:
   - BZ
 date: 2024-10-23
-categories: 
+categories:
+  - SOFTWARE ENGINEERING
+tags:
   - python
 ---
 

@@ -2,8 +2,10 @@
 title: Gradient Descent
 date: 
   created: 2020-02-02 21:04:06
-categories: 
-  - ML
+categories:
+  - MACHINE LEARNING
+tags:
+  - optimization
 ---
 
 

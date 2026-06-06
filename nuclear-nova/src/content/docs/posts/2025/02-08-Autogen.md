@@ -3,8 +3,12 @@ title: Autogen Intro and RAG Workflow
 authors:
   - BZ
 date: 2025-02-08
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - agents
+  - autogen
+  - rag
 ---
 
 # Introduction to Autogen

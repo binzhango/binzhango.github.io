@@ -1,5 +1,4 @@
 ---
-import ThemeControl from './ThemeControl.astro';
 import { getPostPath, getPostsByYear } from '../utils/post-utils';
 
 interface Props {
@@ -16,19 +15,73 @@ function shouldOpen(year: string, paths: string[]): boolean {
 }
 ---
 
-<aside class="blog-sidebar" aria-label="Blog archive by year">
+<aside class="blog-sidebar" aria-label="Blog posts by year">
   <div class="blog-sidebar__inner">
+    <div class="blog-sidebar__header">
+      <p class="blog-sidebar__eyebrow">Posts</p>
+
+      <button
+        type="button"
+        class="blog-sidebar-toggle"
+        data-blog-sidebar-toggle
+        aria-label="Collapse blog sidebar"
+        aria-pressed="false"
+      >
+        <span class="blog-sidebar-toggle__icon-wrap" aria-hidden="true">
+          <svg class="blog-sidebar-toggle__icon" viewBox="0 0 20 20">
+            <path
+              d="M12.25 5.75 8 10l4.25 4.25"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </span>
+        <span class="blog-sidebar-toggle__label" aria-hidden="true">Posts</span>
+      </button>
+    </div>
+
     <div class="blog-sidebar__content">
-      <a class="blog-sidebar__home" href="/posts/" aria-current={currentPath === '/posts/' ? 'page' : undefined}>Blog</a>
       <nav class="blog-year-groups" aria-label="Posts by year">
         {yearGroups.map(([year, yearlyPosts]) => {
           const paths = yearlyPosts.map((post) => getPostPath(post));
+          const currentYearGroup = paths.includes(currentPath);
+
           return (
             <details open={shouldOpen(year, paths)}>
-              <summary>
-                <span class="blog-year-label">{year}</span>
-                <span class="blog-year-count" aria-label={`${yearlyPosts.length} posts in ${year}`}>
-                  {yearlyPosts.length}
+              <summary
+                aria-current={currentYearGroup ? 'true' : undefined}
+                data-year={year}
+                title={`${year} (${yearlyPosts.length} posts)`}
+              >
+                <span class="blog-year-summary">
+                  <span class="blog-year-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="4.5" y="5.5" width="15" height="15" rx="3.25" fill="none" stroke="currentColor" stroke-width="1.7"></rect>
+                      <path d="M8 3.75v3.4M16 3.75v3.4M5 10h14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                    </svg>
+                    <span>{year.slice(-2)}</span>
+                  </span>
+                  <span class="blog-year-meta">
+                    <span class="blog-year-label">{year}</span>
+                    <span class="blog-year-count" aria-label={`${yearlyPosts.length} posts in ${year}`}>
+                      {yearlyPosts.length}
+                    </span>
+                  </span>
+                </span>
+                <span class="blog-year-chevron" aria-hidden="true">
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M5.75 11.75 10 7.5l4.25 4.25"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.8"
+                    ></path>
+                  </svg>
                 </span>
               </summary>
               <ul>
@@ -50,66 +103,5 @@ function shouldOpen(year: string, paths: string[]): boolean {
         })}
       </nav>
     </div>
-    <div class="blog-sidebar__footer">
-      <ThemeControl />
-      <button
-        type="button"
-        class="blog-sidebar-toggle"
-        data-blog-sidebar-toggle
-        aria-label="Collapse blog sidebar"
-        aria-pressed="false"
-      >
-        <svg class="blog-sidebar-toggle__icon" viewBox="0 0 20 20" aria-hidden="true">
-          <rect x="2.25" y="3" width="15.5" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"></rect>
-          <path d="M7.25 4.5v11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
-          <path d="M11.75 7.25 9.25 10l2.5 2.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
-        </svg>
-      </button>
-    </div>
   </div>
 </aside>
-
-<script is:inline>
-  function syncBlogSidebarToggle() {
-    const toggle = document.querySelector('.blog-sidebar [data-blog-sidebar-toggle]');
-    if (!(toggle instanceof HTMLButtonElement)) return;
-    const isMobile = window.matchMedia('(max-width: 720px)').matches;
-    const viewport = isMobile ? 'mobile' : 'desktop';
-
-    if (toggle.dataset.initialized !== 'true' || toggle.dataset.viewport !== viewport) {
-      document.body.classList.toggle('blog-sidebar-collapsed', isMobile);
-      toggle.dataset.initialized = 'true';
-      toggle.dataset.viewport = viewport;
-    }
-
-    const collapsed = document.body.classList.contains('blog-sidebar-collapsed');
-    toggle.hidden = false;
-    toggle.setAttribute('aria-pressed', String(!collapsed));
-    toggle.setAttribute('aria-label', collapsed ? 'Open blog sidebar' : 'Collapse blog sidebar');
-    toggle.dataset.collapsed = String(collapsed);
-  }
-
-  function setupBlogSidebarToggle() {
-    const toggle = document.querySelector('.blog-sidebar [data-blog-sidebar-toggle]');
-    if (!(toggle instanceof HTMLButtonElement)) return;
-
-    if (toggle.dataset.bound !== 'true') {
-      toggle.dataset.bound = 'true';
-      toggle.addEventListener('click', () => {
-        const nextCollapsed = !document.body.classList.contains('blog-sidebar-collapsed');
-        document.body.classList.toggle('blog-sidebar-collapsed', nextCollapsed);
-        syncBlogSidebarToggle();
-      });
-    }
-
-    syncBlogSidebarToggle();
-  }
-
-  setupBlogSidebarToggle();
-
-  if (!window.__blogSidebarFooterToggleBound) {
-    document.addEventListener('astro:after-swap', setupBlogSidebarToggle);
-    window.addEventListener('resize', setupBlogSidebarToggle, { passive: true });
-    window.__blogSidebarFooterToggleBound = true;
-  }
-</script>

@@ -3,8 +3,10 @@ title: LLM Interview Questions
 authors:
   - BZ
 date: 2025-10-30
-categories: 
-  - LLM
+categories:
+  - LARGE LANGUAGE MODELS
+tags:
+  - llm fundamentals
 ---
 
 # Questions

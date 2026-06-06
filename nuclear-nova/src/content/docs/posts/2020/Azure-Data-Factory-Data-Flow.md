@@ -4,9 +4,10 @@ date:
   created: 2020-11-18 21:27:29
 
 tags:
-  - Data Engineer
-categories: 
-  - Azure
+  - etl
+  - cloud
+categories:
+  - DATA ENGINEERING
 ---
 
 Recently I'm working in Azure to implement ETL jobs. The main tool is ADF (Azure Data Factory). This post show some solutions to resolve issue in my work.
