@@ -3,8 +3,11 @@ title: Text to SQL (Smolagents)
 authors:
   - BZ
 date: 2025-05-04
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - llm apps
+  - sql
 ---
 
 <!-- more -->

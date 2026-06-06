@@ -3,8 +3,10 @@ title: How LLM Tools work
 authors:
   - BZ
 date: 2025-07-11
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - tool use
 ---
 
 <!-- more -->

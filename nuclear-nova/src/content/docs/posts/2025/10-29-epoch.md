@@ -3,8 +3,10 @@ title: LLM Training Epoch
 authors:
   - BZ
 date: 2025-10-29
-categories: 
-  - LLM
+categories:
+  - LARGE LANGUAGE MODELS
+tags:
+  - model training
 ---
 
 # Impact of Multi-Epoch On LLM Training

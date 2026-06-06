@@ -4,8 +4,10 @@ authors:
   - BZ
 date: 2025-03-29
 pin: true
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - llm apps
 ---
 
 <!-- more -->

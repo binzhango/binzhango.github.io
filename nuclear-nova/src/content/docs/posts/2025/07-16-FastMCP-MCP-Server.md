@@ -3,8 +3,10 @@ title: FastMCP MCP Server Hub
 authors:
   - BZ
 date: 2025-07-16
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - mcp
 ---
 
 <!-- more -->

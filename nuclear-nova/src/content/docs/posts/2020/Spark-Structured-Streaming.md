@@ -5,9 +5,10 @@ date:
   created: 2020-02-08 23:23:13
 
 tags:
-  - Data Engineer
-categories: 
-  - Spark
+  - spark
+  - streaming
+categories:
+  - DATA ENGINEERING
 ---
 
 

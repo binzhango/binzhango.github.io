@@ -3,8 +3,11 @@ title: LangGraph Reflection
 authors:
   - BZ
 date: 2025-10-19
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - langgraph
+  - agents
 ---
 
 <!-- more -->

@@ -2,8 +2,10 @@
 title: "ChatGPT in 2025: A Year in Review"
 author: BZ
 date: 2026-01-04
-categories: 
-  - LLM
+categories:
+  - LARGE LANGUAGE MODELS
+tags:
+  - llm fundamentals
 ---
 
 <!-- more -->

@@ -2,8 +2,10 @@
 title: The Mandate for Leadership in AI Engineering
 author: BZ
 date: 2025-11-27
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - leadership
 ---
 
 <!-- more -->
@@ -325,7 +327,6 @@ If you're uncertain about your next steps:
 - Focus your efforts on design and strategic decisions.
 - Assess the outcomes.
 - Decide which future you want to build in. -->
-
 
 
 

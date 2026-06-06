@@ -3,8 +3,10 @@ title: Ollama Import GGUF Models
 authors:
   - BZ
 date: 2025-04-21
-categories: 
-  - LLM
+categories:
+  - LARGE LANGUAGE MODELS
+tags:
+  - llmops
 ---
 
 <!-- more -->

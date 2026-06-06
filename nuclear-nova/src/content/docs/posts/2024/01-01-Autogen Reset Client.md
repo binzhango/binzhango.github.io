@@ -4,8 +4,11 @@ authors:
   - BZ
 date: 2024-09-08
 
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - agents
+  - autogen
 ---
 
 ## HttpClient

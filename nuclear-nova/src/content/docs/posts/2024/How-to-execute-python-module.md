@@ -3,7 +3,9 @@ title: How to execute python modules
 authors:
   - BZ
 date: 2024-09-08 00:00:00
-categories: 
+categories:
+  - SOFTWARE ENGINEERING
+tags:
   - python
 ---
 

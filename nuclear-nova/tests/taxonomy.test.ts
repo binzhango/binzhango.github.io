@@ -4,14 +4,22 @@ import { normalizeCategory, slugifyCategory, slugifyTag } from '../src/utils/tax
 
 describe('taxonomy helpers', () => {
   it('normalizes known categories to canonical labels', () => {
-    expect(normalizeCategory('ml')).toBe('ML');
-    expect(normalizeCategory('azure')).toBe('Azure');
-    expect(normalizeCategory('scala')).toBe('Scala');
+    expect(normalizeCategory('ai engineering')).toBe('AI ENGINEERING');
+    expect(normalizeCategory('data engineering')).toBe('DATA ENGINEERING');
+    expect(normalizeCategory('large language models')).toBe('LARGE LANGUAGE MODELS');
+    expect(normalizeCategory('machine learning')).toBe('MACHINE LEARNING');
+  });
+
+  it('maps legacy tool categories to broader shelves', () => {
+    expect(normalizeCategory('llm')).toBe('LARGE LANGUAGE MODELS');
+    expect(normalizeCategory('spark')).toBe('DATA ENGINEERING');
+    expect(normalizeCategory('python')).toBe('SOFTWARE ENGINEERING');
   });
 
   it('slugifies category links consistently', () => {
-    expect(slugifyCategory('ML')).toBe('ml');
-    expect(slugifyCategory('Snowflake')).toBe('snowflake');
+    expect(slugifyCategory('AI ENGINEERING')).toBe('ai-engineering');
+    expect(slugifyCategory('LARGE LANGUAGE MODELS')).toBe('large-language-models');
+    expect(slugifyCategory('DATA SCIENCE')).toBe('data-science');
     expect(slugifyCategory('  Data Platform  ')).toBe('data-platform');
   });
 

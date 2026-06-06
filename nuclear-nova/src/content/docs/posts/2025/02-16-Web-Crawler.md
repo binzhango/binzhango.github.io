@@ -3,8 +3,10 @@ title: Crawling the Web with LLM
 authors:
   - BZ
 date: 2025-02-16
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - llm apps
 ---
 
 ## Crawling the Web with Large Language Models (LLMs)
