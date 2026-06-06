@@ -3,8 +3,12 @@ title: Gradio with Ollama
 authors:
   - BZ
 date: 2024-12-15
-categories: 
+categories:
+  - AI ENGINEERING
+tags:
+  - llm apps
   - python
+  - llmops
 ---
 
 # Simple Unstructured file processing

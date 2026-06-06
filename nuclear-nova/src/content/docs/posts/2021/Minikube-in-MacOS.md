@@ -5,9 +5,9 @@ authors:
 date: 
   created: 2021-07-18 05:53:45
 tags:
-  - Data Engineer
-categories: 
-  - k8s
+  - containers
+categories:
+  - DEVOPS
 ---
 # Setup Minikube
 <!-- more -->

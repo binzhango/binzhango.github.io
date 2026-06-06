@@ -4,8 +4,10 @@ title: Batch Normalization
 date: 
   created: 2020-02-04 08:15:15
 
-categories: 
-  - ML
+categories:
+  - MACHINE LEARNING
+tags:
+  - deep learning
 ---
 
 Batch Normalization is one of important parts in our NN.

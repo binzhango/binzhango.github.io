@@ -3,8 +3,12 @@ title: LangGraph VS AutoGen
 authors:
   - BZ
 date: 2025-02-09
-categories: 
-  - LLM
+categories:
+  - AI ENGINEERING
+tags:
+  - agents
+  - langgraph
+  - autogen
 ---
 
 

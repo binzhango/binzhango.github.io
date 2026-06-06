@@ -3,7 +3,11 @@ title: Databricks Wheel Job
 authors:
   - BZ
 date: 2024-11-01
-categories: 
+categories:
+  - DATA ENGINEERING
+tags:
+  - data platform
+  - spark
   - python
 ---
 

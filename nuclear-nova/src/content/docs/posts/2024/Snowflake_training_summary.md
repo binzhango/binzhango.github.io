@@ -4,9 +4,9 @@ date:
   created: 2024-10-05
 
 tags:
-  - Data Science
-categories: 
-  - Snowflake
+  - data platform
+categories:
+  - DATA SCIENCE
 ---
 
 <!-- more -->

@@ -3,9 +3,12 @@ title: PySpark Dataframe Transformation
 authors:
   - BZ
 date: 2024-11-15
-categories: 
-  - python
+categories:
+  - DATA ENGINEERING
+tags:
   - spark
+  - python
+  - dataframe
 ---
 
 # Migration from `Scala` to `Python`

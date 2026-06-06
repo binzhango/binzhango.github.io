@@ -3,8 +3,12 @@ title: "AI Terminology: Agents, Skills, RAG, MCP, and the Layers Beneath the Hyp
 date: 2026-03-08
 author: BZ
 description: "A practical mental model for AI terminology: prompt, context, memory, agents, RAG, function calling, MCP, workflows, skills, and sub-agents."
-categories: ["LLM"]
-tags: ["agents", "rag", "mcp", "skills", "workflow"]
+categories:
+  - AI ENGINEERING
+tags:
+  - agents
+  - rag
+  - mcp
 ---
 
 <!-- more -->
