@@ -1712,20 +1712,14 @@ starlight-search input::placeholder {
 }
 
 .post-content > p:first-child {
-    font-size: clamp(1.08rem, 1.4vw, 1.24rem);
-    line-height: 1.9;
+    font-size: clamp(1.04rem, 1.2vw, 1.16rem);
+    line-height: 1.82;
     color: var(--post-heading) !important;
     text-wrap: pretty;
 }
 
 .post-content > p:first-child::first-letter {
-    float: left;
-    margin: 0.1rem 0.45rem 0 0;
-    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-    font-size: 3.2rem;
-    line-height: 0.9;
-    font-weight: 700;
-    color: var(--post-accent);
+    content: none;
 }
 
 .post-content :where(p, li, blockquote) {
@@ -1733,25 +1727,28 @@ starlight-search input::placeholder {
 }
 
 .post-content p {
-    margin: 1rem 0;
+    margin: 1.05rem 0;
+    font-size: 1rem;
+    line-height: 1.78;
     text-wrap: pretty;
 }
 
 .post-content h2,
 .post-content h3,
 .post-content h4 {
-    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-family: var(--font-roobert);
     color: var(--post-heading) !important;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
     scroll-margin-top: 5.75rem;
 }
 
 .post-content h2 {
-    margin-top: 2.8rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.7rem;
+    margin-top: 2.55rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.62rem;
     border-bottom: 1px solid color-mix(in srgb, var(--sl-color-hairline) 88%, transparent);
-    font-size: clamp(1.65rem, 2vw, 2rem);
+    font-size: clamp(1.45rem, 1.8vw, 1.8rem);
+    line-height: 1.18;
     position: relative;
 }
 
@@ -1767,15 +1764,17 @@ starlight-search input::placeholder {
 }
 
 .post-content h3 {
-    margin-top: 2rem;
-    margin-bottom: 0.8rem;
-    font-size: clamp(1.3rem, 1.5vw, 1.55rem);
+    margin-top: 1.9rem;
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.2rem, 1.35vw, 1.38rem);
+    line-height: 1.24;
 }
 
 .post-content h4 {
-    margin-top: 1.55rem;
-    margin-bottom: 0.7rem;
-    font-size: 1.08rem;
+    margin-top: 1.45rem;
+    margin-bottom: 0.6rem;
+    font-size: 1.04rem;
+    line-height: 1.32;
 }
 
 .post-content a {
@@ -1797,11 +1796,8 @@ starlight-search input::placeholder {
 .post-content strong,
 .post-content b {
     color: var(--post-heading) !important;
-    font-weight: 750;
-    text-decoration: underline;
-    text-decoration-thickness: 0.08em;
-    text-decoration-color: color-mix(in srgb, var(--post-warm) 42%, transparent);
-    text-underline-offset: 0.15em;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 .post-content em {
@@ -1827,14 +1823,15 @@ starlight-search input::placeholder {
 
 .post-content ul:not(.contains-task-list),
 .post-content ol {
-    margin: 1.15rem 0;
+    margin: 1.05rem 0;
     padding-left: 1.25rem;
 }
 
 .post-content ul:not(.contains-task-list) > li,
 .post-content ol > li {
     padding-left: 0.35rem;
-    margin: 0.65rem 0;
+    margin: 0.55rem 0;
+    line-height: 1.72;
 }
 
 .post-content ul:not(.contains-task-list) > li::marker {
@@ -2020,8 +2017,7 @@ starlight-search input::placeholder {
 
 @media (max-width: 640px) {
     .post-content > p:first-child::first-letter {
-        font-size: 2.5rem;
-        margin-right: 0.35rem;
+        content: none;
     }
 
     .post-content h2 {
