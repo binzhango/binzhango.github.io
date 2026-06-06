@@ -194,7 +194,14 @@ function formatDate(date: Date | undefined): string {
 
 <style>
     .archive-layout {
-        --archive-sidebar-width: 15rem;
+        --archive-sidebar-width: clamp(14.5rem, 18vw, 17rem);
+        --archive-sidebar-surface:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.28), transparent 34%),
+            linear-gradient(
+                180deg,
+                rgba(246, 238, 225, 0.96) 0%,
+                rgba(239, 228, 210, 0.94) 100%
+            );
         display: grid;
         grid-template-columns: var(--archive-sidebar-width) minmax(0, 68rem);
         gap: clamp(1rem, 1.6vw, 1.45rem);
@@ -213,15 +220,14 @@ function formatDate(date: Date | undefined): string {
         align-self: start;
         width: var(--archive-sidebar-width);
         min-width: 0;
-        height: calc(100vh - 6rem);
-        border-right: 1px solid color-mix(in srgb, var(--clay-border) 70%, white 30%);
-        background:
-            linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 38%),
-            linear-gradient(
-                180deg,
-                rgba(246, 238, 225, 0.96) 0%,
-                rgba(239, 228, 210, 0.94) 100%
-            ) !important;
+        max-height: calc(100vh - 6rem);
+        border: 1px solid color-mix(in srgb, var(--clay-border) 82%, white 18%);
+        border-radius: 26px;
+        background: var(--archive-sidebar-surface) !important;
+        box-shadow:
+            0 16px 32px rgba(58, 44, 24, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.38) inset;
+        overflow: hidden;
     }
 
     .archive-content {
@@ -245,19 +251,19 @@ function formatDate(date: Date | undefined): string {
     }
 
     .archive-sidebar__card {
-        height: 100%;
+        max-height: calc(100vh - 6rem);
         box-sizing: border-box;
-        padding: 0.9rem 0.75rem 1rem;
+        padding: 0.95rem;
         display: grid;
         align-content: start;
-        gap: 1rem;
+        gap: 0.9rem;
         overflow: auto;
         scrollbar-width: thin;
     }
 
     .archive-sidebar__section {
         display: grid;
-        gap: 0.55rem;
+        gap: 0.6rem;
     }
 
     .archive-sidebar__eyebrow,
@@ -271,8 +277,8 @@ function formatDate(date: Date | undefined): string {
     }
 
     .archive-sidebar__section + .archive-sidebar__section {
-        padding-top: 0.95rem;
-        border-top: 1px solid color-mix(in srgb, var(--clay-border) 55%, white 45%);
+        padding-top: 0.9rem;
+        border-top: 1px solid color-mix(in srgb, var(--clay-border) 54%, transparent);
     }
 
     .archive-sidebar__list {
@@ -280,7 +286,7 @@ function formatDate(date: Date | undefined): string {
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 0.25rem;
+        gap: 0.35rem;
     }
 
     .archive-sidebar__list a {
@@ -292,9 +298,9 @@ function formatDate(date: Date | undefined): string {
             0 10px 20px rgba(58, 44, 24, 0.1),
             0 0 0 1px rgba(255, 255, 255, 0.52) inset;
         display: block;
-        padding: 0.52rem 0.62rem;
+        padding: 0.58rem 0.68rem;
         border: 1px solid transparent;
-        border-radius: 0.55rem;
+        border-radius: 14px;
         color: var(--sl-color-text);
         text-decoration: none;
         transition:
@@ -320,13 +326,15 @@ function formatDate(date: Date | undefined): string {
         ) !important;
         border-color: color-mix(in srgb, var(--clay-slushie-500) 38%, var(--clay-border));
         color: var(--sl-color-text) !important;
-        box-shadow: inset 3px 0 0 rgba(1, 65, 141, 0.14);
+        box-shadow:
+            inset 3px 0 0 rgba(1, 65, 141, 0.14),
+            0 6px 16px rgba(58, 44, 24, 0.05);
     }
 
     .archive-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.35rem;
+        gap: 0.4rem;
     }
 
     .archive-tag-link {
@@ -339,10 +347,10 @@ function formatDate(date: Date | undefined): string {
             0 0 0 1px rgba(255, 255, 255, 0.52) inset;
         display: inline-flex;
         align-items: center;
-        padding: 0.3rem 0.55rem;
+        padding: 0.34rem 0.58rem;
         border: 1px solid var(--clay-border);
-        border-radius: 0.55rem;
-        background: transparent;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--clay-paper) 42%, transparent);
         color: var(--sl-color-text) !important;
         text-decoration: none;
         font-size: 0.74rem;
@@ -486,10 +494,20 @@ function formatDate(date: Date | undefined): string {
     }
 
     :root[data-theme='dark'] .archive-sidebar {
-        border-right-color: color-mix(in srgb, var(--clay-border) 58%, var(--clay-slushie-500) 42%);
-        background:
-            linear-gradient(180deg, rgba(59, 211, 253, 0.08), transparent 30%),
-            linear-gradient(180deg, color-mix(in srgb, var(--clay-paper) 90%, #29313a 10%) 0%, color-mix(in srgb, var(--clay-cream) 88%, var(--clay-slushie-800) 12%) 100%) !important;
+        --archive-sidebar-surface:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%),
+            linear-gradient(
+                180deg,
+                color-mix(in srgb, var(--clay-paper) 90%, #29313a 10%) 0%,
+                color-mix(in srgb, var(--clay-cream) 88%, var(--clay-slushie-800) 12%) 100%
+            );
+        border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+        background: var(--archive-sidebar-surface) !important;
+        box-shadow:
+            0 24px 52px rgba(0, 0, 0, 0.32),
+            0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+            0 1px 0 rgba(255, 255, 255, 0.08) inset,
+            0 0 26px color-mix(in srgb, var(--clay-slushie-500) 7%, transparent);
     }
 
     :root[data-theme='dark'] .archive-sidebar__list a {
@@ -562,11 +580,11 @@ function formatDate(date: Date | undefined): string {
             position: static;
             width: 100%;
             height: auto;
-            border-right: 0;
-            border-bottom: 1px solid color-mix(in srgb, var(--clay-border) 70%, white 30%);
+            max-height: none;
         }
 
         .archive-sidebar__card {
+            max-height: none;
             grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
             gap: 1rem;
             overflow: visible;
