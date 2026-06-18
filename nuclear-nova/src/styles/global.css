@@ -254,33 +254,71 @@ pre[data-language],
 .astro-code,
 .expressive-code pre {
     position: relative;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 3px solid #cbd5e1 !important;
+    margin: 0;
+    padding: 3.25rem 1.25rem 1.25rem;
+    border: 0 !important;
+    border-radius: 0;
     overflow-x: auto;
     overflow-y: auto;
-    line-height: 1.7;
+    white-space: pre !important;
+    overflow-wrap: normal !important;
+    word-break: normal;
+    line-height: 1.65;
     /* Max height for ~75 lines (75 lines * 1.7 line-height * 1rem font-size + padding) */
     max-height: calc(50 * 1.7rem + 2rem);
-    background: #f8f9fa !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    font-weight: 600 !important;
+    background: var(--shiki-light-bg, #ffffff) !important;
+    box-shadow: none;
+    font-size: 0.875rem;
+    font-weight: 400 !important;
+    tab-size: 2;
 }
 
 :root[data-theme='dark'] pre[data-language],
 :root[data-theme='dark'] .astro-code,
 :root[data-theme='dark'] .expressive-code pre {
-    border-color: #64748b !important;
-    background: #1e1e1e !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: var(--shiki-dark-bg, #24292e) !important;
 }
 
-/* Make all code text bold */
+/* Keep highlighted code readable without making JSON punctuation visually heavy. */
 pre code,
 .astro-code code,
 pre[data-language] code,
 .expressive-code pre code {
-    font-weight: 600 !important;
+    font-weight: 400 !important;
+    counter-reset: code-line;
+}
+
+/* Shiki emits theme colors as CSS variables when defaultColor is disabled. */
+.astro-code span[style],
+pre[data-language] span[style] {
+    color: var(--shiki-light) !important;
+}
+
+:root[data-theme='dark'] .astro-code span[style],
+:root[data-theme='dark'] pre[data-language] span[style] {
+    color: var(--shiki-dark) !important;
+}
+
+/* Generated line numbers stay visual-only, so copied code contains no gutter text. */
+.astro-code code > .line,
+pre[data-language] code > .line {
+    display: inline-block;
+    min-width: 100%;
+    counter-increment: code-line;
+}
+
+.astro-code code > .line::before,
+pre[data-language] code > .line::before {
+    content: counter(code-line);
+    display: inline-block;
+    width: 2.25rem;
+    margin-right: 1.25rem;
+    padding-right: 0.75rem;
+    border-right: 1px solid color-mix(in srgb, var(--sl-color-text) 14%, transparent);
+    color: color-mix(in srgb, var(--sl-color-text) 42%, transparent);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    user-select: none;
 }
 
 /* Hide ExpressiveCode's built-in copy button */
@@ -294,22 +332,53 @@ pre[data-language] code,
 /* Copy button styling */
 .code-block-wrapper {
     position: relative;
-    margin: 1rem 0;
+    margin: 1.25rem 0;
+    overflow: hidden;
+    border: 1px solid var(--clay-border, #d8d2c8);
+    border-radius: 14px;
+    background: var(--shiki-light-bg, #ffffff);
+    box-shadow: 0 8px 24px rgba(33, 29, 24, 0.08);
+}
+
+.code-block-wrapper::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    border-bottom: 1px solid var(--clay-border, #d8d2c8);
+    background: color-mix(in srgb, var(--sl-color-bg-nav) 92%, transparent);
+    color: color-mix(in srgb, var(--sl-color-text) 68%, transparent);
+    font-family: var(--font-fira-code);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+:root[data-theme='dark'] .code-block-wrapper {
+    background: var(--shiki-dark-bg, #24292e);
 }
 
 .copy-button {
     position: absolute;
-    top: 0.75rem;
+    top: 0.45rem;
     right: 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 0.875rem;
+    padding: 0.35rem 0.65rem;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 0.5rem;
+    border-radius: 0.375rem;
     color: rgba(255, 255, 255, 0.9);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -364,7 +433,7 @@ pre[data-language] code,
 
 /* Adjust code block padding to make room for copy button */
 .code-block-wrapper pre {
-    padding-top: 3rem;
+    padding-top: 3.25rem;
 }
 
 /* Sidebar link hover effects */
@@ -1844,6 +1913,102 @@ starlight-search input::placeholder {
     font-weight: 800;
 }
 
+/* Takeaway boards turn dense rule lists into a responsive, scannable summary. */
+.post-content .takeaway-lede {
+    max-width: 44rem;
+    margin: 0.9rem 0 1.15rem;
+    color: var(--post-muted);
+    font-size: 1rem;
+}
+
+.post-content ol.takeaway-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 0.85rem;
+    margin: 1.15rem 0 2rem;
+    padding: 0;
+    list-style: none;
+}
+
+.post-content ol.takeaway-grid > li.takeaway-card {
+    --takeaway-accent: var(--post-accent);
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 0.9rem;
+    min-width: 0;
+    margin: 0;
+    padding: 1.05rem 1rem 1rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--takeaway-accent) 24%, var(--sl-color-hairline));
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--post-surface) 92%, var(--takeaway-accent) 8%);
+    box-shadow: 0 0.6rem 1.5rem color-mix(in srgb, var(--sl-color-black) 6%, transparent);
+    list-style: none;
+    transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.post-content ol.takeaway-grid > li.takeaway-card:nth-child(3n + 2) {
+    --takeaway-accent: var(--post-link);
+}
+
+.post-content ol.takeaway-grid > li.takeaway-card:nth-child(3n) {
+    --takeaway-accent: var(--post-warm);
+}
+
+.post-content ol.takeaway-grid > li.takeaway-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.22rem;
+    background: linear-gradient(90deg, var(--takeaway-accent), color-mix(in srgb, var(--takeaway-accent) 28%, transparent));
+}
+
+@media (hover: hover) {
+    .post-content ol.takeaway-grid > li.takeaway-card:hover {
+        transform: translateY(-2px);
+        border-color: color-mix(in srgb, var(--takeaway-accent) 46%, var(--sl-color-hairline));
+        box-shadow: 0 0.85rem 1.8rem color-mix(in srgb, var(--sl-color-black) 9%, transparent);
+    }
+}
+
+.post-content .takeaway-number {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid color-mix(in srgb, var(--takeaway-accent) 36%, transparent);
+    border-radius: 0.8rem;
+    background: color-mix(in srgb, var(--takeaway-accent) 14%, transparent);
+    color: color-mix(in srgb, var(--takeaway-accent) 82%, var(--post-heading));
+    font-family: var(--font-fira-code);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+}
+
+.post-content .takeaway-card strong {
+    display: block;
+    margin-top: 0.05rem;
+    font-family: var(--font-roobert);
+    font-size: 1rem;
+    line-height: 1.25;
+}
+
+.post-content .takeaway-card p {
+    margin: 0.38rem 0 0;
+    color: var(--post-body);
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .post-content ol.takeaway-grid > li.takeaway-card {
+        transition: none;
+    }
+}
+
 .post-content li > :first-child {
     margin-top: 0;
 }
@@ -1881,6 +2046,10 @@ starlight-search input::placeholder {
 
 .post-content :where(img, picture > img) {
     display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
     margin: 1.5rem auto;
     border-radius: 1rem;
     border: 1px solid color-mix(in srgb, var(--sl-color-hairline) 85%, transparent);
@@ -2229,22 +2398,12 @@ a:hover {
     outline-offset: 3px;
 }
 
-pre[data-language],
-.astro-code,
-.expressive-code pre,
-.post-content pre {
-    border: 1px solid var(--clay-border) !important;
-    border-radius: 24px;
-    background: color-mix(in srgb, var(--sl-color-bg-inline-code) 86%, #ffffff 14%) !important;
-    box-shadow: var(--clay-shadow);
-}
-
 .copy-button {
-    border-radius: 999px;
+    border-radius: 0.375rem;
     border: 1px solid var(--clay-border);
     background: rgba(255, 255, 255, 0.82);
     color: var(--sl-color-text);
-    box-shadow: var(--clay-shadow);
+    box-shadow: none;
 }
 
 .copy-button:hover {

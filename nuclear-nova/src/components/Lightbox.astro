@@ -64,7 +64,9 @@ import 'glightbox/dist/css/glightbox.min.css';
 <style is:global>
   /* Lightbox wrapper styling */
   .glightbox-wrapper {
-    display: inline-block;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
     cursor: zoom-in;
     transition: opacity 0.2s ease;
   }
@@ -76,6 +78,7 @@ import 'glightbox/dist/css/glightbox.min.css';
   /* Ensure images within lightbox links maintain their styling */
   .glightbox-wrapper img {
     display: block;
+    width: auto;
     max-width: 100%;
     height: auto;
   }
@@ -92,6 +95,6 @@ import 'glightbox/dist/css/glightbox.min.css';
 
   /* Ensure lightbox works well with Starlight's content area */
   .sl-markdown-content .glightbox-wrapper {
-    margin: 1rem 0;
+    margin: 1rem auto;
   }
 </style>
