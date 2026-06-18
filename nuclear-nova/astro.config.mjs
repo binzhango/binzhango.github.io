@@ -10,6 +10,7 @@ import rehypeMathJax from 'rehype-mathjax/chtml';
 import rehypeMermaid from 'rehype-mermaid';
 import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers';
 import remarkStarlightAdmonitions from './src/plugins/remark-starlight-admonitions.mjs';
+import rehypeMermaidShikiAdapter from './src/plugins/rehype-mermaid-shiki-adapter.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -38,6 +39,7 @@ export default defineConfig({
                     },
                 },
             ],
+            rehypeMermaidShikiAdapter,
             [rehypeMermaid, { strategy: 'img-svg' }],
         ],
         shikiConfig: {
@@ -54,15 +56,15 @@ export default defineConfig({
             // Note: Shiki has countless langs built-in, including .astro!
             // https://shiki.style/languages
             langs: [],
-            // Enable word wrap to prevent horizontal scrolling
-            wrap: true,
+            // Preserve code formatting and use horizontal scrolling for long lines.
+            wrap: false,
             // Add custom transformers: https://shiki.style/guide/transformers
             // Find common transformers: https://shiki.style/packages/transformers
             transformers: [
                 transformerNotationDiff(),
                 transformerNotationHighlight(),
             ],
-            // Enable line numbers
+            // Expose dual-theme CSS variables; global.css applies them per theme.
             defaultColor: false,
         },
     },
