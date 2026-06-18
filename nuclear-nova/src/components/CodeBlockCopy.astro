@@ -16,6 +16,7 @@
       // Create wrapper
       const wrapper = document.createElement('div');
       wrapper.className = 'code-block-wrapper';
+      wrapper.dataset.language = codeBlock.getAttribute('data-language') || 'code';
       
       // Create copy button
       const copyButton = document.createElement('button');
