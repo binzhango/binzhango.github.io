@@ -162,8 +162,8 @@ The cleaned-up local folder includes three helper scripts:
 
 The full script contents are collapsed below so the main article stays readable.
 
-<details>
-<summary><code>dbx-proxy.py</code></summary>
+<details class="script-details">
+<summary><span class="script-summary-icon" aria-hidden="true"></span><span class="script-summary-name"><code>dbx-proxy.py</code></span><span class="script-summary-state" aria-hidden="true"></span></summary>
 
 ```python
 #!/usr/bin/env python3
@@ -348,8 +348,8 @@ if __name__ == "__main__":
 
 </details>
 
-<details>
-<summary><code>dbx-proxy-wrapper.sh</code></summary>
+<details class="script-details">
+<summary><span class="script-summary-icon" aria-hidden="true"></span><span class="script-summary-name"><code>dbx-proxy-wrapper.sh</code></span><span class="script-summary-state" aria-hidden="true"></span></summary>
 
 ```zsh
 #!/bin/zsh
@@ -374,8 +374,8 @@ exec "$PYTHON_BIN" "$SCRIPT_DIR/dbx-proxy.py"
 
 </details>
 
-<details>
-<summary><code>dbx-proxy-service.sh</code></summary>
+<details class="script-details">
+<summary><span class="script-summary-icon" aria-hidden="true"></span><span class="script-summary-name"><code>dbx-proxy-service.sh</code></span><span class="script-summary-state" aria-hidden="true"></span></summary>
 
 ```zsh
 #!/bin/zsh
@@ -457,8 +457,8 @@ esac
 
 </details>
 
-<details>
-<summary><code>install.sh</code></summary>
+<details class="script-details">
+<summary><span class="script-summary-icon" aria-hidden="true"></span><span class="script-summary-name"><code>install.sh</code></span><span class="script-summary-state" aria-hidden="true"></span></summary>
 
 ```zsh
 #!/bin/zsh
@@ -577,8 +577,8 @@ fi
 
 </details>
 
-<details>
-<summary><code>dbx-copilot-cli.sh</code></summary>
+<details class="script-details">
+<summary><span class="script-summary-icon" aria-hidden="true"></span><span class="script-summary-name"><code>dbx-copilot-cli.sh</code></span><span class="script-summary-state" aria-hidden="true"></span></summary>
 
 ```zsh
 #!/bin/zsh
@@ -628,8 +628,8 @@ fi
 
 </details>
 
-<details>
-<summary><code>chatLanguageModels.sample.json</code></summary>
+<details class="script-details">
+<summary><span class="script-summary-icon" aria-hidden="true"></span><span class="script-summary-name"><code>chatLanguageModels.sample.json</code></span><span class="script-summary-state" aria-hidden="true"></span></summary>
 
 ```json
 [
