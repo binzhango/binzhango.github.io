@@ -2102,6 +2102,107 @@ starlight-search input::placeholder {
     content: '−';
 }
 
+.post-content details.script-details {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: var(--post-surface);
+}
+
+.post-content details.script-details > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 3.15rem;
+    padding: 0.8rem 0.95rem;
+    border-bottom: 1px solid transparent;
+    background:
+        linear-gradient(90deg, color-mix(in srgb, var(--post-accent) 8%, transparent), transparent 68%);
+}
+
+.post-content details.script-details[open] > summary {
+    border-bottom-color: color-mix(in srgb, var(--sl-color-hairline) 80%, transparent);
+}
+
+.sl-markdown-content .post-content details.script-details > summary::before,
+.post-content details.script-details > summary::before {
+    content: none !important;
+    display: none !important;
+}
+
+.post-content details.script-details > summary::after {
+    content: none;
+    display: none;
+}
+
+.post-content .script-summary-icon {
+    position: relative;
+    width: 1.3rem;
+    height: 1.5rem;
+    flex: 0 0 1.3rem;
+    border: 1.5px solid color-mix(in srgb, var(--post-accent) 76%, transparent);
+    border-radius: 0.22rem;
+    background: color-mix(in srgb, var(--post-accent) 7%, transparent);
+}
+
+.post-content .script-summary-icon::before {
+    content: '';
+    position: absolute;
+    top: -1.5px;
+    right: -1.5px;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-left: 1.5px solid color-mix(in srgb, var(--post-accent) 76%, transparent);
+    border-bottom: 1.5px solid color-mix(in srgb, var(--post-accent) 76%, transparent);
+    border-radius: 0 0.18rem 0 0;
+    background: var(--post-surface);
+}
+
+.post-content .script-summary-name {
+    min-width: 0;
+}
+
+.post-content .script-summary-name code {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.post-content .script-summary-state {
+    margin-left: auto;
+}
+
+.post-content .script-summary-state::before {
+    content: 'Show code';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.22rem 0.58rem;
+    border: 1px solid color-mix(in srgb, var(--post-accent) 24%, transparent);
+    border-radius: 999px;
+    color: var(--post-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.post-content details.script-details[open] .script-summary-state::before {
+    content: 'Hide code';
+    color: var(--post-accent);
+}
+
+.post-content details.script-details > summary:hover .script-summary-icon,
+.post-content details.script-details > summary:focus-visible .script-summary-icon {
+    background: color-mix(in srgb, var(--post-accent) 13%, transparent);
+}
+
+.post-content details.script-details .code-block-wrapper,
+.post-content details.script-details pre {
+    margin: 1rem;
+}
+
 .post-content mjx-container {
     max-width: 100%;
 }
@@ -2414,6 +2515,25 @@ a:hover {
 .copy-button.copied {
     background: rgba(132, 231, 165, 0.3);
     color: var(--clay-matcha-600);
+}
+
+:root[data-theme='dark'] .copy-button {
+    border-color: color-mix(in srgb, var(--clay-border) 78%, transparent);
+    background: color-mix(in srgb, var(--clay-paper) 72%, #000000 28%);
+    color: color-mix(in srgb, var(--clay-ink) 72%, transparent);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+:root[data-theme='dark'] .copy-button:hover {
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 38%, var(--clay-border) 62%);
+    background: color-mix(in srgb, var(--clay-paper) 82%, #000000 18%);
+    color: var(--clay-ink);
+}
+
+:root[data-theme='dark'] .copy-button.copied {
+    border-color: color-mix(in srgb, var(--clay-matcha-300) 34%, var(--clay-border) 66%);
+    background: color-mix(in srgb, var(--clay-matcha-600) 16%, var(--clay-paper) 84%);
+    color: var(--clay-matcha-300);
 }
 
 .sl-markdown-content aside:is(.note, .tip, .caution, .danger, .question-note, .starlight-aside),

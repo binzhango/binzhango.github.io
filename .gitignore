@@ -5,5 +5,5 @@ site
 analysis
 nuclear-nova/scripts/phase0-build-artifact-scan.sh
 nuclear-nova/ADMONITION_PLAYBOOK.md
-python/pdf_reader/__init__.py
-python/pdf_reader/_extract.py
+python/*
+
