@@ -2517,6 +2517,25 @@ a:hover {
     color: var(--clay-matcha-600);
 }
 
+:root[data-theme='dark'] .copy-button {
+    border-color: color-mix(in srgb, var(--clay-border) 78%, transparent);
+    background: color-mix(in srgb, var(--clay-paper) 72%, #000000 28%);
+    color: color-mix(in srgb, var(--clay-ink) 72%, transparent);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+:root[data-theme='dark'] .copy-button:hover {
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 38%, var(--clay-border) 62%);
+    background: color-mix(in srgb, var(--clay-paper) 82%, #000000 18%);
+    color: var(--clay-ink);
+}
+
+:root[data-theme='dark'] .copy-button.copied {
+    border-color: color-mix(in srgb, var(--clay-matcha-300) 34%, var(--clay-border) 66%);
+    background: color-mix(in srgb, var(--clay-matcha-600) 16%, var(--clay-paper) 84%);
+    color: var(--clay-matcha-300);
+}
+
 .sl-markdown-content aside:is(.note, .tip, .caution, .danger, .question-note, .starlight-aside),
 .starlight-aside {
     border-radius: 24px;
