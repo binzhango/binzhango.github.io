@@ -51,17 +51,7 @@ It then forwards the request to Databricks with the right URL, authentication he
 
 Both integrations use the same flow:
 
-```text
-VS Code Copilot Custom Endpoint
-        |
-        v
-Local dbx-proxy on localhost:19000
-        |
-        v
-Databricks Model Serving /serving-endpoints/{name}/invocations
-
-GitHub Copilot CLI uses the same localhost proxy path.
-```
+![Animated flow showing VS Code Copilot and Copilot CLI sending requests through a local dbx-proxy to Databricks Model Serving](/assets/images/2026/databricks-copilot-proxy-flow.gif)
 
 The proxy does four jobs:
 
