@@ -1,5 +1,5 @@
 ---
-title: "Databricks Model Serving in VS Code and Copilot CLI"
+title: "Use Databricks Models with VS Code Copilot and Copilot CLI"
 date: 2026-06-23
 author: BZ
 description: "How to use one local proxy to connect Databricks Model Serving to both VS Code Copilot Custom Endpoint and GitHub Copilot CLI."
