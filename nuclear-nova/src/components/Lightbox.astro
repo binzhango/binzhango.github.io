@@ -23,7 +23,7 @@ import 'glightbox/dist/css/glightbox.min.css';
       link.classList.add('glightbox', 'glightbox-wrapper');
       link.setAttribute('data-gallery', 'content-gallery');
 
-      if (img.alt) {
+      if (img.alt && img.dataset.lightboxDescription !== 'none') {
         link.setAttribute('data-description', img.alt);
       }
 
