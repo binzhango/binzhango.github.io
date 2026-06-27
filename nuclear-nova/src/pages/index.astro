@@ -88,11 +88,17 @@ function formatDate(date: Date | undefined): string {
         </div>
 
         <article class="featured-card">
-          <div class="featured-card__chrome" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+          <aside class="featured-card__status" aria-label="1B token milestone">
+            <p class="status-card__milestone">1B tokens. Still building.</p>
+            <figure class="status-card__media">
+              <img
+                data-lightbox-description="none"
+                src="/assets/images/2026/codex-profile-card.png"
+                alt="Bin Zhang Codex profile card showing 1B lifetime tokens, a 71.8M peak day, a 5 day current streak, and a 14 day longest streak."
+                loading="lazy"
+              />
+            </figure>
+          </aside>
 
           <div class="featured-card__content">
             <p class="meta">{formatDate(featured.data.date)}</p>
@@ -491,8 +497,8 @@ function formatDate(date: Date | undefined): string {
 
   .featured-card {
     display: grid;
-    grid-template-columns: minmax(8rem, 0.34fr) minmax(0, 1fr);
-    min-height: 21rem;
+    grid-template-columns: minmax(18rem, 36%) minmax(0, 64%);
+    min-height: clamp(21rem, 28vw, 25rem);
     border-radius: 28px;
     background:
       radial-gradient(circle at 16% 15%, rgba(248, 204, 101, 0.14), transparent 30%),
@@ -508,45 +514,28 @@ function formatDate(date: Date | undefined): string {
     background: linear-gradient(90deg, var(--clay-blueberry-800), var(--clay-slushie-500), var(--clay-pomegranate-400));
   }
 
-  .featured-card__chrome {
+  .featured-card__status {
     display: grid;
-    align-content: start;
-    gap: 0.65rem;
-    padding: 1.35rem;
+    align-content: center;
+    gap: clamp(0.55rem, 1vw, 0.8rem);
+    min-width: 0;
+    padding: clamp(0.75rem, 1.25vw, 1rem);
     border-right: 1px solid color-mix(in srgb, var(--clay-border) 82%, var(--clay-slushie-800) 18%);
     background:
       linear-gradient(180deg, rgba(1, 65, 141, 0.08), transparent),
       rgba(239, 230, 216, 0.72) !important;
   }
 
-  .featured-card__chrome span {
-    width: 2.6rem;
-    height: 2.6rem;
-    border: 1px solid var(--clay-border);
-    border-radius: 999px;
-    background: var(--clay-lemon-400);
-    box-shadow: 0 8px 18px rgba(18, 27, 48, 0.08);
-  }
-
-  .featured-card__chrome span:nth-child(2) {
-    margin-left: 2rem;
-    background: var(--clay-slushie-500);
-  }
-
-  .featured-card__chrome span:nth-child(3) {
-    margin-left: 0.7rem;
-    background: var(--clay-pomegranate-400);
-  }
-
   .featured-card__content {
     display: grid;
     align-content: center;
     gap: 0.75rem;
+    min-width: 0;
     padding: clamp(1.2rem, 3vw, 2.1rem);
   }
 
-  .featured-card h3 {
-    max-width: 24ch;
+  .featured-card__content h3 {
+    max-width: 20ch;
     margin: 0;
     color: var(--sl-color-text);
     font-size: clamp(1.85rem, 3.4vw, 3.35rem);
@@ -555,16 +544,36 @@ function formatDate(date: Date | undefined): string {
     text-wrap: balance;
   }
 
-  .featured-card p:last-of-type,
+  .featured-card__content p:last-of-type,
   .post-card p {
     margin: 0;
     color: var(--clay-charcoal);
     line-height: 1.68;
   }
 
-  .featured-card p:last-of-type {
+  .featured-card__content p:last-of-type {
     max-width: 58rem;
     font-size: clamp(0.98rem, 1.15vw, 1.06rem);
+  }
+
+  .status-card__milestone {
+    margin: 0;
+    color: var(--sl-color-text);
+    font-size: clamp(1.1rem, 1.75vw, 1.55rem) !important;
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .status-card__media {
+    margin: 0;
+  }
+
+  .status-card__media img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .categories {
@@ -718,7 +727,7 @@ function formatDate(date: Date | undefined): string {
       linear-gradient(145deg, #211d1a 0%, #17252b 100%) !important;
   }
 
-  :root[data-theme='dark'] .featured-card__chrome {
+  :root[data-theme='dark'] .featured-card__status {
     border-right-color: color-mix(in srgb, var(--clay-border) 62%, var(--clay-slushie-500) 38%);
     background:
       linear-gradient(180deg, rgba(1, 65, 141, 0.26), transparent),
@@ -801,16 +810,9 @@ function formatDate(date: Date | undefined): string {
       min-height: auto;
     }
 
-    .featured-card__chrome {
-      min-height: 5.2rem;
-      display: flex;
+    .featured-card__status {
       border-right: 0;
       border-bottom: 1px solid color-mix(in srgb, var(--clay-border) 66%, white 34%);
-    }
-
-    .featured-card__chrome span:nth-child(2),
-    .featured-card__chrome span:nth-child(3) {
-      margin-left: 0;
     }
 
     .recent-grid {
@@ -849,8 +851,10 @@ function formatDate(date: Date | undefined): string {
     }
 
     .featured-card__content,
+    .featured-card__status,
     .post-card {
       padding: 1rem;
     }
+
   }
 </style>
