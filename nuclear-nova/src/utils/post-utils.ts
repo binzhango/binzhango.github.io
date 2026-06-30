@@ -14,18 +14,25 @@ export interface PostsByTag {
     [tag: string]: Post[];
 }
 
+function getPostTime(post: Post): number {
+    return post.data.date ? new Date(post.data.date).getTime() : 0;
+}
+
+function comparePosts(a: Post, b: Post): number {
+    if (a.data.pin !== b.data.pin) {
+        return a.data.pin ? -1 : 1;
+    }
+
+    return getPostTime(b) - getPostTime(a);
+}
+
 /**
- * Get all posts sorted by date (newest first)
- * Filters for posts in the /posts/ directory and sorts by date
+ * Get all posts sorted with pinned posts first, then by date (newest first)
  */
 export async function getAllPosts(): Promise<Post[]> {
     const posts = await getCollection('blog');
 
-    return posts.sort((a, b) => {
-        const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
-        const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
-        return dateB - dateA;
-    });
+    return posts.sort(comparePosts);
 }
 
 /**

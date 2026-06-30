@@ -3,6 +3,7 @@ title: "From Prompt to Response: A Step-by-Step Walkthrough of LLM Inference"
 date: 2026-03-07
 author: BZ
 description: "A cleaner mental model for LLM inference: prompt templating, tokenization, scheduling, prefill, KV cache, decode, and the split between the inference engine and the model."
+pin: true
 categories:
   - LARGE LANGUAGE MODELS
 tags:
@@ -10,6 +11,22 @@ tags:
 ---
 
 <!-- more -->
+
+> **Update:** For a deeper systems-level treatment of LLM inference, especially the interaction between request scheduling, prefill, decode, and KV-cache reuse, see [arXiv:2606.24937](/assets/pdfs/2606.24937v1.pdf).
+
+<details class="pdf-embed">
+  <summary>Preview PDF: arXiv:2606.24937</summary>
+  <figure>
+    <iframe
+      src="/assets/pdfs/2606.24937v1.pdf"
+      title="arXiv:2606.24937 PDF"
+      loading="lazy"
+    ></iframe>
+    <figcaption>
+      Embedded PDF preview. <a href="/assets/pdfs/2606.24937v1.pdf">Open the paper in a separate tab</a>.
+    </figcaption>
+  </figure>
+</details>
 
 ## What Happens Between a Prompt and the Final Response
 

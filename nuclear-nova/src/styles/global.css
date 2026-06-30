@@ -2573,6 +2573,139 @@ a:hover {
     background: linear-gradient(90deg, var(--clay-blueberry-800) 0%, var(--clay-slushie-800) 100%);
 }
 
+.sl-markdown-content .pdf-embed {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0.85rem 0 1.35rem;
+    border: 0;
+    border-radius: 16px;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.sl-markdown-content .pdf-embed summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    max-width: 100%;
+    cursor: pointer;
+    padding: 0.46rem 0.72rem;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 78%, var(--clay-slushie-500) 22%);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--clay-slushie-500) 9%, var(--clay-paper) 91%);
+    color: var(--sl-color-text);
+    font-size: 0.86rem;
+    font-weight: 600;
+    line-height: 1.2;
+    list-style: none;
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--clay-paper) 82%, #ffffff 18%) inset;
+    transition:
+        border-color 0.16s ease,
+        background-color 0.16s ease,
+        color 0.16s ease;
+}
+
+.sl-markdown-content .pdf-embed summary::marker {
+    content: '';
+}
+
+.sl-markdown-content .pdf-embed summary::-webkit-details-marker {
+    display: none;
+}
+
+.sl-markdown-content .pdf-embed summary::before {
+    content: '';
+    width: 0.8rem;
+    height: 0.8rem;
+    background: currentColor;
+    clip-path: polygon(34% 16%, 78% 50%, 34% 84%, 24% 72%, 53% 50%, 24% 28%);
+    transform: rotate(0deg);
+    transition: transform 0.16s ease;
+    flex: none;
+}
+
+.sl-markdown-content .pdf-embed[open] {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+}
+
+.sl-markdown-content .pdf-embed[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.sl-markdown-content .pdf-embed summary:hover {
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 42%, var(--clay-border) 58%);
+    background: color-mix(in srgb, var(--clay-slushie-500) 13%, var(--clay-paper) 87%);
+    color: var(--clay-blueberry-800);
+}
+
+.sl-markdown-content .pdf-embed figure {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0.72rem 0 0;
+    padding: 0.85rem;
+    border: 1px solid var(--clay-border);
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--clay-paper) 88%, #ffffff 12%);
+    overflow: hidden;
+}
+
+.sl-markdown-content .pdf-embed iframe {
+    width: 100%;
+    min-height: min(72vh, 52rem);
+    border: 1px solid var(--clay-border);
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.sl-markdown-content .pdf-embed figcaption {
+    margin: 0;
+    color: var(--clay-muted);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+:root[data-theme='dark'] .sl-markdown-content .pdf-embed iframe {
+    border-color: color-mix(in srgb, var(--clay-border) 70%, var(--clay-slushie-500) 30%);
+    background: #111415;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+:root[data-theme='dark'] .sl-markdown-content .pdf-embed {
+    background: transparent;
+}
+
+:root[data-theme='dark'] .sl-markdown-content .pdf-embed summary {
+    border-color: color-mix(in srgb, var(--clay-border) 70%, var(--clay-slushie-500) 30%);
+    background: color-mix(in srgb, var(--clay-slushie-500) 14%, var(--clay-paper) 86%);
+    box-shadow: none;
+}
+
+:root[data-theme='dark'] .sl-markdown-content .pdf-embed summary:hover {
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 48%, var(--clay-border) 52%);
+    background: color-mix(in srgb, var(--clay-slushie-500) 20%, var(--clay-paper) 80%);
+    color: var(--clay-slushie-500);
+}
+
+:root[data-theme='dark'] .sl-markdown-content .pdf-embed[open] {
+    background: transparent;
+}
+
+:root[data-theme='dark'] .sl-markdown-content .pdf-embed figure {
+    border-color: color-mix(in srgb, var(--clay-border) 70%, var(--clay-slushie-500) 30%);
+    background: color-mix(in srgb, var(--clay-paper) 90%, #000000 10%);
+}
+
+@media (max-width: 720px) {
+    .sl-markdown-content .pdf-embed iframe {
+        min-height: 30rem;
+    }
+}
+
 .post-content {
     background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.3), transparent 34%) !important;
     background-color: rgba(246, 238, 225, 0.92) !important;
