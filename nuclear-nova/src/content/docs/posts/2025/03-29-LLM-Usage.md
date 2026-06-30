@@ -3,7 +3,6 @@ title: GenAI Projects
 authors:
   - BZ
 date: 2025-03-29
-pin: true
 categories:
   - AI ENGINEERING
 tags:

@@ -27,9 +27,12 @@ function formatDate(date: Date | undefined): string {
     </header>
     <div class="posts-list">
       {posts.map((post) => (
-        <article class="post-item">
+        <article class={`post-item${post.data.pin ? ' post-item--pinned' : ''}`}>
           <div class="post-item__top">
-            <p class="post-item__date">{formatDate(post.data.date)}</p>
+            <div class="post-item__meta">
+              {post.data.pin && <span class="pin-badge">Pinned</span>}
+              <p class="post-item__date">{formatDate(post.data.date)}</p>
+            </div>
             <h2><a href={getPostPath(post)}>{post.data.title}</a></h2>
           </div>
           {post.data.categories && post.data.categories.length > 0 && (
@@ -109,6 +112,7 @@ function formatDate(date: Date | undefined): string {
   }
 
   .post-item {
+    position: relative;
     display: grid;
     gap: 0.8rem;
     padding: 1.2rem;
@@ -123,6 +127,22 @@ function formatDate(date: Date | undefined): string {
       border-color 0.22s ease;
   }
 
+  .post-item--pinned {
+    border-width: 1.5px;
+    border-color: color-mix(in srgb, var(--clay-lemon-400) 58%, var(--clay-border));
+    background-image:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.36), transparent 34%),
+      linear-gradient(180deg, rgba(255, 246, 220, 0.78), rgba(246, 225, 202, 0.88)) !important;
+    background-color: #f6e1ca !important;
+    box-shadow:
+      0 18px 34px rgba(58, 44, 24, 0.14),
+      0 0 0 1px rgba(255, 255, 255, 0.62) inset;
+  }
+
+  .post-item--pinned::before {
+    content: none;
+  }
+
   .post-item:hover {
     border-color: color-mix(in srgb, var(--clay-blueberry-800) 24%, var(--clay-border));
     transform: translateY(-0.12rem);
@@ -134,6 +154,29 @@ function formatDate(date: Date | undefined): string {
   .post-item__top {
     display: grid;
     gap: 0.45rem;
+  }
+
+  .post-item__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pin-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.45rem;
+    padding: 0.18rem 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--clay-blueberry-800) 34%, var(--clay-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--clay-blueberry-800) 88%, #1d3942 12%);
+    color: #ffffff;
+    font-family: var(--font-space-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
   }
 
   .post-item h2 {
@@ -204,5 +247,24 @@ function formatDate(date: Date | undefined): string {
   :root[data-theme='dark'] .post-item {
     background-image: linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%) !important;
     background-color: #1c1816 !important;
+  }
+
+  :root[data-theme='dark'] .post-item--pinned {
+    border-width: 1.5px;
+    border-color: color-mix(in srgb, var(--clay-lemon-400) 46%, var(--clay-border));
+    background-image:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 34%),
+      linear-gradient(180deg, #33251d, #251d1a) !important;
+    background-color: #2a211d !important;
+    box-shadow:
+      0 24px 52px rgba(0, 0, 0, 0.46),
+      0 0 0 1px rgba(255, 255, 255, 0.055) inset,
+      0 0 28px rgba(248, 204, 101, 0.08);
+  }
+
+  :root[data-theme='dark'] .pin-badge {
+    border-color: color-mix(in srgb, var(--clay-lemon-400) 38%, var(--clay-border));
+    background: color-mix(in srgb, var(--clay-lemon-400) 82%, #3a2c1c 18%);
+    color: #15120f;
   }
 </style>
