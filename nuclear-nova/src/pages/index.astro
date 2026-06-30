@@ -686,13 +686,13 @@ function formatDate(date: Date | undefined): string {
   .post-card--pinned {
     --card-tone: var(--clay-pomegranate-400);
     border-width: 1.5px;
-    border-color: color-mix(in srgb, var(--clay-lemon-400) 58%, var(--clay-border));
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 58%, var(--clay-border));
     background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.42), transparent 34%),
-      linear-gradient(180deg, rgba(255, 246, 220, 0.78), rgba(246, 225, 202, 0.88)) !important;
+      linear-gradient(145deg, rgba(255, 255, 255, 0.44), transparent 34%),
+      linear-gradient(180deg, #dff5f3 0%, #cbe7f1 100%) !important;
     box-shadow:
-      0 18px 34px rgba(58, 44, 24, 0.14),
-      0 0 0 1px rgba(255, 255, 255, 0.62) inset;
+      0 18px 34px rgba(30, 71, 82, 0.14),
+      0 0 0 1px rgba(255, 255, 255, 0.7) inset;
   }
 
   .post-card--pinned::after {
@@ -808,20 +808,20 @@ function formatDate(date: Date | undefined): string {
 
   :root[data-theme='dark'] .post-card--pinned {
     border-width: 1.5px;
-    border-color: color-mix(in srgb, var(--clay-lemon-400) 46%, var(--clay-border));
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 52%, var(--clay-border));
     background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 34%),
-      linear-gradient(180deg, #33251d, #251d1a) !important;
+      linear-gradient(145deg, rgba(255, 255, 255, 0.052), transparent 34%),
+      linear-gradient(180deg, #12313a 0%, #172635 100%) !important;
     box-shadow:
       0 24px 52px rgba(0, 0, 0, 0.46),
       0 0 0 1px rgba(255, 255, 255, 0.055) inset,
-      0 0 28px rgba(248, 204, 101, 0.08);
+      0 0 28px rgba(59, 211, 253, 0.08);
   }
 
   :root[data-theme='dark'] .pin-badge {
-    border-color: color-mix(in srgb, var(--clay-lemon-400) 38%, var(--clay-border));
-    background: color-mix(in srgb, var(--clay-lemon-400) 82%, #3a2c1c 18%);
-    color: #15120f;
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 54%, var(--clay-border));
+    background: color-mix(in srgb, var(--clay-slushie-500) 78%, #10252e 22%);
+    color: #061318;
   }
 
   :root[data-theme='dark'] .post-card::before {
