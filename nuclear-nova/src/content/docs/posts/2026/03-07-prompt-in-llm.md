@@ -3,6 +3,7 @@ title: "From Prompt to Response: A Step-by-Step Walkthrough of LLM Inference"
 date: 2026-03-07
 author: BZ
 description: "A cleaner mental model for LLM inference: prompt templating, tokenization, scheduling, prefill, KV cache, decode, and the split between the inference engine and the model."
+pin: true
 categories:
   - LARGE LANGUAGE MODELS
 tags:

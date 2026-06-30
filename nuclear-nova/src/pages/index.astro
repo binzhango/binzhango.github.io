@@ -7,6 +7,11 @@ import { getPostExcerpt } from '../utils/excerpt';
 const posts = await getAllPosts();
 const featured = posts[0];
 const recentPosts = posts.slice(1, 7);
+const newestPost = [...posts].sort((a, b) => {
+  const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return dateB - dateA;
+})[0];
 const totalPosts = posts.length;
 const categoryCounts = new Map<string, number>();
 
@@ -61,7 +66,7 @@ function formatDate(date: Date | undefined): string {
           </div>
           <div class="metric metric--wide">
             <span>Latest</span>
-            <strong>{featured ? formatDate(featured.data.date) : 'Coming soon'}</strong>
+            <strong>{newestPost ? formatDate(newestPost.data.date) : 'Coming soon'}</strong>
           </div>
         </div>
 
@@ -83,7 +88,7 @@ function formatDate(date: Date | undefined): string {
     {featured && (
       <section class="featured-section" aria-labelledby="featured-heading">
         <div class="section-heading">
-          <p class="eyebrow">Latest dispatch</p>
+          <p class="eyebrow">{featured.data.pin ? 'Pinned dispatch' : 'Latest dispatch'}</p>
           <h2 id="featured-heading">Featured article</h2>
         </div>
 
@@ -101,7 +106,10 @@ function formatDate(date: Date | undefined): string {
           </aside>
 
           <div class="featured-card__content">
-            <p class="meta">{formatDate(featured.data.date)}</p>
+            <div class="featured-card__meta">
+              {featured.data.pin && <span class="pin-badge">Pinned</span>}
+              <p class="meta">{formatDate(featured.data.date)}</p>
+            </div>
             <h3>{featured.data.title}</h3>
             {featured.data.categories && featured.data.categories.length > 0 && (
               <div class="categories">
@@ -130,9 +138,12 @@ function formatDate(date: Date | undefined): string {
 
       <div class="recent-grid">
         {recentPosts.map((post, index) => (
-          <article class={`post-card post-card--tone-${index % 4}`}>
+          <article class={`post-card post-card--tone-${index % 4}${post.data.pin ? ' post-card--pinned' : ''}`}>
             <div class="post-card__top">
-              <p class="meta">{formatDate(post.data.date)}</p>
+              <div class="post-card__meta">
+                {post.data.pin && <span class="pin-badge">Pinned</span>}
+                <p class="meta">{formatDate(post.data.date)}</p>
+              </div>
               <span class="post-card__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             </div>
 
@@ -534,6 +545,33 @@ function formatDate(date: Date | undefined): string {
     padding: clamp(1.2rem, 3vw, 2.1rem);
   }
 
+  .featured-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .featured-card__meta .meta {
+    margin: 0;
+  }
+
+  .pin-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.45rem;
+    padding: 0.18rem 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--clay-blueberry-800) 34%, var(--clay-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--clay-blueberry-800) 88%, #1d3942 12%);
+    color: #ffffff;
+    font-family: var(--font-space-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
   .featured-card__content h3 {
     max-width: 20ch;
     margin: 0;
@@ -645,11 +683,39 @@ function formatDate(date: Date | undefined): string {
     transform: translateY(-0.18rem);
   }
 
+  .post-card--pinned {
+    --card-tone: var(--clay-pomegranate-400);
+    border-width: 1.5px;
+    border-color: color-mix(in srgb, var(--clay-lemon-400) 58%, var(--clay-border));
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.42), transparent 34%),
+      linear-gradient(180deg, rgba(255, 246, 220, 0.78), rgba(246, 225, 202, 0.88)) !important;
+    box-shadow:
+      0 18px 34px rgba(58, 44, 24, 0.14),
+      0 0 0 1px rgba(255, 255, 255, 0.62) inset;
+  }
+
+  .post-card--pinned::after {
+    height: 0.36rem;
+    background: linear-gradient(90deg, var(--clay-blueberry-800), var(--clay-slushie-500), var(--clay-pomegranate-400));
+  }
+
   .post-card__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.6rem;
+  }
+
+  .post-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .post-card__meta .meta {
+    margin: 0;
   }
 
   .post-card__index {
@@ -738,6 +804,24 @@ function formatDate(date: Date | undefined): string {
     background:
       linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 32%),
       #1c1816 !important;
+  }
+
+  :root[data-theme='dark'] .post-card--pinned {
+    border-width: 1.5px;
+    border-color: color-mix(in srgb, var(--clay-lemon-400) 46%, var(--clay-border));
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 34%),
+      linear-gradient(180deg, #33251d, #251d1a) !important;
+    box-shadow:
+      0 24px 52px rgba(0, 0, 0, 0.46),
+      0 0 0 1px rgba(255, 255, 255, 0.055) inset,
+      0 0 28px rgba(248, 204, 101, 0.08);
+  }
+
+  :root[data-theme='dark'] .pin-badge {
+    border-color: color-mix(in srgb, var(--clay-lemon-400) 38%, var(--clay-border));
+    background: color-mix(in srgb, var(--clay-lemon-400) 82%, #3a2c1c 18%);
+    color: #15120f;
   }
 
   :root[data-theme='dark'] .post-card::before {
