@@ -12,6 +12,22 @@ tags:
 
 <!-- more -->
 
+> **Update:** For a deeper systems-level treatment of LLM inference, especially the interaction between request scheduling, prefill, decode, and KV-cache reuse, see [arXiv:2606.24937](/assets/pdfs/2606.24937v1.pdf).
+
+<details class="pdf-embed">
+  <summary>Preview PDF: arXiv:2606.24937</summary>
+  <figure>
+    <iframe
+      src="/assets/pdfs/2606.24937v1.pdf"
+      title="arXiv:2606.24937 PDF"
+      loading="lazy"
+    ></iframe>
+    <figcaption>
+      Embedded PDF preview. <a href="/assets/pdfs/2606.24937v1.pdf">Open the paper in a separate tab</a>.
+    </figcaption>
+  </figure>
+</details>
+
 ## What Happens Between a Prompt and the Final Response
 
 From input to output, a prompt generally goes through seven steps: **request packaging**, **tokenization**, **inference scheduling**, **prefill**, and **decode** before the result is returned.
