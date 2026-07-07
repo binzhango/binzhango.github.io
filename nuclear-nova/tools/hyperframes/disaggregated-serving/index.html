@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #f7f2e8;
+      }
+
+      body {
+        color: #172033;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      #root {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        background:
+          radial-gradient(circle at 12% 12%, rgba(56, 189, 248, 0.15), transparent 24%),
+          radial-gradient(circle at 90% 90%, rgba(250, 204, 21, 0.17), transparent 26%),
+          linear-gradient(180deg, #fbf7ed 0%, #eee7da 100%);
+      }
+
+      .box {
+        position: absolute;
+        border: 3px solid #1f2937;
+        background: rgba(255, 255, 255, 0.66);
+        box-shadow: 0 18px 45px rgba(31, 41, 55, 0.12);
+      }
+
+      .router {
+        left: 346px;
+        top: 56px;
+        width: 588px;
+        height: 92px;
+        display: grid;
+        place-content: center;
+        text-align: center;
+      }
+
+      .router-title {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+
+      .router-subtitle {
+        margin-top: 6px;
+        font-size: 24px;
+        font-weight: 650;
+      }
+
+      .pool {
+        top: 282px;
+        width: 430px;
+        height: 330px;
+        padding: 28px 36px;
+      }
+
+      .prefill {
+        left: 76px;
+      }
+
+      .decode {
+        left: 774px;
+      }
+
+      .pool-title {
+        margin-bottom: 28px;
+        text-align: center;
+        font-size: 29px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 28px;
+        font-size: 23px;
+        line-height: 1.2;
+      }
+
+      li {
+        padding-left: 7px;
+      }
+
+      .footer {
+        position: absolute;
+        left: 36px;
+        right: 36px;
+        bottom: 24px;
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .line {
+        position: absolute;
+        background: #334155;
+        transform-origin: top left;
+      }
+
+      .vline {
+        width: 4px;
+      }
+
+      .hline {
+        height: 4px;
+      }
+
+      .router-v {
+        left: 640px;
+        top: 148px;
+        height: 58px;
+      }
+
+      .router-h {
+        left: 274px;
+        top: 204px;
+        width: 732px;
+      }
+
+      .drop-left {
+        left: 274px;
+        top: 204px;
+        height: 52px;
+      }
+
+      .drop-right {
+        left: 1006px;
+        top: 204px;
+        height: 52px;
+      }
+
+      .arrow-down {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 18px solid #334155;
+      }
+
+      .arrow-left-pool {
+        left: 263px;
+        top: 248px;
+      }
+
+      .arrow-right-pool {
+        left: 995px;
+        top: 248px;
+      }
+
+      .kv-line {
+        left: 514px;
+        top: 504px;
+        width: 238px;
+      }
+
+      .arrow-right {
+        position: absolute;
+        left: 744px;
+        top: 493px;
+        width: 0;
+        height: 0;
+        border-top: 13px solid transparent;
+        border-bottom: 13px solid transparent;
+        border-left: 18px solid #334155;
+      }
+
+      .kv-label {
+        position: absolute;
+        left: 548px;
+        top: 486px;
+        padding: 4px 12px;
+        background: rgba(247, 242, 232, 0.94);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1.05;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="5"
+      data-width="1280"
+      data-height="720"
+    >
+      <section id="router" class="box router clip" data-start="0" data-duration="5">
+        <div class="router-title">ROUTER / SCHEDULER</div>
+        <div class="router-subtitle">(routes requests, tracks capacity)</div>
+      </section>
+
+      <div id="router-v" class="line vline router-v"></div>
+      <div id="router-h" class="line hline router-h"></div>
+      <div id="drop-left" class="line vline drop-left"></div>
+      <div id="drop-right" class="line vline drop-right"></div>
+      <div id="arrow-left-pool" class="arrow-down arrow-left-pool"></div>
+      <div id="arrow-right-pool" class="arrow-down arrow-right-pool"></div>
+
+      <section id="prefill" class="box pool prefill clip" data-start="0" data-duration="5">
+        <div class="pool-title">PREFILL POOL</div>
+        <ul>
+          <li>Compute-optimized</li>
+          <li>High-end GPUs<br />(H100, A100)</li>
+          <li>Large batch sizes</li>
+          <li>Short-lived jobs</li>
+        </ul>
+        <div class="footer">Produces KV cache</div>
+      </section>
+
+      <div id="kv-line" class="line hline kv-line"></div>
+      <div id="arrow-right" class="arrow-right"></div>
+      <div id="kv-label" class="kv-label">KV<br />cache<br />xfer</div>
+
+      <section id="decode" class="box pool decode clip" data-start="0" data-duration="5">
+        <div class="pool-title">DECODE POOL</div>
+        <ul>
+          <li>Memory-BW optimized</li>
+          <li>Can use cheaper<br />GPUs (A10, L40)</li>
+          <li>Continuous batching</li>
+          <li>Long-running jobs</li>
+        </ul>
+        <div class="footer">Consumes KV cache</div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set([
+        "#router",
+        "#router-v",
+        "#router-h",
+        "#drop-left",
+        "#drop-right",
+        "#arrow-left-pool",
+        "#arrow-right-pool",
+        "#prefill",
+        "#decode",
+        "#kv-line",
+        "#arrow-right",
+        "#kv-label",
+      ], { opacity: 0 });
+
+      tl.fromTo("#router", { opacity: 0, y: -18, scale: 0.98 }, { opacity: 1, y: 0, scale: 1, duration: 0.45 }, 0.05);
+      tl.fromTo("#router-v", { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.3 }, 0.55);
+      tl.fromTo("#router-h", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.45 }, 0.82);
+      tl.fromTo(["#drop-left", "#drop-right"], { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.3 }, 1.15);
+      tl.fromTo(["#arrow-left-pool", "#arrow-right-pool"], { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.22 }, 1.35);
+      tl.fromTo("#prefill", { opacity: 0, x: -24, scale: 0.98 }, { opacity: 1, x: 0, scale: 1, duration: 0.45 }, 1.55);
+      tl.fromTo("#decode", { opacity: 0, x: 24, scale: 0.98 }, { opacity: 1, x: 0, scale: 1, duration: 0.45 }, 1.85);
+      tl.fromTo("#kv-line", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.42 }, 2.55);
+      tl.fromTo("#arrow-right", { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.22 }, 2.88);
+      tl.fromTo("#kv-label", { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3 }, 2.75);
+      tl.to(["#prefill", "#decode", "#router"], { scale: 1.006, duration: 0.22, yoyo: true, repeat: 1 }, 3.45);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
