@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #f7f2e8;
+      }
+
+      body {
+        color: #172033;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      #root {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        background:
+          radial-gradient(circle at 12% 12%, rgba(56, 189, 248, 0.15), transparent 25%),
+          radial-gradient(circle at 90% 88%, rgba(250, 204, 21, 0.17), transparent 25%),
+          linear-gradient(180deg, #fbf7ed 0%, #eee7da 100%);
+      }
+
+      .title {
+        position: absolute;
+        top: 38px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 33px;
+        font-weight: 850;
+        letter-spacing: 0.02em;
+      }
+
+      .subtitle {
+        position: absolute;
+        top: 84px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #334155;
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .panel {
+        position: absolute;
+        top: 140px;
+        height: 500px;
+        border: 3px solid #1f2937;
+        background: rgba(255, 255, 255, 0.68);
+        box-shadow: 0 18px 44px rgba(31, 41, 55, 0.12);
+      }
+
+      .logical {
+        left: 64px;
+        width: 360px;
+      }
+
+      .table {
+        left: 462px;
+        width: 356px;
+      }
+
+      .physical {
+        left: 856px;
+        width: 360px;
+      }
+
+      .panel-title {
+        position: absolute;
+        top: 24px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 25px;
+        font-weight: 850;
+      }
+
+      .panel-subtitle {
+        position: absolute;
+        top: 58px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #475569;
+        font-size: 16px;
+        font-weight: 750;
+      }
+
+      .row {
+        position: absolute;
+        left: 36px;
+        right: 36px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #334155;
+        background: #eff6ff;
+        font-size: 18px;
+        font-weight: 850;
+      }
+
+      .logical .row {
+        background: #dbeafe;
+        color: #1e3a8a;
+      }
+
+      .physical .row {
+        background: #f8fafc;
+        color: #0f172a;
+      }
+
+      .physical .active {
+        background: #dcfce7;
+        color: #14532d;
+      }
+
+      .r0 {
+        top: 116px;
+      }
+
+      .r1 {
+        top: 196px;
+      }
+
+      .r2 {
+        top: 276px;
+      }
+
+      .r3 {
+        top: 356px;
+      }
+
+      .slot {
+        position: absolute;
+        left: 34px;
+        right: 34px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        border: 2px solid #334155;
+        background: #fff7ed;
+        font-size: 17px;
+        font-weight: 850;
+      }
+
+      .slot span:last-child {
+        color: #9a3412;
+      }
+
+      .s0 {
+        top: 116px;
+      }
+
+      .s1 {
+        top: 196px;
+      }
+
+      .s2 {
+        top: 276px;
+      }
+
+      .s3 {
+        top: 356px;
+      }
+
+      .arrow {
+        position: absolute;
+        height: 3px;
+        background: #334155;
+        transform-origin: left center;
+      }
+
+      .arrow::after {
+        content: "";
+        position: absolute;
+        right: -1px;
+        top: -7px;
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 13px solid #334155;
+      }
+
+      .logical-arrow {
+        left: 390px;
+        top: 285px;
+        width: 86px;
+      }
+
+      .map-arrow {
+        left: 790px;
+        width: 92px;
+      }
+
+      .m0 {
+        top: 285px;
+      }
+
+      .m1 {
+        top: 365px;
+      }
+
+      .m2 {
+        top: 445px;
+      }
+
+      .m3 {
+        top: 525px;
+      }
+
+      .token-dot {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        background: #2563eb;
+        box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.14);
+      }
+
+      .caption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 32px;
+        text-align: center;
+        color: #273449;
+        font-size: 21px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="5"
+      data-width="1280"
+      data-height="720"
+    >
+      <div class="title">vLLM PAGEDATTENTION: LOGICAL BLOCKS MAP TO PHYSICAL BLOCKS</div>
+      <div class="subtitle">The request stays logically contiguous; GPU memory can be non-contiguous.</div>
+
+      <section id="logical" class="panel logical">
+        <div class="panel-title">Request logical KV</div>
+        <div class="panel-subtitle">what attention sees</div>
+        <div class="row r0">logical block 0</div>
+        <div class="row r1">logical block 1</div>
+        <div class="row r2">logical block 2</div>
+        <div class="row r3">logical block 3</div>
+      </section>
+
+      <section id="table" class="panel table">
+        <div class="panel-title">Block table</div>
+        <div class="panel-subtitle">logical -> physical</div>
+        <div class="slot s0"><span>block 0</span><span>41</span></div>
+        <div class="slot s1"><span>block 1</span><span>7</span></div>
+        <div class="slot s2"><span>block 2</span><span>93</span></div>
+        <div class="slot s3"><span>block 3</span><span>12</span></div>
+      </section>
+
+      <section id="physical" class="panel physical">
+        <div class="panel-title">GPU physical KV</div>
+        <div class="panel-subtitle">where blocks actually live</div>
+        <div class="row r0 active">physical block 41</div>
+        <div class="row r1 active">physical block 7</div>
+        <div class="row r2 active">physical block 93</div>
+        <div class="row r3 active">physical block 12</div>
+      </section>
+
+      <div id="a0" class="arrow logical-arrow"></div>
+      <div id="m0" class="arrow map-arrow m0"></div>
+      <div id="m1" class="arrow map-arrow m1"></div>
+      <div id="m2" class="arrow map-arrow m2"></div>
+      <div id="m3" class="arrow map-arrow m3"></div>
+      <div id="dot" class="token-dot"></div>
+      <div id="caption" class="caption">No large contiguous KV tensor is required per request.</div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set(["#table", "#physical", "#a0", ".map-arrow", "#dot", "#caption"], {
+        opacity: 0,
+      });
+      tl.set("#dot", { x: 245, y: 244 });
+
+      tl.fromTo("#logical", { y: -12, scale: 0.985 }, { y: 0, scale: 1, duration: 0.42 }, 0);
+      tl.fromTo("#table", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5 }, 0.75);
+      tl.fromTo("#a0", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.38 }, 1.05);
+      tl.fromTo("#physical", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 }, 1.45);
+      tl.fromTo(".map-arrow", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.38, stagger: 0.08 }, 1.85);
+
+      tl.to("#dot", { opacity: 1, duration: 0.12 }, 2.2);
+      tl.to("#dot", { x: 612, y: 134, duration: 0.48 }, 2.25);
+      tl.to("#dot", { x: 1036, y: 134, duration: 0.52 }, 2.8);
+      tl.to("#dot", { x: 612, y: 194, duration: 0.42 }, 3.35);
+      tl.to("#dot", { x: 1036, y: 214, duration: 0.48 }, 3.78);
+      tl.fromTo("#caption", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, 4.2);
+      tl.to([".active", ".slot"], { scale: 1.018, duration: 0.2, yoyo: true, repeat: 1, stagger: 0.025 }, 4.45);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

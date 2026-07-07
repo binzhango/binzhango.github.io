@@ -1869,6 +1869,22 @@ starlight-search input::placeholder {
     text-decoration: none;
 }
 
+.post-content .term {
+    display: inline;
+    padding: 0.04em 0.22em;
+    border-radius: 0.32rem;
+    background: color-mix(in srgb, var(--post-accent) 9%, transparent);
+    color: color-mix(in srgb, var(--post-heading) 84%, var(--post-accent));
+    font-weight: 740;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+:root[data-theme='dark'] .post-content .term {
+    background: color-mix(in srgb, var(--post-accent) 18%, transparent);
+    color: color-mix(in srgb, #f8fafc 88%, var(--post-accent));
+}
+
 .post-content em {
     color: color-mix(in srgb, var(--post-heading) 88%, var(--post-accent));
     font-style: italic;
@@ -1911,6 +1927,154 @@ starlight-search input::placeholder {
 .post-content ol > li::marker {
     color: var(--post-link);
     font-weight: 800;
+}
+
+.post-content .risk-list,
+.post-content .chip-list,
+.post-content .signal-list,
+.post-content .role-list,
+.post-content .question-list,
+.post-content .prompt-list,
+.post-content .action-grid,
+.post-content .use-case-grid {
+    list-style: none;
+    padding-left: 0;
+}
+
+.post-content .risk-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1rem 0 1.25rem;
+}
+
+.post-content .risk-list li {
+    position: relative;
+    margin: 0;
+    padding: 0.45rem 0 0.45rem 0.9rem;
+    border-left: 2px solid color-mix(in srgb, var(--post-warm) 72%, var(--post-accent));
+    background: transparent;
+    color: var(--post-body);
+    line-height: 1.58;
+}
+
+.post-content .risk-list li::before {
+    content: none;
+}
+
+.post-content .action-grid,
+.post-content .use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 0.65rem;
+    margin: 1.05rem 0 1.35rem;
+}
+
+.post-content .action-grid li,
+.post-content .use-case-grid li {
+    margin: 0;
+    min-height: 0;
+    padding: 0.78rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--post-accent) 18%, transparent);
+    border-radius: 0.58rem;
+    background: color-mix(in srgb, var(--sl-color-bg) 92%, transparent);
+    line-height: 1.48;
+}
+
+.post-content .action-grid li .term {
+    display: block;
+    width: fit-content;
+    margin-bottom: 0.32rem;
+}
+
+.post-content .chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1rem 0 1.3rem;
+}
+
+.post-content .chip-list li {
+    margin: 0;
+    padding: 0.34rem 0.62rem;
+    border: 1px solid color-mix(in srgb, var(--post-link) 16%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--post-link) 5%, transparent);
+    color: var(--post-heading);
+    font-size: 0.94rem;
+    font-weight: 650;
+    line-height: 1.25;
+}
+
+.post-content .signal-list,
+.post-content .role-list,
+.post-content .question-list {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1rem 0 1.3rem;
+}
+
+.post-content .signal-list li,
+.post-content .role-list li,
+.post-content .question-list li {
+    position: relative;
+    margin: 0;
+    padding: 0.45rem 0 0.45rem 1.05rem;
+    border-left: 2px solid color-mix(in srgb, var(--post-accent) 42%, transparent);
+    background: transparent;
+    line-height: 1.5;
+}
+
+.post-content .signal-list li::before,
+.post-content .role-list li::before,
+.post-content .question-list li::before {
+    content: none;
+}
+
+.post-content .prompt-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 0.85rem;
+    margin: 1.1rem 0 1.35rem;
+}
+
+.post-content .prompt-panel {
+    padding: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--post-accent) 16%, transparent);
+    border-radius: 0.62rem;
+    background: color-mix(in srgb, var(--sl-color-bg) 92%, transparent);
+}
+
+.post-content .prompt-title {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--post-heading);
+}
+
+.post-content .prompt-list {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+}
+
+.post-content .prompt-list li {
+    margin: 0;
+    padding: 0.38rem 0 0.38rem 0.75rem;
+    border-left: 2px solid color-mix(in srgb, var(--post-accent) 32%, transparent);
+    border-radius: 0;
+    background: transparent;
+    line-height: 1.42;
+}
+
+.post-content .prompt-list.bad li {
+    border-left-color: color-mix(in srgb, var(--post-warm) 52%, var(--post-accent));
+    background: transparent;
+}
+
+:root[data-theme='dark'] .post-content .action-grid li,
+:root[data-theme='dark'] .post-content .use-case-grid li,
+:root[data-theme='dark'] .post-content .prompt-panel {
+    background: rgba(15, 23, 42, 0.62);
 }
 
 /* Takeaway boards turn dense rule lists into a responsive, scannable summary. */
@@ -2248,6 +2412,7 @@ starlight-search input::placeholder {
     letter-spacing: 0.04em;
     text-transform: uppercase;
     white-space: nowrap;
+    text-align: left;
 }
 
 .post-content td {
@@ -2257,6 +2422,21 @@ starlight-search input::placeholder {
     color: var(--post-body);
     vertical-align: top;
     word-break: break-word;
+}
+
+.post-content th[align='right'],
+.post-content td[align='right'] {
+    text-align: right;
+}
+
+.post-content th[align='center'],
+.post-content td[align='center'] {
+    text-align: center;
+}
+
+.post-content td > code,
+.post-content th > code {
+    margin-inline: 0;
 }
 
 .post-content tbody tr {

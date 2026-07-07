@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #f7f2e8;
+      }
+
+      body {
+        color: #172033;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      #root {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        background:
+          radial-gradient(circle at 12% 14%, rgba(56, 189, 248, 0.15), transparent 25%),
+          radial-gradient(circle at 90% 88%, rgba(250, 204, 21, 0.17), transparent 25%),
+          linear-gradient(180deg, #fbf7ed 0%, #eee7da 100%);
+      }
+
+      .title {
+        position: absolute;
+        top: 38px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 32px;
+        font-weight: 850;
+        letter-spacing: 0.02em;
+      }
+
+      .subtitle {
+        position: absolute;
+        top: 82px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #334155;
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .tokens {
+        position: absolute;
+        left: 190px;
+        top: 130px;
+        display: flex;
+        gap: 22px;
+      }
+
+      .token {
+        width: 132px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border: 2px solid #1d4ed8;
+        background: #dbeafe;
+        color: #1e3a8a;
+        font-size: 20px;
+        font-weight: 850;
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+      }
+
+      .layer {
+        position: absolute;
+        left: 84px;
+        width: 1112px;
+        height: 118px;
+        border: 3px solid #1f2937;
+        background: rgba(255, 255, 255, 0.68);
+        box-shadow: 0 16px 38px rgba(31, 41, 55, 0.1);
+      }
+
+      .layer-0 {
+        top: 230px;
+      }
+
+      .layer-1 {
+        top: 374px;
+      }
+
+      .layer-n {
+        top: 518px;
+      }
+
+      .layer-label {
+        position: absolute;
+        left: 24px;
+        top: 38px;
+        width: 136px;
+        font-size: 25px;
+        font-weight: 850;
+      }
+
+      .kv-group {
+        position: absolute;
+        top: 22px;
+        height: 74px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .k-group {
+        left: 190px;
+      }
+
+      .v-group {
+        left: 655px;
+      }
+
+      .group-label {
+        width: 38px;
+        font-size: 30px;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      .cell {
+        width: 100px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border: 2px solid #334155;
+        background: #eff6ff;
+        font-size: 17px;
+        font-weight: 800;
+      }
+
+      .v-group .cell {
+        background: #f0fdf4;
+      }
+
+      .ellipsis {
+        width: 42px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .flow-dot {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        background: #2563eb;
+        box-shadow: 0 0 0 9px rgba(37, 99, 235, 0.13);
+      }
+
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="5"
+      data-width="1280"
+      data-height="720"
+    >
+      <div class="title">KV CACHE IS STORED PER LAYER</div>
+      <div class="subtitle">Each token leaves behind a K/V pair at every transformer layer</div>
+
+      <div id="tokens" class="tokens">
+        <div class="token">token_0</div>
+        <div class="token">token_1</div>
+        <div class="token">token_2</div>
+      </div>
+
+      <section id="layer0" class="layer layer-0">
+        <div class="layer-label">Layer 0</div>
+        <div class="kv-group k-group">
+          <div class="group-label">K</div>
+          <div class="cell">K[t0]</div>
+          <div class="cell">K[t1]</div>
+          <div class="cell">K[t2]</div>
+          <div class="ellipsis">...</div>
+        </div>
+        <div class="kv-group v-group">
+          <div class="group-label">V</div>
+          <div class="cell">V[t0]</div>
+          <div class="cell">V[t1]</div>
+          <div class="cell">V[t2]</div>
+          <div class="ellipsis">...</div>
+        </div>
+      </section>
+
+      <section id="layer1" class="layer layer-1">
+        <div class="layer-label">Layer 1</div>
+        <div class="kv-group k-group">
+          <div class="group-label">K</div>
+          <div class="cell">K[t0]</div>
+          <div class="cell">K[t1]</div>
+          <div class="cell">K[t2]</div>
+          <div class="ellipsis">...</div>
+        </div>
+        <div class="kv-group v-group">
+          <div class="group-label">V</div>
+          <div class="cell">V[t0]</div>
+          <div class="cell">V[t1]</div>
+          <div class="cell">V[t2]</div>
+          <div class="ellipsis">...</div>
+        </div>
+      </section>
+
+      <section id="layern" class="layer layer-n">
+        <div class="layer-label">Layer N</div>
+        <div class="kv-group k-group">
+          <div class="group-label">K</div>
+          <div class="cell">K[t0]</div>
+          <div class="cell">K[t1]</div>
+          <div class="cell">K[t2]</div>
+          <div class="ellipsis">...</div>
+        </div>
+        <div class="kv-group v-group">
+          <div class="group-label">V</div>
+          <div class="cell">V[t0]</div>
+          <div class="cell">V[t1]</div>
+          <div class="cell">V[t2]</div>
+          <div class="ellipsis">...</div>
+        </div>
+      </section>
+
+      <div id="dot" class="flow-dot"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set(["#tokens", "#layer0", "#layer1", "#layern", "#dot"], { opacity: 0 });
+      tl.fromTo("#tokens", { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.35 }, 0.1);
+      tl.fromTo("#layer0", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.35 }, 0.75);
+      tl.fromTo("#layer1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.35 }, 1.25);
+      tl.fromTo("#layern", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.35 }, 1.75);
+      tl.fromTo("#dot", { opacity: 0, x: 244, y: 142, scale: 0.7 }, { opacity: 1, x: 314, y: 255, scale: 1, duration: 0.5 }, 2.2);
+      tl.to("#dot", { x: 774, y: 255, duration: 0.45 }, 2.75);
+      tl.to("#dot", { x: 314, y: 399, duration: 0.45 }, 3.25);
+      tl.to("#dot", { x: 774, y: 399, duration: 0.45 }, 3.75);
+      tl.to("#dot", { opacity: 0, scale: 0.5, duration: 0.25 }, 4.25);
+      tl.to(["#layer0", "#layer1", "#layern"], { scale: 1.004, duration: 0.22, yoyo: true, repeat: 1 }, 4.35);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
