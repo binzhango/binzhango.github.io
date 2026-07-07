@@ -12,7 +12,7 @@ import 'glightbox/dist/css/glightbox.min.css';
 
   function initializeLightbox() {
     const contentImages = document.querySelectorAll<HTMLImageElement>(
-      '.sl-markdown-content img:not(.no-lightbox)'
+      '.sl-markdown-content img:not(.no-lightbox):not([id^="mermaid-"])'
     );
 
     contentImages.forEach((img) => {
@@ -96,5 +96,13 @@ import 'glightbox/dist/css/glightbox.min.css';
   /* Ensure lightbox works well with Starlight's content area */
   .sl-markdown-content .glightbox-wrapper {
     margin: 1rem auto;
+  }
+
+  .sl-markdown-content img[id^='mermaid-'] {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem auto;
   }
 </style>
