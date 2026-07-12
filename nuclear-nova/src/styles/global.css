@@ -2231,6 +2231,57 @@ starlight-search input::placeholder {
     color: var(--post-muted);
 }
 
+/* Screenshot sizing for the local-model Copilot tutorial. */
+.post-content .copilot-figure {
+    --copilot-image-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem auto;
+}
+
+.post-content .copilot-figure > :where(.glightbox-wrapper, img) {
+    width: var(--copilot-image-width);
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.post-content .copilot-figure .glightbox-wrapper > img {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+.post-content .copilot-figure > figcaption {
+    width: var(--copilot-image-width);
+    max-width: 100%;
+    line-height: 1.5;
+}
+
+.post-content .copilot-figure--compact {
+    --copilot-image-width: 27rem;
+}
+
+.post-content .copilot-figure--panel {
+    --copilot-image-width: 31rem;
+}
+
+.post-content .copilot-figure--banner,
+.post-content .copilot-figure--wide {
+    --copilot-image-width: 100%;
+}
+
+@media (max-width: 40rem) {
+    .post-content .copilot-figure {
+        margin-block: 1.5rem;
+    }
+
+    .post-content .copilot-figure > :where(.glightbox-wrapper, img),
+    .post-content .copilot-figure > figcaption {
+        width: 100%;
+    }
+}
+
 .post-content details {
     margin: 1.35rem 0;
     padding: 0.3rem 1rem 0.9rem;
