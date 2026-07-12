@@ -1,0 +1,25 @@
+{
+  "canvas": { "width": 1600, "height": 900, "fps": 15, "duration": 6 },
+  "title": "Request-aware serving",
+  "subtitle": "Route work by state, locality, and latency.",
+  "groups": [
+    { "label": "SERVING PLANE", "x": 72, "y": 190, "w": 1456, "h": 272, "accent": "blue" },
+    { "label": "STATE PLANE", "x": 72, "y": 510, "w": 1456, "h": 246, "accent": "green", "dashed": true }
+  ],
+  "nodes": [
+    { "id": "request", "x": 130, "y": 255, "w": 290, "h": 142, "accent": "blue", "kicker": "INGRESS", "title": "Request", "detail": "Prompt · SLA · Tenant" },
+    { "id": "router", "x": 520, "y": 255, "w": 310, "h": 142, "accent": "violet", "kicker": "ROUTER", "title": "KV-aware routing", "detail": "Locality · Load · Priority" },
+    { "id": "worker", "x": 940, "y": 255, "w": 300, "h": 142, "accent": "blue", "kicker": "WORKER", "title": "Decode pool", "detail": "Tokens · Batching · Latency" },
+    { "id": "cache", "x": 520, "y": 566, "w": 310, "h": 130, "accent": "green", "kicker": "STATE", "title": "KV cache", "detail": "Reuse · Transfer · Eviction" }
+  ],
+  "edges": [
+    { "from": "request", "to": "router", "accent": "blue" },
+    { "from": "router", "to": "worker", "accent": "violet" },
+    { "from": "router", "to": "cache", "accent": "green" }
+  ],
+  "chips": [
+    { "x": 940, "y": 594, "label": "CACHE HIT", "accent": "green" },
+    { "x": 1110, "y": 594, "label": "P95 42MS", "accent": "neutral" }
+  ],
+  "sequence": ["request", "router", "cache", "router", "worker"]
+}

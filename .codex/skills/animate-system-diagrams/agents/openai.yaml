@@ -1,0 +1,4 @@
+interface:
+  display_name: "Animate System Diagrams"
+  short_description: "Create polished animated technical diagrams"
+  default_prompt: "Use $animate-system-diagrams to create a polished looping architecture animation for my article."
