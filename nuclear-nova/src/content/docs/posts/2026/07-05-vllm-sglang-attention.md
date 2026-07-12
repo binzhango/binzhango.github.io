@@ -264,15 +264,7 @@ It stores reusable prompt and generation prefixes in a radix tree. A radix tree 
 
 Conceptually:
 
-```text
-root
-+-- "system prompt + tool schemas"
-|   +-- "user question A" -> cached KV
-|   +-- "user question B" -> cached KV
-+-- "few-shot examples"
-    +-- "task A" -> cached KV
-    +-- "task B" -> cached KV
-```
+![Animated RadixAttention tree showing shared cached prefixes branching into request-specific suffixes](/assets/images/2026/sglang-radixattention-prefix-tree.gif)
 
 When a new request arrives, SGLang looks for the longest matching prefix. If a matching prefix exists, the runtime reuses the corresponding KV cache and only computes the suffix.
 

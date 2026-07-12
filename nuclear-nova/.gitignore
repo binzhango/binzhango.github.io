@@ -7,6 +7,7 @@ dist/
 
 # dependencies
 node_modules/
+animations/*/output/
 
 # logs
 npm-debug.log*

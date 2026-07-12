@@ -1,0 +1,84 @@
+{
+  "canvas": { "width": 1800, "height": 1800, "fps": 15, "duration": 18 },
+  "title": "Statistical tests every data scientist should know",
+  "subtitle": "Choose the question family, then narrow by design, assumptions, and sample structure.",
+  "layout": { "mode": "manual", "density": "reference", "direction": "TB" },
+  "typography": { "kicker": 14, "title": 23, "detail": 16 },
+  "exports": { "formats": ["mp4", "gif"] },
+  "groups": [
+    { "label": "COMPARE MEANS", "x": 48, "y": 342, "w": 324, "h": 1338, "accent": "green" },
+    { "label": "COMPARE PROPORTIONS", "x": 388, "y": 342, "w": 324, "h": 1338, "accent": "blue" },
+    { "label": "RELATIONSHIPS", "x": 728, "y": 342, "w": 324, "h": 1338, "accent": "violet" },
+    { "label": "VARIANCES", "x": 1068, "y": 342, "w": 324, "h": 1338, "accent": "neutral" },
+    { "label": "DISTRIBUTIONS", "x": 1408, "y": 342, "w": 324, "h": 1338, "accent": "green" }
+  ],
+  "nodes": [
+    { "id": "question", "x": 650, "y": 130, "w": 500, "h": 130, "accent": "blue", "kicker": "START WITH THE QUESTION", "title": "What do you need to learn?", "detail": "Difference · association · variability · fit" },
+
+    { "id": "means", "x": 60, "y": 390, "w": 300, "h": 140, "accent": "green", "kicker": "NUMERIC OUTCOME", "title": "Is the average different?", "detail": "Independent, repeated, or paired groups" },
+    { "id": "means_scope", "x": 60, "y": 670, "w": 300, "h": 140, "accent": "green", "kicker": "GROUP STRUCTURE", "title": "Two · many · paired", "detail": "Define the independent unit first" },
+    { "id": "means_param", "x": 60, "y": 950, "w": 300, "h": 140, "accent": "green", "kicker": "PARAMETRIC", "title": "Welch t · ANOVA", "detail": "Paired t for related observations" },
+    { "id": "means_rank", "x": 60, "y": 1230, "w": 300, "h": 140, "accent": "green", "kicker": "RANK-BASED", "title": "Mann–Whitney · Kruskal", "detail": "Use when ranks match the estimand" },
+    { "id": "means_paired", "x": 60, "y": 1510, "w": 300, "h": 140, "accent": "green", "kicker": "RELATED SAMPLES", "title": "Paired t · Wilcoxon", "detail": "Model within-pair differences" },
+
+    { "id": "props", "x": 400, "y": 390, "w": 300, "h": 140, "accent": "blue", "kicker": "BINARY OUTCOME", "title": "Is the proportion different?", "detail": "Compare success rates or category mixes" },
+    { "id": "props_scope", "x": 400, "y": 670, "w": 300, "h": 140, "accent": "blue", "kicker": "GROUP STRUCTURE", "title": "Two or multiple groups", "detail": "Check expected cell frequencies" },
+    { "id": "props_large", "x": 400, "y": 950, "w": 300, "h": 140, "accent": "blue", "kicker": "LARGE COUNTS", "title": "Two-proportion z-test", "detail": "Report absolute and relative effects" },
+    { "id": "props_multi", "x": 400, "y": 1230, "w": 300, "h": 140, "accent": "blue", "kicker": "MULTIPLE GROUPS", "title": "Chi-square homogeneity", "detail": "Compare category mixes across groups" },
+    { "id": "props_sparse", "x": 400, "y": 1510, "w": 300, "h": 140, "accent": "blue", "kicker": "SPARSE COUNTS", "title": "Fisher exact · F–F–H", "detail": "Exact alternatives for small tables" },
+
+    { "id": "relations", "x": 740, "y": 390, "w": 300, "h": 140, "accent": "violet", "kicker": "ASSOCIATION", "title": "Are variables related?", "detail": "Numeric–numeric or categorical–categorical" },
+    { "id": "relations_type", "x": 740, "y": 670, "w": 300, "h": 140, "accent": "violet", "kicker": "VARIABLE TYPES", "title": "Numeric or categorical", "detail": "Inspect plots and table sparsity first" },
+    { "id": "relations_numeric", "x": 740, "y": 950, "w": 300, "h": 140, "accent": "violet", "kicker": "LINEAR NUMERIC", "title": "Pearson correlation", "detail": "Linear relationship without outliers" },
+    { "id": "relations_rank", "x": 740, "y": 1230, "w": 300, "h": 140, "accent": "violet", "kicker": "MONOTONIC NUMERIC", "title": "Spearman correlation", "detail": "Rank-based nonlinear alternative" },
+    { "id": "relations_cat", "x": 740, "y": 1510, "w": 300, "h": 140, "accent": "violet", "kicker": "CATEGORICAL", "title": "Chi-square · Fisher", "detail": "Independence or sparse 2×2 tables" },
+
+    { "id": "variances", "x": 1080, "y": 390, "w": 300, "h": 140, "accent": "neutral", "kicker": "SPREAD", "title": "Are variances different?", "detail": "Variability may be the business outcome" },
+    { "id": "variances_scope", "x": 1080, "y": 670, "w": 300, "h": 140, "accent": "neutral", "kicker": "GROUP STRUCTURE", "title": "Two or multiple groups", "detail": "Check skew and influential observations" },
+    { "id": "variances_f", "x": 1080, "y": 950, "w": 300, "h": 140, "accent": "neutral", "kicker": "TWO NORMAL GROUPS", "title": "F variance-ratio test", "detail": "Sensitive to non-normal distributions" },
+    { "id": "variances_robust", "x": 1080, "y": 1230, "w": 300, "h": 140, "accent": "neutral", "kicker": "ROBUST COMPARISON", "title": "Levene · Brown–Forsythe", "detail": "Prefer median centering under skew" },
+    { "id": "variances_welch", "x": 1080, "y": 1510, "w": 300, "h": 140, "accent": "neutral", "kicker": "UNEQUAL MEAN VARIANCE", "title": "Use Welch t-test", "detail": "Avoid a fragile two-stage decision" },
+
+    { "id": "distribution", "x": 1420, "y": 390, "w": 300, "h": 140, "accent": "green", "kicker": "FIT AND SHAPE", "title": "Does data match a pattern?", "detail": "Expected counts, normality, or two samples" },
+    { "id": "distribution_scope", "x": 1420, "y": 670, "w": 300, "h": 140, "accent": "green", "kicker": "QUESTION TYPE", "title": "Counts · shape · comparison", "detail": "Combine plots with formal diagnostics" },
+    { "id": "distribution_gof", "x": 1420, "y": 950, "w": 300, "h": 140, "accent": "green", "kicker": "EXPECTED COUNTS", "title": "Chi-square goodness of fit", "detail": "Observed versus expected frequencies" },
+    { "id": "distribution_normal", "x": 1420, "y": 1230, "w": 300, "h": 140, "accent": "green", "kicker": "NORMALITY", "title": "Shapiro · Anderson–Darling", "detail": "Use Q–Q plots and context too" },
+    { "id": "distribution_ks", "x": 1420, "y": 1510, "w": 300, "h": 140, "accent": "green", "kicker": "GENERAL COMPARISON", "title": "Kolmogorov–Smirnov", "detail": "Compare empirical distributions" }
+  ],
+  "edges": [
+    { "from": "question", "to": "means", "accent": "green" },
+    { "from": "question", "to": "props", "accent": "blue" },
+    { "from": "question", "to": "relations", "accent": "violet" },
+    { "from": "question", "to": "variances", "accent": "neutral" },
+    { "from": "question", "to": "distribution", "accent": "green" },
+    { "from": "means", "to": "means_scope", "accent": "green" },
+    { "from": "means_scope", "to": "means_param", "accent": "green" },
+    { "from": "means_param", "to": "means_rank", "accent": "green" },
+    { "from": "means_rank", "to": "means_paired", "accent": "green" },
+    { "from": "props", "to": "props_scope", "accent": "blue" },
+    { "from": "props_scope", "to": "props_large", "accent": "blue" },
+    { "from": "props_large", "to": "props_multi", "accent": "blue" },
+    { "from": "props_multi", "to": "props_sparse", "accent": "blue" },
+    { "from": "relations", "to": "relations_type", "accent": "violet" },
+    { "from": "relations_type", "to": "relations_numeric", "accent": "violet" },
+    { "from": "relations_numeric", "to": "relations_rank", "accent": "violet" },
+    { "from": "relations_rank", "to": "relations_cat", "accent": "violet" },
+    { "from": "variances", "to": "variances_scope", "accent": "neutral" },
+    { "from": "variances_scope", "to": "variances_f", "accent": "neutral" },
+    { "from": "variances_f", "to": "variances_robust", "accent": "neutral" },
+    { "from": "variances_robust", "to": "variances_welch", "accent": "neutral" },
+    { "from": "distribution", "to": "distribution_scope", "accent": "green" },
+    { "from": "distribution_scope", "to": "distribution_gof", "accent": "green" },
+    { "from": "distribution_gof", "to": "distribution_normal", "accent": "green" },
+    { "from": "distribution_normal", "to": "distribution_ks", "accent": "green" }
+  ],
+  "sequence": [
+    "question",
+    "means", "means_scope", "means_param", "means_rank", "means_paired",
+    "props", "props_scope", "props_large", "props_multi", "props_sparse",
+    "relations", "relations_type", "relations_numeric", "relations_rank", "relations_cat",
+    "variances", "variances_scope", "variances_f", "variances_robust", "variances_welch",
+    "distribution", "distribution_scope", "distribution_gof", "distribution_normal", "distribution_ks"
+  ],
+  "packetDuration": 2.4
+}

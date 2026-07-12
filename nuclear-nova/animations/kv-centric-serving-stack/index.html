@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;background:#050912;overflow:hidden}body{font-family:Inter,ui-sans-serif,system-ui;color:#eef5ff}svg{display:block}.title{font-size:38px;font-weight:650;letter-spacing:-.02em;fill:#eef5ff}.subtitle{font-size:21px;fill:#7f8ba3}.group-label,.kicker,.chip{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;letter-spacing:.12em}.group-label{font-size:16px}.kicker{font-size:16px}.node-title{font-size:27px;font-weight:650;fill:#eef5ff}.detail{font-size:17px;fill:#8490a6}.edge{fill:none;stroke-width:1.5}.packet{filter:url(#glow)}
+  </style>
+</head>
+<body>
+<svg id="stage"></svg>
+<script type="module">
+const input = window.__SCENE__ || await fetch('./scene.json').then(r => r.json());
+const scene = structuredClone(input);
+const { width: W, height: H, duration } = scene.canvas;
+const typography = scene.typography || {};
+const svg = document.querySelector('#stage');
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+svg.setAttribute('width', W);
+svg.setAttribute('height', H);
+
+const C = { blue: '#3188ff', violet: '#8b5cf6', green: '#00c889', neutral: '#637087' };
+const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function wrapText(value, fontSize, maxWidth, maxLines = 2) {
+  const words = String(value || '').split(/\s+/).filter(Boolean);
+  const maxChars = Math.max(8, Math.floor(maxWidth / (fontSize * .56)));
+  const lines = [];
+  for (const word of words) {
+    const current = lines[lines.length - 1];
+    if (!current || `${current} ${word}`.length > maxChars) lines.push(word);
+    else lines[lines.length - 1] = `${current} ${word}`;
+  }
+  if (lines.length > maxLines) {
+    const kept = lines.slice(0, maxLines);
+    kept[maxLines - 1] = `${kept[maxLines - 1].slice(0, Math.max(1, maxChars - 1))}…`;
+    return kept;
+  }
+  return lines;
+}
+const tspans = (lines, x, lineHeight) => lines.map((line, index) => `<tspan x="${x}" dy="${index ? lineHeight : 0}">${esc(line)}</tspan>`).join('');
+
+function graphInfo(nodes, edges) {
+  const ids = new Set(nodes.map(n => n.id));
+  const incoming = Object.fromEntries(nodes.map(n => [n.id, 0]));
+  const outgoing = Object.fromEntries(nodes.map(n => [n.id, []]));
+  for (const edge of edges) {
+    if (!ids.has(edge.from) || !ids.has(edge.to)) continue;
+    incoming[edge.to] += 1;
+    outgoing[edge.from].push(edge.to);
+  }
+  const roots = nodes.filter(n => incoming[n.id] === 0).map(n => n.id);
+  const queue = [...(roots.length ? roots : [nodes[0].id])];
+  const depth = Object.fromEntries(nodes.map(n => [n.id, 0]));
+  const seen = new Set();
+  while (queue.length) {
+    const id = queue.shift();
+    if (seen.has(id)) continue;
+    seen.add(id);
+    for (const next of outgoing[id]) {
+      depth[next] = Math.max(depth[next], depth[id] + 1);
+      queue.push(next);
+    }
+  }
+  return { incoming, outgoing, roots, depth, branching: Object.values(outgoing).some(children => children.length > 1) };
+}
+
+function applyAutoLayout(scene) {
+  const config = scene.layout || {};
+  const needsLayout = scene.nodes.some(n => !['x', 'y', 'w', 'h'].every(key => Number.isFinite(n[key])));
+  let mode = config.mode || (needsLayout ? 'auto' : 'manual');
+  if (mode === 'manual') {
+    scene.resolvedLayout = { mode, direction: config.direction || 'TB' };
+    return;
+  }
+
+  const info = graphInfo(scene.nodes, scene.edges || []);
+  if (mode === 'auto') mode = info.branching ? 'tree' : 'flow';
+  const direction = config.direction || (mode === 'tree' ? 'TB' : 'LR');
+  const marginX = config.marginX ?? 90;
+  const top = config.top ?? 190;
+  const bottom = config.bottom ?? 90;
+  const gap = config.gap ?? 34;
+  const levels = new Map();
+
+  for (const node of scene.nodes) {
+    const level = info.depth[node.id] ?? 0;
+    if (!levels.has(level)) levels.set(level, []);
+    levels.get(level).push(node);
+  }
+
+  const orderedLevels = [...levels.entries()].sort((a, b) => a[0] - b[0]);
+  const maxAcross = Math.max(...orderedLevels.map(([, nodes]) => nodes.length));
+  const levelCount = orderedLevels.length;
+  const availableW = W - marginX * 2;
+  const availableH = H - top - bottom;
+
+  if (mode === 'tree') {
+    const root = info.roots[0] || scene.nodes[0].id;
+    const leaves = [];
+    const collectLeaves = id => {
+      const children = info.outgoing[id] || [];
+      if (!children.length) { leaves.push(id); return; }
+      children.forEach(collectLeaves);
+    };
+    collectLeaves(root);
+    const leafIndex = Object.fromEntries(leaves.map((id, index) => [id, index]));
+    const spanRange = {};
+    const findRange = id => {
+      if (spanRange[id]) return spanRange[id];
+      const children = info.outgoing[id] || [];
+      if (!children.length) {
+        const index = leafIndex[id] ?? 0;
+        spanRange[id] = { min: index, max: index };
+      } else {
+        const ranges = children.map(findRange);
+        spanRange[id] = {
+          min: Math.min(...ranges.map(range => range.min)),
+          max: Math.max(...ranges.map(range => range.max))
+        };
+      }
+      return spanRange[id];
+    };
+    const findCenter = id => {
+      const range = findRange(id);
+      return (range.min + range.max) / 2;
+    };
+    findRange(root);
+    const leafCount = Math.max(1, leaves.length);
+
+    if (direction === 'TB') {
+      const cardW = Math.min(config.nodeWidth ?? 300, (availableW - gap * (leafCount - 1)) / leafCount);
+      const cardH = Math.min(config.nodeHeight ?? 124, (availableH - gap * (levelCount - 1)) / levelCount);
+      const firstCenter = marginX + cardW / 2;
+      const step = leafCount > 1 ? (availableW - cardW) / (leafCount - 1) : 0;
+      orderedLevels.forEach(([, nodes], levelIndex) => {
+        const y = top + levelIndex * ((availableH - cardH) / Math.max(1, levelCount - 1));
+        nodes.sort((a, b) => findCenter(a.id) - findCenter(b.id));
+        nodes.forEach(node => {
+          const center = leafCount > 1 ? firstCenter + findCenter(node.id) * step : W / 2;
+          Object.assign(node, { x: center - cardW / 2, y, w: cardW, h: cardH });
+        });
+      });
+    } else {
+      const cardW = Math.min(config.nodeWidth ?? 300, (availableW - gap * (levelCount - 1)) / levelCount);
+      const cardH = Math.min(config.nodeHeight ?? 124, (availableH - gap * (leafCount - 1)) / leafCount);
+      const firstCenter = top + cardH / 2;
+      const step = leafCount > 1 ? (availableH - cardH) / (leafCount - 1) : 0;
+      orderedLevels.forEach(([, nodes], levelIndex) => {
+        const x = marginX + levelIndex * ((availableW - cardW) / Math.max(1, levelCount - 1));
+        nodes.sort((a, b) => findCenter(a.id) - findCenter(b.id));
+        nodes.forEach(node => {
+          const center = leafCount > 1 ? firstCenter + findCenter(node.id) * step : top + availableH / 2;
+          Object.assign(node, { x, y: center - cardH / 2, w: cardW, h: cardH });
+        });
+      });
+    }
+  } else if (direction === 'TB') {
+    const cardW = Math.min(config.nodeWidth ?? 300, (availableW - gap * (maxAcross - 1)) / maxAcross);
+    const cardH = Math.min(config.nodeHeight ?? 124, (availableH - gap * (levelCount - 1)) / levelCount);
+    orderedLevels.forEach(([, nodes], levelIndex) => {
+      const rowW = nodes.length * cardW + (nodes.length - 1) * gap;
+      const startX = (W - rowW) / 2;
+      const y = top + levelIndex * ((availableH - cardH) / Math.max(1, levelCount - 1));
+      nodes.forEach((node, index) => Object.assign(node, { x: startX + index * (cardW + gap), y, w: cardW, h: cardH }));
+    });
+  } else {
+    const cardW = Math.min(config.nodeWidth ?? 300, (availableW - gap * (levelCount - 1)) / levelCount);
+    const cardH = Math.min(config.nodeHeight ?? 124, (availableH - gap * (maxAcross - 1)) / maxAcross);
+    orderedLevels.forEach(([, nodes], levelIndex) => {
+      const columnH = nodes.length * cardH + (nodes.length - 1) * gap;
+      const startY = top + (availableH - columnH) / 2;
+      const x = marginX + levelIndex * ((availableW - cardW) / Math.max(1, levelCount - 1));
+      nodes.forEach((node, index) => Object.assign(node, { x, y: startY + index * (cardH + gap), w: cardW, h: cardH }));
+    });
+  }
+
+  scene.resolvedLayout = { mode, direction };
+}
+
+applyAutoLayout(scene);
+
+const grid = `<defs><pattern id="grid" width="92" height="92" patternUnits="userSpaceOnUse"><path d="M92 0H0V92" fill="none" stroke="#8fb6e8" stroke-opacity=".045"/></pattern><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="100%" height="100%" fill="#050912"/><rect width="100%" height="100%" fill="url(#grid)"/>`;
+const groups = (scene.groups || []).map(g => {
+  const c = C[g.accent || 'neutral'];
+  return `<g><rect x="${g.x}" y="${g.y}" width="${g.w}" height="${g.h}" rx="26" fill="${c}" fill-opacity=".025" stroke="${c}" stroke-opacity=".3" ${g.dashed ? 'stroke-dasharray="6 7"' : ''}/><rect x="${g.x + 30}" y="${g.y - 18}" width="${Math.max(170, g.label.length * 11 + 42)}" height="36" rx="18" fill="#050912" stroke="${c}" stroke-opacity=".45"/><text x="${g.x + 50}" y="${g.y + 6}" class="group-label" fill="${c}">${esc(g.label)}</text></g>`;
+}).join('');
+
+const byId = Object.fromEntries(scene.nodes.map(n => [n.id, n]));
+const routing = graphInfo(scene.nodes, scene.edges || []);
+function edgePath(a, b, edge) {
+  const ac = { x: a.x + a.w / 2, y: a.y + a.h / 2 };
+  const bc = { x: b.x + b.w / 2, y: b.y + b.h / 2 };
+  const siblings = routing.outgoing[edge.from] || [edge.to];
+  const branchIndex = Math.max(0, siblings.indexOf(edge.to));
+  const branchCount = siblings.length;
+  const vertical = scene.resolvedLayout?.direction === 'TB' || (!scene.resolvedLayout && Math.abs(bc.y - ac.y) > Math.abs(bc.x - ac.x));
+  if (vertical) {
+    const downward = bc.y >= ac.y;
+    const y1 = downward ? a.y + a.h : a.y;
+    const y2 = downward ? b.y : b.y + b.h;
+    const x1 = branchCount > 1 ? a.x + a.w * (branchIndex + 1) / (branchCount + 1) : ac.x;
+    const mid = (y1 + y2) / 2;
+    return `M${x1},${y1} C${x1},${mid} ${bc.x},${mid} ${bc.x},${y2}`;
+  }
+  const rightward = bc.x >= ac.x;
+  const x1 = rightward ? a.x + a.w : a.x;
+  const x2 = rightward ? b.x : b.x + b.w;
+  const y1 = branchCount > 1 ? a.y + a.h * (branchIndex + 1) / (branchCount + 1) : ac.y;
+  const mid = (x1 + x2) / 2;
+  return `M${x1},${y1} C${mid},${y1} ${mid},${bc.y} ${x2},${bc.y}`;
+}
+
+const edges = (scene.edges || []).map((e, i) => {
+  const a = byId[e.from], b = byId[e.to], c = C[e.accent || 'neutral'], d = edgePath(a, b, e);
+  return `<g class="edge-group" data-from="${esc(e.from)}" data-to="${esc(e.to)}"><path id="edge-${i}" d="${d}" class="edge" stroke="${c}" stroke-opacity=".22"/><circle class="packet" r="5" fill="${c}" opacity="0"><animateMotion dur="${scene.packetDuration || duration}s" repeatCount="indefinite" begin="${i * .42}s" path="${d}"/></circle></g>`;
+}).join('');
+
+const nodes = scene.nodes.map((n, i) => {
+  const c = C[n.accent || 'neutral'];
+  const kickerSize = n.kickerSize || typography.kicker || 16;
+  const titleSize = n.titleSize || typography.title || 27;
+  const detailSize = n.detailSize || typography.detail || 17;
+  const textX = n.x + 26;
+  const textWidth = n.w - 52;
+  const titleLines = wrapText(n.title, titleSize, textWidth, 2);
+  const detailLines = wrapText(n.detail, detailSize, textWidth, 2);
+  const titleY = n.y + 62;
+  const titleLineHeight = Math.round(titleSize * 1.12);
+  const detailY = titleY + (titleLines.length - 1) * titleLineHeight + 30;
+  const detailLineHeight = Math.round(detailSize * 1.18);
+  return `<g class="node" data-id="${esc(n.id)}" data-index="${i}"><rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="20" fill="${c}" fill-opacity=".075" stroke="${c}" stroke-opacity=".44"/><rect class="halo" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="20" fill="none" stroke="${c}" stroke-width="2" opacity="0" filter="url(#glow)"/><text x="${textX}" y="${n.y + 30}" class="kicker" font-size="${kickerSize}" fill="${c}">${esc(n.kicker)}</text><text x="${textX}" y="${titleY}" class="node-title" font-size="${titleSize}">${tspans(titleLines, textX, titleLineHeight)}</text><text x="${textX}" y="${detailY}" class="detail" font-size="${detailSize}">${tspans(detailLines, textX, detailLineHeight)}</text></g>`;
+}).join('');
+
+const chips = (scene.chips || []).filter(ch => Number.isFinite(ch.x) && Number.isFinite(ch.y)).map(ch => {
+  const c = C[ch.accent || 'neutral'], w = Math.max(138, ch.label.length * 11 + 42);
+  return `<g><rect x="${ch.x}" y="${ch.y}" width="${w}" height="48" rx="24" fill="${c}" fill-opacity=".04" stroke="${c}" stroke-opacity=".38"/><text x="${ch.x + 22}" y="${ch.y + 30}" class="chip" font-size="14" fill="${c}">${esc(ch.label)}</text></g>`;
+}).join('');
+
+svg.innerHTML = grid + `<text x="80" y="90" class="title">${esc(scene.title)}</text><text x="80" y="128" class="subtitle">${esc(scene.subtitle)}</text>` + groups + edges + nodes + chips;
+const params = new URLSearchParams(location.search);
+const frame = Number(params.get('frame') || 0), fps = scene.canvas.fps, t = (frame / fps) % duration;
+const seq = scene.sequence || scene.nodes.map(n => n.id), slot = duration / seq.length, phase = t / slot;
+const active = seq[Math.floor(phase) % seq.length], local = phase - Math.floor(phase), pulse = Math.sin(Math.PI * local) ** 2;
+document.querySelectorAll('.node').forEach(g => {
+  const on = g.dataset.id === active;
+  g.querySelector('.halo').setAttribute('opacity', on ? String(.22 + .68 * pulse) : '0');
+  g.style.opacity = on ? String(.78 + .22 * pulse) : '.58';
+});
+document.querySelectorAll('.edge-group').forEach(g => {
+  const on = g.dataset.to === active;
+  g.querySelector('.edge').setAttribute('stroke-opacity', on ? String(.48 + .32 * pulse) : '.22');
+  g.querySelector('.packet').setAttribute('opacity', on ? String(.45 + .5 * pulse) : '0');
+});
+document.querySelectorAll('animateMotion').forEach(a => a.setAttribute('begin', '0s'));
+svg.setCurrentTime(t);
+window.__READY__ = true;
+</script>
+</body>
+</html>

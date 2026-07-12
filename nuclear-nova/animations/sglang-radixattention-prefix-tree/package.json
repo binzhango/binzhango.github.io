@@ -1,0 +1,7 @@
+{
+  "name": "animated-system-diagram",
+  "private": true,
+  "type": "module",
+  "scripts": { "render": "node render.mjs" },
+  "dependencies": { "playwright": "^1.58.0" }
+}
