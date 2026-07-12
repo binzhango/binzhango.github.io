@@ -2231,6 +2231,26 @@ starlight-search input::placeholder {
     color: var(--post-muted);
 }
 
+.post-content .statistical-workflow {
+    margin: 2rem auto;
+}
+
+.post-content .statistical-workflow video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid color-mix(in srgb, #3188ff 36%, var(--sl-color-hairline));
+    border-radius: 1rem;
+    background: #050912;
+    box-shadow: 0 1.2rem 2.8rem color-mix(in srgb, #050912 24%, transparent);
+}
+
+.post-content .statistical-workflow figcaption {
+    max-width: 52rem;
+    margin-inline: auto;
+    line-height: 1.55;
+}
+
 /* Screenshot sizing for the local-model Copilot tutorial. */
 .post-content .copilot-figure {
     --copilot-image-width: 100%;

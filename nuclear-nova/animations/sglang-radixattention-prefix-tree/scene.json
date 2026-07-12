@@ -1,0 +1,26 @@
+{
+  "canvas": { "width": 1600, "height": 900, "fps": 15, "duration": 8 },
+  "title": "RadixAttention reuses the longest cached prefix",
+  "subtitle": "Shared prompt tokens keep their KV state; only the request-specific suffix needs new prefill compute.",
+  "layout": { "mode": "tree", "direction": "TB", "top": 190, "bottom": 80, "gap": 44, "nodeWidth": 300, "nodeHeight": 135 },
+  "exports": { "formats": ["mp4", "gif"] },
+  "nodes": [
+    { "id": "root", "accent": "blue", "kicker": "RADIX ROOT", "title": "Incoming request", "detail": "Match tokens from the beginning" },
+    { "id": "system", "accent": "violet", "kicker": "SHARED PREFIX", "title": "System prompt + tools", "detail": "Cached KV reused once" },
+    { "id": "fewshot", "accent": "violet", "kicker": "SHARED PREFIX", "title": "Few-shot examples", "detail": "Cached KV reused once" },
+    { "id": "questionA", "accent": "green", "kicker": "UNIQUE SUFFIX A", "title": "User question A", "detail": "Compute only these new tokens" },
+    { "id": "questionB", "accent": "green", "kicker": "UNIQUE SUFFIX B", "title": "User question B", "detail": "Compute only these new tokens" },
+    { "id": "taskA", "accent": "green", "kicker": "UNIQUE SUFFIX A", "title": "Task A", "detail": "Compute only these new tokens" },
+    { "id": "taskB", "accent": "green", "kicker": "UNIQUE SUFFIX B", "title": "Task B", "detail": "Compute only these new tokens" }
+  ],
+  "edges": [
+    { "from": "root", "to": "system", "accent": "violet" },
+    { "from": "root", "to": "fewshot", "accent": "violet" },
+    { "from": "system", "to": "questionA", "accent": "green" },
+    { "from": "system", "to": "questionB", "accent": "green" },
+    { "from": "fewshot", "to": "taskA", "accent": "green" },
+    { "from": "fewshot", "to": "taskB", "accent": "green" }
+  ],
+  "sequence": ["root", "system", "questionA", "root", "system", "questionB", "root", "fewshot", "taskA", "root", "fewshot", "taskB"],
+  "packetDuration": 2
+}
