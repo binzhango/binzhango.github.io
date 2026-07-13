@@ -1,0 +1,659 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryBadge from '../../components/CategoryBadge.astro';
+import TagBadge from '../../components/TagBadge.astro';
+import { getCollectionExcerpt, getCuratedCollections, type CuratedCollection } from '../../utils/collections';
+import { getPostPath, slugifyId } from '../../utils/post-utils';
+
+export async function getStaticPaths() {
+  const collections = await getCuratedCollections();
+  return collections.map((collection) => ({
+    params: { slug: collection.slug },
+    props: { collection },
+  }));
+}
+
+interface Props {
+  collection: CuratedCollection;
+}
+
+const { collection } = Astro.props as Props;
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+
+function getNoteId(postId: string): string {
+  return `note-${slugifyId(postId).replaceAll('/', '-')}`;
+}
+---
+
+<BaseLayout title={`${collection.title} | Collections`} description={collection.description}>
+  <nav class="collection-breadcrumbs" aria-label="Breadcrumb">
+    <a href="/collections/">Collections</a>
+    <span aria-hidden="true">/</span>
+    <span>{collection.title}</span>
+  </nav>
+
+  <header class="collection-hero">
+    <div>
+      <p class="collection-hero__eyebrow">Collection</p>
+      <h1>{collection.title}</h1>
+      <p class="collection-hero__description">{collection.description}</p>
+    </div>
+    <div class="collection-hero__count">
+      <strong>{collection.posts.length}</strong>
+      <span>notes in this path</span>
+    </div>
+  </header>
+
+  <main class="collection-browser" data-collection-browser>
+    <aside class="collection-selector" aria-label="Collection notes">
+      <div class="collection-selector__header">
+        <label for="collection-search">Find a note</label>
+        <span data-result-count>{collection.posts.length} notes</span>
+      </div>
+      <input
+        id="collection-search"
+        class="collection-search"
+        type="search"
+        placeholder="Search titles, categories, or tags"
+        autocomplete="off"
+        data-collection-search
+      />
+
+      <div class="collection-selector__scroll" data-collection-list tabindex="-1">
+        <ol>
+          {collection.posts.map((post, index) => {
+            const noteId = getNoteId(post.id);
+            const searchText = [
+              post.data.title,
+              ...(post.data.categories ?? []),
+              ...(post.data.tags ?? []),
+            ].join(' ').toLowerCase();
+
+            return (
+              <li data-collection-row data-search={searchText}>
+                <button
+                  type="button"
+                  class="collection-selector__item"
+                  data-collection-item
+                  data-target={noteId}
+                  aria-controls={noteId}
+                  aria-current={index === 0 ? 'true' : undefined}
+                >
+                  <span class="collection-selector__index">{String(index + 1).padStart(2, '0')}</span>
+                  <span class="collection-selector__title">{post.data.title}</span>
+                  <span class="collection-selector__date">{formatDate(post.data.date)}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+        <p class="collection-selector__empty" data-empty-state hidden>No matching notes found.</p>
+      </div>
+    </aside>
+
+    <section class="collection-preview" aria-live="polite">
+      {collection.posts.map((post, index) => {
+        const noteId = getNoteId(post.id);
+        return (
+          <article class="note-preview" id={noteId} data-note-panel hidden={index !== 0}>
+            <div class="note-preview__sequence">
+              <span>Note {String(index + 1).padStart(2, '0')}</span>
+              <span>{index + 1} of {collection.posts.length}</span>
+            </div>
+            <div class="note-preview__meta">
+              <time datetime={post.data.date?.toISOString()}>{formatDate(post.data.date)}</time>
+              {post.data.categories?.map((category) => <CategoryBadge category={category} link={false} />)}
+            </div>
+            <h2>{post.data.title}</h2>
+            <p class="note-preview__excerpt">{getCollectionExcerpt(post, 300)}</p>
+
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="note-preview__tags" aria-label="Article tags">
+                {post.data.tags.map((tag) => <TagBadge tag={tag} link={false} />)}
+              </div>
+            )}
+
+            <div class="note-preview__actions">
+              <a class="note-preview__read" href={getPostPath(post)}>
+                Read
+              </a>
+              <div class="note-preview__pager" aria-label="Collection navigation">
+                {index > 0 && (
+                  <button type="button" data-preview-direction="previous" data-target={getNoteId(collection.posts[index - 1].id)}>
+                    <span aria-hidden="true">&larr;</span>
+                    <span>Previous</span>
+                  </button>
+                )}
+                {index < collection.posts.length - 1 && (
+                  <button type="button" data-preview-direction="next" data-target={getNoteId(collection.posts[index + 1].id)}>
+                    <span>Next</span>
+                    <span aria-hidden="true">&rarr;</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  function setupCollectionBrowser() {
+    const browser = document.querySelector<HTMLElement>('[data-collection-browser]');
+    if (!browser || browser.dataset.ready === 'true') return;
+    browser.dataset.ready = 'true';
+
+    const buttons = Array.from(browser.querySelectorAll<HTMLButtonElement>('[data-collection-item]'));
+    const panels = Array.from(browser.querySelectorAll<HTMLElement>('[data-note-panel]'));
+    const rows = Array.from(browser.querySelectorAll<HTMLElement>('[data-collection-row]'));
+    const search = browser.querySelector<HTMLInputElement>('[data-collection-search]');
+    const count = browser.querySelector<HTMLElement>('[data-result-count]');
+    const empty = browser.querySelector<HTMLElement>('[data-empty-state]');
+
+    function selectNote(target: string, updateHash = true) {
+      const selectedButton = buttons.find((button) => button.dataset.target === target);
+      const selectedPanel = panels.find((panel) => panel.id === target);
+      if (!selectedButton || !selectedPanel) return;
+
+      buttons.forEach((button) => button.removeAttribute('aria-current'));
+      panels.forEach((panel) => { panel.hidden = panel !== selectedPanel; });
+      selectedButton.setAttribute('aria-current', 'true');
+
+      const list = selectedButton.closest<HTMLElement>('[data-collection-list]');
+      if (list) {
+        const itemBounds = selectedButton.getBoundingClientRect();
+        const listBounds = list.getBoundingClientRect();
+        if (itemBounds.top < listBounds.top) list.scrollTop -= listBounds.top - itemBounds.top;
+        if (itemBounds.bottom > listBounds.bottom) list.scrollTop += itemBounds.bottom - listBounds.bottom;
+      }
+
+      if (updateHash) history.replaceState(null, '', `#${target}`);
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => selectNote(button.dataset.target ?? ''));
+      button.addEventListener('keydown', (event) => {
+        const visibleButtons = buttons.filter((candidate) => !candidate.closest<HTMLElement>('[data-collection-row]')?.hidden);
+        const currentIndex = visibleButtons.indexOf(button);
+        let nextIndex = currentIndex;
+
+        if (event.key === 'ArrowDown') nextIndex = Math.min(currentIndex + 1, visibleButtons.length - 1);
+        if (event.key === 'ArrowUp') nextIndex = Math.max(currentIndex - 1, 0);
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = visibleButtons.length - 1;
+        if (nextIndex === currentIndex || nextIndex < 0) return;
+
+        event.preventDefault();
+        visibleButtons[nextIndex].focus();
+        selectNote(visibleButtons[nextIndex].dataset.target ?? '');
+      });
+    });
+
+    browser.querySelectorAll<HTMLButtonElement>('[data-preview-direction]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.target ?? '';
+        selectNote(target);
+        buttons.find((item) => item.dataset.target === target)?.focus();
+      });
+    });
+
+    search?.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      let visibleCount = 0;
+      rows.forEach((row) => {
+        const matches = !query || (row.dataset.search ?? '').includes(query);
+        row.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+      if (count) count.textContent = `${visibleCount} ${visibleCount === 1 ? 'note' : 'notes'}`;
+      if (empty) empty.hidden = visibleCount !== 0;
+
+      const currentButton = buttons.find((button) => button.getAttribute('aria-current') === 'true');
+      if (currentButton?.closest<HTMLElement>('[data-collection-row]')?.hidden) {
+        const firstMatch = buttons.find((button) => !button.closest<HTMLElement>('[data-collection-row]')?.hidden);
+        if (firstMatch) selectNote(firstMatch.dataset.target ?? '');
+      }
+    });
+
+    const initialTarget = window.location.hash.slice(1);
+    if (initialTarget) selectNote(initialTarget, false);
+  }
+
+  setupCollectionBrowser();
+  document.addEventListener('astro:page-load', setupCollectionBrowser);
+</script>
+
+<style>
+  .collection-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--clay-muted);
+    font-size: 0.8rem;
+  }
+
+  .collection-breadcrumbs a {
+    color: var(--sl-color-text) !important;
+  }
+
+  .collection-hero,
+  .collection-selector,
+  .collection-preview {
+    border: 1px solid var(--clay-border);
+    box-shadow: var(--clay-shadow);
+  }
+
+  .collection-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    padding: clamp(1.1rem, 3vw, 1.8rem);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 90% 12%, rgba(59, 211, 253, 0.14), transparent 30%),
+      color-mix(in srgb, var(--clay-paper) 88%, var(--clay-cream) 12%);
+  }
+
+  .collection-hero__eyebrow,
+  .collection-selector__header,
+  .collection-selector__index,
+  .collection-selector__date,
+  .note-preview__sequence,
+  .note-preview__meta,
+  .collection-hero__count span {
+    color: var(--clay-muted);
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .collection-hero__eyebrow,
+  .collection-hero__description {
+    margin: 0;
+  }
+
+  .collection-hero h1 {
+    max-width: 24ch;
+    margin: 0.35rem 0 0.6rem;
+    font-size: clamp(2.2rem, 5vw, 4.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
+    text-wrap: balance;
+  }
+
+  .collection-hero__description {
+    max-width: 68ch;
+    color: var(--clay-charcoal);
+    line-height: 1.65;
+  }
+
+  .collection-hero__count {
+    display: grid;
+    min-width: 9rem;
+    gap: 0.25rem;
+    padding: 0.8rem 0;
+    border-block: 1px solid var(--clay-border);
+  }
+
+  .collection-hero__count strong {
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+
+  .collection-browser {
+    --collection-panel-height: clamp(31rem, calc(100vh - 10rem), 38rem);
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .collection-selector,
+  .collection-preview {
+    box-sizing: border-box;
+    height: var(--collection-panel-height);
+    min-width: 0;
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--clay-paper) 90%, var(--clay-cream) 10%);
+  }
+
+  .collection-selector {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+    position: sticky;
+    top: 5.4rem;
+    padding: 0.9rem;
+  }
+
+  .collection-selector__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .collection-selector__header label {
+    color: var(--sl-color-text);
+    font-weight: 700;
+  }
+
+  .collection-search {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2.7rem;
+    padding: 0.62rem 0.75rem;
+    border: 1px solid var(--clay-border);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--clay-paper) 82%, white 18%);
+    color: var(--sl-color-text);
+    font: inherit;
+    font-size: 0.86rem;
+  }
+
+  .collection-search:focus {
+    outline: 3px solid color-mix(in srgb, var(--clay-slushie-500) 22%, transparent);
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 54%, var(--clay-border));
+  }
+
+  .collection-selector__scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 0.65rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .collection-selector__scroll ol {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .collection-selector__item {
+    display: grid;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 0.18rem 0.5rem;
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    background: transparent;
+    color: var(--sl-color-text);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .collection-selector__item:hover {
+    border-color: var(--clay-border);
+    background: color-mix(in srgb, var(--clay-slushie-500) 8%, var(--clay-paper) 92%);
+  }
+
+  .collection-selector__item[aria-current='true'] {
+    border-color: color-mix(in srgb, var(--clay-slushie-500) 42%, var(--clay-border));
+    background: color-mix(in srgb, var(--clay-slushie-500) 14%, var(--clay-paper) 86%);
+  }
+
+  .collection-selector__item:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--clay-slushie-500) 22%, transparent);
+  }
+
+  .collection-selector__index {
+    grid-row: 1 / 3;
+    padding-top: 0.1rem;
+    color: var(--clay-slushie-800);
+    font-weight: 700;
+  }
+
+  .collection-selector__title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .collection-selector__date {
+    font-size: 0.62rem;
+  }
+
+  .collection-selector__empty {
+    margin: 1rem 0;
+    color: var(--clay-muted);
+    text-align: center;
+  }
+
+  .collection-preview {
+    overflow-y: auto;
+    padding: clamp(1.1rem, 3vw, 2rem);
+    scrollbar-gutter: stable;
+  }
+
+  .note-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-height: 100%;
+  }
+
+  .note-preview[hidden] {
+    display: none;
+  }
+
+  .note-preview__sequence,
+  .note-preview__meta,
+  .note-preview__actions,
+  .note-preview__tags,
+  .note-preview__pager {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .note-preview__sequence {
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--clay-border);
+  }
+
+  .note-preview__meta :global(.category-badge),
+  .note-preview__tags :global(.tag-badge) {
+    font-size: 0.68rem;
+  }
+
+  .note-preview h2 {
+    max-width: 24ch;
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 3.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.05em;
+    text-wrap: balance;
+  }
+
+  .note-preview__excerpt {
+    max-width: 68ch;
+    margin: 0;
+    color: var(--clay-charcoal);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .note-preview__actions {
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--clay-border);
+  }
+
+  .note-preview__actions a,
+  .note-preview__actions button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.7rem;
+    padding: 0.62rem 0.9rem;
+    border: 1px solid var(--clay-border);
+    border-radius: 999px;
+    color: var(--sl-color-text) !important;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      background 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .note-preview__actions .note-preview__read {
+    min-width: 5.2rem;
+    padding-inline: 1.1rem;
+    border-color: color-mix(in srgb, var(--clay-lemon-500) 68%, var(--clay-border) 32%);
+    background: var(--clay-lemon-400);
+    color: #211b0f !important;
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.76rem;
+    letter-spacing: 0.015em;
+    box-shadow:
+      0 8px 18px rgba(97, 68, 9, 0.12),
+      0 1px 0 rgba(255, 255, 255, 0.42) inset;
+  }
+
+  .note-preview__pager {
+    justify-content: flex-end;
+  }
+
+  .note-preview__actions button {
+    background: color-mix(in srgb, var(--clay-paper) 82%, var(--clay-cream) 18%);
+  }
+
+  .note-preview__actions a:hover,
+  .note-preview__actions button:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: var(--clay-shadow);
+  }
+
+  .note-preview__actions .note-preview__read:hover {
+    border-color: color-mix(in srgb, var(--clay-lemon-500) 82%, #8b6518 18%);
+    background: var(--clay-lemon-500);
+    box-shadow:
+      0 10px 22px rgba(97, 68, 9, 0.17),
+      0 1px 0 rgba(255, 255, 255, 0.44) inset;
+  }
+
+  .note-preview__actions a:focus-visible,
+  .note-preview__actions button:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--clay-slushie-500) 24%, transparent);
+    outline-offset: 2px;
+  }
+
+  :root[data-theme='dark'] .collection-hero,
+  :root[data-theme='dark'] .collection-selector,
+  :root[data-theme='dark'] .collection-preview {
+    border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+    background: #1c1816;
+    box-shadow:
+      0 24px 52px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.035) inset;
+  }
+
+  :root[data-theme='dark'] .collection-search {
+    background: color-mix(in srgb, var(--clay-paper) 86%, #2b3440 14%);
+  }
+
+  :root[data-theme='dark'] .collection-selector__item:hover,
+  :root[data-theme='dark'] .collection-selector__item[aria-current='true'] {
+    background: color-mix(in srgb, var(--clay-slushie-500) 11%, #1c1816 89%);
+  }
+
+  :root[data-theme='dark'] .note-preview__actions button {
+    border-color: color-mix(in srgb, var(--clay-border) 70%, var(--clay-slushie-500) 30%);
+    background: color-mix(in srgb, var(--clay-paper) 84%, #2b3440 16%);
+  }
+
+  :root[data-theme='dark'] .note-preview__actions .note-preview__read {
+    border-color: color-mix(in srgb, var(--clay-lemon-500) 58%, #59451f 42%);
+    background: color-mix(in srgb, var(--clay-lemon-400) 72%, #6a5124 28%);
+    color: #181208 !important;
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.26),
+      0 1px 0 rgba(255, 244, 207, 0.18) inset;
+  }
+
+  :root[data-theme='dark'] .note-preview__actions .note-preview__read:hover {
+    border-color: color-mix(in srgb, var(--clay-lemon-500) 72%, #73571f 28%);
+    background: color-mix(in srgb, var(--clay-lemon-400) 82%, #6a5124 18%);
+    box-shadow:
+      0 10px 22px rgba(0, 0, 0, 0.32),
+      0 1px 0 rgba(255, 244, 207, 0.2) inset;
+  }
+
+  @media (max-width: 760px) {
+    .collection-hero,
+    .collection-browser {
+      grid-template-columns: 1fr;
+    }
+
+    .collection-hero {
+      align-items: start;
+      border-radius: 22px;
+    }
+
+    .collection-hero__count {
+      width: 100%;
+    }
+
+    .collection-selector {
+      position: static;
+      height: auto;
+      border-radius: 20px;
+    }
+
+    .collection-selector__scroll {
+      flex: none;
+      max-height: min(26rem, 58vh);
+      min-height: 0;
+    }
+
+    .collection-preview {
+      height: auto;
+      min-height: 25rem;
+      border-radius: 20px;
+    }
+
+    .note-preview__actions {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .note-preview__pager {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .note-preview__pager button:only-child {
+      margin-left: auto;
+    }
+  }
+</style>
