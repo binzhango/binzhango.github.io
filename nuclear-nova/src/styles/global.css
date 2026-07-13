@@ -2795,6 +2795,47 @@ a:hover {
     box-shadow: var(--clay-shadow);
 }
 
+/* Preserve admonition hierarchy after the clay card treatment above. */
+.post-content aside.starlight-aside {
+    --aside-accent: var(--clay-slushie-500);
+}
+
+.post-content aside.starlight-aside--note {
+    --aside-accent: #3b82f6;
+    border-color: #93b4ef;
+    border-left: 4px solid #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.post-content aside.starlight-aside--tip {
+    --aside-accent: #22c55e;
+    border-color: #86c99e;
+    border-left: 4px solid #22c55e;
+    background-color: rgba(34, 197, 94, 0.1);
+}
+
+.post-content aside.starlight-aside--caution {
+    --aside-accent: #f59e0b;
+    border-color: #dfb66e;
+    border-left: 4px solid #f59e0b;
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.post-content aside.starlight-aside--danger {
+    --aside-accent: #ef4444;
+    border-color: #e59a9a;
+    border-left: 4px solid #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.post-content aside.starlight-aside .starlight-aside__title {
+    color: var(--aside-accent) !important;
+}
+
+:root[data-theme='dark'] .post-content aside.starlight-aside {
+    background-color: color-mix(in srgb, var(--aside-accent) 14%, var(--clay-paper) 86%);
+}
+
 .sl-link-card,
 .sl-card,
 .card,
