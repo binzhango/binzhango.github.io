@@ -32,7 +32,7 @@ const showSecondary = hasSecondary || reserveSecondary;
 <style>
   .blog-layout {
     --blog-sidebar-width: clamp(14.5rem, 18vw, 17rem);
-    --blog-sidebar-collapsed-width: 3.1rem;
+    --blog-sidebar-collapsed-width: 5.25rem;
     --blog-main-max-width: 68rem;
     --blog-main-expanded-max-width: none;
     --blog-secondary-width: 14rem;
@@ -290,7 +290,7 @@ const showSecondary = hasSecondary || reserveSecondary;
     flex: 1;
   }
 
-  :global(.blog-year-icon) {
+  :global(.blog-year-orbit) {
     display: none;
   }
 
@@ -514,7 +514,7 @@ const showSecondary = hasSecondary || reserveSecondary;
 
   :global(body.blog-sidebar-collapsed .blog-year-groups) {
     justify-items: center;
-    gap: 0.48rem;
+    gap: 0.58rem;
   }
 
   :global(body.blog-sidebar-collapsed .blog-year-groups details) {
@@ -523,8 +523,8 @@ const showSecondary = hasSecondary || reserveSecondary;
   }
 
   :global(body.blog-sidebar-collapsed .blog-year-groups summary) {
-    width: 2.32rem;
-    height: 2.32rem;
+    width: 4.1rem;
+    height: 4.1rem;
     justify-content: center;
     padding: 0;
     border-radius: 999px;
@@ -536,6 +536,20 @@ const showSecondary = hasSecondary || reserveSecondary;
     box-shadow:
       0 7px 16px rgba(58, 44, 24, 0.06),
       0 0 0 1px rgba(255, 255, 255, 0.34) inset;
+  }
+
+  :global(body.blog-sidebar-collapsed .blog-year-groups summary[aria-current='true']::after) {
+    content: '';
+    position: absolute;
+    left: -0.38rem;
+    top: 50%;
+    width: 0.48rem;
+    height: 0.48rem;
+    border: 2px solid var(--clay-paper);
+    border-radius: 999px;
+    background: var(--year-rail-accent);
+    box-shadow: 0 0 0 1px var(--year-rail-accent);
+    transform: translateY(-50%);
   }
 
   :global(body.blog-sidebar-collapsed .blog-year-groups summary:hover),
@@ -572,7 +586,8 @@ const showSecondary = hasSecondary || reserveSecondary;
       0 0 0 1px rgba(255, 255, 255, 0.42) inset;
   }
 
-  :global(body.blog-sidebar-collapsed .blog-year-groups summary[aria-current='true']) {
+  :global(body.blog-sidebar-collapsed .blog-year-groups summary[aria-current='true']),
+  :global(body.blog-sidebar-collapsed .blog-year-groups details[open] > summary[aria-current='true']) {
     color: color-mix(in srgb, var(--year-rail-accent) 76%, var(--sl-color-text) 24%) !important;
     border-color: color-mix(in srgb, var(--year-rail-accent) 58%, var(--clay-border));
     background:
@@ -580,7 +595,13 @@ const showSecondary = hasSecondary || reserveSecondary;
       color-mix(in srgb, var(--year-rail-accent) 23%, white 77%);
     box-shadow:
       0 9px 18px rgba(58, 44, 24, 0.1),
+      0 0 0 3px var(--clay-paper),
+      0 0 0 5px color-mix(in srgb, var(--year-rail-accent) 62%, transparent),
       0 0 0 1px rgba(255, 255, 255, 0.48) inset;
+  }
+
+  :global(body.blog-sidebar-collapsed .blog-year-groups summary[aria-current='true'] .blog-year-orbit) {
+    font-weight: 750;
   }
 
   :global(body.blog-sidebar-collapsed .blog-year-summary) {
@@ -588,32 +609,18 @@ const showSecondary = hasSecondary || reserveSecondary;
     justify-content: center;
   }
 
-  :global(body.blog-sidebar-collapsed .blog-year-icon) {
-    position: relative;
+  :global(body.blog-sidebar-collapsed .blog-year-orbit) {
     display: inline-grid;
     place-items: center;
-    width: 1.48rem;
-    height: 1.48rem;
-  }
-
-  :global(body.blog-sidebar-collapsed .blog-year-icon svg) {
-    width: 1.48rem;
-    height: 1.48rem;
-    display: block;
-    opacity: 0.92;
-  }
-
-  :global(body.blog-sidebar-collapsed .blog-year-icon span) {
-    position: absolute;
-    top: 0.58rem;
-    left: 50%;
-    transform: translateX(-50%);
+    min-width: 0;
     color: currentColor;
-    font-family: var(--font-space-mono);
-    font-size: 0.56rem;
-    font-weight: 700;
+    font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', var(--font-roobert), Arial, sans-serif;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum' 1, 'lnum' 1;
+    font-weight: 650;
     line-height: 1;
-    letter-spacing: 0;
+    letter-spacing: 0.015em;
   }
 
   :global(body.blog-sidebar-collapsed .blog-year-meta),

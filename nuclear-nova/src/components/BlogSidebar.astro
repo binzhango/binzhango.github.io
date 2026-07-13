@@ -57,13 +57,7 @@ function shouldOpen(year: string, paths: string[]): boolean {
                 title={`${year} (${yearlyPosts.length} posts)`}
               >
                 <span class="blog-year-summary">
-                  <span class="blog-year-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                      <rect x="4.5" y="5.5" width="15" height="15" rx="3.25" fill="none" stroke="currentColor" stroke-width="1.7"></rect>
-                      <path d="M8 3.75v3.4M16 3.75v3.4M5 10h14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
-                    </svg>
-                    <span>{year.slice(-2)}</span>
-                  </span>
+                  <span class="blog-year-orbit" aria-hidden="true">{year}</span>
                   <span class="blog-year-meta">
                     <span class="blog-year-label">{year}</span>
                     <span class="blog-year-count" aria-label={`${yearlyPosts.length} posts in ${year}`}>

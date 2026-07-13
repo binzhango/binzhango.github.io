@@ -65,6 +65,6 @@ Out - Final answer: Michael Watts
 ## Tracing
 ![Phoenix Server](/assets/images/2025/smolagent.png)
 
-> [!NOTE]
->
-> We will add this lightweight agent into our existing LLM job to interact with SQL databases and other tools. This will allow us to trace the execution of SQL queries and other operations, providing insights into the performance and behavior of our models.
+:::note
+We will add this lightweight agent to our existing LLM workflow so it can interact with SQL databases and other tools. This lets us trace SQL queries and related operations, providing insight into model performance and behavior.
+:::
