@@ -17,7 +17,7 @@ Over the next 12 to 24 months, the differentiator among engineers will shift fro
 
 Cutting-edge models now demonstrate sustained reasoning capabilities exceeding two hours, with approximately 50% reliability—doubling every seven months in their capacity for continuous operation. 
 Just a few years prior, these models were confined to basic autocomplete functions. 
-Today, they are capable of independently executing entire development workflows, including {==**coding**==}, {==**testing**==}, {==**documentation**==}, and {==**deployment adjustments**==}.
+Today, they are capable of independently executing entire development workflows, including **coding**, **testing**, **documentation**, and **deployment adjustments**.
 
 > This represents a transformative paradigm shift: 
 >
@@ -25,10 +25,7 @@ Today, they are capable of independently executing entire development workflows,
 
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_1.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![AI engineering transforms the software development lifecycle](/assets/images/2025/AI_Engineers_1.png)
 
 
 
@@ -59,10 +56,7 @@ Moreover, these models are not standalone. They can integrate with:
 These AI agents won't just reside within your code editor; they will become part of your entire engineering stack.
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_2.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![AI agents integrate across the engineering stack](/assets/images/2025/AI_Engineers_2.png)
 
 
 ## **2. The Engineer’s New Role: Delegate, Review, Own**
@@ -80,13 +74,10 @@ This serves as a blueprint for the future of engineering roles.
 | Review   | Human Engineer    | Validates the architectural integrity, performs sanity checks on major migrations, assesses hidden risks, and verifies boundary correctness. |
 | Own      | Human Engineer    | Holds ultimate responsibility for strategic direction, prioritization, risk mitigation, and long-term system maintainability. |
 
-Consider AI agents as fast, high-output {++junior engineers++} who may occasionally make mistakes. You aren’t being replaced; instead, you are being promoted to lead and guide them.
+Consider AI agents as fast, high-output **junior engineers** who may occasionally make mistakes. You aren’t being replaced; instead, you are being promoted to lead and guide them.
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_3.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![The Delegate, Review, Own operating model](/assets/images/2025/AI_Engineers_3.png)
 
 ## **3. Planning: Streamlining Upstream and Downstream Workflows**
 
@@ -114,10 +105,7 @@ As a result, the engineer's role shifts from explanation to auditing:
 - Will this conflict with existing roadmap items?
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_4.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![AI-assisted planning from specifications to implementation tasks](/assets/images/2025/AI_Engineers_4.png)
 
 
 ## **4. Design: From “Implementation Specialist” to “Design System Steward”**
@@ -139,10 +127,7 @@ Now, your role has expanded beyond merely executing designs; it's about ensuring
 As a result, professionals evolve from being simple "implementers" to becoming stewards of user experience and system coherence.
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_5.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![Engineers become stewards of design systems](/assets/images/2025/AI_Engineers_5.png)
 
 
 ## **5. Build: Where the Most Significant Productivity Gap Will Arise**
@@ -156,13 +141,9 @@ Implementing a new feature involves several tasks:
 - Integrating the frontend and handling errors
 - Conducting tests, gathering telemetry, and creating documentation
 
-{==
-
-For humans, this process results in context-switching overhead. 
-
-For AI models, it translates to longer reasoning times and increased tool usage.
-
-==}
+> For humans, this process results in context-switching overhead.
+>
+> For AI models, it translates to longer reasoning times and increased tool usage.
 
 
 When you provide an AI agent with a clearly defined workflow, such as:
@@ -184,10 +165,7 @@ Human engineers should concentrate on the following:
 A team that utilizes AI agents can complete a sprint's work in one week, whereas a traditional manual team may take an entire month. This productivity gap cannot be closed by simply working overtime.
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_6.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![AI agents execute a structured build workflow](/assets/images/2025/AI_Engineers_6.png)
 
 ## **6. Test & Review: Tests Become “Formal Specifications”**
 
@@ -212,10 +190,7 @@ Human reviewers assess for:
 Your value lies not in providing comments, **but in safeguarding the system's trajectory over the next three years.**
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_7.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![Tests act as formal specifications for AI agents](/assets/images/2025/AI_Engineers_7.png)
 
 
 ## **7. Documentation & Operations: Knowledge Becomes an Automated By-Product**
@@ -243,10 +218,7 @@ In response, the agent would inspect logs, recent changes, and code paths to pro
 While operations may not become simpler, the more mechanical tasks will be automated, <span class="def-mono-blue">thus allowing you to focus on judgment-driven decisions.</span>
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_8.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![AI turns documentation and operational knowledge into workflow outputs](/assets/images/2025/AI_Engineers_8.png)
 
 ## **8. For Individual Engineers: Your Core Skill Set Must Evolve**
 
@@ -265,10 +237,7 @@ AI does not make engineers obsolete. However, engineers who refuse to adapt will
 You are being pushed to transition from a "coder" role to that of a systems designer.
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_9.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![The engineer evolves from coder to systems designer](/assets/images/2025/AI_Engineers_9.png)
 
 
 ## **9. For Engineering Leaders: Treating AI as a Plugin Will Leave You Behind**
@@ -299,10 +268,7 @@ To adapt, leaders must:
 - Treat testing, logging, and observability as essential components of AI infrastructure, not just optional enhancements.
 
 
-<figure markdown="span">
-  ![AI Engineering](/assets/images/2025/AI_Engineers_10.png){ width="600" }
-  <!-- <figcaption>Image caption</figcaption> -->
-</figure>
+![Engineering leaders redesign the organization around AI-native workflows](/assets/images/2025/AI_Engineers_10.png)
 
 ## **10. Conclusion: Drive Innovation with AI or Play Catch-Up: Shaping the Future of Software Engineering**
 
@@ -327,7 +293,6 @@ If you're uncertain about your next steps:
 - Focus your efforts on design and strategic decisions.
 - Assess the outcomes.
 - Decide which future you want to build in. -->
-
 
 
 
