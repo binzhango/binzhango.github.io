@@ -1,0 +1,396 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryBadge from '../../components/CategoryBadge.astro';
+import { getPostPath } from '../../utils/post-utils';
+import { getCollectionExcerpt, getCuratedCollections } from '../../utils/collections';
+
+const collections = await getCuratedCollections();
+const totalNotes = collections.reduce((total, collection) => total + collection.posts.length, 0);
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+---
+
+<BaseLayout
+  title="Collections | Bin Zhang's Blog"
+  description="Curated reading paths through Bin Zhang's writing on AI, LLM systems, and data engineering."
+>
+  <header class="collections-hero">
+    <div class="collections-hero__copy">
+      <p class="eyebrow">Guided reading</p>
+      <h1>Collections</h1>
+      <p>
+        Related notes arranged into deliberate paths. Pick a subject, begin with the first idea,
+        and follow the sequence as the system comes together.
+      </p>
+    </div>
+    <dl class="collections-hero__stats" aria-label="Collection summary">
+      <div>
+        <dt>Paths</dt>
+        <dd>{collections.length}</dd>
+      </div>
+      <div>
+        <dt>Notes</dt>
+        <dd>{totalNotes}</dd>
+      </div>
+    </dl>
+  </header>
+
+  <main class="collections-list">
+    {collections.map((collection, collectionIndex) => (
+      <section
+        class={`collection collection--tone-${collectionIndex}`}
+        id={collection.slug}
+        aria-labelledby={`${collection.slug}-title`}
+      >
+        <header class="collection__header">
+          <div class="collection__identity">
+            <div>
+              <p class="collection__type">Collection</p>
+              <h2 id={`${collection.slug}-title`}>{collection.title}</h2>
+            </div>
+          </div>
+          <div class="collection__summary">
+            <p>{collection.description}</p>
+            <span>{collection.posts.length}-note reading path</span>
+          </div>
+        </header>
+
+        <ol class="collection__posts" aria-label={`${collection.title} reading order`}>
+          {collection.posts.slice(0, 3).map((post, postIndex) => (
+            <li class="collection-post">
+              <span class="collection-post__step" aria-hidden="true">
+                {String(postIndex + 1).padStart(2, '0')}
+              </span>
+              <div class="collection-post__content">
+                <div class="collection-post__meta">
+                  <time datetime={post.data.date?.toISOString()}>{formatDate(post.data.date)}</time>
+                  {post.data.categories?.[0] && <CategoryBadge category={post.data.categories[0]} link={false} />}
+                </div>
+                <h3><a href={getPostPath(post)}>{post.data.title}</a></h3>
+                <p>{getCollectionExcerpt(post)}</p>
+              </div>
+              <a class="collection-post__action" href={getPostPath(post)} aria-label={`Read ${post.data.title}`}>
+                <span>Read note</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+
+        <a class="collection__browse" href={`/collections/${collection.slug}/`}>
+          Browse all {collection.posts.length} notes
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
+    ))}
+  </main>
+</BaseLayout>
+
+<style>
+  .collections-hero,
+  .collection {
+    border: 1px solid var(--clay-border);
+    box-shadow: var(--clay-shadow);
+  }
+
+  .collections-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    margin-bottom: clamp(1.3rem, 3vw, 2rem);
+    padding: clamp(1.2rem, 3vw, 2rem);
+    border-radius: 30px;
+    background:
+      radial-gradient(circle at 88% 8%, rgba(59, 211, 253, 0.14), transparent 30%),
+      radial-gradient(circle at 12% 92%, rgba(248, 204, 101, 0.14), transparent 28%),
+      color-mix(in srgb, var(--clay-paper) 88%, var(--clay-cream) 12%);
+  }
+
+  .collections-hero__copy {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .eyebrow,
+  .collection__type,
+  .collection__summary span,
+  .collection-post__meta,
+  .collections-hero__stats dt {
+    margin: 0;
+    color: var(--clay-muted);
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .collections-hero h1 {
+    margin: 0;
+    font-size: clamp(2.7rem, 7vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.065em;
+  }
+
+  .collections-hero__copy > p:last-child {
+    max-width: 62ch;
+    margin: 0;
+    color: var(--clay-charcoal);
+    line-height: 1.68;
+  }
+
+  .collections-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(5.5rem, 1fr));
+    margin: 0;
+    border-block: 1px solid var(--clay-border);
+  }
+
+  .collections-hero__stats div {
+    display: grid;
+    gap: 0.28rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .collections-hero__stats div + div {
+    border-left: 1px solid var(--clay-border);
+  }
+
+  .collections-hero__stats dd {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .collections-list {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .collection {
+    --collection-tone: var(--clay-slushie-500);
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    border-radius: 28px;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--collection-tone) 11%, transparent), transparent 44%),
+      color-mix(in srgb, var(--clay-paper) 90%, var(--clay-cream) 10%);
+  }
+
+  .collection::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0.32rem;
+    background: var(--collection-tone);
+  }
+
+  .collection--tone-1 { --collection-tone: var(--clay-ube-300); }
+  .collection--tone-2 { --collection-tone: var(--clay-pomegranate-400); }
+  .collection--tone-3 { --collection-tone: var(--clay-matcha-300); }
+
+  .collection__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.75fr);
+    gap: 1.5rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--clay-border) 78%, var(--collection-tone) 22%);
+  }
+
+  .collection__identity {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  .collection__identity h2 {
+    max-width: 25ch;
+    margin: 0.2rem 0 0;
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  .collection__summary {
+    display: grid;
+    align-content: end;
+    gap: 0.5rem;
+  }
+
+  .collection__summary p {
+    margin: 0;
+    color: var(--clay-charcoal);
+    line-height: 1.6;
+  }
+
+  .collection__posts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .collection-post {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--clay-border) 82%, var(--collection-tone) 18%);
+  }
+
+  .collection-post__step {
+    align-self: start;
+    padding-top: 0.22rem;
+    color: color-mix(in srgb, var(--collection-tone) 72%, var(--clay-muted) 28%);
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .collection-post__content {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .collection-post__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .collection-post__meta :global(.category-badge) {
+    padding: 0.22rem 0.5rem;
+    font-size: 0.62rem;
+  }
+
+  .collection-post h3 {
+    margin: 0;
+    font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+    line-height: 1.18;
+  }
+
+  .collection-post h3 a {
+    color: var(--sl-color-text) !important;
+    text-decoration: none;
+  }
+
+  .collection-post h3 a:hover {
+    color: color-mix(in srgb, var(--collection-tone) 62%, var(--sl-color-text) 38%) !important;
+  }
+
+  .collection-post__content > p {
+    display: -webkit-box;
+    overflow: hidden;
+    max-width: 78ch;
+    margin: 0;
+    color: var(--clay-charcoal);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .collection-post__action,
+  .collection__browse {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 68%, var(--collection-tone) 32%);
+    border-radius: 999px;
+    color: var(--sl-color-text) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+
+  .collection-post__action {
+    padding: 0.5rem 0.72rem;
+  }
+
+  .collection__browse {
+    width: fit-content;
+    margin-top: 1rem;
+    padding: 0.62rem 0.9rem;
+    background: color-mix(in srgb, var(--collection-tone) 13%, var(--clay-paper) 87%);
+  }
+
+  .collection-post__action:hover,
+  .collection__browse:hover {
+    border-color: var(--collection-tone);
+    background: color-mix(in srgb, var(--collection-tone) 16%, var(--clay-paper) 84%);
+    transform: translateY(-0.1rem);
+  }
+
+  :root[data-theme='dark'] .collections-hero,
+  :root[data-theme='dark'] .collection {
+    border-color: color-mix(in srgb, var(--clay-border) 72%, var(--clay-slushie-500) 28%);
+    box-shadow:
+      0 24px 52px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.035) inset;
+  }
+
+  :root[data-theme='dark'] .collections-hero {
+    background:
+      radial-gradient(circle at 88% 8%, rgba(59, 211, 253, 0.09), transparent 30%),
+      radial-gradient(circle at 12% 92%, rgba(248, 204, 101, 0.08), transparent 28%),
+      #1c1816;
+  }
+
+  :root[data-theme='dark'] .collection {
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--collection-tone) 9%, transparent), transparent 44%),
+      #1c1816;
+  }
+
+  :root[data-theme='dark'] .collection__browse:hover,
+  :root[data-theme='dark'] .collection-post__action:hover,
+  :root[data-theme='dark'] .collection__browse {
+    background: color-mix(in srgb, var(--collection-tone) 12%, #1c1816 88%);
+  }
+
+  @media (max-width: 760px) {
+    .collections-hero,
+    .collection__header {
+      grid-template-columns: 1fr;
+    }
+
+    .collections-hero {
+      align-items: start;
+      border-radius: 22px;
+    }
+
+    .collections-hero__stats {
+      width: 100%;
+    }
+
+    .collection {
+      border-radius: 22px;
+    }
+
+    .collection-post {
+      grid-template-columns: 1.6rem minmax(0, 1fr);
+    }
+
+    .collection-post__action {
+      grid-column: 2;
+      justify-self: start;
+    }
+
+    .collection-post__action span:first-child {
+      display: none;
+    }
+  }
+</style>

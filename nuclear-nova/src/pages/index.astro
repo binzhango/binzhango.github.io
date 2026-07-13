@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryBadge from '../components/CategoryBadge.astro';
 import { getAllPosts, getPostPath } from '../utils/post-utils';
 import { getPostExcerpt } from '../utils/excerpt';
+import { getCuratedCollections } from '../utils/collections';
 
 const posts = await getAllPosts();
 const featured = posts[0];
@@ -24,6 +25,8 @@ for (const post of posts) {
 const topCategories = Array.from(categoryCounts.entries())
   .sort((a, b) => b[1] - a[1])
   .slice(0, 4);
+
+const curatedCollections = await getCuratedCollections();
 
 function formatDate(date: Date | undefined): string {
   if (!date) return '';
@@ -85,6 +88,29 @@ function formatDate(date: Date | undefined): string {
   </section>
 
   <main class="home-board" aria-label="Homepage posts">
+    {curatedCollections.length > 0 && (
+      <section class="collections-section" aria-labelledby="collections-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Reading paths</p>
+          <h2 id="collections-heading">Browse collections</h2>
+        </div>
+
+        <nav class="collection-shortcuts" aria-label="Blog collections">
+          {curatedCollections.map((collection, collectionIndex) => (
+            <a class={`collection-shortcut collection-shortcut--tone-${collectionIndex}`} href={`/collections/${collection.slug}/`}>
+              <span class="collection-shortcut__copy">
+                <strong>{collection.title}</strong>
+                <span>{collection.posts.length} notes</span>
+              </span>
+              <span class="collection-shortcut__arrow" aria-hidden="true">
+                &rarr;
+              </span>
+            </a>
+          ))}
+        </nav>
+      </section>
+    )}
+
     {featured && (
       <section class="featured-section" aria-labelledby="featured-heading">
         <div class="section-heading">
@@ -182,6 +208,7 @@ function formatDate(date: Date | undefined): string {
     }
 
     :global(html:root[data-theme='light']) .home-board,
+    :global(html:root[data-theme='light']) .collections-section,
     :global(html:root[data-theme='light']) .featured-section,
     :global(html:root[data-theme='light']) .recent-section {
       background: #f3eee7 !important;
@@ -203,6 +230,7 @@ function formatDate(date: Date | undefined): string {
     :global(html:root[data-theme='dark'] .page),
     :global(html:root[data-theme='dark'] .sl-markdown-content),
     :global(html:root[data-theme='dark']) .home-board,
+    :global(html:root[data-theme='dark']) .collections-section,
     :global(html:root[data-theme='dark']) .featured-section,
     :global(html:root[data-theme='dark']) .recent-section {
       background: #15120f !important;
@@ -506,6 +534,112 @@ function formatDate(date: Date | undefined): string {
     line-height: 1.08;
   }
 
+  .collection-shortcuts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .collection-shortcut {
+    --collection-tone: var(--clay-slushie-500);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-width: 0;
+    min-height: 4.5rem;
+    padding: 0.85rem 0.8rem 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 78%, var(--collection-tone) 22%);
+    border-radius: 18px;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--collection-tone) 10%, transparent), transparent 58%),
+      color-mix(in srgb, var(--clay-paper) 90%, var(--clay-cream) 10%);
+    color: var(--sl-color-text) !important;
+    box-shadow:
+      0 10px 22px rgba(58, 44, 24, 0.07),
+      0 1px 0 rgba(255, 255, 255, 0.7) inset;
+    text-decoration: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .collection-shortcut::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0.24rem;
+    background: var(--collection-tone);
+  }
+
+  .collection-shortcut--tone-0 {
+    --collection-tone: var(--clay-slushie-500);
+  }
+
+  .collection-shortcut--tone-1 {
+    --collection-tone: var(--clay-ube-300);
+  }
+
+  .collection-shortcut--tone-2 {
+    --collection-tone: var(--clay-pomegranate-400);
+  }
+
+  .collection-shortcut--tone-3 {
+    --collection-tone: var(--clay-matcha-300);
+  }
+
+  .collection-shortcut:hover {
+    border-color: color-mix(in srgb, var(--collection-tone) 56%, var(--clay-border));
+    box-shadow:
+      0 13px 26px rgba(58, 44, 24, 0.11),
+      0 1px 0 rgba(255, 255, 255, 0.72) inset;
+    transform: translateY(-0.12rem);
+  }
+
+  .collection-shortcut:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--collection-tone) 25%, transparent);
+    outline-offset: 2px;
+  }
+
+  .collection-shortcut__copy {
+    display: grid;
+    gap: 0.28rem;
+    min-width: 0;
+  }
+
+  .collection-shortcut__copy strong {
+    font-size: 0.9rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .collection-shortcut__copy span {
+    color: var(--clay-muted);
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.66rem;
+    text-transform: uppercase;
+  }
+
+  .collection-shortcut__arrow {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border: 1px solid color-mix(in srgb, var(--clay-border) 64%, var(--collection-tone) 36%);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--collection-tone) 14%, var(--clay-paper) 86%);
+    transition: transform 0.18s ease;
+  }
+
+  .collection-shortcut:hover .collection-shortcut__arrow {
+    transform: translateX(0.16rem);
+  }
+
   .featured-card {
     display: grid;
     grid-template-columns: minmax(18rem, 36%) minmax(0, 64%);
@@ -806,6 +940,20 @@ function formatDate(date: Date | undefined): string {
       #1c1816 !important;
   }
 
+  :root[data-theme='dark'] .collection-shortcut {
+    border-color: color-mix(in srgb, var(--clay-border) 70%, var(--collection-tone) 30%);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--collection-tone) 8%, transparent), transparent 58%),
+      #1c1816;
+    box-shadow:
+      0 12px 24px rgba(0, 0, 0, 0.3),
+      0 1px 0 rgba(255, 255, 255, 0.035) inset;
+  }
+
+  :root[data-theme='dark'] .collection-shortcut__arrow {
+    background: color-mix(in srgb, var(--collection-tone) 13%, #1c1816 87%);
+  }
+
   :root[data-theme='dark'] .post-card--pinned {
     border-width: 1.5px;
     border-color: color-mix(in srgb, var(--clay-slushie-500) 52%, var(--clay-border));
@@ -902,6 +1050,10 @@ function formatDate(date: Date | undefined): string {
     .recent-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .collection-shortcuts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 680px) {
@@ -925,6 +1077,7 @@ function formatDate(date: Date | undefined): string {
     }
 
     .metric-grid,
+    .collection-shortcuts,
     .recent-grid {
       grid-template-columns: 1fr;
     }
