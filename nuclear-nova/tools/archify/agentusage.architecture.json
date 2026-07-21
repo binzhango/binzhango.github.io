@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agentusage Architecture",
+    "subtitle": "Local-first ingestion, normalization, storage, and usage delivery",
+    "output": "agentusage-architecture.html",
+    "visual_preset": "signal-flow",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "history-ingestion",
+        "label": "History ingestion",
+        "focus": ["agent_history", "provider_readers", "ingestion", "event_model", "sqlite"],
+        "note": "Follow provider-owned history through incremental parsing, normalization, and the default local database."
+      },
+      {
+        "id": "hook-ingestion",
+        "label": "Live hook ingestion",
+        "focus": ["telemetry_hooks", "hook_adapters", "ingestion", "event_model", "sqlite"],
+        "note": "See how hook payloads join the same normalized and idempotent storage path."
+      },
+      {
+        "id": "usage-delivery",
+        "label": "Usage delivery",
+        "focus": ["sqlite", "query_engine", "browser", "terminal", "json_api"],
+        "note": "One query layer serves the browser dashboard, terminal experiences, reports, and local API."
+      },
+      {
+        "id": "shared-storage",
+        "label": "Optional shared storage",
+        "focus": ["event_model", "postgres", "query_engine"],
+        "note": "PostgreSQL is an explicit alternative for shared state; SQLite remains the personal default."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "agent_history",
+      "type": "external",
+      "label": "Local Agent History",
+      "sublabel": "JSONL · logs · local DBs",
+      "pos": [90, 105],
+      "size": [220, 80],
+      "tag": "Codex · Claude · OpenCode · Copilot"
+    },
+    {
+      "id": "telemetry_hooks",
+      "type": "external",
+      "label": "Telemetry Hooks",
+      "sublabel": "agent event payloads",
+      "pos": [630, 105],
+      "size": [220, 80],
+      "tag": "optional live path"
+    },
+    {
+      "id": "provider_readers",
+      "type": "backend",
+      "label": "Provider Readers",
+      "sublabel": "format-specific adapters",
+      "pos": [90, 275],
+      "size": [220, 80],
+      "tag": "incremental cursors"
+    },
+    {
+      "id": "hook_adapters",
+      "type": "backend",
+      "label": "Hook Adapters",
+      "sublabel": "shared event envelope",
+      "pos": [630, 275],
+      "size": [220, 80],
+      "tag": "Codex · Claude · OpenCode"
+    },
+    {
+      "id": "ingestion",
+      "type": "backend",
+      "label": "Ingestion Pipeline",
+      "sublabel": "parse · classify · dedupe",
+      "pos": [360, 465],
+      "size": [220, 82],
+      "tag": "idempotent batches"
+    },
+    {
+      "id": "event_model",
+      "type": "messagebus",
+      "label": "Normalized Event Model",
+      "sublabel": "usage · raw · metrics · cursors",
+      "pos": [350, 635],
+      "size": [240, 82],
+      "tag": "provider-independent"
+    },
+    {
+      "id": "sqlite",
+      "type": "database",
+      "label": "SQLite",
+      "sublabel": "one DB per provider",
+      "pos": [110, 825],
+      "size": [210, 80],
+      "tag": "default · local"
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "shared backend",
+      "pos": [620, 825],
+      "size": [210, 80],
+      "tag": "explicit opt-in"
+    },
+    {
+      "id": "query_engine",
+      "type": "backend",
+      "label": "Query & Summary Engine",
+      "sublabel": "windows · trends · latest quota",
+      "pos": [350, 1015],
+      "size": [240, 82],
+      "tag": "read-only serving path"
+    },
+    {
+      "id": "browser",
+      "type": "frontend",
+      "label": "Browser Dashboard",
+      "sublabel": "embedded HTML · charts · PNG",
+      "pos": [30, 1210],
+      "size": [220, 80],
+      "tag": "127.0.0.1:8787"
+    },
+    {
+      "id": "terminal",
+      "type": "frontend",
+      "label": "Terminal & Reports",
+      "sublabel": "TUI · daily · range",
+      "pos": [360, 1210],
+      "size": [220, 80],
+      "tag": "agentusage / au"
+    },
+    {
+      "id": "json_api",
+      "type": "frontend",
+      "label": "Local JSON API",
+      "sublabel": "providers · summary · trend",
+      "pos": [690, 1210],
+      "size": [220, 80],
+      "tag": "scriptable"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "agentusage normalization core",
+      "wraps": ["ingestion", "event_model"],
+      "pad": 22
+    }
+  ],
+  "connections": [
+    {
+      "id": "history-to-readers",
+      "from": "agent_history",
+      "to": "provider_readers",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "hooks-to-adapters",
+      "from": "telemetry_hooks",
+      "to": "hook_adapters",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "readers-to-ingestion",
+      "from": "provider_readers",
+      "to": "ingestion",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "via": [[200, 415], [360, 415]]
+    },
+    {
+      "id": "adapters-to-ingestion",
+      "from": "hook_adapters",
+      "to": "ingestion",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "via": [[740, 415], [580, 415]]
+    },
+    {
+      "id": "ingestion-to-model",
+      "from": "ingestion",
+      "to": "event_model",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "model-to-sqlite",
+      "from": "event_model",
+      "to": "sqlite",
+      "label": "default",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[470, 770], [215, 770]]
+    },
+    {
+      "id": "model-to-postgres",
+      "from": "event_model",
+      "to": "postgres",
+      "label": "opt-in",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[470, 770], [725, 770]]
+    },
+    {
+      "id": "sqlite-to-query",
+      "from": "sqlite",
+      "to": "query_engine",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[215, 955], [470, 955]]
+    },
+    {
+      "id": "postgres-to-query",
+      "from": "postgres",
+      "to": "query_engine",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[725, 955], [470, 955]]
+    },
+    {
+      "id": "query-to-browser",
+      "from": "query_engine",
+      "to": "browser",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[470, 1150], [140, 1150]]
+    },
+    {
+      "id": "query-to-terminal",
+      "from": "query_engine",
+      "to": "terminal",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "query-to-api",
+      "from": "query_engine",
+      "to": "json_api",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[470, 1150], [800, 1150]]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Normalize once",
+      "items": [
+        "Provider readers preserve source-specific detail",
+        "Usage, raw payloads, metrics, and cursors stay queryable",
+        "Stable deduplication keys keep synchronization idempotent"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Local by default",
+      "items": [
+        "SQLite keeps provider data on the developer machine",
+        "The Rust binary embeds the web UI and loopback API",
+        "CLI reports and the TUI reuse the same summaries"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Status stays current",
+      "items": [
+        "Historical usage comes from normalized events",
+        "Quota comes from the newest quota-bearing raw payload",
+        "PostgreSQL is used only when shared storage is intentional"
+      ]
+    }
+  ]
+}
