@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Production RAG Evidence System",
+    "subtitle": "Offline evidence preparation, online answer construction, and evaluation feedback",
+    "output": "rag-production-system.html",
+    "visual_preset": "blueprint",
+    "animation": "none",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "offline",
+      "label": "Offline Evidence Path"
+    },
+    {
+      "id": "online",
+      "label": "Online Answer Path"
+    },
+    {
+      "id": "feedback",
+      "label": "Evaluation Feedback"
+    }
+  ],
+  "mainPath": [
+    "query",
+    "route",
+    "retrieve",
+    "assemble",
+    "generate",
+    "answer"
+  ],
+  "nodes": [
+    {
+      "id": "sources",
+      "lane": "offline",
+      "col": 0,
+      "width": 76,
+      "type": "external",
+      "label": "Sources",
+      "sublabel": "files · APIs · databases"
+    },
+    {
+      "id": "parse",
+      "lane": "offline",
+      "col": 1,
+      "width": 48,
+      "type": "backend",
+      "label": "Parse",
+      "sublabel": "normalize content"
+    },
+    {
+      "id": "structure",
+      "lane": "offline",
+      "col": 2,
+      "width": 48,
+      "type": "messagebus",
+      "label": "Layout",
+      "sublabel": "structure + provenance"
+    },
+    {
+      "id": "chunk",
+      "lane": "offline",
+      "col": 3,
+      "width": 72,
+      "type": "backend",
+      "label": "Chunk",
+      "sublabel": "or extract"
+    },
+    {
+      "id": "indexes",
+      "lane": "offline",
+      "col": 5,
+      "width": 84,
+      "type": "database",
+      "label": "Indexes",
+      "sublabel": "dense · sparse · graph · structured"
+    },
+    {
+      "id": "query",
+      "lane": "online",
+      "col": 0,
+      "width": 76,
+      "type": "frontend",
+      "label": "User Query",
+      "sublabel": "question + identity"
+    },
+    {
+      "id": "route",
+      "lane": "online",
+      "col": 1,
+      "width": 48,
+      "type": "security",
+      "label": "Route",
+      "sublabel": "authorize + classify"
+    },
+    {
+      "id": "retrieve",
+      "lane": "online",
+      "col": 2,
+      "width": 48,
+      "type": "backend",
+      "label": "Recall",
+      "sublabel": "retrieve candidates"
+    },
+    {
+      "id": "assemble",
+      "lane": "online",
+      "col": 3,
+      "width": 40,
+      "type": "messagebus",
+      "label": "Pack",
+      "sublabel": "fuse + rerank + assemble"
+    },
+    {
+      "id": "generate",
+      "lane": "online",
+      "col": 4,
+      "width": 44,
+      "type": "cloud",
+      "label": "LLM",
+      "sublabel": "generate or abstain"
+    },
+    {
+      "id": "answer",
+      "lane": "online",
+      "col": 5,
+      "width": 110,
+      "type": "security",
+      "label": "Verify + Answer",
+      "sublabel": "schema · claims · citations · trace"
+    },
+    {
+      "id": "fixes",
+      "lane": "feedback",
+      "col": 1,
+      "width": 80,
+      "type": "messagebus",
+      "label": "Fixes",
+      "sublabel": "ingestion + routing"
+    },
+    {
+      "id": "evaluate",
+      "lane": "feedback",
+      "col": 5,
+      "width": 92,
+      "type": "backend",
+      "label": "Evaluate",
+      "sublabel": "traces + regression tests"
+    }
+  ],
+  "edges": [
+    {
+      "id": "sources-to-parse",
+      "from": "sources",
+      "to": "parse"
+    },
+    {
+      "id": "parse-to-structure",
+      "from": "parse",
+      "to": "structure"
+    },
+    {
+      "id": "structure-to-chunk",
+      "from": "structure",
+      "to": "chunk"
+    },
+    {
+      "id": "chunk-to-indexes",
+      "from": "chunk",
+      "to": "indexes",
+      "variant": "emphasis"
+    },
+    {
+      "id": "query-to-route",
+      "from": "query",
+      "to": "route",
+      "variant": "security"
+    },
+    {
+      "id": "route-to-retrieve",
+      "from": "route",
+      "to": "retrieve",
+      "variant": "emphasis"
+    },
+    {
+      "id": "indexes-to-retrieve",
+      "from": "indexes",
+      "to": "retrieve",
+      "variant": "dashed",
+      "role": "async",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "drop",
+      "bias": 0.7
+    },
+    {
+      "id": "retrieve-to-assemble",
+      "from": "retrieve",
+      "to": "assemble",
+      "variant": "emphasis"
+    },
+    {
+      "id": "assemble-to-generate",
+      "from": "assemble",
+      "to": "generate",
+      "variant": "emphasis"
+    },
+    {
+      "id": "generate-to-answer",
+      "from": "generate",
+      "to": "answer",
+      "variant": "emphasis"
+    },
+    {
+      "id": "answer-to-evaluate",
+      "from": "answer",
+      "to": "evaluate",
+      "label": "trace",
+      "variant": "dashed",
+      "role": "async",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "drop"
+    },
+    {
+      "id": "evaluate-to-fixes",
+      "from": "evaluate",
+      "to": "fixes",
+      "variant": "dashed",
+      "role": "return",
+      "fromSide": "left",
+      "toSide": "right",
+      "route": "straight"
+    },
+    {
+      "id": "fixes-to-route",
+      "from": "fixes",
+      "to": "route",
+      "variant": "dashed",
+      "role": "return",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "route": "straight"
+    },
+    {
+      "id": "fixes-to-parse",
+      "from": "fixes",
+      "to": "parse",
+      "variant": "dashed",
+      "role": "return",
+      "fromSide": "left",
+      "toSide": "top",
+      "via": [
+        [24, 368],
+        [24, 40],
+        [220, 40]
+      ]
+    }
+  ],
+  "cards": []
+}

@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "RAG Architecture Evolution",
+    "subtitle": "From a linear retrieval–generation loop to composable retrieval modules",
+    "output": "rag-evolution-architecture.html",
+    "visual_preset": "blueprint",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 850]
+  },
+  "components": [
+    {
+      "id": "naive_index",
+      "type": "database",
+      "label": "Index",
+      "sublabel": "knowledge vectorization",
+      "pos": [90, 135],
+      "size": [170, 72],
+      "tag": "offline"
+    },
+    {
+      "id": "naive_retrieve",
+      "type": "backend",
+      "label": "Retrieve",
+      "sublabel": "semantic recall",
+      "pos": [465, 135],
+      "size": [170, 72],
+      "tag": "online · retrieval phase"
+    },
+    {
+      "id": "naive_generate",
+      "type": "cloud",
+      "label": "Generate",
+      "sublabel": "integrate context + answer",
+      "pos": [840, 135],
+      "size": [180, 72],
+      "tag": "online · generation phase"
+    },
+    {
+      "id": "advanced_index",
+      "type": "database",
+      "label": "Index",
+      "sublabel": "external knowledge",
+      "pos": [315, 315],
+      "size": [170, 70],
+      "tag": "offline"
+    },
+    {
+      "id": "pre_retrieval",
+      "type": "frontend",
+      "label": "Pre-retrieval",
+      "sublabel": "query rewriting",
+      "pos": [40, 430],
+      "size": [170, 72],
+      "tag": "online optimization"
+    },
+    {
+      "id": "advanced_retrieve",
+      "type": "backend",
+      "label": "Retrieve",
+      "sublabel": "candidate recall",
+      "pos": [315, 430],
+      "size": [170, 72],
+      "tag": "online · retrieval phase"
+    },
+    {
+      "id": "post_retrieval",
+      "type": "security",
+      "label": "Post-retrieval",
+      "sublabel": "reranking",
+      "pos": [570, 430],
+      "size": [180, 72],
+      "tag": "online optimization"
+    },
+    {
+      "id": "advanced_generate",
+      "type": "cloud",
+      "label": "Generate",
+      "sublabel": "integrate context + answer",
+      "pos": [840, 430],
+      "size": [170, 72],
+      "tag": "online · generation phase"
+    },
+    {
+      "id": "router",
+      "type": "security",
+      "label": "Router",
+      "sublabel": "select a path",
+      "pos": [30, 670],
+      "size": [150, 72],
+      "tag": "dynamic orchestration"
+    },
+    {
+      "id": "query_transform",
+      "type": "frontend",
+      "label": "Query Transform",
+      "sublabel": "rewrite · decompose",
+      "pos": [230, 670],
+      "size": [180, 72],
+      "tag": "composable module"
+    },
+    {
+      "id": "retrieval_modules",
+      "type": "backend",
+      "label": "Retrieval Modules",
+      "sublabel": "dense · sparse · tools",
+      "pos": [460, 670],
+      "size": [190, 72],
+      "tag": "select or combine"
+    },
+    {
+      "id": "fusion",
+      "type": "messagebus",
+      "label": "Fusion",
+      "sublabel": "merge retrieved evidence",
+      "pos": [700, 670],
+      "size": [150, 72],
+      "tag": "composable module"
+    },
+    {
+      "id": "modular_generate",
+      "type": "cloud",
+      "label": "Generate",
+      "sublabel": "grounded response",
+      "pos": [900, 670],
+      "size": [150, 72],
+      "tag": "generation phase"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "NAIVE RAG · BASIC LINEAR FLOW",
+      "wraps": ["naive_index", "naive_retrieve", "naive_generate"],
+      "pad": 26
+    },
+    {
+      "kind": "region",
+      "label": "ADVANCED RAG · PRE- AND POST-RETRIEVAL OPTIMIZATION",
+      "wraps": ["advanced_index", "pre_retrieval", "advanced_retrieve", "post_retrieval", "advanced_generate"],
+      "pad": 24
+    },
+    {
+      "kind": "security-group",
+      "label": "MODULAR RAG · LEGO-LIKE ORCHESTRATION",
+      "wraps": ["router", "query_transform", "retrieval_modules", "fusion", "modular_generate"],
+      "pad": 24
+    }
+  ],
+  "connections": [
+    {
+      "id": "naive-index-to-retrieve",
+      "from": "naive_index",
+      "to": "naive_retrieve",
+      "label": "vector index",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "naive-retrieve-to-generate",
+      "from": "naive_retrieve",
+      "to": "naive_generate",
+      "label": "retrieved context",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "advanced-index-to-retrieve",
+      "from": "advanced_index",
+      "to": "advanced_retrieve",
+      "label": "serves",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "straight",
+      "labelAt": [455, 407]
+    },
+    {
+      "id": "advanced-pre-to-retrieve",
+      "from": "pre_retrieval",
+      "to": "advanced_retrieve",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "advanced-retrieve-to-post",
+      "from": "advanced_retrieve",
+      "to": "post_retrieval",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "advanced-post-to-generate",
+      "from": "post_retrieval",
+      "to": "advanced_generate",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "modular-router-to-transform",
+      "from": "router",
+      "to": "query_transform",
+      "variant": "security",
+      "route": "straight"
+    },
+    {
+      "id": "modular-transform-to-retrieval",
+      "from": "query_transform",
+      "to": "retrieval_modules",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "modular-retrieval-to-fusion",
+      "from": "retrieval_modules",
+      "to": "fusion",
+      "variant": "dashed",
+      "route": "straight"
+    },
+    {
+      "id": "modular-fusion-to-generate",
+      "from": "fusion",
+      "to": "modular_generate",
+      "variant": "emphasis",
+      "route": "straight"
+    }
+  ],
+  "cards": []
+}
