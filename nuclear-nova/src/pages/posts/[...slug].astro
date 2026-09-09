@@ -4,6 +4,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogShell from '../../components/BlogShell.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
 import TagBadge from '../../components/TagBadge.astro';
+import '../../styles/rag-series.css';
+import { getCuratedCollections } from '../../utils/collections';
 import { getAdjacentPosts, getPostPath, getAllPosts, slugifyId, type Post } from '../../utils/post-utils';
 
 export async function getStaticPaths() {
@@ -29,6 +31,7 @@ const { Content, headings } = await render(post);
 const adjacent = await getAdjacentPosts(post.id);
 
 const pageTitle = post.data.title;
+const isRagSeries = post.data.tags?.includes('rag-engineering') ?? false;
 const pageDescription = post.data.excerpt ?? post.data.description ?? '';
 
 function formatDate(date: Date | undefined): string {
@@ -70,8 +73,12 @@ function toNav(postEntry: Post | null) {
   };
 }
 
-const prevPost = toNav(adjacent.prev);
-const nextPost = toNav(adjacent.next);
+const series = isRagSeries
+  ? (await getCuratedCollections()).find((entry) => entry.slug === 'rag-engineering')
+  : undefined;
+const seriesIndex = series?.posts.findIndex((entry) => entry.id === post.id) ?? -1;
+const prevPost = toNav(series && seriesIndex >= 0 ? series.posts[seriesIndex - 1] ?? null : adjacent.prev);
+const nextPost = toNav(series && seriesIndex >= 0 ? series.posts[seriesIndex + 1] ?? null : adjacent.next);
 const currentPath = getPostPath(post);
 const readingTime = estimateReadingTime(post.body ?? '');
 const sectionHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
@@ -149,7 +156,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
         )}
       </header>
 
-      <section class="post-content">
+      <section class="post-content" data-series={isRagSeries ? 'rag-engineering' : undefined}>
         <Content />
       </section>
 

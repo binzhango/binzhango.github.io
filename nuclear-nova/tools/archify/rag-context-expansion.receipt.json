@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/tools/archify/rag-context-expansion.dataflow.json",
+  "output": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/public/tools/rag-context-expansion.html",
+  "specification": {
+    "sha256": "111f18493964efe7d644aa18a3b301d8667f98eff9765fd09975cc9f0c5b183a",
+    "bytes": 1696
+  },
+  "artifact": {
+    "sha256": "4989d437ac53e450be8560cb3911bc7d60877316d6ef6e20061a1b8e48eff185",
+    "bytes": 662734
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

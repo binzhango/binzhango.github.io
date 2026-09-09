@@ -1,0 +1,500 @@
+/* Reading treatments scoped to the RAG Engineering series. */
+.post-content[data-series='rag-engineering'] {
+  --rag-rule: color-mix(in srgb, var(--post-muted) 28%, transparent);
+  min-width: 0;
+  /* Wide rendered code/table descendants scroll in their own containers. */
+  overflow-x: clip;
+  line-height: 1.8;
+}
+
+.post-content[data-series='rag-engineering'] :is(h2, h3) {
+  scroll-margin-top: 7rem;
+}
+
+.post-content[data-series='rag-engineering'] :not(pre) > code {
+  display: inline;
+  padding: 0.08em 0.25em;
+  margin: 0;
+  border: 0;
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--post-muted) 10%, transparent);
+  color: var(--post-heading) !important;
+  font-weight: 500;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.post-content[data-series='rag-engineering'] .rag-series-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin: 0 0 2rem;
+  padding: 0.9rem 0;
+  border-block: 1px solid var(--rag-rule);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.post-content[data-series='rag-engineering'] .rag-series-nav > span {
+  color: var(--post-muted);
+  font-weight: 650;
+  letter-spacing: 0.06em;
+}
+
+
+.post-content[data-series='rag-engineering'] :is(ul, ol) {
+  padding-inline-start: 1.5rem;
+}
+
+.post-content[data-series='rag-engineering'] li {
+  padding-inline-start: 0.2rem;
+  margin-block: 0.55rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-table {
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+  margin-block: 1.8rem;
+  border: 1px solid var(--rag-rule);
+  border-radius: 0.45rem;
+  scrollbar-width: thin;
+}
+
+.post-content[data-series='rag-engineering'] .rag-table:focus-visible {
+  outline: 2px solid var(--post-link);
+  outline-offset: 3px;
+}
+
+.post-content[data-series='rag-engineering'] .rag-table table {
+  display: table;
+  width: 100%;
+  min-width: 36rem;
+  table-layout: auto;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  border-collapse: collapse;
+  box-shadow: none;
+  background: transparent;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.post-content[data-series='rag-engineering'] .rag-table thead {
+  background: color-mix(in srgb, var(--post-muted) 8%, transparent);
+}
+
+.post-content[data-series='rag-engineering'] .rag-table :is(th, td) {
+  padding: 0.8rem 1rem;
+  vertical-align: top;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  border: 0;
+  border-bottom: 1px solid var(--rag-rule);
+}
+
+.post-content[data-series='rag-engineering'] .rag-table th {
+  color: var(--post-heading) !important;
+  font-size: inherit;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.post-content[data-series='rag-engineering'] .rag-table tbody tr {
+  background: transparent;
+}
+
+.post-content[data-series='rag-engineering'] .rag-table table tbody tr:hover {
+  background: color-mix(in srgb, var(--post-muted) 6%, transparent);
+}
+
+.post-content[data-series='rag-engineering'] .rag-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.post-content[data-series='rag-engineering'] .rag-diagram {
+  margin: 2rem 0;
+}
+
+.post-content[data-series='rag-engineering'] .rag-paths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding: 1.4rem;
+  border: 1px solid var(--rag-rule);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--post-muted) 4%, transparent);
+}
+
+.post-content[data-series='rag-engineering'] .rag-paths__label {
+  margin: 0 0 1.2rem;
+  font-weight: 650;
+  color: var(--post-heading);
+}
+
+.post-content[data-series='rag-engineering'] .rag-paths ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-paths li {
+  margin: 0 0 1.2rem;
+  padding-left: 0.35rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.post-content[data-series='rag-engineering'] .rag-paths li:last-child {
+  margin-bottom: 0;
+}
+
+.post-content[data-series='rag-engineering'] .rag-paths li span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--post-muted);
+}
+
+.post-content[data-series='rag-engineering'] .rag-diagram figcaption {
+  margin-top: 0.8rem;
+  color: var(--post-muted);
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+/* Native draw.io SVG exports, with readable type at article width. */
+.post-content[data-series='rag-engineering'] .rag-diagram-scroll {
+  overflow-x: auto; border: 1px solid var(--rag-rule); border-radius: 0.65rem;
+  background: #f8fafc; scrollbar-width: thin;
+}
+.post-content[data-series='rag-engineering'] .rag-diagram-scroll:focus-visible {
+  outline: 2px solid var(--post-link); outline-offset: 3px;
+}
+.post-content[data-series='rag-engineering'] .rag-drawio img {
+  display: block; width: 100%; min-width: 38rem; max-width: none;
+  height: auto; margin: 0; border: 0; border-radius: 0; box-shadow: none;
+}
+.post-content[data-series='rag-engineering'] .rag-drawio .rag-figure-dark { display: none; }
+[data-theme='dark'] .post-content[data-series='rag-engineering'] .rag-drawio .rag-figure-light { display: none; }
+[data-theme='dark'] .post-content[data-series='rag-engineering'] .rag-drawio .rag-figure-dark { display: block; }
+[data-theme='dark'] .post-content[data-series='rag-engineering'] .rag-diagram-scroll { background: #101b2b; }
+.post-content[data-series='rag-engineering'] .rag-figure-links {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; margin-top: 0.75rem;
+  font-size: 0.8rem; line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .post-content[data-series='rag-engineering'] .rag-paths {
+    grid-template-columns: 1fr;
+  }
+
+  .post-content[data-series='rag-engineering'] .rag-paths section + section {
+    border-top: 1px solid var(--rag-rule);
+    padding-top: 1.25rem;
+  }
+
+  .post-content[data-series='rag-engineering'] :is(h2, h3) {
+    scroll-margin-top: 15rem;
+  }
+}
+
+/* Visual explanations: connected stages, source excerpts, and comparisons. */
+.post-content[data-series='rag-engineering'] :is(.rag-visual, .rag-evidence-demo, .rag-debug-grid) {
+  margin-block: 2rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-visual-title {
+  margin: 0 0 0.9rem;
+  font-size: 1.03rem;
+  font-weight: 700;
+  color: var(--post-heading);
+}
+
+.post-content[data-series='rag-engineering'] :is(.rag-panel-label, .rag-card-kicker) {
+  display: block;
+  margin: 0 0 0.65rem;
+  color: var(--post-link);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+}
+
+.post-content[data-series='rag-engineering'] :is(.rag-compare, .rag-debug-grid) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.post-content[data-series='rag-engineering'] :is(.rag-compare, .rag-debug-grid) > section {
+  min-width: 0;
+  padding: 1.2rem;
+  border: 1px solid var(--rag-rule);
+  border-top: 3px solid var(--post-link);
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--post-link) 5%, var(--sl-color-bg));
+}
+
+.post-content[data-series='rag-engineering'] .rag-compare > section:last-child {
+  border-top-color: var(--post-accent);
+  background: color-mix(in srgb, var(--post-accent) 5%, var(--sl-color-bg));
+}
+
+.post-content[data-series='rag-engineering'] :is(.rag-compare, .rag-debug-grid) :is(p, li) {
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.post-content[data-series='rag-engineering'] :is(.rag-compare, .rag-debug-grid) p:last-child {
+  margin-bottom: 0;
+}
+
+.post-content[data-series='rag-engineering'] .rag-debug-grid h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.08rem;
+}
+
+.post-content[data-series='rag-engineering'] ol.rag-step-flow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: rag-step;
+}
+
+.post-content[data-series='rag-engineering'] .rag-step-flow > li {
+  position: relative;
+  margin: 0;
+  padding: 1rem 0.8rem;
+  border: 1px solid var(--rag-rule);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--post-link) 6%, var(--sl-color-bg));
+  counter-increment: rag-step;
+}
+
+.post-content[data-series='rag-engineering'] .rag-step-flow > li::before {
+  content: counter(rag-step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--post-link);
+}
+
+.post-content[data-series='rag-engineering'] .rag-step-flow > li:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -1.1rem;
+  top: 44%;
+  color: var(--post-accent);
+  font-weight: 700;
+}
+
+.post-content[data-series='rag-engineering'] .rag-step-flow :is(strong, span) {
+  display: block;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.post-content[data-series='rag-engineering'] .rag-step-flow span {
+  margin-top: 0.4rem;
+  color: var(--post-muted);
+}
+
+.post-content[data-series='rag-engineering'] .rag-visual figcaption {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--post-muted);
+  text-align: left;
+}
+
+.post-content[data-series='rag-engineering'] .rag-evidence-demo {
+  border: 1px solid var(--rag-rule);
+  border-radius: 0.7rem;
+  overflow: hidden;
+}
+
+.post-content[data-series='rag-engineering'] .rag-evidence-demo > section {
+  padding: 1.1rem 1.3rem;
+  background: color-mix(in srgb, var(--post-link) 4%, var(--sl-color-bg));
+}
+
+.post-content[data-series='rag-engineering'] .rag-evidence-demo > section + section {
+  border-top: 1px solid var(--rag-rule);
+}
+
+.post-content[data-series='rag-engineering'] .rag-evidence-demo > section:last-child {
+  background: color-mix(in srgb, var(--post-accent) 9%, var(--sl-color-bg));
+}
+
+.post-content[data-series='rag-engineering'] .rag-evidence-demo p:last-child {
+  margin: 0;
+}
+
+.post-content[data-series='rag-engineering'] mark {
+  padding: 0.05em 0.2em;
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--post-accent) 19%, transparent);
+  color: var(--post-heading);
+}
+
+.post-content[data-series='rag-engineering'] .rag-chunk {
+  padding: 0.8rem;
+  margin-block: 0.6rem;
+  border: 1px dashed var(--post-muted);
+  border-radius: 0.4rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-budget {
+  padding: 1.2rem;
+  border: 1px solid var(--rag-rule);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--post-accent) 5%, var(--sl-color-bg));
+}
+
+.post-content[data-series='rag-engineering'] .rag-budget meter {
+  width: 100%;
+  height: 2rem;
+  accent-color: var(--post-accent);
+}
+
+.post-content[data-series='rag-engineering'] .rag-ranking {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-ranking > section {
+  padding: 0.8rem;
+  border: 1px solid var(--rag-rule);
+  border-radius: 0.5rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-ranking ol {
+  padding-left: 1.3rem;
+  margin: 0;
+}
+
+.post-content[data-series='rag-engineering'] .rag-ranking li {
+  padding: 0.35rem;
+  font-weight: 650;
+  background: color-mix(in srgb, var(--post-link) 7%, transparent);
+  border-radius: 0.25rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-ranking section:last-child {
+  border-color: var(--post-accent);
+}
+
+.post-content[data-series='rag-engineering'] .rag-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+
+.post-content[data-series='rag-engineering'] .rag-metrics > div {
+  padding: 1rem;
+  border-top: 3px solid var(--post-accent);
+  background: color-mix(in srgb, var(--post-accent) 7%, var(--sl-color-bg));
+}
+
+.post-content[data-series='rag-engineering'] .rag-metrics dt {
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.post-content[data-series='rag-engineering'] .rag-metrics dd {
+  margin: 0.4rem 0 0;
+  color: var(--post-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .post-content[data-series='rag-engineering'] :is(.rag-compare, .rag-debug-grid) {
+    grid-template-columns: 1fr;
+  }
+  .post-content[data-series='rag-engineering'] ol.rag-step-flow {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+  }
+  .post-content[data-series='rag-engineering'] .rag-step-flow > li:not(:last-child)::after {
+    content: '↓';
+    top: auto;
+    right: 50%;
+    bottom: -1.3rem;
+  }
+  .post-content[data-series='rag-engineering'] .rag-metrics {
+    gap: 0.4rem;
+  }
+  .post-content[data-series='rag-engineering'] .rag-metrics > div {
+    padding: 0.7rem 0.45rem;
+  }
+  .post-content[data-series='rag-engineering'] .rag-metrics dd {
+    font-size: 1.3rem;
+  }
+}
+
+.post-content[data-series='rag-engineering'] .rag-diagram-hint { display: none; }
+.post-content[data-series='rag-engineering'] .rag-diagram figcaption { text-align: left; }
+@media (max-width: 640px) {
+  .post-content[data-series='rag-engineering'] .rag-diagram-hint {
+    display: block; color: var(--post-muted); font-size: 0.78rem; margin: 0 0 0.6rem;
+  }
+}
+
+/* Stable, author-selected table treatments; shared sizing and semantics remain above. */
+.post-content[data-series='rag-engineering'] .rag-table--header thead {
+  background: linear-gradient(100deg, #155e75, #514080);
+}
+.post-content[data-series='rag-engineering'] .rag-table--header th {
+  color: #fff !important;
+}
+.post-content[data-series='rag-engineering'] .rag-table--header {
+  border-radius: 0.8rem;
+}
+.post-content[data-series='rag-engineering'] .rag-table--striped thead {
+  background: color-mix(in srgb, var(--post-link) 14%, transparent);
+}
+.post-content[data-series='rag-engineering'] .rag-table--striped tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--post-link) 8%, transparent);
+}
+.post-content[data-series='rag-engineering'] .rag-table--column tbody td:first-child {
+  background: color-mix(in srgb, var(--post-accent) 12%, transparent);
+  border-inline-start: 3px solid var(--post-accent);
+  font-weight: 650;
+  color: var(--post-heading);
+}
+.post-content[data-series='rag-engineering'] .rag-table--column thead {
+  background: color-mix(in srgb, var(--post-accent) 8%, transparent);
+}
+.post-content[data-series='rag-engineering'] .rag-table--minimal {
+  border-inline: 0;
+  border-radius: 0;
+  border-top: 2px solid var(--post-heading);
+}
+.post-content[data-series='rag-engineering'] .rag-table--minimal thead {
+  background: transparent;
+}
+.post-content[data-series='rag-engineering'] .rag-table--minimal th {
+  border-bottom: 2px solid var(--rag-rule);
+}
+
+/* Archify previews retain the generated composition; full viewers provide zoom and exploration. */
+.post-content[data-series='rag-engineering'] .rag-archify img {
+  display: block; width: 100%; min-width: 70rem; max-width: none;
+  height: auto; margin: 0; border: 0; border-radius: 0; box-shadow: none;
+}
+.post-content[data-series='rag-engineering'] .rag-archify .rag-figure-dark { display: none; }
+[data-theme='dark'] .post-content[data-series='rag-engineering'] .rag-archify .rag-figure-light { display: none; }
+[data-theme='dark'] .post-content[data-series='rag-engineering'] .rag-archify .rag-figure-dark { display: block; }

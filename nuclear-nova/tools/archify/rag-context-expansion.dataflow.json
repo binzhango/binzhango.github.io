@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "From Search Hit to Generation Context",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1080,
+      640
+    ]
+  },
+  "stages": [
+    {
+      "label": "Retrieve"
+    },
+    {
+      "label": "Expand"
+    },
+    {
+      "label": "Select"
+    },
+    {
+      "label": "Generate"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "hit",
+      "type": "database",
+      "label": "Sentence hit",
+      "sublabel": "narrow search unit",
+      "stage": 0,
+      "row": 1
+    },
+    {
+      "id": "window",
+      "type": "backend",
+      "label": "Sentence window",
+      "sublabel": "same version + profile",
+      "stage": 1,
+      "row": 0
+    },
+    {
+      "id": "parent",
+      "type": "backend",
+      "label": "Parent element",
+      "sublabel": "parser-defined text",
+      "stage": 1,
+      "row": 2
+    },
+    {
+      "id": "pack",
+      "type": "backend",
+      "label": "Pack context",
+      "sublabel": "deduplicate + budget",
+      "stage": 2,
+      "row": 1
+    },
+    {
+      "id": "evidence",
+      "type": "backend",
+      "label": "Generation evidence",
+      "sublabel": "text + source locator",
+      "stage": 3,
+      "row": 1
+    }
+  ],
+  "flows": [
+    {
+      "from": "hit",
+      "to": "window",
+      "label": "neighbor nodes"
+    },
+    {
+      "from": "hit",
+      "to": "parent",
+      "label": "parent element ID"
+    },
+    {
+      "from": "window",
+      "to": "pack",
+      "label": "window text"
+    },
+    {
+      "from": "parent",
+      "to": "pack",
+      "label": "parent text"
+    },
+    {
+      "from": "pack",
+      "to": "evidence",
+      "label": "selected passages"
+    }
+  ]
+}

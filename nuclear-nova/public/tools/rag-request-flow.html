@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RAG request flow</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #07111f;
+        --panel: #111827;
+        --grid: rgba(148, 163, 184, 0.08);
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --flow: #5eead4;
+        --track: #334155;
+      }
+
+      * { box-sizing: border-box; }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background:
+          linear-gradient(var(--grid) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+          radial-gradient(circle at 50% 42%, rgba(56, 189, 248, 0.1), transparent 44%),
+          var(--bg);
+        background-size: 28px 28px, 28px 28px, auto, auto;
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .diagram {
+        width: 100%;
+        padding: 18px;
+      }
+
+      svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .mobile { display: none; }
+
+      .eyebrow {
+        fill: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+      }
+
+      .node {
+        fill: var(--panel);
+        stroke-width: 2;
+        filter: drop-shadow(0 9px 16px rgba(0, 0, 0, 0.3));
+      }
+
+      .node-title {
+        fill: var(--text);
+        font-size: 17px;
+        font-weight: 800;
+        letter-spacing: 0.045em;
+      }
+
+      .node-detail {
+        fill: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .edge-track {
+        fill: none;
+        stroke: var(--track);
+        stroke-linecap: round;
+        stroke-width: 5;
+      }
+
+      .edge-motion {
+        fill: none;
+        stroke: var(--flow);
+        stroke-dasharray: 10 13;
+        stroke-linecap: round;
+        stroke-width: 3;
+        animation: edge-flow 920ms linear infinite;
+      }
+
+      .traveler {
+        fill: var(--flow);
+        filter: drop-shadow(0 0 5px rgba(94, 234, 212, 0.9));
+      }
+
+      @keyframes edge-flow {
+        to { stroke-dashoffset: -23; }
+      }
+
+      @media (max-width: 680px) {
+        body { overflow: auto; }
+        .diagram { padding: 12px; }
+        .desktop { display: none; }
+        .mobile { display: block; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .edge-motion { animation: none; }
+        .traveler { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="diagram">
+      <svg class="desktop" viewBox="0 0 1160 270" role="img" aria-labelledby="desktop-title desktop-desc">
+        <title id="desktop-title">RAG request flow</title>
+        <desc id="desktop-desc">A question retrieves relevant evidence, the evidence is placed in a grounded prompt, and the model generates an answer with citations. Animated arrowheads show the direction.</desc>
+        <text class="eyebrow" x="30" y="28">ONLINE PATH · ANSWER A QUESTION</text>
+
+        <defs>
+          <linearGradient id="node-sheen" x1="0" x2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.045" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+
+        <path id="d-edge-1" class="edge-track" d="M270 145 H330" />
+        <path class="edge-motion" d="M270 145 H330" />
+        <path id="d-edge-2" class="edge-track" d="M550 145 H610" />
+        <path class="edge-motion" d="M550 145 H610" />
+        <path id="d-edge-3" class="edge-track" d="M830 145 H890" />
+        <path class="edge-motion" d="M830 145 H890" />
+
+        <g>
+          <rect class="node" x="30" y="88" width="240" height="114" rx="18" stroke="#38bdf8" />
+          <rect x="30" y="88" width="240" height="114" rx="18" fill="url(#node-sheen)" />
+          <text class="node-title" x="52" y="130">01 · QUESTION</text>
+          <text class="node-detail" x="52" y="164">Capture user intent</text>
+        </g>
+        <g>
+          <rect class="node" x="330" y="88" width="220" height="114" rx="18" stroke="#34d399" />
+          <rect x="330" y="88" width="220" height="114" rx="18" fill="url(#node-sheen)" />
+          <text class="node-title" x="352" y="130">02 · RETRIEVE</text>
+          <text class="node-detail" x="352" y="164">Rank relevant evidence</text>
+        </g>
+        <g>
+          <rect class="node" x="610" y="88" width="220" height="114" rx="18" stroke="#a78bfa" />
+          <rect x="610" y="88" width="220" height="114" rx="18" fill="url(#node-sheen)" />
+          <text class="node-title" x="632" y="130">03 · GROUND PROMPT</text>
+          <text class="node-detail" x="632" y="164">Question + evidence</text>
+        </g>
+        <g>
+          <rect class="node" x="890" y="88" width="240" height="114" rx="18" stroke="#fb7185" />
+          <rect x="890" y="88" width="240" height="114" rx="18" fill="url(#node-sheen)" />
+          <text class="node-title" x="912" y="130">04 · GENERATE</text>
+          <text class="node-detail" x="912" y="164">Answer + citations</text>
+        </g>
+
+        <polygon class="traveler" points="-7,-6 8,0 -7,6">
+          <animateMotion dur="1.6s" repeatCount="indefinite" rotate="auto"><mpath href="#d-edge-1" /></animateMotion>
+        </polygon>
+        <polygon class="traveler" points="-7,-6 8,0 -7,6">
+          <animateMotion dur="1.6s" begin="0.3s" repeatCount="indefinite" rotate="auto"><mpath href="#d-edge-2" /></animateMotion>
+        </polygon>
+        <polygon class="traveler" points="-7,-6 8,0 -7,6">
+          <animateMotion dur="1.6s" begin="0.6s" repeatCount="indefinite" rotate="auto"><mpath href="#d-edge-3" /></animateMotion>
+        </polygon>
+      </svg>
+
+      <svg class="mobile" viewBox="0 0 360 690" role="img" aria-labelledby="mobile-title mobile-desc">
+        <title id="mobile-title">RAG request flow</title>
+        <desc id="mobile-desc">A vertical mobile layout showing a question retrieving evidence, building a grounded prompt, and generating an answer. Animated arrowheads move downward.</desc>
+        <text class="eyebrow" x="18" y="24">ONLINE PATH · ANSWER A QUESTION</text>
+
+        <path id="m-edge-1" class="edge-track" d="M180 154 V208" />
+        <path class="edge-motion" d="M180 154 V208" />
+        <path id="m-edge-2" class="edge-track" d="M180 314 V368" />
+        <path class="edge-motion" d="M180 314 V368" />
+        <path id="m-edge-3" class="edge-track" d="M180 474 V528" />
+        <path class="edge-motion" d="M180 474 V528" />
+
+        <g>
+          <rect class="node" x="18" y="48" width="324" height="106" rx="18" stroke="#38bdf8" />
+          <text class="node-title" x="40" y="90">01 · QUESTION</text>
+          <text class="node-detail" x="40" y="123">Capture user intent</text>
+        </g>
+        <g>
+          <rect class="node" x="18" y="208" width="324" height="106" rx="18" stroke="#34d399" />
+          <text class="node-title" x="40" y="250">02 · RETRIEVE</text>
+          <text class="node-detail" x="40" y="283">Rank relevant evidence</text>
+        </g>
+        <g>
+          <rect class="node" x="18" y="368" width="324" height="106" rx="18" stroke="#a78bfa" />
+          <text class="node-title" x="40" y="410">03 · GROUND PROMPT</text>
+          <text class="node-detail" x="40" y="443">Question + evidence</text>
+        </g>
+        <g>
+          <rect class="node" x="18" y="528" width="324" height="106" rx="18" stroke="#fb7185" />
+          <text class="node-title" x="40" y="570">04 · GENERATE</text>
+          <text class="node-detail" x="40" y="603">Answer + citations</text>
+        </g>
+
+        <polygon class="traveler" points="-7,-6 8,0 -7,6">
+          <animateMotion dur="1.6s" repeatCount="indefinite" rotate="auto"><mpath href="#m-edge-1" /></animateMotion>
+        </polygon>
+        <polygon class="traveler" points="-7,-6 8,0 -7,6">
+          <animateMotion dur="1.6s" begin="0.3s" repeatCount="indefinite" rotate="auto"><mpath href="#m-edge-2" /></animateMotion>
+        </polygon>
+        <polygon class="traveler" points="-7,-6 8,0 -7,6">
+          <animateMotion dur="1.6s" begin="0.6s" repeatCount="indefinite" rotate="auto"><mpath href="#m-edge-3" /></animateMotion>
+        </polygon>
+      </svg>
+    </main>
+  </body>
+</html>

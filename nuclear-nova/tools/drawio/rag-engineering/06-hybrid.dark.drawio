@@ -1,0 +1,45 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="06-hybrid" name="Two retrieval signals, one candidate list">
+    <mxGraphModel grid="1" gridSize="10" page="0" background="#101b2b">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="query" value="&lt;b&gt;Question&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;&quot;API key rotation endpoint&quot;&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="195" width="220" height="115" />
+        </mxCell>
+        <mxCell id="dense" value="&lt;b&gt;Dense search&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Semantic similarity&lt;/font&gt;" style="rounded=0;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#55b5df;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;fontColor=#101b2b;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="330" y="50" width="285" height="115" />
+        </mxCell>
+        <mxCell id="keyword" value="&lt;b&gt;Keyword search&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Exact identifiers and terms&lt;/font&gt;" style="rounded=0;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#ac9cee;strokeColor=#ac9cee;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;fontColor=#101b2b;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="330" y="340" width="285" height="115" />
+        </mxCell>
+        <mxCell id="fusion" value="&lt;b&gt;Rank fusion&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Combine ranks by stable chunk ID&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="715" y="195" width="285" height="115" />
+        </mxCell>
+        <mxCell id="rerank" value="&lt;b&gt;Rerank + pack&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Score relevance, then fit context&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="715" y="445" width="285" height="100" />
+        </mxCell>
+        <mxCell id="edge-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="query" target="dense">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="query" target="keyword">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="dense" target="fusion">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;exitX=1;exitY=0.5;entryX=0;entryY=0.75;" edge="1" parent="1" source="keyword" target="fusion">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="665" y="397" />
+              <mxPoint x="665" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="fusion" target="rerank">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

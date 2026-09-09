@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" modified="2026-08-28T23:20:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="rag-request-desktop" name="Desktop">
+    <mxGraphModel dx="1200" dy="720" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="question" value="&lt;b&gt;01 · QUESTION&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;User intent&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="50" y="160" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieve" value="&lt;b&gt;02 · RETRIEVE&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;Rank relevant evidence&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#34d399;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="160" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="prompt" value="&lt;b&gt;03 · GROUND PROMPT&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;Question + evidence&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#a78bfa;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="610" y="160" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="generate" value="&lt;b&gt;04 · GENERATE&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;Answer + citations&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#fb7185;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="890" y="160" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#5eead4;strokeWidth=3;endArrow=block;endFill=1;flowAnimation=1;" edge="1" parent="1" source="question" target="retrieve">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#5eead4;strokeWidth=3;endArrow=block;endFill=1;flowAnimation=1;" edge="1" parent="1" source="retrieve" target="prompt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#5eead4;strokeWidth=3;endArrow=block;endFill=1;flowAnimation=1;" edge="1" parent="1" source="prompt" target="generate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="rag-request-mobile" name="Mobile">
+    <mxGraphModel dx="600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="583" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="m0" />
+        <mxCell id="m1" parent="m0" />
+        <mxCell id="m-question" value="&lt;b&gt;01 · QUESTION&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;User intent&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="m1">
+          <mxGeometry x="120" y="50" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="m-retrieve" value="&lt;b&gt;02 · RETRIEVE&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;Rank relevant evidence&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#34d399;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="m1">
+          <mxGeometry x="120" y="220" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="m-prompt" value="&lt;b&gt;03 · GROUND PROMPT&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;Question + evidence&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#a78bfa;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="m1">
+          <mxGeometry x="120" y="390" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="m-generate" value="&lt;b&gt;04 · GENERATE&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;Answer + citations&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#111827;strokeColor=#fb7185;strokeWidth=2;fontColor=#f8fafc;fontSize=17;spacing=12;" vertex="1" parent="m1">
+          <mxGeometry x="120" y="560" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="m-edge-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#5eead4;strokeWidth=3;endArrow=block;endFill=1;flowAnimation=1;" edge="1" parent="m1" source="m-question" target="m-retrieve">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m-edge-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#5eead4;strokeWidth=3;endArrow=block;endFill=1;flowAnimation=1;" edge="1" parent="m1" source="m-retrieve" target="m-prompt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m-edge-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#5eead4;strokeWidth=3;endArrow=block;endFill=1;flowAnimation=1;" edge="1" parent="m1" source="m-prompt" target="m-generate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

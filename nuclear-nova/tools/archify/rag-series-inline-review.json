@@ -1,0 +1,15 @@
+{
+  "inlineParts": [
+    1,
+    5,
+    9
+  ],
+  "newArtifacts": [
+    "rag-context-expansion.html",
+    "rag-evaluation-flow.html"
+  ],
+  "validation": "Both new artifacts passed 9/9 showcase checks with zero errors or warnings.",
+  "visualReview": "Inspected generated previews and rendered Part 5; desktop/mobile image decoding, viewer links, and page containment passed for all three changed posts.",
+  "previewMethod": "Chrome screenshot of delivered SVG using supported embed mode, after theme transition; 2x pixel density.",
+  "remainingDrawioFigures": 8
+}

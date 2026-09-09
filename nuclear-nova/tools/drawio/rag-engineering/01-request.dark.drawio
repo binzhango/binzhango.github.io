@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="01-request" name="From documents to an answer">
+    <mxGraphModel grid="1" gridSize="10" page="0" background="#101b2b">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="docs" value="&lt;b&gt;Source documents&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;API guides · policies&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="40.0" width="200" height="120" />
+        </mxCell>
+        <mxCell id="chunk" value="&lt;b&gt;Parse + chunk&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Text with source locations&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="260" y="55" width="200" height="90" />
+        </mxCell>
+        <mxCell id="index" value="&lt;b&gt;Search index&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Representations + source IDs&lt;/font&gt;" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;whiteSpace=wrap;html=1;fillColor=#2d294c;strokeColor=#ac9cee;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="500" y="40.0" width="200" height="120" />
+        </mxCell>
+        <mxCell id="question" value="&lt;b&gt;Question&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;What does the policy say?&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="255" width="200" height="90" />
+        </mxCell>
+        <mxCell id="retrieve" value="&lt;b&gt;Retrieve&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Rank passages for the query&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="260" y="255" width="200" height="90" />
+        </mxCell>
+        <mxCell id="prompt" value="&lt;b&gt;Build prompt&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Question + selected passages&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#2d294c;strokeColor=#ac9cee;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="500" y="255" width="200" height="90" />
+        </mxCell>
+        <mxCell id="llm" value="&lt;b&gt;LLM&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Generate using the context&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="500" y="425" width="200" height="90" />
+        </mxCell>
+        <mxCell id="answer" value="&lt;b&gt;Answer + sources&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Resolve IDs to source passages&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="260" y="410.0" width="200" height="120" />
+        </mxCell>
+        <mxCell id="edge-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="docs" target="chunk">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="chunk" target="index">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="question" target="retrieve">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-3" value="search" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="index" target="retrieve">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="600" y="205" />
+              <mxPoint x="360" y="205" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="retrieve" target="prompt">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="prompt" target="llm">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="llm" target="answer">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

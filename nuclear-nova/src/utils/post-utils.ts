@@ -26,6 +26,11 @@ function comparePosts(a: Post, b: Post): number {
     return getPostTime(b) - getPostTime(a);
 }
 
+function comparePostsChronologically(a: Post, b: Post): number {
+    const dateDifference = getPostTime(a) - getPostTime(b);
+    return dateDifference !== 0 ? dateDifference : a.id.localeCompare(b.id);
+}
+
 /**
  * Get all posts sorted with pinned posts first, then by date (newest first)
  */
@@ -119,7 +124,9 @@ export async function getAdjacentPosts(currentSlug: string): Promise<{
     prev: Post | null;
     next: Post | null;
 }> {
-    const posts = await getAllPosts();
+    // Footer navigation follows publishing chronology, independent of archive
+    // ranking and pinned posts: previous is older, next is newer.
+    const posts = (await getCollection('blog')).sort(comparePostsChronologically);
     const currentIndex = posts.findIndex((post) => post.id === currentSlug);
     
     if (currentIndex === -1) {
@@ -127,9 +134,9 @@ export async function getAdjacentPosts(currentSlug: string): Promise<{
     }
     
     return {
-        // Previous post is the one before in the sorted array (newer)
+        // Previous post is the older article.
         prev: currentIndex > 0 ? posts[currentIndex - 1] : null,
-        // Next post is the one after in the sorted array (older)
+        // Next post is the newer article.
         next: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null,
     };
 }

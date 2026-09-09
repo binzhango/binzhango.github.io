@@ -14,6 +14,23 @@ interface CollectionBlueprint extends Omit<CuratedCollection, 'posts'> {
 
 const collectionBlueprints: CollectionBlueprint[] = [
   {
+    slug: 'rag-engineering',
+    title: 'RAG Engineering: From Retrieval to Reliable Answers',
+    description: 'Ten articles for software engineers on how RAG systems work and fail. Follow worked examples through parsing, indexing, retrieval, context assembly, grounded answers, evaluation, and security.',
+    postIds: [
+      '2026/08-27-rag-engineering-01-inspectable-rag-baseline',
+      '2026/08-30-rag-engineering-02-chunking-is-a-retrieval-decision',
+      '2026/09-02-rag-engineering-03-safe-versioned-ingestion',
+      '2026/09-05-rag-engineering-04-embedding-profile-index-contract',
+      '2026/09-08-rag-engineering-05-context-expansion-multimodal-search',
+      '2026/09-11-rag-engineering-06-hybrid-corrective-retrieval',
+      '2026/09-14-rag-engineering-07-query-planning-safe-structured-retrieval',
+      '2026/09-17-rag-engineering-08-validated-cited-generation',
+      '2026/09-20-rag-engineering-09-rag-evaluation-regression-gates',
+      '2026/09-23-rag-engineering-10-security-governance',
+    ],
+  },
+  {
     slug: 'llm-inference-systems',
     title: 'LLM Inference & Serving',
     description: 'Understand how prompts become tokens, how attention and KV cache work, and how serving engines scale inference.',
