@@ -2664,6 +2664,15 @@ body.sidebar-hidden main {
     aspect-ratio: 720 / 528;
 }
 
+.sl-markdown-content .archify-frame--compact-flow iframe {
+    min-height: 17rem;
+    aspect-ratio: 700 / 400;
+}
+
+.sl-markdown-content .archify-frame__viewport {
+    width: 100%;
+}
+
 .sl-markdown-content .archify-frame figcaption {
     margin: 0;
     color: var(--clay-muted);
@@ -2677,9 +2686,22 @@ body.sidebar-hidden main {
         overflow-x: auto;
     }
 
+    .sl-markdown-content .archify-frame--compact-flow {
+        overflow-x: visible;
+    }
+
+    .sl-markdown-content .archify-frame__viewport {
+        overflow-x: auto;
+        border-radius: 14px;
+    }
+
     .sl-markdown-content .archify-frame iframe {
         min-width: 42rem;
         min-height: 34rem;
+    }
+
+    .sl-markdown-content .archify-frame--compact-flow iframe {
+        min-height: 17rem;
     }
 }
 
@@ -2959,6 +2981,95 @@ starlight-search input::placeholder {
     text-decoration-color: currentColor;
 }
 
+/* Make repository source references visibly different from ordinary article links. */
+.post-content a[href^='https://github.com/binzhango/local_lke/blob/'] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    margin-inline: 0.08rem;
+    padding: 0.18rem 0.48rem;
+    border: 1px solid color-mix(in srgb, var(--post-link) 34%, var(--clay-border));
+    border-radius: 0.55rem;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--post-accent) 10%, transparent), color-mix(in srgb, var(--post-warm) 12%, transparent)),
+        color-mix(in srgb, var(--clay-paper) 84%, white 16%);
+    box-shadow: 0 3px 9px rgba(58, 44, 24, 0.08);
+    color: color-mix(in srgb, var(--post-link) 84%, var(--post-heading)) !important;
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.88em;
+    font-weight: 700;
+    line-height: 1.35;
+    text-decoration: none;
+    vertical-align: baseline;
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.post-content a[href^='https://github.com/binzhango/local_lke/blob/']::before {
+    content: 'SOURCE';
+    color: color-mix(in srgb, var(--post-heading) 62%, var(--post-accent));
+    font-size: 0.68em;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.post-content a[href^='https://github.com/binzhango/local_lke/blob/']::after {
+    content: '\2197';
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.84em;
+    line-height: 1;
+}
+
+.post-content a[href^='https://github.com/binzhango/local_lke/blob/'] > code {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: inherit !important;
+    font: inherit;
+}
+
+.post-content a[href^='https://github.com/binzhango/local_lke/blob/']:hover {
+    border-color: color-mix(in srgb, var(--post-link) 58%, var(--post-accent));
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--post-accent) 16%, transparent), color-mix(in srgb, var(--post-warm) 18%, transparent)),
+        color-mix(in srgb, var(--clay-paper) 76%, white 24%);
+    box-shadow: 0 7px 16px rgba(58, 44, 24, 0.13);
+    color: var(--post-heading) !important;
+    transform: translateY(-0.06rem);
+}
+
+.post-content a[href^='https://github.com/binzhango/local_lke/blob/']:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--post-link) 64%, transparent);
+    outline-offset: 2px;
+}
+
+:root[data-theme='dark'] .post-content a[href^='https://github.com/binzhango/local_lke/blob/'] {
+    border-color: color-mix(in srgb, var(--post-link) 48%, rgba(255, 255, 255, 0.14));
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--post-accent) 14%, transparent), rgba(240, 197, 106, 0.06)),
+        #151c26;
+    box-shadow: 0 5px 13px rgba(0, 0, 0, 0.28);
+    color: color-mix(in srgb, #f8fafc 84%, var(--post-link)) !important;
+}
+
+:root[data-theme='dark'] .post-content a[href^='https://github.com/binzhango/local_lke/blob/']::before {
+    color: color-mix(in srgb, #f8fafc 66%, var(--post-accent));
+}
+
+:root[data-theme='dark'] .post-content a[href^='https://github.com/binzhango/local_lke/blob/']:hover {
+    border-color: color-mix(in srgb, var(--post-link) 68%, var(--post-accent));
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--post-accent) 22%, transparent), rgba(240, 197, 106, 0.1)),
+        #1a2430;
+    color: #ffffff !important;
+}
+
 .post-content strong,
 .post-content b {
     color: var(--post-heading) !important;
@@ -3026,6 +3137,294 @@ starlight-search input::placeholder {
     font-weight: 800;
 }
 
+.post-content .drawio-flow-frame {
+    margin: 1.35rem 0 1.6rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--post-link) 24%, var(--clay-border));
+    border-radius: 0.9rem;
+    background: #07111f;
+    box-shadow: 0 10px 24px rgba(7, 17, 31, 0.18);
+}
+
+.post-content .drawio-flow-frame iframe {
+    display: block;
+    width: 100%;
+    height: 17rem;
+    border: 0;
+    background: #07111f;
+}
+
+.post-content .drawio-flow-frame figcaption {
+    margin: 0;
+    padding: 0.78rem 0.9rem 0.88rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
+    background: color-mix(in srgb, var(--clay-paper) 94%, var(--post-link) 6%);
+    color: var(--post-muted);
+    font-size: 0.83rem;
+    line-height: 1.55;
+}
+
+.post-content .drawio-flow-frame figcaption a {
+    display: inline-block;
+    margin: 0.25rem 0.72rem 0 0;
+}
+
+:root[data-theme='dark'] .post-content .drawio-flow-frame figcaption {
+    background: rgba(15, 23, 42, 0.92);
+}
+
+@media (max-width: 42.5rem) {
+    .post-content .drawio-flow-frame iframe {
+        height: 37rem;
+    }
+}
+
+/* Responsive concept cards used by the RAG Engineering series introduction. */
+.post-content .concept-comparison,
+.post-content .rag-foundations,
+.post-content .rag-shift {
+    display: grid;
+    gap: 0.78rem;
+    margin: 1.35rem 0 1.6rem;
+}
+
+.post-content .concept-comparison--three,
+.post-content .rag-foundations {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.post-content .rag-shift {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.post-content .concept-comparison__card,
+.post-content .rag-foundations > section,
+.post-content .rag-shift__card {
+    min-width: 0;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--post-link) 18%, var(--clay-border));
+    border-radius: 0.8rem;
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--post-accent) 7%, transparent), transparent 56%),
+        color-mix(in srgb, var(--clay-paper) 92%, white 8%);
+    box-shadow: 0 6px 16px rgba(58, 44, 24, 0.07);
+}
+
+.post-content .concept-comparison__card--accent {
+    border-color: color-mix(in srgb, var(--post-link) 48%, var(--clay-border));
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--post-link) 13%, transparent);
+}
+
+.post-content .concept-comparison h3,
+.post-content .rag-foundations h3,
+.post-content .rag-shift h3 {
+    margin: 0 0 0.75rem;
+    padding: 0;
+    border: 0;
+    color: var(--post-heading);
+    font-size: 1.02rem;
+    line-height: 1.25;
+}
+
+.post-content .concept-comparison p,
+.post-content .rag-foundations p,
+.post-content .rag-shift p {
+    margin: 0;
+    color: var(--post-muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+}
+
+.post-content .concept-comparison p + p {
+    margin-top: 0.68rem;
+    padding-top: 0.68rem;
+    border-top: 1px solid color-mix(in srgb, var(--post-link) 12%, transparent);
+}
+
+.post-content .concept-comparison p > strong,
+.post-content .rag-shift p > span,
+.post-content .rag-foundations > section > span {
+    display: block;
+    margin-bottom: 0.16rem;
+    color: var(--post-link) !important;
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+.post-content .rag-foundations > section > span {
+    margin-bottom: 0.55rem;
+}
+
+.post-content .rag-shift__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.68rem 0.85rem;
+}
+
+.post-content .rag-shift__card h3 {
+    grid-column: 1 / -1;
+    margin-bottom: 0.05rem;
+}
+
+.post-content .rag-shift__card p {
+    padding: 0.72rem;
+    border-radius: 0.58rem;
+    background: color-mix(in srgb, var(--post-muted) 5%, transparent);
+}
+
+.post-content .rag-shift__card p:last-child {
+    background: color-mix(in srgb, var(--post-link) 10%, transparent);
+    color: color-mix(in srgb, var(--post-heading) 86%, var(--post-link));
+}
+
+:root[data-theme='dark'] .post-content .concept-comparison__card,
+:root[data-theme='dark'] .post-content .rag-foundations > section,
+:root[data-theme='dark'] .post-content .rag-shift__card {
+    border-color: color-mix(in srgb, var(--post-link) 30%, rgba(255, 255, 255, 0.12));
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--post-accent) 11%, transparent), transparent 58%),
+        rgba(15, 23, 42, 0.76);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.22);
+}
+
+:root[data-theme='dark'] .post-content .concept-comparison__card--accent {
+    border-color: color-mix(in srgb, var(--post-link) 58%, rgba(255, 255, 255, 0.16));
+}
+
+@media (max-width: 52rem) {
+    .post-content .concept-comparison--three,
+    .post-content .rag-foundations,
+    .post-content .rag-shift {
+        grid-template-columns: 1fr;
+    }
+
+    .post-content .rag-shift__card {
+        grid-template-columns: 1fr;
+    }
+
+    .post-content .rag-shift__card h3 {
+        grid-column: auto;
+    }
+}
+
+/* A compact process rail for short, ordered engineering flows. */
+.post-content .rag-process {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.62rem;
+    margin: 1.35rem 0 1.55rem;
+    padding: 0;
+    counter-reset: rag-process-step;
+    list-style: none;
+}
+
+.post-content .rag-process > li {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 8.4rem;
+    margin: 0;
+    padding: 2.8rem 0.78rem 0.82rem;
+    border: 1px solid color-mix(in srgb, var(--post-link) 20%, var(--clay-border));
+    border-radius: 0.72rem;
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--post-accent) 8%, transparent), transparent 58%),
+        color-mix(in srgb, var(--clay-paper) 90%, white 10%);
+    box-shadow: 0 5px 14px rgba(58, 44, 24, 0.07);
+    counter-increment: rag-process-step;
+    flex-direction: column;
+    line-height: 1.38;
+}
+
+.post-content .rag-process > li::before {
+    content: counter(rag-process-step, decimal-leading-zero);
+    position: absolute;
+    top: 0.7rem;
+    left: 0.78rem;
+    display: grid;
+    width: 1.7rem;
+    height: 1.7rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--post-link);
+    color: var(--sl-color-bg);
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.post-content .rag-process > li:not(:last-child)::after {
+    content: '\2192';
+    position: absolute;
+    z-index: 2;
+    top: 1.02rem;
+    right: -0.82rem;
+    display: grid;
+    width: 1rem;
+    height: 1rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--sl-color-bg);
+    color: var(--post-accent);
+    font-family: var(--font-space-mono, var(--font-fira-code));
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.post-content .rag-process strong {
+    color: var(--post-heading) !important;
+    font-size: 0.92rem;
+    letter-spacing: -0.01em;
+}
+
+.post-content .rag-process span {
+    margin-top: 0.28rem;
+    color: var(--post-muted);
+    font-size: 0.82rem;
+}
+
+:root[data-theme='dark'] .post-content .rag-process > li {
+    border-color: color-mix(in srgb, var(--post-link) 34%, rgba(255, 255, 255, 0.12));
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--post-accent) 13%, transparent), transparent 58%),
+        rgba(15, 23, 42, 0.76);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 48rem) {
+    .post-content .rag-process {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+    }
+
+    .post-content .rag-process > li {
+        display: grid;
+        min-height: 0;
+        padding: 0.78rem 0.85rem 0.78rem 3.25rem;
+        grid-template-columns: 1fr;
+    }
+
+    .post-content .rag-process > li::before {
+        top: 50%;
+        left: 0.82rem;
+        transform: translateY(-50%);
+    }
+
+    .post-content .rag-process > li:not(:last-child)::after {
+        content: '\2193';
+        top: auto;
+        right: auto;
+        bottom: -0.78rem;
+        left: 1.18rem;
+    }
+}
+
 .post-content .risk-list,
 .post-content .chip-list,
 .post-content .signal-list,
@@ -3033,7 +3432,8 @@ starlight-search input::placeholder {
 .post-content .question-list,
 .post-content .prompt-list,
 .post-content .action-grid,
-.post-content .use-case-grid {
+.post-content .use-case-grid,
+.post-content .boundary-grid {
     list-style: none;
     padding-left: 0;
 }
@@ -3077,10 +3477,45 @@ starlight-search input::placeholder {
     line-height: 1.48;
 }
 
-.post-content .action-grid li .term {
+.post-content .action-grid li .term,
+.post-content .use-case-grid li .term {
     display: block;
     width: fit-content;
     margin-bottom: 0.32rem;
+}
+
+.post-content .boundary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 0.65rem;
+    margin: 1.05rem 0 1.4rem;
+}
+
+.post-content .boundary-grid li {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0.82rem 0.9rem;
+    border: 1px dashed color-mix(in srgb, var(--post-warm) 48%, var(--clay-border));
+    border-radius: 0.62rem;
+    background: color-mix(in srgb, var(--post-warm) 5%, var(--sl-color-bg));
+}
+
+.post-content .boundary-grid li strong {
+    font-size: 0.88rem;
+    line-height: 1.3;
+}
+
+.post-content .boundary-grid li span {
+    color: var(--post-muted);
+    font-size: 0.84rem;
+    line-height: 1.48;
+}
+
+:root[data-theme='dark'] .post-content .boundary-grid li {
+    border-color: color-mix(in srgb, var(--post-warm) 48%, rgba(255, 255, 255, 0.14));
+    background: color-mix(in srgb, var(--post-warm) 8%, rgba(15, 23, 42, 0.72));
 }
 
 .post-content .chip-list {

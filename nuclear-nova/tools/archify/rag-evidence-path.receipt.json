@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/tools/archify/rag-evidence-path.dataflow.json",
+  "output": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/public/tools/rag-evidence-path.html",
+  "specification": {
+    "sha256": "e1b180c4a5cdc6775f58ee7eae46b2a0a066812c06129b06a32dc65b4964349c",
+    "bytes": 2683
+  },
+  "artifact": {
+    "sha256": "fdf35d9e428e6d190f66e3cea45ea7c0f001a7b544c40b50e95015766dbb5abf",
+    "bytes": 668528
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

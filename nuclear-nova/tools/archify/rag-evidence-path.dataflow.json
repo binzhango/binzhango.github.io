@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "RAG: From Source Documents to Cited Answers",
+    "quality_profile": "showcase",
+    "output": "public/tools/rag-evidence-path.html",
+    "viewBox": [
+      1080,
+      580
+    ]
+  },
+  "stages": [
+    {
+      "label": "Inputs"
+    },
+    {
+      "label": "Preparation"
+    },
+    {
+      "label": "Search"
+    },
+    {
+      "label": "Context"
+    },
+    {
+      "label": "Response"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sources",
+      "type": "external",
+      "label": "Source documents",
+      "sublabel": "content + provenance",
+      "stage": 0,
+      "row": 0
+    },
+    {
+      "id": "chunks",
+      "type": "backend",
+      "label": "Parse and chunk",
+      "sublabel": "versioned evidence",
+      "stage": 1,
+      "row": 0
+    },
+    {
+      "id": "index",
+      "type": "database",
+      "label": "Search index",
+      "sublabel": "vectors + metadata",
+      "stage": 2,
+      "row": 0
+    },
+    {
+      "id": "request",
+      "type": "frontend",
+      "label": "Question + caller",
+      "sublabel": "request identity",
+      "stage": 0,
+      "row": 2
+    },
+    {
+      "id": "scope",
+      "type": "security",
+      "label": "Authorize scope",
+      "sublabel": "allowed collections",
+      "stage": 1,
+      "row": 2
+    },
+    {
+      "id": "retrieve",
+      "type": "backend",
+      "label": "Retrieve candidates",
+      "sublabel": "ranked evidence IDs",
+      "stage": 2,
+      "row": 2
+    },
+    {
+      "id": "context",
+      "type": "backend",
+      "label": "Assemble context",
+      "sublabel": "deduplicate + budget",
+      "stage": 3,
+      "row": 2
+    },
+    {
+      "id": "answer",
+      "type": "backend",
+      "label": "Generate and validate",
+      "sublabel": "answer + citations",
+      "stage": 4,
+      "row": 2,
+      "width": 174
+    }
+  ],
+  "flows": [
+    {
+      "from": "sources",
+      "to": "chunks",
+      "label": "source bytes"
+    },
+    {
+      "from": "chunks",
+      "to": "index",
+      "label": "embed and persist"
+    },
+    {
+      "from": "index",
+      "to": "retrieve",
+      "label": "searchable evidence"
+    },
+    {
+      "from": "request",
+      "to": "scope",
+      "label": "authenticate",
+      "variant": "security"
+    },
+    {
+      "from": "scope",
+      "to": "retrieve",
+      "label": "question + scope",
+      "variant": "security"
+    },
+    {
+      "from": "retrieve",
+      "to": "context",
+      "label": "question + matches",
+      "variant": "emphasis"
+    },
+    {
+      "from": "context",
+      "to": "answer",
+      "label": "question + context",
+      "variant": "emphasis",
+      "labelDy": 53
+    }
+  ]
+}

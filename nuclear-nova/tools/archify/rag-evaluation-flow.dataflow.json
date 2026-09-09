@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Compare RAG Changes on the Same Cases",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1080,
+      640
+    ]
+  },
+  "stages": [
+    {
+      "label": "Cases"
+    },
+    {
+      "label": "Execute"
+    },
+    {
+      "label": "Measure"
+    },
+    {
+      "label": "Decide"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cases",
+      "type": "database",
+      "label": "Fixed cases",
+      "sublabel": "questions + labels",
+      "stage": 0,
+      "row": 1
+    },
+    {
+      "id": "baseline",
+      "type": "backend",
+      "label": "Baseline run",
+      "sublabel": "saved configuration",
+      "stage": 1,
+      "row": 0
+    },
+    {
+      "id": "candidate",
+      "type": "backend",
+      "label": "Candidate run",
+      "sublabel": "changed configuration",
+      "stage": 1,
+      "row": 2
+    },
+    {
+      "id": "metrics",
+      "type": "backend",
+      "label": "Paired metrics",
+      "sublabel": "coverage + latency",
+      "stage": 2,
+      "row": 1
+    },
+    {
+      "id": "gate",
+      "type": "backend",
+      "label": "Regression gate",
+      "sublabel": "configured thresholds",
+      "stage": 3,
+      "row": 1
+    }
+  ],
+  "flows": [
+    {
+      "from": "cases",
+      "to": "baseline",
+      "label": "same inputs"
+    },
+    {
+      "from": "cases",
+      "to": "candidate",
+      "label": "same inputs"
+    },
+    {
+      "from": "baseline",
+      "to": "metrics",
+      "label": "case results"
+    },
+    {
+      "from": "candidate",
+      "to": "metrics",
+      "label": "case results"
+    },
+    {
+      "from": "metrics",
+      "to": "gate",
+      "label": "metric deltas"
+    }
+  ]
+}

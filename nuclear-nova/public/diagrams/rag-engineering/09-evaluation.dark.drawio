@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="09-evaluation" name="Compare systems on the same cases">
+    <mxGraphModel grid="1" gridSize="10" page="0" background="#101b2b">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dataset" value="&lt;b&gt;Fixed evaluation set&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Questions + evidence labels&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="200" y="15.0" width="310" height="120" />
+        </mxCell>
+        <mxCell id="baseline" value="&lt;b&gt;Baseline&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Frozen source and config&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="220" width="300" height="100" />
+        </mxCell>
+        <mxCell id="candidate" value="&lt;b&gt;Candidate&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;One controlled change&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#2d294c;strokeColor=#ac9cee;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="395" y="220" width="300" height="100" />
+        </mxCell>
+        <mxCell id="compare" value="&lt;b&gt;Compare each case&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Retrieval · context · answer&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="200" y="415" width="310" height="100" />
+        </mxCell>
+        <mxCell id="inspect" value="&lt;b&gt;Inspect changed failures&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Explain gains and regressions&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="200" y="585.0" width="310" height="120" />
+        </mxCell>
+        <mxCell id="edge-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="dataset" target="baseline">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="dataset" target="candidate">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="baseline" target="compare">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="candidate" target="compare">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="compare" target="inspect">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

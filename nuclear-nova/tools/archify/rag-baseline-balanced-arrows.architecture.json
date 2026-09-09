@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Local RAG: Offline and Online Paths",
+    "output": "public/tools/rag-baseline-flow.html",
+    "quality_profile": "showcase",
+    "viewBox": [700, 400],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "offlineFixtures",
+      "type": "external",
+      "label": "01 · Fixtures",
+      "sublabel": "known documents",
+      "pos": [30, 35],
+      "size": [160, 60]
+    },
+    {
+      "id": "offlineNormalize",
+      "type": "backend",
+      "label": "02 · Normalize",
+      "sublabel": "canonical content",
+      "pos": [270, 35],
+      "size": [160, 60]
+    },
+    {
+      "id": "offlineSplit",
+      "type": "backend",
+      "label": "03 · Split",
+      "sublabel": "stable chunks",
+      "pos": [510, 35],
+      "size": [160, 60]
+    },
+    {
+      "id": "offlineEmbed",
+      "type": "backend",
+      "label": "04 · Embed",
+      "sublabel": "document vectors",
+      "pos": [510, 124],
+      "size": [160, 60]
+    },
+    {
+      "id": "offlineIndex",
+      "type": "database",
+      "label": "05 · Index",
+      "sublabel": "searchable evidence",
+      "pos": [270, 124],
+      "size": [160, 60]
+    },
+    {
+      "id": "onlineQuestion",
+      "type": "frontend",
+      "label": "01 · Question",
+      "sublabel": "user input",
+      "pos": [30, 220],
+      "size": [160, 60]
+    },
+    {
+      "id": "onlineEmbed",
+      "type": "backend",
+      "label": "02 · Embed query",
+      "sublabel": "query vector",
+      "pos": [270, 220],
+      "size": [160, 60]
+    },
+    {
+      "id": "onlineRetrieve",
+      "type": "backend",
+      "label": "03 · Retrieve top-k",
+      "sublabel": "ranked evidence",
+      "pos": [510, 220],
+      "size": [160, 60]
+    },
+    {
+      "id": "onlineGenerate",
+      "type": "backend",
+      "label": "04 · Generate",
+      "sublabel": "grounded draft",
+      "pos": [510, 309],
+      "size": [160, 60]
+    },
+    {
+      "id": "onlineValidate",
+      "type": "security",
+      "label": "05 · Validate",
+      "sublabel": "answer contract",
+      "pos": [270, 309],
+      "size": [160, 60]
+    },
+    {
+      "id": "onlineCite",
+      "type": "external",
+      "label": "06 · Cite sources",
+      "sublabel": "resolved citations",
+      "pos": [30, 309],
+      "size": [160, 60]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "OFFLINE PATH · BUILD THE INDEX",
+      "wraps": [
+        "offlineFixtures",
+        "offlineNormalize",
+        "offlineSplit",
+        "offlineEmbed",
+        "offlineIndex"
+      ],
+      "pad": 16
+    },
+    {
+      "kind": "region",
+      "label": "ONLINE PATH · ANSWER A QUESTION",
+      "wraps": [
+        "onlineQuestion",
+        "onlineEmbed",
+        "onlineRetrieve",
+        "onlineGenerate",
+        "onlineValidate",
+        "onlineCite"
+      ],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    { "id": "offlineLoad", "from": "offlineFixtures", "to": "offlineNormalize", "variant": "emphasis", "route": "straight", "width": 2.4 },
+    { "id": "offlineClean", "from": "offlineNormalize", "to": "offlineSplit", "variant": "emphasis", "route": "straight", "width": 2.4 },
+    { "id": "offlineChunk", "from": "offlineSplit", "to": "offlineEmbed", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "orthogonal-v", "width": 2.4 },
+    { "id": "offlineStore", "from": "offlineEmbed", "to": "offlineIndex", "variant": "emphasis", "route": "straight", "width": 2.4 },
+    { "id": "onlineAsk", "from": "onlineQuestion", "to": "onlineEmbed", "variant": "emphasis", "route": "straight", "width": 2.4 },
+    { "id": "onlineSearch", "from": "onlineEmbed", "to": "onlineRetrieve", "variant": "emphasis", "route": "straight", "width": 2.4 },
+    { "id": "onlineGround", "from": "onlineRetrieve", "to": "onlineGenerate", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "orthogonal-v", "width": 2.4 },
+    { "id": "onlineCheck", "from": "onlineGenerate", "to": "onlineValidate", "variant": "emphasis", "route": "straight", "width": 2.4 },
+    { "id": "onlinePublish", "from": "onlineValidate", "to": "onlineCite", "variant": "emphasis", "route": "straight", "width": 2.4 }
+  ]
+}

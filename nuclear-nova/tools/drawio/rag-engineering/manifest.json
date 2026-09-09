@@ -1,0 +1,1210 @@
+[
+  {
+    "slug": "01-request",
+    "title": "From documents to an answer",
+    "nodes": [
+      {
+        "id": "docs",
+        "title": "Source documents",
+        "detail": "API guides \u00b7 policies",
+        "x": 20,
+        "y": 40.0,
+        "w": 200,
+        "h": 120,
+        "kind": "document",
+        "tone": "blue"
+      },
+      {
+        "id": "chunk",
+        "title": "Parse + chunk",
+        "detail": "Text with source locations",
+        "x": 260,
+        "y": 55,
+        "w": 200,
+        "h": 90,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "index",
+        "title": "Search index",
+        "detail": "Representations + source IDs",
+        "x": 500,
+        "y": 40.0,
+        "w": 200,
+        "h": 120,
+        "kind": "database",
+        "tone": "violet"
+      },
+      {
+        "id": "question",
+        "title": "Question",
+        "detail": "What does the policy say?",
+        "x": 20,
+        "y": 255,
+        "w": 200,
+        "h": 90,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "retrieve",
+        "title": "Retrieve",
+        "detail": "Rank passages for the query",
+        "x": 260,
+        "y": 255,
+        "w": 200,
+        "h": 90,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "prompt",
+        "title": "Build prompt",
+        "detail": "Question + selected passages",
+        "x": 500,
+        "y": 255,
+        "w": 200,
+        "h": 90,
+        "kind": "process",
+        "tone": "violet"
+      },
+      {
+        "id": "llm",
+        "title": "LLM",
+        "detail": "Generate using the context",
+        "x": 500,
+        "y": 425,
+        "w": 200,
+        "h": 90,
+        "kind": "process",
+        "tone": "green"
+      },
+      {
+        "id": "answer",
+        "title": "Answer + sources",
+        "detail": "Resolve IDs to source passages",
+        "x": 260,
+        "y": 410.0,
+        "w": 200,
+        "h": 120,
+        "kind": "document",
+        "tone": "green"
+      }
+    ],
+    "edges": [
+      {
+        "a": "docs",
+        "b": "chunk",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "chunk",
+        "b": "index",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "question",
+        "b": "retrieve",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "index",
+        "b": "retrieve",
+        "label": "search",
+        "points": [
+          [
+            600,
+            205
+          ],
+          [
+            360,
+            205
+          ]
+        ],
+        "dashed": false
+      },
+      {
+        "a": "retrieve",
+        "b": "prompt",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "prompt",
+        "b": "llm",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "llm",
+        "b": "answer",
+        "label": "",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "Preparation happens when sources change. Retrieval and generation run for each question."
+  },
+  {
+    "slug": "02-parsing",
+    "title": "Parsing and chunking change different things",
+    "nodes": [
+      {
+        "id": "source",
+        "title": "Original document",
+        "detail": "Reading order + visual layout",
+        "x": 25,
+        "y": 40,
+        "w": 260,
+        "h": 100,
+        "kind": "rail",
+        "tone": "blue"
+      },
+      {
+        "id": "page",
+        "title": "A policy table",
+        "detail": "Severity | Target\nP1 | 15 minutes",
+        "x": 395,
+        "y": 30,
+        "w": 300,
+        "h": 130,
+        "kind": "document",
+        "tone": "slate"
+      },
+      {
+        "id": "parse",
+        "title": "Parse structure",
+        "detail": "Recover text, headers and rows",
+        "x": 25,
+        "y": 225,
+        "w": 260,
+        "h": 100,
+        "kind": "rail",
+        "tone": "blue"
+      },
+      {
+        "id": "elements",
+        "title": "Normalized elements",
+        "detail": "Table header + typed rows\nSource: page 2, table 1",
+        "x": 395,
+        "y": 210,
+        "w": 300,
+        "h": 135,
+        "kind": "document",
+        "tone": "violet"
+      },
+      {
+        "id": "split",
+        "title": "Choose boundaries",
+        "detail": "Group related evidence",
+        "x": 25,
+        "y": 410,
+        "w": 260,
+        "h": 100,
+        "kind": "rail",
+        "tone": "blue"
+      },
+      {
+        "id": "chunks",
+        "title": "Searchable chunk",
+        "detail": "P1 target: 15 minutes\nSource: page 2, table 1",
+        "x": 395,
+        "y": 395,
+        "w": 300,
+        "h": 135,
+        "kind": "document",
+        "tone": "green"
+      }
+    ],
+    "edges": [
+      {
+        "a": "source",
+        "b": "parse",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "parse",
+        "b": "split",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "source",
+        "b": "page",
+        "label": "",
+        "points": [],
+        "dashed": true
+      },
+      {
+        "a": "parse",
+        "b": "elements",
+        "label": "",
+        "points": [],
+        "dashed": true
+      },
+      {
+        "a": "split",
+        "b": "chunks",
+        "label": "",
+        "points": [],
+        "dashed": true
+      }
+    ],
+    "caption": "A splitter cannot restore a table header that parsing discarded.",
+    "layout": "editorial-rail"
+  },
+  {
+    "slug": "03-ingestion",
+    "title": "Publish a complete version",
+    "nodes": [
+      {
+        "id": "accept",
+        "title": "Accept version",
+        "detail": "Stable source + revision ID",
+        "x": 25,
+        "y": 50,
+        "w": 220,
+        "h": 95,
+        "kind": "terminal",
+        "tone": "blue"
+      },
+      {
+        "id": "stage",
+        "title": "Stage derived data",
+        "detail": "Parse \u00b7 chunk \u00b7 embed",
+        "x": 300,
+        "y": 50,
+        "w": 270,
+        "h": 95,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "check",
+        "title": "Check build",
+        "detail": "All artifacts ready?",
+        "x": 320,
+        "y": 220,
+        "w": 230,
+        "h": 170,
+        "kind": "diamond",
+        "tone": "violet"
+      },
+      {
+        "id": "publish",
+        "title": "Publish version",
+        "detail": "Atomically switch active pointer",
+        "x": 645,
+        "y": 255,
+        "w": 275,
+        "h": 100,
+        "kind": "process",
+        "tone": "green"
+      },
+      {
+        "id": "retry",
+        "title": "Record failure + retry",
+        "detail": "Keep the current version active",
+        "x": 25,
+        "y": 255,
+        "w": 235,
+        "h": 100,
+        "kind": "process",
+        "tone": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "a": "accept",
+        "b": "stage",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "stage",
+        "b": "check",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "check",
+        "b": "publish",
+        "label": "pass",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "check",
+        "b": "retry",
+        "label": "fail",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "retry",
+        "b": "stage",
+        "label": "retry",
+        "points": [
+          [
+            142,
+            195
+          ],
+          [
+            280,
+            195
+          ],
+          [
+            280,
+            97
+          ]
+        ],
+        "dashed": false,
+        "style": "exitX=0.5;exitY=0;entryX=0;entryY=0.5;",
+        "offset": [
+          0,
+          -15
+        ]
+      }
+    ],
+    "caption": "Staging can fail without exposing a partially built index to readers.",
+    "layout": "release-lifecycle"
+  },
+  {
+    "slug": "04-compatibility",
+    "title": "One vector space, one search contract",
+    "nodes": [
+      {
+        "id": "query",
+        "title": "Query encoder",
+        "detail": "Model \u00b7 revision \u00b7 normalization",
+        "x": 30,
+        "y": 40,
+        "w": 305,
+        "h": 135,
+        "kind": "profile",
+        "tone": "blue"
+      },
+      {
+        "id": "index",
+        "title": "Index profile",
+        "detail": "Document encoder + metric",
+        "x": 425,
+        "y": 40,
+        "w": 305,
+        "h": 135,
+        "kind": "profile",
+        "tone": "violet"
+      },
+      {
+        "id": "gate",
+        "title": "Profiles compatible?",
+        "detail": "Validate before similarity search",
+        "x": 225,
+        "y": 270,
+        "w": 310,
+        "h": 110,
+        "kind": "rail",
+        "tone": "violet"
+      },
+      {
+        "id": "search",
+        "title": "Search",
+        "detail": "Compare compatible vectors",
+        "x": 30,
+        "y": 485,
+        "w": 305,
+        "h": 100,
+        "kind": "process",
+        "tone": "green"
+      },
+      {
+        "id": "reject",
+        "title": "Reject or reroute",
+        "detail": "Use the matching index",
+        "x": 425,
+        "y": 485,
+        "w": 305,
+        "h": 100,
+        "kind": "process",
+        "tone": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "a": "query",
+        "b": "gate",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "index",
+        "b": "gate",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "gate",
+        "b": "search",
+        "label": "yes",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "gate",
+        "b": "reject",
+        "label": "no",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "Matching vector dimensions alone does not establish compatibility.",
+    "layout": "contract-comparison"
+  },
+  {
+    "slug": "05-expansion",
+    "title": "Search a sentence; send a useful source region",
+    "nodes": [
+      {
+        "id": "hit",
+        "title": "Sentence hit",
+        "detail": "\"Acknowledge P1 within 15 min.\"",
+        "x": 30,
+        "y": 25.0,
+        "w": 310,
+        "h": 120,
+        "kind": "document",
+        "tone": "blue"
+      },
+      {
+        "id": "parent",
+        "title": "Parent section",
+        "detail": "Deadline + scope + exception",
+        "x": 390,
+        "y": 25.0,
+        "w": 280,
+        "h": 120,
+        "kind": "document",
+        "tone": "violet"
+      },
+      {
+        "id": "dedup",
+        "title": "Deduplicate regions",
+        "detail": "Three hits \u2192 one parent section",
+        "x": 390,
+        "y": 225,
+        "w": 280,
+        "h": 100,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "context",
+        "title": "Final context",
+        "detail": "780 / 900 tokens\nPolicy + escalation owner",
+        "x": 30,
+        "y": 405.0,
+        "w": 310,
+        "h": 120,
+        "kind": "document",
+        "tone": "green"
+      },
+      {
+        "id": "budget",
+        "title": "Pack within budget",
+        "detail": "520 policy + 260 escalation",
+        "x": 390,
+        "y": 415,
+        "w": 280,
+        "h": 100,
+        "kind": "process",
+        "tone": "blue"
+      }
+    ],
+    "edges": [
+      {
+        "a": "hit",
+        "b": "parent",
+        "label": "expand",
+        "points": [],
+        "dashed": false,
+        "offset": [
+          0,
+          -18
+        ]
+      },
+      {
+        "a": "parent",
+        "b": "dedup",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "dedup",
+        "b": "budget",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "budget",
+        "b": "context",
+        "label": "",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "Keep the triggering sentence ID when expanding; count the parent only once."
+  },
+  {
+    "slug": "06-hybrid",
+    "title": "Two retrieval signals, one candidate list",
+    "nodes": [
+      {
+        "id": "query",
+        "title": "Question",
+        "detail": "\"API key rotation endpoint\"",
+        "x": 25,
+        "y": 195,
+        "w": 220,
+        "h": 115,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "dense",
+        "title": "Dense search",
+        "detail": "Semantic similarity",
+        "x": 330,
+        "y": 50,
+        "w": 285,
+        "h": 115,
+        "kind": "rail",
+        "tone": "blue"
+      },
+      {
+        "id": "keyword",
+        "title": "Keyword search",
+        "detail": "Exact identifiers and terms",
+        "x": 330,
+        "y": 340,
+        "w": 285,
+        "h": 115,
+        "kind": "rail",
+        "tone": "violet"
+      },
+      {
+        "id": "fusion",
+        "title": "Rank fusion",
+        "detail": "Combine ranks by stable chunk ID",
+        "x": 715,
+        "y": 195,
+        "w": 285,
+        "h": 115,
+        "kind": "process",
+        "tone": "green"
+      },
+      {
+        "id": "rerank",
+        "title": "Rerank + pack",
+        "detail": "Score relevance, then fit context",
+        "x": 715,
+        "y": 445,
+        "w": 285,
+        "h": 100,
+        "kind": "process",
+        "tone": "green"
+      }
+    ],
+    "edges": [
+      {
+        "a": "query",
+        "b": "dense",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "query",
+        "b": "keyword",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "dense",
+        "b": "fusion",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "keyword",
+        "b": "fusion",
+        "label": "",
+        "points": [
+          [
+            665,
+            397
+          ],
+          [
+            665,
+            280
+          ]
+        ],
+        "dashed": false,
+        "style": "exitX=1;exitY=0.5;entryX=0;entryY=0.75;"
+      },
+      {
+        "a": "fusion",
+        "b": "rerank",
+        "label": "",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "Fusion combines ranked lists. A reranker separately evaluates query\u2013passage relevance.",
+    "layout": "parallel-lanes"
+  },
+  {
+    "slug": "06-correction",
+    "title": "A bounded retrieval retry",
+    "nodes": [
+      {
+        "id": "first",
+        "title": "Retrieve",
+        "detail": "Inspect evidence coverage",
+        "x": 25,
+        "y": 45,
+        "w": 250,
+        "h": 100,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "gate",
+        "title": "Enough support?",
+        "detail": "Coverage check",
+        "x": 350,
+        "y": 15,
+        "w": 235,
+        "h": 165,
+        "kind": "diamond",
+        "tone": "violet"
+      },
+      {
+        "id": "answer",
+        "title": "Generate",
+        "detail": "Use the supported evidence",
+        "x": 690,
+        "y": 45,
+        "w": 270,
+        "h": 100,
+        "kind": "terminal",
+        "tone": "green"
+      },
+      {
+        "id": "retry",
+        "title": "Retry once",
+        "detail": "Revise query or retrieval strategy",
+        "x": 335,
+        "y": 310,
+        "w": 270,
+        "h": 105,
+        "kind": "process",
+        "tone": "amber"
+      },
+      {
+        "id": "last",
+        "title": "Check support again",
+        "detail": "Enough \u2192 generate\nStill missing \u2192 abstain",
+        "x": 690,
+        "y": 310,
+        "w": 270,
+        "h": 110,
+        "kind": "process",
+        "tone": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "a": "first",
+        "b": "gate",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "gate",
+        "b": "answer",
+        "label": "yes",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "gate",
+        "b": "retry",
+        "label": "no",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "retry",
+        "b": "last",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "last",
+        "b": "answer",
+        "label": "supported",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "A retry has a budget and an explicit stop. Similarity alone is not an evidence-sufficiency test.",
+    "layout": "bounded-loop"
+  },
+  {
+    "slug": "07-routing",
+    "title": "Choose the operation the question requires",
+    "nodes": [
+      {
+        "id": "question",
+        "title": "Question",
+        "detail": "Explain a rule, or calculate a value?",
+        "x": 240,
+        "y": 25,
+        "w": 330,
+        "h": 100,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "route",
+        "title": "Route by operation",
+        "detail": "Preserve constraints",
+        "x": 280,
+        "y": 200,
+        "w": 250,
+        "h": 180,
+        "kind": "diamond",
+        "tone": "violet"
+      },
+      {
+        "id": "passage",
+        "title": "Retrieve passages",
+        "detail": "Explain the P1 policy",
+        "x": 25,
+        "y": 475,
+        "w": 325,
+        "h": 130,
+        "kind": "document",
+        "tone": "blue"
+      },
+      {
+        "id": "rows",
+        "title": "Query eligible rows",
+        "detail": "AVG(response_minutes) for P1",
+        "x": 460,
+        "y": 475,
+        "w": 325,
+        "h": 130,
+        "kind": "database",
+        "tone": "violet"
+      },
+      {
+        "id": "response",
+        "title": "Compose the answer",
+        "detail": "Cite passages or the query result",
+        "x": 240,
+        "y": 700,
+        "w": 330,
+        "h": 120,
+        "kind": "document",
+        "tone": "green"
+      }
+    ],
+    "edges": [
+      {
+        "a": "question",
+        "b": "route",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "route",
+        "b": "passage",
+        "label": "explain",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "route",
+        "b": "rows",
+        "label": "aggregate",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "passage",
+        "b": "response",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "rows",
+        "b": "response",
+        "label": "",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "Nearest passages are not a complete population for an aggregate calculation.",
+    "layout": "decision-tree"
+  },
+  {
+    "slug": "08-citations",
+    "title": "A citation must pass three different checks",
+    "nodes": [
+      {
+        "id": "claim",
+        "title": "Generated claim",
+        "detail": "\"The target is 30 minutes. [C1]\"",
+        "x": 270,
+        "y": 25,
+        "w": 340,
+        "h": 105,
+        "kind": "rail",
+        "tone": "blue"
+      },
+      {
+        "id": "shape",
+        "title": "1. Structure",
+        "detail": "Expected fields and types?",
+        "x": 25,
+        "y": 250,
+        "w": 245,
+        "h": 165,
+        "kind": "checkcard",
+        "tone": "blue"
+      },
+      {
+        "id": "identity",
+        "title": "2. Source identity",
+        "detail": "Does C1 exist in the registry?",
+        "x": 325,
+        "y": 250,
+        "w": 245,
+        "h": 165,
+        "kind": "checkcard",
+        "tone": "violet"
+      },
+      {
+        "id": "support",
+        "title": "3. Evidence support",
+        "detail": "Does C1 actually say 30 min?",
+        "x": 625,
+        "y": 250,
+        "w": 245,
+        "h": 165,
+        "kind": "checkcard",
+        "tone": "amber"
+      },
+      {
+        "id": "source",
+        "title": "Supplied source C1",
+        "detail": "\"The target is 15 minutes.\"",
+        "x": 590,
+        "y": 530,
+        "w": 305,
+        "h": 125,
+        "kind": "document",
+        "tone": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "a": "claim",
+        "b": "shape",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "claim",
+        "b": "identity",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "claim",
+        "b": "support",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "source",
+        "b": "support",
+        "label": "compare",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "Well-formed output and a real citation ID can still carry an unsupported claim.",
+    "layout": "validation-cards"
+  },
+  {
+    "slug": "09-evaluation",
+    "title": "Compare systems on the same cases",
+    "nodes": [
+      {
+        "id": "dataset",
+        "title": "Fixed evaluation set",
+        "detail": "Questions + evidence labels",
+        "x": 200,
+        "y": 15.0,
+        "w": 310,
+        "h": 120,
+        "kind": "document",
+        "tone": "blue"
+      },
+      {
+        "id": "baseline",
+        "title": "Baseline",
+        "detail": "Frozen source and config",
+        "x": 25,
+        "y": 220,
+        "w": 300,
+        "h": 100,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "candidate",
+        "title": "Candidate",
+        "detail": "One controlled change",
+        "x": 395,
+        "y": 220,
+        "w": 300,
+        "h": 100,
+        "kind": "process",
+        "tone": "violet"
+      },
+      {
+        "id": "compare",
+        "title": "Compare each case",
+        "detail": "Retrieval \u00b7 context \u00b7 answer",
+        "x": 200,
+        "y": 415,
+        "w": 310,
+        "h": 100,
+        "kind": "process",
+        "tone": "green"
+      },
+      {
+        "id": "inspect",
+        "title": "Inspect changed failures",
+        "detail": "Explain gains and regressions",
+        "x": 200,
+        "y": 585.0,
+        "w": 310,
+        "h": 120,
+        "kind": "document",
+        "tone": "green"
+      }
+    ],
+    "edges": [
+      {
+        "a": "dataset",
+        "b": "baseline",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "dataset",
+        "b": "candidate",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "baseline",
+        "b": "compare",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "candidate",
+        "b": "compare",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "compare",
+        "b": "inspect",
+        "label": "",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "A higher average is useful only when the changed cases are understood."
+  },
+  {
+    "slug": "10-authorization",
+    "title": "Access scope travels with the request",
+    "nodes": [
+      {
+        "id": "outside",
+        "title": "UNTRUSTED REQUEST",
+        "detail": "",
+        "x": 10,
+        "y": 10,
+        "w": 330,
+        "h": 590,
+        "kind": "panel",
+        "tone": "slate"
+      },
+      {
+        "id": "boundary",
+        "title": "APPLICATION ACCESS BOUNDARY",
+        "detail": "",
+        "x": 385,
+        "y": 10,
+        "w": 680,
+        "h": 590,
+        "kind": "panel",
+        "tone": "violet"
+      },
+      {
+        "id": "request",
+        "title": "Request identity",
+        "detail": "Caller + requested collection",
+        "x": 45,
+        "y": 210,
+        "w": 260,
+        "h": 115,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "access",
+        "title": "Access allowed?",
+        "detail": "Current permission",
+        "x": 420,
+        "y": 170,
+        "w": 240,
+        "h": 185,
+        "kind": "diamond",
+        "tone": "violet"
+      },
+      {
+        "id": "deny",
+        "title": "Deny",
+        "detail": "Return no protected context",
+        "x": 425,
+        "y": 440,
+        "w": 255,
+        "h": 105,
+        "kind": "terminal",
+        "tone": "amber"
+      },
+      {
+        "id": "retrieve",
+        "title": "Scoped retrieval",
+        "detail": "Enforce allowed source IDs",
+        "x": 745,
+        "y": 90,
+        "w": 285,
+        "h": 105,
+        "kind": "process",
+        "tone": "blue"
+      },
+      {
+        "id": "context",
+        "title": "Authorized context",
+        "detail": "Check expansion + cache scope",
+        "x": 745,
+        "y": 265,
+        "w": 285,
+        "h": 120,
+        "kind": "document",
+        "tone": "violet"
+      },
+      {
+        "id": "generate",
+        "title": "Generate",
+        "detail": "Use only the admitted context",
+        "x": 745,
+        "y": 460,
+        "w": 285,
+        "h": 105,
+        "kind": "process",
+        "tone": "green"
+      }
+    ],
+    "edges": [
+      {
+        "a": "request",
+        "b": "access",
+        "label": "authenticate",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "access",
+        "b": "deny",
+        "label": "no",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "access",
+        "b": "retrieve",
+        "label": "yes",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "retrieve",
+        "b": "context",
+        "label": "",
+        "points": [],
+        "dashed": false
+      },
+      {
+        "a": "context",
+        "b": "generate",
+        "label": "",
+        "points": [],
+        "dashed": false
+      }
+    ],
+    "caption": "Apply authorization during retrieval, expansion, and cache reuse\u2014not only in the prompt.",
+    "layout": "trust-boundaries"
+  }
+]

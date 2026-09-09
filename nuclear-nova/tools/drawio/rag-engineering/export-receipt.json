@@ -1,0 +1,182 @@
+{
+  "renderer": "Official draw.io GraphViewer / Graph.getSvg",
+  "runtimeSha256": "0ed88c6e34ec665cfd9609d3548959ebe877ee87fecfc133db555be05a0e5890",
+  "diagrams": [
+    {
+      "name": "01-request",
+      "vertices": 8,
+      "edges": 7,
+      "width": "730px",
+      "height": "540px",
+      "sha256": "7500915d977801da9972bb3f3842a842f9a7f0eb54822e9a99df759980916eb0"
+    },
+    {
+      "name": "01-request.dark",
+      "vertices": 8,
+      "edges": 7,
+      "width": "730px",
+      "height": "540px",
+      "sha256": "cc780faa3528fde850404b4aa0ecfb84f506df5de526c48bf426edf96ca65ed8"
+    },
+    {
+      "name": "02-parsing",
+      "vertices": 6,
+      "edges": 5,
+      "width": "720px",
+      "height": "550px",
+      "sha256": "58d248fba08b6748a0ef518d5ab96cf4736fa55ede47a705b3c916ef07b47c15"
+    },
+    {
+      "name": "02-parsing.dark",
+      "vertices": 6,
+      "edges": 5,
+      "width": "720px",
+      "height": "550px",
+      "sha256": "45187c07df4841a34d5475c0dffc89b952c4e1604a7b737a2a78cab20d078c7f"
+    },
+    {
+      "name": "03-ingestion",
+      "vertices": 5,
+      "edges": 5,
+      "width": "945px",
+      "height": "390px",
+      "sha256": "eccfdb9c7b240a74a85243a2be2b356c3469ea9daf4ae43ecbb1b2595f8f924e"
+    },
+    {
+      "name": "03-ingestion.dark",
+      "vertices": 5,
+      "edges": 5,
+      "width": "945px",
+      "height": "390px",
+      "sha256": "70e03360018e14d7fed826839bfba76c1a0fef5cfbdf9f6f52951ce3645d44ed"
+    },
+    {
+      "name": "04-compatibility",
+      "vertices": 5,
+      "edges": 4,
+      "width": "750px",
+      "height": "595px",
+      "sha256": "3061e7c20e12866edc8ffe86fa6c8b8bbd816eb367bdefad8f66744b5751c329"
+    },
+    {
+      "name": "04-compatibility.dark",
+      "vertices": 5,
+      "edges": 4,
+      "width": "750px",
+      "height": "595px",
+      "sha256": "09870be63a6f621a4abbf5934e3b987cea750243a21b25ae35fbadffe6537b1a"
+    },
+    {
+      "name": "05-expansion",
+      "vertices": 5,
+      "edges": 4,
+      "width": "690px",
+      "height": "550px",
+      "sha256": "cf1c575b50b9de67cf6892f648f953be55e479f52dde254148cfae22c4b6dad6"
+    },
+    {
+      "name": "05-expansion.dark",
+      "vertices": 5,
+      "edges": 4,
+      "width": "690px",
+      "height": "550px",
+      "sha256": "ce08afecd8e3fc22448c9f6b76818624c7d2547efe692a56d8710b2e2ac02273"
+    },
+    {
+      "name": "06-hybrid",
+      "vertices": 5,
+      "edges": 5,
+      "width": "1025px",
+      "height": "545px",
+      "sha256": "f7f170402cd41506ab00a9fa58aff83ad2bfcca63c22642c3f242344b06f4ce8"
+    },
+    {
+      "name": "06-hybrid.dark",
+      "vertices": 5,
+      "edges": 5,
+      "width": "1025px",
+      "height": "545px",
+      "sha256": "7dc76bd3a2000a35592b24b412f03de901c6065bb5273d72abcaa2eb2db6a9ab"
+    },
+    {
+      "name": "06-correction",
+      "vertices": 5,
+      "edges": 5,
+      "width": "985px",
+      "height": "455px",
+      "sha256": "eedb862e77befb336b0b2fe3f85903c315f1bf186ac671fd19c70238e5243c1f"
+    },
+    {
+      "name": "06-correction.dark",
+      "vertices": 5,
+      "edges": 5,
+      "width": "985px",
+      "height": "455px",
+      "sha256": "d411100d288486996d08bb54b3ebde2e2a2b38196f2db0550879875d4095607d"
+    },
+    {
+      "name": "07-routing",
+      "vertices": 5,
+      "edges": 5,
+      "width": "810px",
+      "height": "845px",
+      "sha256": "f2236d20939cf5e94c7893ee067bfb0a156a37132c816d24cf3e78bfe4b130f4"
+    },
+    {
+      "name": "07-routing.dark",
+      "vertices": 5,
+      "edges": 5,
+      "width": "810px",
+      "height": "845px",
+      "sha256": "84aba012e7c771b41778944cc1572e4170e6b1a16c54547efb607b782d8ed5cf"
+    },
+    {
+      "name": "08-citations",
+      "vertices": 5,
+      "edges": 4,
+      "width": "920px",
+      "height": "680px",
+      "sha256": "32a02eca2cd3b85f135b5f6995ab733537881737dd8de23d5b61ff524ffff2f8"
+    },
+    {
+      "name": "08-citations.dark",
+      "vertices": 5,
+      "edges": 4,
+      "width": "920px",
+      "height": "680px",
+      "sha256": "e3c847f3c457771d6b486112eaab0373deff0ca5aeaeb6adb30aacabdc1a08b0"
+    },
+    {
+      "name": "09-evaluation",
+      "vertices": 5,
+      "edges": 5,
+      "width": "720px",
+      "height": "740px",
+      "sha256": "72fe16201673272aef61806ba942027b917ad0a128ae6370ac4b917004abf37a"
+    },
+    {
+      "name": "09-evaluation.dark",
+      "vertices": 5,
+      "edges": 5,
+      "width": "720px",
+      "height": "740px",
+      "sha256": "a1bfc8ea979123e349187d92241f885a5a3a67f47315ada843855116a54daf4b"
+    },
+    {
+      "name": "10-authorization",
+      "vertices": 8,
+      "edges": 5,
+      "width": "1105px",
+      "height": "640px",
+      "sha256": "d0db911eccba3bef9103b799eb69624f67a83e903d55ca059419ace1e45add06"
+    },
+    {
+      "name": "10-authorization.dark",
+      "vertices": 8,
+      "edges": 5,
+      "width": "1105px",
+      "height": "640px",
+      "sha256": "8787e96ac7bc5d411773680d61b6f96de4f2134dccdef2685fe5c691220536e6"
+    }
+  ]
+}
