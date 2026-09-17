@@ -1,0 +1,115 @@
+---
+import 'pdfjs-dist/web/pdf_viewer.css';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Embedded PDF reader</title>
+  </head>
+  <body>
+    <div class="toolbar" role="toolbar" aria-label="PDF controls">
+      <button id="previous" aria-label="Previous PDF page" disabled>←</button>
+      <label>Page <input id="page-number" type="number" min="1" value="1" aria-label="PDF page number" disabled /></label>
+      <span id="page-count">/ …</span>
+      <button id="next" aria-label="Next PDF page" disabled>→</button>
+      <span class="spacer"></span>
+      <button id="zoom-out" aria-label="Zoom out" disabled>−</button>
+      <button id="fit" disabled>Fit width</button>
+      <button id="zoom-in" aria-label="Zoom in" disabled>+</button>
+    </div>
+    <p id="status" role="status">Loading PDF…</p>
+    <div id="viewerContainer" tabindex="0" aria-label="PDF document">
+      <div id="viewer" class="pdfViewer"></div>
+    </div>
+    <noscript>
+      <style>.toolbar, #status, #viewerContainer { display: none; }</style>
+      This embedded reader requires JavaScript. <a href="/assets/pdfs/2606.24937v1.pdf" download>Download the PDF</a>.
+    </noscript>
+    <script>
+      import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+      async function initializeReader() {
+        const status = document.querySelector<HTMLParagraphElement>('#status')!;
+        try {
+          const { getDocument, GlobalWorkerOptions } = await import('pdfjs-dist');
+          const { PDFViewer, EventBus, PDFLinkService } = await import('pdfjs-dist/web/pdf_viewer.mjs');
+          GlobalWorkerOptions.workerSrc = workerUrl;
+          const eventBus = new EventBus();
+          const linkService = new PDFLinkService({ eventBus });
+          const container = document.querySelector<HTMLDivElement>('#viewerContainer')!;
+          const viewer = new PDFViewer({ container, eventBus, linkService });
+          linkService.setViewer(viewer);
+          const pageNumber = document.querySelector<HTMLInputElement>('#page-number')!;
+          const previous = document.querySelector<HTMLButtonElement>('#previous')!;
+          const next = document.querySelector<HTMLButtonElement>('#next')!;
+          const syncPage = () => {
+            pageNumber.value = String(viewer.currentPageNumber);
+            previous.disabled = viewer.currentPageNumber <= 1;
+            next.disabled = viewer.currentPageNumber >= viewer.pagesCount;
+          };
+          eventBus.on('pagesinit', () => {
+            viewer.currentScaleValue = 'page-width';
+            document.querySelectorAll<HTMLButtonElement | HTMLInputElement>('button, input').forEach((control) => { control.disabled = false; });
+            syncPage();
+          });
+          eventBus.on('pagerendered', () => { status.hidden = true; });
+          eventBus.on('pagechanging', syncPage);
+          previous.addEventListener('click', () => viewer.previousPage());
+          next.addEventListener('click', () => viewer.nextPage());
+          const goToPage = () => {
+            viewer.currentPageNumber = Math.max(1, Math.min(viewer.pagesCount, Math.trunc(Number(pageNumber.value)) || 1));
+            syncPage();
+          };
+          pageNumber.addEventListener('change', goToPage);
+          pageNumber.addEventListener('keydown', (event) => { if (event.key === 'Enter') goToPage(); });
+          document.querySelector('#zoom-in')!.addEventListener('click', () => viewer.increaseScale());
+          document.querySelector('#zoom-out')!.addEventListener('click', () => viewer.decreaseScale());
+          document.querySelector('#fit')!.addEventListener('click', () => { viewer.currentScaleValue = 'page-width'; });
+          new ResizeObserver(() => {
+            if (viewer.pagesCount && viewer.currentScaleValue === 'page-width') viewer.currentScaleValue = 'page-width';
+          }).observe(container);
+          const pdf = await getDocument({ url: '/assets/pdfs/2606.24937v1.pdf' }).promise;
+          document.querySelector('#page-count')!.textContent = `/ ${pdf.numPages}`;
+          pageNumber.max = String(pdf.numPages);
+          linkService.setDocument(pdf);
+          viewer.setDocument(pdf);
+        } catch (error) {
+          status.textContent = 'The PDF could not load. Reload this page to try again.';
+          console.error('Embedded PDF reader:', error);
+        }
+      }
+      // Keep the reader controls consistent with the enclosing article's theme.
+      try {
+        const source = window.parent.document.documentElement;
+        const syncTheme = () => { document.documentElement.dataset.theme = source.dataset.theme ?? 'light'; };
+        syncTheme();
+        new MutationObserver(syncTheme).observe(source, { attributes: true, attributeFilter: ['data-theme'] });
+      } catch { /* The reader also works when opened on its own. */ }
+      initializeReader();
+    </script>
+  </body>
+</html>
+<style is:global>
+  :root { --reader-bg: #e6e9ee; --reader-surface: #fff; --reader-text: #172231; --reader-line: #c6ced9; color-scheme: light; }
+  :root[data-theme='dark'] { --reader-bg: #222a34; --reader-surface: #19232e; --reader-text: #edf2f8; --reader-line: #465568; color-scheme: dark; }
+  html, body { height: 100%; margin: 0; overflow: hidden; font: 14px system-ui, sans-serif; color: var(--reader-text); background: var(--reader-bg); }
+  * { box-sizing: border-box; }
+  .toolbar { height: 54px; display: flex; align-items: center; gap: 6px; padding: 7px 10px; background: var(--reader-surface); border-bottom: 1px solid var(--reader-line); }
+  .toolbar label { display: flex; align-items: center; gap: 5px; }
+  button, input { font: inherit; color: inherit; background: var(--reader-surface); border: 1px solid var(--reader-line); border-radius: 4px; height: 34px; }
+  button { padding: 0 9px; cursor: pointer; }
+  button:disabled { opacity: 0.4; cursor: default; }
+  button:hover:not(:disabled) { background: var(--reader-bg); }
+  input { width: 55px; padding: 0 4px; }
+  :focus-visible { outline: 2px solid #548bee; outline-offset: -2px; }
+  .spacer { flex: 1; }
+  #viewerContainer { position: absolute; inset: 54px 0 0; overflow: auto; overscroll-behavior: contain; }
+  #status { position: absolute; z-index: 2; top: 60px; left: 12px; padding: 8px 12px; background: var(--reader-surface); border-radius: 4px; }
+  #status[hidden] { display: none; }
+  .pdfViewer .page { margin: 8px auto; }
+  noscript { display: block; padding: 1rem; }
+  @media (max-width: 420px) { .toolbar { gap: 3px; padding-inline: 4px; font-size: 12px; } button { padding-inline: 7px; } input { width: 43px; } }
+</style>

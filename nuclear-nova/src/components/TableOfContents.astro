@@ -1,0 +1,74 @@
+---
+interface Props { headings: { depth: number; slug: string; text: string }[]; mode?: 'desktop' | 'mobile'; tone?: string; }
+const { headings, mode = 'desktop', tone } = Astro.props;
+const baseDepth = Math.min(...headings.map((heading) => heading.depth));
+let section = 0;
+let subsection = 0;
+const entries = headings.map((heading) => {
+  const nested = heading.depth > baseDepth;
+  if (nested) subsection += 1;
+  else { section += 1; subsection = 0; }
+  return { ...heading, nested, number: nested ? `${section}.${subsection}` : String(section).padStart(2, '0') };
+});
+---
+<div class="contents" data-contents data-topic-tone={tone}>
+  {mode === 'desktop' && <nav class="contents-desktop" aria-label="On this page">
+    <div class="contents-heading"><p>On this page</p><span aria-hidden="true">{String(section).padStart(2, '0')}</span></div>
+    <ul>{entries.map((heading) => <li class:list={{ nested: heading.nested }}><a href={`#${heading.slug}`}><span class="section-number" aria-hidden="true">{heading.number}</span><span class="section-title">{heading.text}</span></a></li>)}</ul>
+  </nav>}
+  {mode === 'mobile' && <details class="contents-mobile">
+    <summary>On this page <span>{headings.length} sections</span></summary>
+    <nav aria-label="On this page"><ul>{entries.map((heading) => <li class:list={{ nested: heading.nested }}><a href={`#${heading.slug}`}><span class="section-number" aria-hidden="true">{heading.number}</span><span class="section-title">{heading.text}</span></a></li>)}</ul></nav>
+  </details>}
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-contents]').forEach((contents) => {
+    const links = Array.from(contents.querySelectorAll<HTMLAnchorElement>('a'));
+    const headings = [...new Set(links.map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1)))))].filter((heading): heading is HTMLElement => !!heading);
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (!visible) return;
+      links.forEach((link) => {
+        if (decodeURIComponent(link.hash.slice(1)) === visible.target.id) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-100px 0px -60% 0px' });
+    headings.forEach((heading) => observer.observe(heading));
+    document.addEventListener('astro:before-swap', () => observer.disconnect(), { once: true });
+  });
+</script>
+<style>
+  .contents-desktop { padding-inline: .25rem; }
+  .contents-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--ink); }
+  .contents-heading p { margin: 0; color: var(--ink); font-size: .875rem; font-weight: 600; letter-spacing: -.015em; }
+  .contents-heading > span { color: var(--muted); font-size: 1.45rem; line-height: 1; font-weight: 400; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+  ul { list-style: none; margin: 1rem 0 0; padding: .2rem .25rem; max-height: calc(100vh - 220px); overflow: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  li { position: relative; margin: 0; border-left: 1px solid var(--line); }
+  a { position: relative; display: grid; grid-template-columns: 1.8rem minmax(0, 1fr); gap: .4rem; padding: .75rem 0 .75rem .9rem; color: var(--muted); font-size: .875rem; line-height: 1.55; text-decoration: none; }
+  .section-number { color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; padding-top: .12rem; }
+  .section-title { transition: transform 160ms ease, color 160ms ease; }
+  li.nested a { padding-block: .55rem; font-size: .8125rem; }
+  li.nested .section-number { font-size: .8125rem; }
+  a:hover { color: var(--ink); }
+  a:hover .section-title { transform: translateX(3px); }
+  a[aria-current='location'] { color: var(--ink); }
+  a[aria-current='location'] .section-title { font-weight: 600; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: .3em; }
+  a[aria-current='location'] .section-number { color: var(--accent); font-weight: 700; }
+  a[aria-current='location']::before { content: ''; position: absolute; left: -3.5px; top: 1.05rem; width: 6px; height: 6px; background: var(--accent); transform: rotate(45deg); }
+  li.nested a[aria-current='location']::before { top: .85rem; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .contents-mobile { display: none; }
+  @media (max-width: 1023px) {
+    .contents-desktop { display: none; }
+    .contents-mobile { display: block; border-bottom: 1px solid var(--line); padding-bottom: 1rem; }
+    summary { color: var(--ink); font-size: .85rem; }
+    summary span { color: var(--muted); font-size: .8125rem; margin-left: .75rem; }
+    ul { max-height: 60vh; }
+    a { font-size: .85rem; }
+    li.nested a { font-size: .8rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section-title { transition: none; }
+    a:hover .section-title { transform: none; }
+  }
+</style>

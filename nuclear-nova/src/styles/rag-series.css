@@ -3,8 +3,7 @@
   --rag-rule: color-mix(in srgb, var(--post-muted) 28%, transparent);
   min-width: 0;
   /* Wide rendered code/table descendants scroll in their own containers. */
-  overflow-x: clip;
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
 .post-content[data-series='rag-engineering'] :is(h2, h3) {
@@ -46,17 +45,12 @@
 }
 
 
-.post-content[data-series='rag-engineering'] :is(ul, ol) {
-  padding-inline-start: 1.5rem;
-}
-
-.post-content[data-series='rag-engineering'] li {
-  padding-inline-start: 0.2rem;
-  margin-block: 0.55rem;
-}
-
 .post-content[data-series='rag-engineering'] .rag-table {
+  --sticky-head: var(--accent-soft);
+  --sticky-head-text: var(--ink);
   position: relative;
+  width: min(100%, var(--reading-width));
+  margin-inline: auto;
   max-width: 100%;
   overflow-x: auto;
   margin-block: 1.8rem;
@@ -78,7 +72,7 @@
   margin: 0;
   border: 0;
   border-radius: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
   box-shadow: none;
   background: transparent;
   font-size: 0.9rem;
@@ -86,11 +80,11 @@
 }
 
 .post-content[data-series='rag-engineering'] .rag-table thead {
-  background: color-mix(in srgb, var(--post-muted) 8%, transparent);
+  background: var(--accent-soft);
 }
 
 .post-content[data-series='rag-engineering'] .rag-table :is(th, td) {
-  padding: 0.8rem 1rem;
+  padding: .7rem .8rem;
   vertical-align: top;
   white-space: normal;
   word-break: normal;
@@ -200,7 +194,7 @@
   }
 
   .post-content[data-series='rag-engineering'] :is(h2, h3) {
-    scroll-margin-top: 15rem;
+    scroll-margin-top: 6rem;
   }
 }
 
@@ -455,16 +449,17 @@
 
 /* Stable, author-selected table treatments; shared sizing and semantics remain above. */
 .post-content[data-series='rag-engineering'] .rag-table--header thead {
-  background: linear-gradient(100deg, #155e75, #514080);
+  background: var(--table-head);
 }
 .post-content[data-series='rag-engineering'] .rag-table--header th {
   color: #fff !important;
 }
 .post-content[data-series='rag-engineering'] .rag-table--header {
+  --sticky-head: var(--table-head); --sticky-head-text: #fff;
   border-radius: 0.8rem;
 }
 .post-content[data-series='rag-engineering'] .rag-table--striped thead {
-  background: color-mix(in srgb, var(--post-link) 14%, transparent);
+  background: var(--accent-soft);
 }
 .post-content[data-series='rag-engineering'] .rag-table--striped tbody tr:nth-child(even) {
   background: color-mix(in srgb, var(--post-link) 8%, transparent);
@@ -476,9 +471,10 @@
   color: var(--post-heading);
 }
 .post-content[data-series='rag-engineering'] .rag-table--column thead {
-  background: color-mix(in srgb, var(--post-accent) 8%, transparent);
+  background: var(--accent-soft);
 }
 .post-content[data-series='rag-engineering'] .rag-table--minimal {
+  --sticky-head: var(--canvas);
   border-inline: 0;
   border-radius: 0;
   border-top: 2px solid var(--post-heading);
@@ -498,3 +494,5 @@
 .post-content[data-series='rag-engineering'] .rag-archify .rag-figure-dark { display: none; }
 [data-theme='dark'] .post-content[data-series='rag-engineering'] .rag-archify .rag-figure-light { display: none; }
 [data-theme='dark'] .post-content[data-series='rag-engineering'] .rag-archify .rag-figure-dark { display: block; }
+
+.post-content[data-series='rag-engineering'] .rag-table[data-overflow='true'] thead tr > :first-child { color: var(--sticky-head-text) !important; }

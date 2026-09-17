@@ -1,0 +1,37 @@
+---
+import { getBlogPagePath, getPageLinks } from '../utils/pagination';
+interface Props { currentPage: number; totalPages: number; position: 'top' | 'bottom'; }
+const { currentPage, totalPages, position } = Astro.props;
+const pages = getPageLinks(currentPage, totalPages);
+---
+{totalPages > 1 && <nav class:list={["pagination", { "pagination--compact": position === "top" }]} aria-label={`Blog pagination (${position})`}>
+  <div class="page-direction">
+    {currentPage > 1 ? <a href={getBlogPagePath(currentPage - 1)} rel="prev">← Previous</a> : <span aria-disabled="true">← Previous</span>}
+  </div>
+  {position === "top" ? <span class="page-count">Page {currentPage} of {totalPages}</span> : <div class="page-numbers">
+    {pages.map((page) => page === 'ellipsis' ? <span class="ellipsis" aria-hidden="true">…</span> :
+      <a href={getBlogPagePath(page)} aria-label={`Page ${page}`} aria-current={page === currentPage ? 'page' : undefined}>{page}</a>)}
+  </div>}
+  <div class="page-direction page-direction--next">
+    {currentPage < totalPages ? <a href={getBlogPagePath(currentPage + 1)} rel="next">Next →</a> : <span aria-disabled="true">Next →</span>}
+  </div>
+</nav>}
+<style>
+  .pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; padding-block: 1.25rem; }
+  .pagination--compact { justify-content: flex-end; padding-block: .4rem .8rem; }
+  .pagination--compact .page-direction { flex: none; }
+  .page-count { font-size: .875rem; color: var(--muted); }
+  .page-numbers { display: flex; align-items: center; gap: .25rem; }
+  .pagination a, .page-direction > span { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .5rem .75rem; border: 1px solid transparent; border-radius: 6px; font-size: .875rem; text-decoration: none; }
+  .pagination a { transition: background 180ms ease, border-color 180ms ease; }
+  .pagination a:is(:hover, :focus-visible) { background: var(--accent-soft); border-color: var(--accent-line); }
+  .page-numbers a { min-width: 44px; color: var(--body-text); }
+  .page-numbers a[aria-current='page'] { background: var(--accent); border-color: var(--accent); color: var(--canvas); font-weight: 700; }
+  .page-direction { flex: 1; }
+  .page-direction--next { text-align: right; }
+  .page-direction > span { color: var(--muted); opacity: .6; }
+  .ellipsis { padding-inline: .2rem; color: var(--muted); }
+  @media (max-width: 767px) {
+    .page-numbers { order: 3; flex-basis: 100%; justify-content: center; flex-wrap: wrap; }
+  }
+</style>

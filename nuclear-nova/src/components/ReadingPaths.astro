@@ -1,0 +1,40 @@
+---
+import type { CuratedCollection } from '../utils/collections';
+import { getPostPath } from '../utils/post-utils';
+import { getDisplayTitle, getTopicTone } from '../utils/presentation';
+interface Props { collections: CuratedCollection[]; }
+const { collections } = Astro.props;
+---
+<div class="reading-paths">
+  {collections.map((collection) => <article class:list={['reading-path', { 'reading-path--featured': collection.slug === 'rag-engineering' }]} data-topic-tone={getTopicTone(collection.posts[0]?.data.categories?.[0])}>
+    <p class="path-meta">{collection.posts.length} articles <span>Reading path</span></p>
+    <h3><a href={`/collections/${collection.slug}/`}>{collection.title}</a></h3>
+    <p class="path-description">{collection.description}</p>
+    <ol aria-label={`${collection.title} opening chapters`}>
+      {collection.posts.slice(0, collection.slug === 'rag-engineering' ? 3 : 1).map((post) => <li><a href={getPostPath(post)}>{getDisplayTitle(post.data.title).title}</a></li>)}
+    </ol>
+    <a class="path-browse" href={`/collections/${collection.slug}/`}>Explore this path <span aria-hidden="true">↗</span></a>
+  </article>)}
+</div>
+<style>
+  .reading-paths { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 0 2rem; }
+  .reading-path { min-width: 0; padding: 1.5rem 0; border-top: 2px solid var(--accent); display: flex; flex-direction: column; }
+  .reading-path--featured { grid-row: span 2; padding: 1.75rem; margin-right: .5rem; border: 1px solid var(--accent-line); border-top: 3px solid var(--accent); border-radius: .5rem; background: color-mix(in srgb, var(--accent-soft) 65%, var(--surface)); }
+  .path-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; color: var(--accent); font-size: .8125rem; margin: 0 0 1rem; }
+  .path-meta span { color: var(--muted); }
+  h3 { font-size: 1.3rem; line-height: 1.25; letter-spacing: -.03em; margin: 0 0 .75rem; }
+  .reading-path--featured h3 { font-size: clamp(1.55rem, 2.3vw, 2rem); }
+  h3 a { text-decoration: none; color: var(--ink); }
+  h3 a:hover { color: var(--accent); text-decoration: underline; }
+  .path-description { font-size: .875rem; line-height: 1.65; margin: 0 0 1rem; }
+  ol { margin: 0 0 1.5rem; padding: 0; list-style: none; counter-reset: chapter; }
+  li { display: grid; grid-template-columns: 1.5rem 1fr; gap: .5rem; padding-block: .65rem; border-top: 1px solid var(--line); counter-increment: chapter; font-size: .8125rem; line-height: 1.5; }
+  li::before { content: counter(chapter, decimal-leading-zero); color: var(--accent); font-variant-numeric: tabular-nums; }
+  li a { color: var(--body-text); text-decoration: none; }
+  li a:hover { color: var(--accent); text-decoration: underline; }
+  .path-browse { display: flex; justify-content: space-between; margin-top: auto; font-size: .875rem; font-weight: 600; text-decoration: none; }
+  .path-browse span { transition: transform 180ms ease; }
+  .path-browse:hover span { transform: translate(2px, -2px); }
+  @media (max-width: 1023px) { .reading-paths { grid-template-columns: 1fr 1fr; gap: 1.5rem; } .reading-path--featured { grid-column: 1 / -1; grid-row: auto; margin: 0; } }
+  @media (max-width: 767px) { .reading-paths { grid-template-columns: 1fr; gap: .75rem; } }
+</style>

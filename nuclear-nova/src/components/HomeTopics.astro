@@ -1,0 +1,49 @@
+---
+import type { Post } from '../utils/post-utils';
+import { getTopicTone } from '../utils/presentation';
+import { slugifyCategory } from '../utils/taxonomy';
+
+interface Props { posts: Post[] }
+const { posts } = Astro.props;
+const topics = [
+  { category: 'AI ENGINEERING', title: 'AI engineering', description: 'Agents, retrieval, and applications' },
+  { category: 'LARGE LANGUAGE MODELS', title: 'Language models', description: 'Training, inference, and serving' },
+  { category: 'DATA ENGINEERING', title: 'Data engineering', description: 'Spark, pipelines, and streaming' },
+  { category: 'SOFTWARE ENGINEERING', title: 'Software engineering', description: 'Python, tools, and developer workflows' },
+].map(topic => ({ ...topic, count: posts.filter(post => post.data.categories?.some(category => slugifyCategory(category) === slugifyCategory(topic.category))).length }))
+  .filter(topic => topic.count > 0);
+---
+
+<nav class="home-topics" aria-labelledby="home-topics-title">
+  <span class="topic-backing" data-parallax-layer data-travel="16" aria-hidden="true"></span>
+  <h2 id="home-topics-title">Browse by topic</h2>
+  <ul>
+    {topics.map(topic => <li data-topic-tone={getTopicTone(topic.category)}>
+      <a href={`/categories/${slugifyCategory(topic.category)}/`}>
+        <div class="topic-heading"><span class="topic-name">{topic.title}</span><span class="topic-count">{topic.count} posts</span></div>
+        <span class="topic-description">{topic.description}</span>
+      </a>
+    </li>)}
+  </ul>
+</nav>
+
+<style>
+  .home-topics { position: relative; isolation: isolate; min-width: 0; margin: 1rem 0; padding: 1.25rem 1.25rem .25rem; }
+  .topic-backing { position: absolute; z-index: -1; inset: 0; background: var(--surface); border: 1px solid var(--line); border-radius: .75rem; pointer-events: none; }
+  h2 { margin: 0 0 .6rem; font-size: .875rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li + li { border-top: 1px solid var(--line); }
+  a { display: block; padding: 1.2rem 0; text-decoration: none; color: var(--ink); border-radius: .25rem; }
+  .topic-heading { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; }
+  .topic-name { color: var(--accent); font-size: clamp(1.05rem, 1.4vw, 1.3rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.25; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+  .topic-heading { flex-wrap: wrap; gap: .25rem .6rem; }
+  .topic-count { flex-shrink: 0; font-size: .8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .topic-description { display: block; margin-top: .4rem; font-size: .875rem; line-height: 1.5; color: var(--body-text); }
+  a:is(:hover, :focus-visible) .topic-name { text-decoration-line: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+  @media (prefers-reduced-motion: no-preference) { a { transition: transform 180ms ease; } a:hover { transform: translateX(4px); } a:active { transform: translateX(2px); } }
+  @keyframes topic-depth { from { transform: translateY(0); } to { transform: translateY(16px); } }
+  @supports (animation-timeline: view()) { @media (min-width: 768px) and (prefers-reduced-motion: no-preference) { .topic-backing { animation: topic-depth linear both; animation-timeline: --hero; animation-range: exit 0% exit 100%; } } }
+  @media (min-width: 768px) and (max-width: 1023px) { .home-topics { padding-inline: 1.1rem; margin-left: 0; } .topic-heading { flex-wrap: wrap; gap: .25rem .75rem; } }
+  @media (max-width: 767px) { .home-topics { margin: 0; padding: 1.25rem 1.25rem .25rem; } .topic-name { font-size: 1.25rem; } .topic-count { font-size: .8125rem; } a { padding-block: 1rem; } }
+</style>

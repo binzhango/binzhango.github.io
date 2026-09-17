@@ -1,0 +1,14 @@
+{
+  "engine": "CYCLES",
+  "device": "GPU",
+  "views": [
+    "hero.png",
+    "tilt-left.png",
+    "tilt-right.png"
+  ],
+  "resolution": [
+    900,
+    1250
+  ],
+  "packedAssets": true
+}

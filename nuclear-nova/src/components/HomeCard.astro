@@ -1,0 +1,31 @@
+<figure class="home-card">
+  <a class="card-preview" data-home-card href="/card-studio/" aria-label="Open Bin Zhang’s engineering card editor">
+    <span class="card-art" aria-hidden="true">
+      <img class="card-background no-lightbox" src="/card-studio/assets/background.png" alt="" width="1024" height="1536" />
+      <img class="card-subject no-lightbox" src="/card-studio/assets/subject.png" alt="" width="1024" height="1536" />
+      <img class="card-text no-lightbox" src="/card-studio/assets/text.png" alt="" width="1024" height="1536" />
+      <span class="card-shine"></span>
+    </span>
+  </a>
+  <figcaption><span>Engineering notes</span><a href="/card-studio/">Explore the card <span aria-hidden="true">↗</span></a></figcaption>
+</figure>
+
+<script is:inline type="module" src="/card-studio/home-card.bundle.js"></script>
+
+<style>
+  .home-card { width: 100%; max-width: 320px; margin: 0; justify-self: center; min-width: 0; }
+  .card-preview { position: relative; display: block; width: 100%; aspect-ratio: 3 / 4; perspective: 900px; border-radius: 1rem; }
+  .card-preview:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .card-art { position: absolute; width: 76%; aspect-ratio: 2 / 3; left: 12%; top: 6.5%; display: block; overflow: hidden; border-radius: 7px; background: #fff6d9; border: 1px solid #c5b785; box-shadow: 0 8px 20px rgb(25 32 45 / .12); transform: rotateX(var(--card-x, 0deg)) rotateY(var(--card-y, -8deg)); transition: transform 100ms ease-out; pointer-events: none; }
+  .card-art img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+  .card-art .card-subject { transform: scale(.84746); }
+  .card-shine { position: absolute; inset: 0; background: linear-gradient(var(--shine-angle, 115deg), transparent 20%, rgb(255 244 182 / .18) 43%, rgb(191 224 255 / .15) 53%, transparent 75%); mix-blend-mode: soft-light; }
+  .card-preview :global(canvas) { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; opacity: 0; }
+  .card-preview[data-renderer="webgl"] :global(canvas) { opacity: 1; }
+  .card-preview[data-renderer="webgl"] .card-art { visibility: hidden; }
+  figcaption { display: flex; flex-direction: column; align-items: center; gap: .35rem; margin-top: .25rem; color: var(--muted); font-size: .75rem; }
+  figcaption > span { font-family: Georgia, serif; font-size: 1rem; font-style: italic; }
+  figcaption a { color: var(--muted); text-decoration: none; padding: .4rem; }
+  figcaption a:hover { color: var(--accent); text-decoration: underline; }
+  @media (prefers-reduced-motion: reduce) { .card-art { transition: none; transform: none; } }
+</style>
