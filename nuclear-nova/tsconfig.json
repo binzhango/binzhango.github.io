@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "public/card-studio/*.bundle.js", "tools/favicon-card/web/*.bundle.js"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

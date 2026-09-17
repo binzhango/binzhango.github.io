@@ -1,0 +1,12 @@
+---
+import BlogIndex from '../../../components/BlogIndex.astro';
+import { getAllPosts } from '../../../utils/post-utils';
+import { paginatePosts } from '../../../utils/pagination';
+export async function getStaticPaths() {
+  return paginatePosts(await getAllPosts()).slice(1).map((page) => ({
+    params: { page: String(page.currentPage) },
+    props: page,
+  }));
+}
+---
+<BlogIndex {...Astro.props} />
