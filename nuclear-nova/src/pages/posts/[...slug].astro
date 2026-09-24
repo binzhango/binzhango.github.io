@@ -1,5 +1,10 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
+import InterviewBank from '../../components/InterviewBank.astro';
+import { interviewReadingTime } from '../../utils/interview-reading-time';
+import { validateInterviewBank } from '../../utils/interview-validation';
+import { interviewTopics } from '../../utils/interview-topics';
+import '../../styles/interview.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogShell from '../../components/BlogShell.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
@@ -28,6 +33,10 @@ if (!post) {
 const { Content, headings } = await render(post);
 const adjacent = await getAdjacentPosts(post.id);
 
+const isInterview = post.id.toLowerCase() === '2025/10-30-llm-interview';
+const allInterviewQuestions = isInterview ? await getCollection('interview') : [];
+if (isInterview && import.meta.env.PROD) validateInterviewBank(allInterviewQuestions);
+const interviewQuestions = allInterviewQuestions.filter((q) => q.data.status === 'reviewed').sort((a, b) => a.data.order - b.data.order);
 const pageTitle = post.data.title;
 const pageDescription = post.data.excerpt ?? post.data.description ?? '';
 
@@ -37,6 +46,7 @@ function formatDate(date: Date | undefined): string {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    ...(isInterview ? { timeZone: 'UTC' } : {}),
   });
 }
 
@@ -73,14 +83,24 @@ function toNav(postEntry: Post | null) {
 const prevPost = toNav(adjacent.prev);
 const nextPost = toNav(adjacent.next);
 const currentPath = getPostPath(post);
-const readingTime = estimateReadingTime(post.body ?? '');
+const readingTime = isInterview
+  ? interviewReadingTime([post.body ?? '', ...interviewQuestions.map((q) => q.body ?? '')].join('\n\n'))
+  : estimateReadingTime(post.body ?? '');
 const sectionHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
 const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filter((heading) => heading.depth === 1);
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <BlogShell currentPath={currentPath} reserveSecondary={true}>
-    {tocHeadings.length > 0 && (
+    {isInterview && (
+      <Fragment slot="secondary">
+        <nav class="interview-rail" aria-label="Question topics">
+          <p>Topics · {interviewQuestions.length} questions</p>
+          <ol>{interviewTopics.map(([id, title]) => <li><a href={`#topic-${id}`}><span>{title}</span><small>{interviewQuestions.filter((q) => q.data.topic === id).length}</small></a></li>)}</ol>
+        </nav>
+      </Fragment>
+    )}
+    {!isInterview && tocHeadings.length > 0 && (
       <Fragment slot="secondary">
         <nav class="post-toc" aria-label="On this page" data-post-toc>
           <p class="post-toc__title">On this page</p>
@@ -102,7 +122,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
       </Fragment>
     )}
 
-    <article class="post">
+    <article class:list={['post', { 'post--interview': isInterview }]}>
       <header class="post-header">
         <div class="post-header__eyebrow">
           <span class="post-header__eyebrow-label">Article</span>
@@ -151,6 +171,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
 
       <section class="post-content">
         <Content />
+        {isInterview && <InterviewBank questions={interviewQuestions} />}
       </section>
 
       {(prevPost || nextPost) && (
