@@ -16,7 +16,8 @@ import 'glightbox/dist/css/glightbox.min.css';
     );
 
     contentImages.forEach((img) => {
-      if (img.closest('a.glightbox-wrapper')) return;
+      // Preserve authored links and omit hidden media fallbacks from the gallery.
+      if (img.closest('a, video, audio, object')) return;
 
       const link = document.createElement('a');
       link.href = img.src;
@@ -27,11 +28,12 @@ import 'glightbox/dist/css/glightbox.min.css';
         link.setAttribute('data-description', img.alt);
       }
 
-      const parent = img.parentNode;
+      const media = img.closest('picture') ?? img;
+      const parent = media.parentNode;
       if (!parent) return;
 
-      parent.insertBefore(link, img);
-      link.appendChild(img);
+      parent.insertBefore(link, media);
+      link.appendChild(media);
     });
 
     const state = window as LightboxWindow;

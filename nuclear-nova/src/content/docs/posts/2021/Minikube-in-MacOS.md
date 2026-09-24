@@ -1,5 +1,6 @@
 ---
 title: Setup Minikube
+excerpt: "Set up Minikube on macOS, deploy a sample application, and submit a Spark job to a local Kubernetes cluster."
 authors:
   - BZ
 date: 

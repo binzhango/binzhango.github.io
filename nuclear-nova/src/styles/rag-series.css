@@ -1,19 +1,9 @@
 /* Reading treatments scoped to the RAG Engineering series. */
 .post-content[data-series='rag-engineering'] {
   --rag-rule: color-mix(in srgb, var(--post-muted) 28%, transparent);
-  --reading-width: 52rem;
-  --accent-soft: #edf4f0;
-  --table-head: #356859;
-  --canvas: #fafafa;
-  --ink: #18181b;
   min-width: 0;
   /* Wide rendered code/table descendants scroll in their own containers. */
   line-height: 1.7;
-}
-:root[data-theme='dark'] .post-content[data-series='rag-engineering'] {
-  --accent-soft: #263d34;
-  --canvas: #18181b;
-  --ink: #fafafa;
 }
 
 .post-content[data-series='rag-engineering'] :is(h2, h3) {

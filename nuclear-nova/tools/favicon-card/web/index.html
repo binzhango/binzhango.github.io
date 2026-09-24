@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#fafafa" />
+    <link rel="icon" href="./assets/favicon.png" />
+    <title>Bin Zhang · Engineering Notes</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./app.bundle.js"></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="wordmark" href="/" aria-label="Back to the blog"
+        ><span class="wordmark-cn">BZ<span class="brand-dot"></span></span
+        ><span class="wordmark-en">ENGINEERING NOTES</span></a
+      >
+      <span class="collection-label"
+        >Engineering notes <span>/</span> <span id="edition">binzhango.net</span></span
+      >
+      <div class="header-actions">
+<button class="icon-button" id="auto" aria-label="Auto rotate" title="Auto rotate" aria-pressed="false"><i data-lucide="play"></i></button>
+<button class="icon-button" id="reset" aria-label="Reset view" title="Reset view"><i data-lucide="rotate-ccw"></i></button>
+        <button
+          class="icon-button"
+          id="info"
+          aria-label="About this card"
+          title="About this card"
+          disabled
+        >
+          <i data-lucide="info"></i>
+        </button>
+        <button
+          class="icon-button save-button"
+          id="save"
+          aria-label="Save card image"
+          title="Save card image"
+          disabled
+        >
+          <i data-lucide="download"></i>
+        </button>
+      </div>
+    </header>
+    <main>
+      <section class="gallery" aria-label="Card gallery">
+        <div
+          class="stage"
+          id="stage"
+          tabindex="0"
+          role="group"
+          aria-label="Interactive holographic card; drag to rotate, use arrow keys to tilt"
+        >
+          <div id="loading" class="loading" role="status">
+            <span class="loading-line"></span><span>Preparing your card</span>
+          </div>
+        </div>
+        <div class="stage-note" aria-hidden="true">
+          <span>ENGINEERING / NOTES</span><span id="view-label">01 / FRONT</span>
+        </div>
+        <div class="parameter-panel" id="parameter-panel">
+          <div class="panel-heading">
+            <span>Depth & composition</span>
+          </div>
+          <label class="range-row" for="scale"
+            ><span>Artwork scale</span><output id="scale-value"></output
+            ><input id="scale" type="range" min="0.95" max="1.35" step="0.01"
+          /></label>
+          <label class="range-row" for="depth"
+            ><span>Cat depth</span><output id="depth-value"></output
+            ><input id="depth" type="range" min="-0.45" max="0.45" step="0.01"
+          /></label>
+          <label class="range-row" for="fx-depth"
+            ><span>Effects depth</span><output id="fx-depth-value"></output
+            ><input id="fx-depth" type="range" min="-0.3" max="0.9" step="0.01"
+          /></label>
+          <label class="range-row" for="bg-depth"
+            ><span>Background depth</span><output id="bg-depth-value"></output
+            ><input id="bg-depth" type="range" min="-0.4" max="0.4" step="0.01"
+          /></label>
+        </div>
+      </section>
+      <section class="artwork-bar" aria-label="Artwork & finish">
+        <div class="artwork-title">
+          <div class="title-line">
+            <h1 id="card-title">Bin Zhang</h1>
+            <span id="subtitle">AI systems & data engineering</span>
+          </div>
+          <p id="description">Notes on language models, retrieval systems, and data infrastructure. From underlying concepts to working code.</p>
+        </div>
+        <div class="face-picker" role="group" aria-label="Card side">
+          <button id="front" aria-pressed="true" disabled>Front</button
+          ><button id="back" aria-pressed="false" disabled>Back</button>
+        </div>
+        <div class="finish-cluster">
+          <button
+            id="depth-toggle"
+            class="depth-toggle"
+            type="button"
+            aria-controls="parameter-panel"
+            aria-expanded="true"
+            aria-label="Show or hide depth controls"
+            title="Show or hide depth controls"
+          >
+            <i data-lucide="sliders-horizontal"></i><span>Adjust depth</span>
+          </button>
+          <div class="finish-control">
+          <div class="finish-heading">
+            <span>Finish</span>
+            <div class="swatches" role="group" aria-label="Card finish">
+              <button
+                class="swatch pearl"
+                data-finish="pearl"
+                aria-pressed="true"
+                aria-label="Pearl"
+                title="Pearl"
+                disabled
+              ></button
+              ><button
+                class="swatch silver"
+                data-finish="silver"
+                aria-pressed="false"
+                aria-label="Silver"
+                title="Silver"
+                disabled
+              ></button
+              ><button
+                class="swatch gold"
+                data-finish="gold"
+                aria-pressed="true"
+                aria-label="Gold"
+                title="Gold"
+                disabled
+              ></button
+              ><button
+                class="swatch original"
+                data-finish="original"
+                aria-pressed="false"
+                aria-label="Original"
+                title="Original"
+                disabled
+              ></button>
+            </div>
+            <span id="finish-name">Gold</span>
+          </div>
+          <label class="foil-row" for="foil"
+            ><span>Foil</span
+            ><input
+              id="foil"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.52"
+              disabled
+            /><output id="foil-value">52%</output></label
+          >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <span>Drag to tilt · Scroll to zoom · Arrow keys to explore</span><span>BIN ZHANG / ENGINEERING NOTES</span>
+    </footer>
+    <dialog id="about" aria-labelledby="about-title">
+      <button
+        id="close-about"
+        class="icon-button modal-close"
+        aria-label="Close card information"
+        title="Close card information"
+      >
+        <i data-lucide="x"></i>
+      </button>
+      <p class="dialog-mark">BZ</p>
+      <h2 id="about-title">AI systems & data engineering / Bin Zhang</h2>
+      <p id="about-description"></p>
+      <dl>
+        <div>
+          <dt>Source</dt>
+          <dd>Original blog favicon</dd>
+        </div>
+        <div>
+          <dt>Format</dt>
+          <dd>Layered holographic card</dd>
+        </div>
+        <div>
+          <dt>Website</dt>
+          <dd id="about-edition">binzhango.net</dd>
+        </div>
+      </dl>
+    </dialog>
+    <div id="notice" role="status" class="notice" hidden></div>
+  </body>
+</html>

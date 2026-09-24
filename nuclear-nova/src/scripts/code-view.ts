@@ -7,13 +7,12 @@ export function getCodeText(code: Element): string {
 }
 
 export function setupCodeViews() {
-  document.querySelectorAll<HTMLElement>('.interview-bank pre[data-language], .interview-bank pre.astro-code').forEach((pre) => {
+  document.querySelectorAll<HTMLElement>('pre[data-language], pre.astro-code').forEach((pre) => {
     if (pre.closest('.code-block-wrapper')) return;
     const code = pre.querySelector('code');
     if (!code) return;
     const wrapper = document.createElement('div');
-    wrapper.className = 'code-block-wrapper interview-code-block';
-    wrapper.dataset.language = pre.dataset.language || 'Code';
+    wrapper.className = 'code-block-wrapper';
     wrapper.dataset.wrap = 'true';
     const toolbar = document.createElement('div');
     toolbar.className = 'code-toolbar';
@@ -63,7 +62,7 @@ export function setupCodeViews() {
       const tone = wrapper.closest<HTMLElement>('[data-topic-tone]')?.dataset.topicTone;
       wrapper.replaceWith(placeholder);
       dialog = document.createElement('dialog');
-      dialog.className = 'interview-code-dialog';
+      dialog.className = 'code-dialog';
       dialog.setAttribute('aria-label', `${language.textContent} code — expanded view`);
       if (tone) dialog.dataset.topicTone = tone;
       expand.textContent = 'Close'; expand.removeAttribute('aria-haspopup');
@@ -85,4 +84,18 @@ export function setupCodeViews() {
     pre.before(wrapper); wrapper.append(toolbar, pre);
     document.addEventListener('astro:before-swap', () => { clearTimeout(feedback); dialog?.close(); }, { once: true });
   });
+}
+
+export function setupTableOverflow() {
+  const regions = document.querySelectorAll<HTMLElement>('.post-content .table-scroll, .post-content .rag-table');
+  const observers: ResizeObserver[] = [];
+  regions.forEach((region) => {
+    const table = region.querySelector('table');
+    if (!table || region.dataset.observed) return;
+    region.dataset.observed = 'true';
+    const update = () => { region.dataset.overflow = String(region.scrollWidth > region.clientWidth + 1); };
+    const observer = new ResizeObserver(update);
+    observer.observe(region); observer.observe(table); observers.push(observer); update();
+  });
+  document.addEventListener('astro:before-swap', () => observers.forEach((observer) => observer.disconnect()), { once: true });
 }

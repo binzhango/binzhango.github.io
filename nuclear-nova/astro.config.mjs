@@ -11,6 +11,8 @@ import rehypeMermaid from 'rehype-mermaid';
 import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers';
 import remarkStarlightAdmonitions from './src/plugins/remark-starlight-admonitions.mjs';
 import rehypeMermaidShikiAdapter from './src/plugins/rehype-mermaid-shiki-adapter.mjs';
+import rehypeReadableContent from './src/plugins/rehype-readable-content.mjs';
+import remarkLegacyEmoji from './src/plugins/remark-legacy-emoji.mjs';
 import remarkInterview from './src/plugins/remark-interview.mjs';
 import rehypeInterviewIds from './src/plugins/rehype-interview-ids.mjs';
 
@@ -18,6 +20,49 @@ import rehypeInterviewIds from './src/plugins/rehype-interview-ids.mjs';
 export default defineConfig({
     site: process.env.SITE_URL ?? 'https://binzhango.net',
     output: 'static',
+    redirects: {
+        '/posts/2026/08-27-local-lke-01-inspectable-rag-baseline':
+            '/posts/2026/08-27-rag-engineering-01-inspectable-rag-baseline',
+        '/posts/2026/08-30-local-lke-02-chunking-is-a-retrieval-decision':
+            '/posts/2026/08-30-rag-engineering-02-chunking-is-a-retrieval-decision',
+        '/posts/2026/09-02-local-lke-03-safe-versioned-ingestion':
+            '/posts/2026/09-02-rag-engineering-03-safe-versioned-ingestion',
+        '/posts/2026/09-05-local-lke-04-embedding-profile-index-contract':
+            '/posts/2026/09-05-rag-engineering-04-embedding-profile-index-contract',
+        '/posts/2026/09-08-local-lke-05-context-expansion-multimodal-search':
+            '/posts/2026/09-08-rag-engineering-05-context-expansion-multimodal-search',
+        '/posts/2026/09-11-local-lke-06-hybrid-corrective-retrieval':
+            '/posts/2026/09-11-rag-engineering-06-hybrid-corrective-retrieval',
+        '/posts/2026/09-14-local-lke-07-query-planning-safe-structured-retrieval':
+            '/posts/2026/09-14-rag-engineering-07-query-planning-safe-structured-retrieval',
+        '/posts/2026/09-17-local-lke-08-validated-cited-generation':
+            '/posts/2026/09-17-rag-engineering-08-validated-cited-generation',
+        '/posts/2026/09-20-local-lke-09-rag-evaluation-regression-gates':
+            '/posts/2026/09-20-rag-engineering-09-rag-evaluation-regression-gates',
+        '/posts/2026/09-23-local-lke-10-security-governance':
+            '/posts/2026/09-23-rag-engineering-10-security-governance',
+        '/collections/local-lke-rag-engineering': '/collections/rag-engineering',
+        '/tags/local-lke': '/tags/rag-engineering',
+        '/tools/local-lke-baseline-flow.html': '/tools/rag-baseline-flow.html',
+        '/posts/2026/08-27-local-lke-02-chunking-is-a-retrieval-decision':
+            '/posts/2026/08-30-rag-engineering-02-chunking-is-a-retrieval-decision',
+        '/posts/2026/08-27-local-lke-03-safe-versioned-ingestion':
+            '/posts/2026/09-02-rag-engineering-03-safe-versioned-ingestion',
+        '/posts/2026/08-27-local-lke-04-embedding-profile-index-contract':
+            '/posts/2026/09-05-rag-engineering-04-embedding-profile-index-contract',
+        '/posts/2026/08-27-local-lke-05-context-expansion-multimodal-search':
+            '/posts/2026/09-08-rag-engineering-05-context-expansion-multimodal-search',
+        '/posts/2026/08-27-local-lke-06-hybrid-corrective-retrieval':
+            '/posts/2026/09-11-rag-engineering-06-hybrid-corrective-retrieval',
+        '/posts/2026/08-27-local-lke-07-query-planning-safe-structured-retrieval':
+            '/posts/2026/09-14-rag-engineering-07-query-planning-safe-structured-retrieval',
+        '/posts/2026/08-27-local-lke-08-validated-cited-generation':
+            '/posts/2026/09-17-rag-engineering-08-validated-cited-generation',
+        '/posts/2026/08-27-local-lke-09-rag-evaluation-regression-gates':
+            '/posts/2026/09-20-rag-engineering-09-rag-evaluation-regression-gates',
+        '/posts/2026/08-27-local-lke-10-security-governance':
+            '/posts/2026/09-23-rag-engineering-10-security-governance',
+    },
     devToolbar: {
         enabled: false,
     },
@@ -27,7 +72,7 @@ export default defineConfig({
         sitemap(),
     ],
     markdown: {
-        remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkStarlightAdmonitions, remarkInterview],
+        remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkLegacyEmoji, remarkStarlightAdmonitions, remarkInterview],
         rehypePlugins: [
             [
                 rehypeMathJax,
@@ -43,6 +88,7 @@ export default defineConfig({
             ],
             rehypeMermaidShikiAdapter,
             [rehypeMermaid, { strategy: 'img-svg' }],
+            rehypeReadableContent,
             rehypeInterviewIds,
         ],
         shikiConfig: {

@@ -1,5 +1,6 @@
 ---
 title: Crawling the Web with LLM
+excerpt: "Web crawling frameworks and a ScrapeGraphAI example that uses local Ollama models to extract structured information from a webpage."
 authors:
   - BZ
 date: 2025-02-16

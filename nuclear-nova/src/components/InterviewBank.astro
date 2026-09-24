@@ -6,10 +6,6 @@ const { questions } = Astro.props;
 const compiled = await Promise.all(questions.map(async (question) => ({ question, ...(await render(question)) })));
 ---
 <div class="interview-bank" data-interview-bank data-mode="read">
-  <nav class="interview-mobile-topics" aria-label="Question topics">
-    <p>Topics · {questions.length} questions</p>
-    <ol>{interviewTopics.map(([id, title]) => <li><a href={`#topic-${id}`}>{title}</a></li>)}</ol>
-  </nav>
   <div class="interview-controls" data-controls hidden>
     <div class="interview-mode" role="group" aria-label="Study mode">
       <button type="button" data-mode-button="read" aria-pressed="true">Read</button>
@@ -67,9 +63,6 @@ const compiled = await Promise.all(questions.map(async (question) => ({ question
 </div>
 <script>
   import { setupInterviewBanks } from '../scripts/interview-bank';
-  import { setupCodeViews } from '../scripts/interview-code-view';
   setupInterviewBanks();
-  setupCodeViews();
   document.addEventListener('astro:page-load', setupInterviewBanks);
-  document.addEventListener('astro:page-load', setupCodeViews);
 </script>
