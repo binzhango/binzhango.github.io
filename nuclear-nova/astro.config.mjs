@@ -13,6 +13,8 @@ import remarkStarlightAdmonitions from './src/plugins/remark-starlight-admonitio
 import rehypeMermaidShikiAdapter from './src/plugins/rehype-mermaid-shiki-adapter.mjs';
 import rehypeReadableContent from './src/plugins/rehype-readable-content.mjs';
 import remarkLegacyEmoji from './src/plugins/remark-legacy-emoji.mjs';
+import remarkInterview from './src/plugins/remark-interview.mjs';
+import rehypeInterviewIds from './src/plugins/rehype-interview-ids.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -70,7 +72,7 @@ export default defineConfig({
         sitemap(),
     ],
     markdown: {
-        remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkLegacyEmoji, remarkStarlightAdmonitions],
+        remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkLegacyEmoji, remarkStarlightAdmonitions, remarkInterview],
         rehypePlugins: [
             [
                 rehypeMathJax,
@@ -87,6 +89,7 @@ export default defineConfig({
             rehypeMermaidShikiAdapter,
             [rehypeMermaid, { strategy: 'img-svg' }],
             rehypeReadableContent,
+            rehypeInterviewIds,
         ],
         shikiConfig: {
             // Choose from Shiki's built-in themes (or add your own)

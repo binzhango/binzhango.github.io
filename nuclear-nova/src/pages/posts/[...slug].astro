@@ -1,5 +1,10 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
+import InterviewBank from '../../components/InterviewBank.astro';
+import { interviewReadingTime } from '../../utils/interview-reading-time';
+import { validateInterviewBank } from '../../utils/interview-validation';
+import { interviewTopics } from '../../utils/interview-topics';
+import '../../styles/interview.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogShell from '../../components/BlogShell.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
@@ -32,6 +37,10 @@ if (!post) {
 const { Content, headings } = await render(post);
 const adjacent = await getAdjacentPosts(post.id);
 
+const isInterview = post.id.toLowerCase() === '2025/10-30-llm-interview';
+const allInterviewQuestions = isInterview ? await getCollection('interview') : [];
+if (isInterview && import.meta.env.PROD) validateInterviewBank(allInterviewQuestions);
+const interviewQuestions = allInterviewQuestions.filter((q) => q.data.status === 'reviewed').sort((a, b) => a.data.order - b.data.order);
 const pageTitle = post.data.title;
 const isInferenceWalkthrough = post.id === '2026/03-07-prompt-in-llm';
 const isRagSeries = post.data.tags?.includes('rag-engineering') ?? false;
@@ -84,16 +93,19 @@ const seriesIndex = series?.posts.findIndex((entry) => entry.id === post.id) ?? 
 // Keep chapter order within a series, with chronological links at its boundaries.
 const prevPost = toNav(series && seriesIndex >= 0 ? series.posts[seriesIndex - 1] ?? adjacent.prev : adjacent.prev);
 const nextPost = toNav(series && seriesIndex >= 0 ? series.posts[seriesIndex + 1] ?? adjacent.next : adjacent.next);
-const readingTime = estimateReadingTime(post.body ?? '');
+const readingTime = isInterview
+  ? interviewReadingTime([post.body ?? '', ...interviewQuestions.map((q) => q.body ?? '')].join('\n\n'))
+  : estimateReadingTime(post.body ?? '');
 const sectionHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
 const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filter((heading) => heading.depth === 1);
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <BlogShell article>
-    {tocHeadings.length > 0 && <TableOfContents slot="secondary" tone={getTopicTone(post.data.categories?.[0])} headings={tocHeadings} />}
+    {isInterview && <nav slot="secondary" class="interview-rail" aria-label="Question topics"><p>Topics · {interviewQuestions.length} questions</p><ol>{interviewTopics.map(([id, title]) => <li><a href={`#topic-${id}`}><span>{title}</span><small>{interviewQuestions.filter((q) => q.data.topic === id).length}</small></a></li>)}</ol></nav>}
+    {!isInterview && tocHeadings.length > 0 && <TableOfContents slot="secondary" tone={getTopicTone(post.data.categories?.[0])} headings={tocHeadings} />}
 
-    <article data-topic-tone={getTopicTone(post.data.categories?.[0])} class:list={['post', { 'post--walkthrough': isInferenceWalkthrough }]}>
+    <article data-topic-tone={getTopicTone(post.data.categories?.[0])} class:list={['post', { 'post--walkthrough': isInferenceWalkthrough, 'post--interview': isInterview }]}>
       <header class="post-header">
         <h1>{post.data.title}</h1>
         {pageDescription && <p class="post-header__summary">{pageDescription}</p>}
@@ -140,6 +152,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
 
       <section class="post-content" data-series={isRagSeries ? 'rag-engineering' : undefined}>
         <Content />
+        {isInterview && <InterviewBank questions={interviewQuestions} />}
       </section>
 
       {(prevPost || nextPost) && (
