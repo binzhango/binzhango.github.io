@@ -1,5 +1,6 @@
 ---
 title: "ChatGPT in 2025: A Year in Review"
+excerpt: "A visual recap of my year with ChatGPT in 2025, collecting usage statistics and personalized summary cards."
 author: BZ
 date: 2026-01-04
 categories:

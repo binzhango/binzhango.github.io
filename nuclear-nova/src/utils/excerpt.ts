@@ -1,61 +1,72 @@
+import type { Nodes } from 'mdast';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import remarkDirective from 'remark-directive';
+import remarkMath from 'remark-math';
+
 interface ExcerptSource {
   data: {
     excerpt?: string;
+    description?: string;
   };
   body?: string;
 }
 
 const ELLIPSIS = '...';
+const parser = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkDirective)
+  .use(remarkMath);
 
-function toPlainText(input: string): string {
-  return input
-    .replace(/<!--[\s\S]*?-->/g, ' ')
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/<summary>[\s\S]*?<\/summary>/gi, ' ')
-    .replace(/<\/?details>/gi, ' ')
-    .replace(/^:{3,}\S*(?:\[[^\]]*\])?(?:\{[^}]*\})?\s*$/gm, ' ')
-    .replace(/`([^`]+)`/g, '$1')
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/^[>#-]+\s?/gm, '')
-    .replace(/[*_~]+/g, '')
-    .replace(/\s+/g, ' ')
-    .replace(/\s+([.,!?;:])/g, '$1')
-    .trim();
-}
-
-function isUsableExcerpt(rawBlock: string, cleanedBlock: string): boolean {
-  if (!cleanedBlock) return false;
-
-  const normalizedRaw = rawBlock.trim();
-
-  if (!normalizedRaw) return false;
-  if (/^#{1,6}\s+/.test(normalizedRaw)) return false;
-  if (/^:{3,}/.test(normalizedRaw)) return false;
-  if (/^<\/?details>/i.test(normalizedRaw)) return false;
-  if (/^<summary>/i.test(normalizedRaw)) return false;
-  if (/^(Question|Questions|Answer|Sample Code)\b/i.test(cleanedBlock)) return false;
-  if (cleanedBlock.length < 35 && !/[.!?]/.test(cleanedBlock)) return false;
-
-  return true;
+function inlineText(node: Nodes): string {
+  switch (node.type) {
+    case 'text':
+    case 'inlineCode':
+      return node.value;
+    case 'break':
+      return ' ';
+    case 'html':
+      return /^<br\s*\/?\s*>$/i.test(node.value) ? ' ' : '';
+    case 'paragraph':
+    case 'emphasis':
+    case 'strong':
+    case 'delete':
+    case 'link':
+    case 'linkReference':
+      return node.children.map(inlineText).join('');
+    default:
+      return '';
+  }
 }
 
 function extractExcerptSource(input: string): string {
-  const blocks = input
-    .split(/\n\s*\n+/)
-    .map((block) => ({
-      raw: block,
-      cleaned: toPlainText(block),
-    }));
-
-  for (const block of blocks) {
-    if (isUsableExcerpt(block.raw, block.cleaned)) {
-      return block.cleaned;
+  // Parse the whole document so blank lines inside code, diagrams, and logs
+  // cannot turn their contents into candidate paragraphs.
+  const tree = parser.parse(input);
+  const nestedParagraphs = (node: Nodes): Nodes[] => {
+    if (node.type === 'paragraph') return node.data?.directiveLabel ? [] : [node];
+    if (node.type === 'blockquote' || node.type === 'containerDirective') {
+      return node.children.flatMap(nestedParagraphs);
     }
-  }
+    return [];
+  };
+  const paragraphs = [
+    ...tree.children.filter((node) => node.type === 'paragraph'),
+    ...tree.children.filter((node) => node.type !== 'paragraph').flatMap(nestedParagraphs),
+  ]
+    .map((node) => inlineText(node)
+      .replace(/:(bulb|question_mark|exclamation|warning|smile):/g, '')
+      .replace(/\s+/g, ' ')
+      .replace(/\s+([.,!?;:])/g, '$1')
+      .trim())
+    .filter(Boolean);
 
-  return toPlainText(input);
+  // Only fall back to another paragraph, never to flattened raw Markdown.
+  return paragraphs.find((text) => text.length >= 35 || /[.!?]/.test(text))
+    ?? paragraphs[0]
+    ?? '';
 }
 
 function truncate(input: string, maxLength: number): string {
@@ -70,7 +81,7 @@ function truncate(input: string, maxLength: number): string {
 }
 
 export function getPostExcerpt(post: ExcerptSource, maxLength = 150): string {
-  const source = post.data.excerpt ?? post.body ?? '';
+  const source = post.data.excerpt ?? post.data.description ?? post.body ?? '';
   const cleaned = extractExcerptSource(source);
   return truncate(cleaned, maxLength);
 }

@@ -1,5 +1,6 @@
 ---
 title: Text to SQL (Smolagents)
+excerpt: "A smolagents text-to-SQL example with query execution logs, answers from a receipts database, and tracing with Phoenix."
 authors:
   - BZ
 date: 2025-05-04

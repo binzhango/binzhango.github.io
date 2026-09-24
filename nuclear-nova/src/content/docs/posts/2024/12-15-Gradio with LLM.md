@@ -1,5 +1,6 @@
 ---
 title: Gradio with Ollama
+excerpt: "Notes on processing unstructured PDF content and a demo architecture connecting a Gradio interface to models served by Ollama."
 authors:
   - BZ
 date: 2024-12-15

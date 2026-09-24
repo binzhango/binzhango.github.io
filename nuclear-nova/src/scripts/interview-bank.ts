@@ -158,7 +158,7 @@ export function setupInterviewBanks() {
       if (card?.dataset.question) current = card.dataset.question;
       update(); requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
     };
-    document.querySelectorAll<HTMLAnchorElement>('.interview-rail a, .interview-mobile-topics a').forEach((link) => listen(link, 'click', (event) => {
+    document.querySelectorAll<HTMLAnchorElement>('.interview-rail a').forEach((link) => listen(link, 'click', (event) => {
       if (mode !== 'practice') {
         event.preventDefault();
         if (location.hash !== link.hash) history.pushState(null, '', link.hash);

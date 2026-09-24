@@ -1,0 +1,11 @@
+---
+import studioHtml from '../../tools/favicon-card/web/index.html?raw';
+import card from '../../tools/favicon-card/card-config.json';
+
+// An Astro route makes the directory URL work in dev as well as static hosting.
+// Resolve all viewer assets consistently with or without a trailing slash.
+const canonical = new URL('/card-studio/', Astro.site ?? Astro.url).href;
+const escapeAttribute = (value: string) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
+const html = studioHtml.replace('<head>', `<head><base href="/card-studio/" /><link rel="canonical" href="${escapeAttribute(canonical)}" /><meta name="description" content="${escapeAttribute(card.description)}" />`);
+---
+<Fragment set:html={html} />

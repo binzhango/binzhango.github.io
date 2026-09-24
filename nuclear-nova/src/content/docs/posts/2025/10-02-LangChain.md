@@ -1,5 +1,6 @@
 ---
 title: LangGraph Sample Project
+excerpt: "A LangGraph sample project with separate research, analysis, and supervisor services, REST communication, and retry handling."
 authors:
   - BZ
 date: 2025-10-02

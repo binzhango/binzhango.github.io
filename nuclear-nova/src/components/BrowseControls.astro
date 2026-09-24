@@ -1,0 +1,68 @@
+---
+import { getPostsByCategory, getPostsByYear } from '../utils/post-utils';
+import { slugifyCategory } from '../utils/taxonomy';
+const [byYear, byCategory] = await Promise.all([getPostsByYear(), getPostsByCategory()]);
+const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
+const topics = Object.keys(byCategory).sort((a, b) => a.localeCompare(b));
+const path = Astro.url.pathname;
+const selectedYear = years.find(year => path === `/archive/${year}/`);
+const selectedTopic = topics.find(topic => path === `/categories/${slugifyCategory(topic)}/`);
+const topicLabel = (topic: string) => topic.toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase()).replace(/^Ai\b/, 'AI').replace(/^Devops$/, 'DevOps');
+---
+<nav class="browse-controls" aria-label="Browse posts">
+  <div class="browse-views">
+    <a href="/posts/" aria-current={path === '/posts/' || path.startsWith('/posts/page/') ? 'page' : undefined}>All posts</a>
+    <a href="/collections/" aria-current={path.startsWith('/collections/') ? 'page' : undefined}>Reading paths</a>
+  </div>
+  <div class="browse-filters">
+    <details data-disclosure name="browse-writing" class:list={{ 'has-selection': selectedYear }}>
+      <summary aria-label={selectedYear ? `Browse by year: ${selectedYear}` : 'Browse by year'}><span>{selectedYear ?? 'Year'}</span><span class="browse-chevron" aria-hidden="true"></span></summary>
+      <div class="browse-options browse-options--years">
+        <p class="browse-options__label">Browse by year</p>
+        <a href="/posts/">All years</a>
+        {years.map((year) => <a href={`/archive/${year}/`} aria-current={selectedYear === year ? 'page' : undefined}><span>{year}</span><span class="browse-count">{byYear[year].length} {byYear[year].length === 1 ? 'post' : 'posts'}</span></a>)}
+      </div>
+    </details>
+    <details data-disclosure name="browse-writing" class:list={{ 'has-selection': selectedTopic }}>
+      <summary aria-label={selectedTopic ? `Browse by topic: ${topicLabel(selectedTopic)}` : 'Browse by topic'}><span>{selectedTopic ? topicLabel(selectedTopic) : 'Topic'}</span><span class="browse-chevron" aria-hidden="true"></span></summary>
+      <div class="browse-options">
+        <p class="browse-options__label">Browse by topic</p>
+        <a href="/posts/">All topics</a>
+        {topics.map((topic) => <a href={`/categories/${slugifyCategory(topic)}/`} aria-current={selectedTopic === topic ? 'page' : undefined}><span>{topicLabel(topic)}</span><span class="browse-count">{byCategory[topic].length}</span></a>)}
+      </div>
+    </details>
+  </div>
+</nav>
+
+<style>
+  .browse-controls { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+  .browse-views, .browse-filters { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+  .browse-views a { display: flex; align-items: center; min-height: 44px; padding: .65rem 1rem; border-radius: .5rem; color: var(--muted); font-size: .875rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .browse-views a[aria-current='page'] { color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .browse-views a:hover { color: var(--accent); background: var(--accent-soft); }
+  details { position: relative; min-width: 0; }
+  summary { display: flex; align-items: center; justify-content: space-between; gap: .9rem; min-height: 44px; padding: .65rem .9rem; border: 1px solid var(--line); border-radius: .5rem; background: var(--surface); color: var(--body-text); font-size: .875rem; font-weight: 500; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary > span:first-child { overflow-wrap: anywhere; }
+  .browse-chevron { width: .4rem; height: .4rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); flex-shrink: 0; }
+  details[open] .browse-chevron { transform: translateY(2px) rotate(225deg); }
+  summary:hover, details[open] summary, .has-selection summary { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .browse-options { position: absolute; top: calc(100% + .6rem); right: 0; width: 20rem; max-width: calc(100vw - 2.5rem); max-height: min(28rem, 65dvh); overflow-y: auto; overscroll-behavior: contain; padding: .5rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); box-shadow: 0 12px 32px color-mix(in srgb, var(--ink) 12%, transparent); }
+  .browse-options--years { width: 15rem; }
+  .browse-options__label { margin: .35rem .65rem .5rem; font-size: .8125rem; color: var(--muted); }
+  .browse-options a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 44px; padding: .65rem; border-radius: .4rem; font-size: .875rem; color: var(--body-text); text-decoration: none; }
+  .browse-count { color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .browse-options a:hover, .browse-options a[aria-current='page'] { background: var(--accent-soft); color: var(--accent); }
+  .browse-options a[aria-current='page'] { font-weight: 600; box-shadow: inset 3px 0 var(--accent); }
+  @media (prefers-reduced-motion: no-preference) { a, summary { transition: color 160ms ease, background 160ms ease, border-color 160ms ease; } .browse-chevron { transition: transform 160ms ease; } }
+  @media (max-width: 767px) {
+    .browse-controls { align-items: stretch; gap: .75rem; }
+    .browse-views, .browse-filters { width: 100%; }
+    .browse-views a { flex: 1; justify-content: center; }
+    .browse-filters { display: grid; align-items: stretch; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    details { position: static; }
+    summary { height: 100%; }
+    .browse-options { top: calc(100% - .4rem); left: 0; right: 0; width: 100%; max-width: none; }
+  }
+</style>

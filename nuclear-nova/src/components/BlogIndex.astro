@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogShell from './BlogShell.astro';
+import PostPreview from './PostPreview.astro';
+import Pagination from './Pagination.astro';
+import type { Post } from '../utils/post-utils';
+interface Props { posts: Post[]; currentPage: number; totalPages: number; totalPosts: number; start: number; end: number; }
+const { posts, currentPage, totalPages, totalPosts, start, end } = Astro.props;
+---
+<BaseLayout title={currentPage === 1 ? 'Blog Posts' : `Blog Posts — Page ${currentPage}`} description={`Blog posts by Bin Zhang. Page ${currentPage} of ${totalPages}.`}>
+  <BlogShell>
+    <header class="page-heading"><p class="eyebrow">The notebook / {totalPosts} articles</p><h1>Ideas into practice</h1><p>Notes on LLMs, machine learning, data engineering, and the systems that make them work.</p></header>
+    <div class="listing-controls"><p class="page-summary">{totalPosts ? `Showing ${start}–${end} of ${totalPosts} posts` : 'No posts yet'}</p>
+    <Pagination currentPage={currentPage} totalPages={totalPages} position="top" /></div>
+    <div class="post-list">{posts.map((post) => <PostPreview post={post} />)}</div>
+    <Pagination currentPage={currentPage} totalPages={totalPages} position="bottom" />
+  </BlogShell>
+</BaseLayout>
+<style>
+  .listing-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem 1rem; }
+  .listing-controls :global(.pagination) { padding-block: .4rem; }
+  .page-summary { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; margin: 0; color: var(--muted); font-size: .8rem; }
+</style>

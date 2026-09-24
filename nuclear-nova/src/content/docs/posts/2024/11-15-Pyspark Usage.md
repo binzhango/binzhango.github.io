@@ -1,5 +1,6 @@
 ---
 title: PySpark Dataframe Transformation
+excerpt: "Notes on moving from Scala to PySpark, using Python dataclasses for data models, and creating DataFrames from Row objects."
 authors:
   - BZ
 date: 2024-11-15

@@ -1,5 +1,6 @@
 ---
 title: Spark SQL
+excerpt: "Spark submit options and tuning notes covering executors, memory, parallelism, and resource allocation on YARN."
 
 date: 
   created: 2020-02-21 14:10:36

@@ -1,5 +1,6 @@
 ---
 title: MCP Transports
+excerpt: Compare stdio, SSE, and Streamable HTTP transports for MCP, with Python examples for configuring servers and clients.
 authors:
   - BZ
 date: 2025-06-23

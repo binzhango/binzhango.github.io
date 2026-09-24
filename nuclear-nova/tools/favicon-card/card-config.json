@@ -1,0 +1,34 @@
+{
+  "title": "Bin Zhang",
+  "subtitle": "AI systems & data engineering",
+  "technique": "From concepts to code",
+  "tagline": "Language models · Retrieval · Infrastructure",
+  "edition": "binzhango.net",
+  "collection": "ENGINEERING NOTES",
+  "description": "Notes on language models, retrieval systems, and data infrastructure. From underlying concepts to working code.",
+  "assets": {
+    "model": "./assets/card.glb",
+    "subject": "./assets/subject.png",
+    "background": "./assets/background.png",
+    "text": "./assets/text.png",
+    "lineart": "./assets/lineart.png"
+  },
+  "parameters": {
+    "subjectScale": 1.18,
+    "subjectDepth": 0.38,
+    "backgroundDepth": -0.22,
+    "foil": 0.38,
+    "effectsDepth": 0.9
+  },
+  "safeArea": {
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "appearance": {
+    "background": "#fafafa",
+    "finish": "pearl"
+  }
+}

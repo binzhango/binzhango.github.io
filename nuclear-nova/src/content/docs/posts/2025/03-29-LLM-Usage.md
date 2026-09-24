@@ -1,5 +1,6 @@
 ---
 title: GenAI Projects
+excerpt: "A collection of generative AI resources and project notes on schema mapping, feature engineering, PDF extraction, and agent frameworks."
 authors:
   - BZ
 date: 2025-03-29

@@ -13,7 +13,12 @@
     "astro": "astro",
     "new:post": "node ./scripts/init-blog-post.mjs",
     "new:post:sh": "bash ./scripts/init-blog-post.sh",
-    "test": "vitest run"
+    "test": "vitest run",
+    "sync:card": "node scripts/sync-card-studio.mjs",
+    "prebuild": "npm run sync:card",
+    "predev": "npm run sync:card",
+    "prestart": "npm run sync:card",
+    "postbuild": "node scripts/check-card-build.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
@@ -36,12 +41,15 @@
     "remark-parse": "^11.0.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
+    "three": "0.180.0",
     "typescript": "^5.9.3",
     "unified": "^11.0.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.0",
+    "@types/mdast": "^4.0.4",
     "@vitest/ui": "^4.0.18",
+    "esbuild": "0.25.12",
     "fast-check": "^4.5.3",
     "playwright": "^1.58.0",
     "vitest": "^4.0.18"
