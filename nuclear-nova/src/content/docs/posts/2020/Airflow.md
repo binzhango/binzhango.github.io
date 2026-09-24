@@ -1,5 +1,6 @@
 ---
 title: Airflow
+excerpt: "Airflow DAG examples for scheduling Python tasks, configuring retries and queues, and separating task implementations."
 authors:
   - BZ
 date: 

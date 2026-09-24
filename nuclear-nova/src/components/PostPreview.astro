@@ -9,6 +9,7 @@ const { post, index, headingLevel = 2 } = Astro.props;
 const Heading = headingLevel === 2 ? 'h2' : 'h3';
 const tone = getTopicTone(post.data.categories?.[0]);
 const display = getDisplayTitle(post.data.title);
+const excerpt = getPostExcerpt(post, 180);
 const date = post.data.date?.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
 <article class:list={["post-preview", { "post-preview--pinned": post.data.pin }]} data-topic-tone={tone}>
@@ -20,7 +21,7 @@ const date = post.data.date?.toLocaleDateString('en-US', { year: 'numeric', mont
   <div class="preview-copy">
     {post.data.categories?.[0] && <CategoryBadge category={post.data.categories[0]} />}
     <Heading class="preview-title"><a href={getPostPath(post)} aria-label={post.data.title}>{display.series && <span class="preview-series">{display.series}</span>}{display.title}</a></Heading>
-    <p>{getPostExcerpt(post, 180)}</p>
+    {excerpt && <p>{excerpt}</p>}
   </div>
 </article>
 <style>
