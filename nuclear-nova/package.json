@@ -27,6 +27,7 @@
     "astro-og-canvas": "^0.10.0",
     "glightbox": "^3.3.1",
     "gray-matter": "^4.0.3",
+    "pdfjs-dist": "^6.3.289",
     "rehype-mathjax": "^7.1.0",
     "rehype-mermaid": "^3.0.0",
     "remark-directive": "^4.0.0",

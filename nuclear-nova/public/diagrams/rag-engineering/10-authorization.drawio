@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="10-authorization" name="Access scope travels with the request">
+    <mxGraphModel grid="1" gridSize="10" page="0" background="#f8fafc">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="outside" value="UNTRUSTED REQUEST" style="rounded=1;arcSize=5;dashed=1;verticalAlign=top;spacingTop=16;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#74849a;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;verticalAlign=top;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="10" y="10" width="330" height="590" />
+        </mxCell>
+        <mxCell id="boundary" value="APPLICATION ACCESS BOUNDARY" style="rounded=1;arcSize=5;dashed=1;verticalAlign=top;spacingTop=16;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#7463c4;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;verticalAlign=top;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="385" y="10" width="680" height="590" />
+        </mxCell>
+        <mxCell id="request" value="&lt;b&gt;Request identity&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#42536a&quot;&gt;Caller + requested collection&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#287cb5;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="45" y="210" width="260" height="115" />
+        </mxCell>
+        <mxCell id="access" value="&lt;b&gt;Access allowed?&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#42536a&quot;&gt;Current permission&lt;/font&gt;" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;fillColor=#efedff;strokeColor=#7463c4;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="420" y="170" width="240" height="185" />
+        </mxCell>
+        <mxCell id="deny" value="&lt;b&gt;Deny&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#42536a&quot;&gt;Return no protected context&lt;/font&gt;" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#fff2df;strokeColor=#ad741b;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="425" y="440" width="255" height="105" />
+        </mxCell>
+        <mxCell id="retrieve" value="&lt;b&gt;Scoped retrieval&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#42536a&quot;&gt;Enforce allowed source IDs&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e6f3ff;strokeColor=#287cb5;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="745" y="90" width="285" height="105" />
+        </mxCell>
+        <mxCell id="context" value="&lt;b&gt;Authorized context&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#42536a&quot;&gt;Check expansion + cache scope&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#efedff;strokeColor=#7463c4;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="745" y="265" width="285" height="120" />
+        </mxCell>
+        <mxCell id="generate" value="&lt;b&gt;Generate&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#42536a&quot;&gt;Use only the admitted context&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e2f5ed;strokeColor=#278162;strokeWidth=1.7;fontColor=#15263a;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="745" y="460" width="285" height="105" />
+        </mxCell>
+        <mxCell id="edge-0" value="authenticate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#586d86;strokeWidth=2;endArrow=block;endFill=1;fontColor=#15263a;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#f8fafc;" edge="1" parent="1" source="request" target="access">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-1" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#586d86;strokeWidth=2;endArrow=block;endFill=1;fontColor=#15263a;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#f8fafc;" edge="1" parent="1" source="access" target="deny">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-2" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#586d86;strokeWidth=2;endArrow=block;endFill=1;fontColor=#15263a;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#f8fafc;" edge="1" parent="1" source="access" target="retrieve">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#586d86;strokeWidth=2;endArrow=block;endFill=1;fontColor=#15263a;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#f8fafc;" edge="1" parent="1" source="retrieve" target="context">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#586d86;strokeWidth=2;endArrow=block;endFill=1;fontColor=#15263a;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#f8fafc;" edge="1" parent="1" source="context" target="generate">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

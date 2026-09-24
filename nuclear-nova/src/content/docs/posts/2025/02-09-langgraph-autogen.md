@@ -1,5 +1,6 @@
 ---
 title: LangGraph VS AutoGen
+excerpt: Compare LangGraph and AutoGen across workflow structure, state management, customization, and use cases for LLM applications.
 authors:
   - BZ
 date: 2025-02-09
@@ -30,8 +31,8 @@ tags:
 |Use Cases|	Workflow automation, decision trees, RAG pipelines|	Autonomous multi-agent collaboration, code execution, RAG|
 |Complexity Handling|	High control over execution paths|	More emergent behavior, less structured execution|
 |Multi-Agent Support|	Limited (single LLM per node, multi-step workflows)	|Strong support for multiple interacting agents|
-| **Pros** | <table style="color: green; font-weight: bold">  <tbody> <tr> <td>Fine-grained control over execution paths and state management</td>  </tr> <tr> <td>Easily integrates with LangChain’s ecosystem (retrievers, tools, memory)</td>  </tr> <tr> <td>Supports parallel execution and dependency-based workflows</td>  </tr> <tr> <td>Better for structured workflows like data pipelines, RAG, and decision trees</td> </tr> </tbody> </table>|<table style="color: green; font-weight:  bold"> <tbody> <tr> <td>Designed for multi-agent  collaboration, making it ideal for autonomous  agents</td> </tr> <tr> <td>Easier to  set up  for  conversational  AI, coding  assistants,  and  team-based LLM  interactions</td>  </tr>  <tr> <td>Includes  specialized  agents  like CodeExecutorAgent  and SocietyOfMindAgent</td> </tr> <tr> <td>Strong asynchronous processing capabilities for real-time interactions</td> </tr> </tbody> </table> |
-| **Cons**|<table style="color: red; font-weight: bold ;"> <tbody> <tr> <td>Requires explicit graph  definition, which can be verbose</td> </tr> <tr> <td>Less emergent behavior compared to agent-based approaches</td> </tr> <tr> <td>Multi-agent interactions are not as native as in AutoGen</td> </tr> </tbody> </table> |<table style="color:  red; font-weight: bold ;">  <tbody> <tr> <td>State  management is more  implicit via messages  rather than a  structured graph</td> </tr>  <tr> <td>More opinionated, requiring adaptation to its agent-based paradigm</td> </tr> </tbody> </table>|
+| **Pros** | <ul><li>Fine-grained control over execution paths and state management</li><li>Easily integrates with LangChain’s ecosystem (retrievers, tools, memory)</li><li>Supports parallel execution and dependency-based workflows</li><li>Better for structured workflows like data pipelines, RAG, and decision trees</li></ul>|<ul><li>Designed for multi-agent  collaboration, making it ideal for autonomous  agents</li><li>Easier to  set up  for  conversational  AI, coding  assistants,  and  team-based LLM  interactions</li><li>Includes  specialized  agents  like CodeExecutorAgent  and SocietyOfMindAgent</li><li>Strong asynchronous processing capabilities for real-time interactions</li></ul> |
+| **Cons**|<ul><li>Requires explicit graph  definition, which can be verbose</li><li>Less emergent behavior compared to agent-based approaches</li><li>Multi-agent interactions are not as native as in AutoGen</li></ul> |<ul><li>State  management is more  implicit via messages  rather than a  structured graph</li><li>More opinionated, requiring adaptation to its agent-based paradigm</li></ul>|
 
 > Tips :bulb:
 >

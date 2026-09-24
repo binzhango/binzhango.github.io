@@ -72,7 +72,7 @@ In `LangGraph`, both `StateGraph` and `MessageGraph` are used to define workflow
 <details>
 <summary>Answer</summary>
 
-:::tip
+::::tip
 LangGraph achieves workflow dynamism through its flexible graph-construction API, allowing workflows to branch, loop, and jump based on runtime conditions.
 
 - `add_edge(start_node, end_node)`
@@ -173,7 +173,7 @@ print("Final State:", final_state)
 
 
 :::
-:::
+::::
 
 </details>
 
@@ -271,7 +271,7 @@ In LangGraph, `idempotency` means that executing the same node multiple times wi
 <details>
 <summary>Answer</summary>
 
-:::tip
+::::tip
 LangGraph supports concurrency via `asynchronous nodes` and `parallel edges`, which together substantially improve agent efficiency and responsiveness.
 
 <span style="color: red;">:bulb: **Async nodes**</span>
@@ -423,7 +423,7 @@ print(f"\n✨ Done! Processed {len(result['results'])} tasks in parallel")
 Async nodes (non-blocking I/O) and parallel edges (concurrent branches) are powerful for speeding up LangGraph workflows, but they require careful attention to state merging, error handling, resource limits, and determinism. Proper design patterns—independent state keys, aggregation nodes, clear error nodes, and bounded parallelism—help avoid common concurrency pitfalls.
 
 
-:::
+::::
 
 </details>
 
@@ -853,7 +853,7 @@ LCEL (LangChain Expression Language) is a declarative, composable syntax for bui
 <details>
 <summary>Answer</summary>
 
-:::tip
+::::tip
 `LangGraph` provides powerful error handling and backtracking mechanisms through its graph flexibility, **state management**, and **conditional edges**.
 The core idea is to treat error handling as special nodes and paths in the graph, rather than traditional try-except blocks.
 
@@ -943,7 +943,7 @@ LangGraph enables highly robust agents by treating errors as graph nodes and flo
 **This is far more advanced than simple `try-except` or fixed retry loops.**
 
 
-:::
+::::
 
 </details>
 
@@ -1003,7 +1003,7 @@ Which approach to choose depends on the complexity of node logic and its interac
 <details>
 <summary>Answer</summary>
 
-:::tip
+::::tip
 The `checkpointer` mechanism is one of the core features of LangGraph and is essential for building and managing long-lived agents. It allows the agent’s current execution state to be persisted to external storage and reloaded when needed. This enables fault recovery, state restoration, debugging, and iterative development.
 
 
@@ -1058,6 +1058,6 @@ The `checkpointer` mechanism is one of the core features of LangGraph and is ess
     - Test recovery procedures to ensure reliability.
 
 :::
-:::
+::::
 
 </details>

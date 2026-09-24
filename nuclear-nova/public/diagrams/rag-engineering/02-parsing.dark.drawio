@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="02-parsing" name="Parsing and chunking change different things">
+    <mxGraphModel grid="1" gridSize="10" page="0" background="#101b2b">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="source" value="&lt;b&gt;Original document&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Reading order + visual layout&lt;/font&gt;" style="rounded=0;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#55b5df;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;fontColor=#101b2b;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="40" width="260" height="100" />
+        </mxCell>
+        <mxCell id="page" value="&lt;b&gt;A policy table&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Severity | Target&lt;br&gt;P1 | 15 minutes&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#263447;strokeColor=#9aaec8;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="395" y="30" width="300" height="130" />
+        </mxCell>
+        <mxCell id="parse" value="&lt;b&gt;Parse structure&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Recover text, headers and rows&lt;/font&gt;" style="rounded=0;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#55b5df;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;fontColor=#101b2b;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="225" width="260" height="100" />
+        </mxCell>
+        <mxCell id="elements" value="&lt;b&gt;Normalized elements&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Table header + typed rows&lt;br&gt;Source: page 2, table 1&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#2d294c;strokeColor=#ac9cee;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="395" y="210" width="300" height="135" />
+        </mxCell>
+        <mxCell id="split" value="&lt;b&gt;Choose boundaries&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Group related evidence&lt;/font&gt;" style="rounded=0;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#55b5df;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;fontColor=#101b2b;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="410" width="260" height="100" />
+        </mxCell>
+        <mxCell id="chunks" value="&lt;b&gt;Searchable chunk&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;P1 target: 15 minutes&lt;br&gt;Source: page 2, table 1&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="395" y="395" width="300" height="135" />
+        </mxCell>
+        <mxCell id="edge-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="source" target="parse">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="parse" target="split">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;dashed=1;endArrow=open;" edge="1" parent="1" source="source" target="page">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;dashed=1;endArrow=open;" edge="1" parent="1" source="parse" target="elements">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;dashed=1;endArrow=open;" edge="1" parent="1" source="split" target="chunks">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
