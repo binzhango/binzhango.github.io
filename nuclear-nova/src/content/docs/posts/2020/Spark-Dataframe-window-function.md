@@ -1,5 +1,6 @@
 ---
 title: Spark Dataframe window function
+excerpt: "A Scala reference for working with window functions in Spark SQL."
 authors:
   - BZ
 date: 

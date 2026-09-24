@@ -1,5 +1,6 @@
 ---
 title: LangGraph VS AutoGen
+excerpt: Compare LangGraph and AutoGen across workflow structure, state management, customization, and use cases for LLM applications.
 authors:
   - BZ
 date: 2025-02-09
