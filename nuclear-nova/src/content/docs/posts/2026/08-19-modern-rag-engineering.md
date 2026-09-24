@@ -172,6 +172,7 @@ Most RAG debugging becomes easier once the failed contract is known.
   </figcaption>
 </figure>
 
+<div class="table-scroll" role="region" aria-label="RAG architecture comparison — scroll horizontally" tabindex="0" style="--table-min-width: 48rem">
 <table class="rag-evolution-table">
   <thead>
     <tr>
@@ -217,6 +218,7 @@ Most RAG debugging becomes easier once the failed contract is known.
     </tr>
   </tbody>
 </table>
+</div>
 
 Here, **offline** means preprocessing and index construction; **online** means the processing triggered by a user request. Advanced RAG adds targeted retrieval optimizations while retaining a mostly fixed flow. Modular RAG makes those capabilities independently composable and allows the system to choose or combine them according to the request.
 

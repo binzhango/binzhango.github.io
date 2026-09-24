@@ -5,6 +5,9 @@ import { interviewReadingTime } from '../../utils/interview-reading-time';
 import { validateInterviewBank } from '../../utils/interview-validation';
 import { interviewTopics } from '../../utils/interview-topics';
 import '../../styles/interview.css';
+import '../../styles/rag-series.css';
+import '../../styles/blog-article-additions.css';
+import { getCuratedCollections } from '../../utils/collections';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogShell from '../../components/BlogShell.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
@@ -34,6 +37,7 @@ const { Content, headings } = await render(post);
 const adjacent = await getAdjacentPosts(post.id);
 
 const isInterview = post.id.toLowerCase() === '2025/10-30-llm-interview';
+const isRagSeries = post.data.tags?.includes('rag-engineering') ?? false;
 const allInterviewQuestions = isInterview ? await getCollection('interview') : [];
 if (isInterview && import.meta.env.PROD) validateInterviewBank(allInterviewQuestions);
 const interviewQuestions = allInterviewQuestions.filter((q) => q.data.status === 'reviewed').sort((a, b) => a.data.order - b.data.order);
@@ -80,8 +84,12 @@ function toNav(postEntry: Post | null) {
   };
 }
 
-const prevPost = toNav(adjacent.prev);
-const nextPost = toNav(adjacent.next);
+const series = isRagSeries
+  ? (await getCuratedCollections()).find((entry) => entry.slug === 'rag-engineering')
+  : undefined;
+const seriesIndex = series?.posts.findIndex((entry) => entry.id === post.id) ?? -1;
+const prevPost = toNav(series && seriesIndex >= 0 ? series.posts[seriesIndex - 1] ?? null : adjacent.prev);
+const nextPost = toNav(series && seriesIndex >= 0 ? series.posts[seriesIndex + 1] ?? null : adjacent.next);
 const currentPath = getPostPath(post);
 const readingTime = isInterview
   ? interviewReadingTime([post.body ?? '', ...interviewQuestions.map((q) => q.body ?? '')].join('\n\n'))
@@ -169,7 +177,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
         )}
       </header>
 
-      <section class="post-content">
+      <section class="post-content" data-series={isRagSeries ? 'rag-engineering' : undefined} data-walkthrough={post.id === '2026/03-07-prompt-in-llm' ? 'llm-inference' : undefined}>
         <Content />
         {isInterview && <InterviewBank questions={interviewQuestions} />}
       </section>

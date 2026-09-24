@@ -1,0 +1,39 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="05-expansion" name="Search a sentence; send a useful source region">
+    <mxGraphModel grid="1" gridSize="10" page="0" background="#101b2b">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hit" value="&lt;b&gt;Sentence hit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;&quot;Acknowledge P1 within 15 min.&quot;&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="30" y="25.0" width="310" height="120" />
+        </mxCell>
+        <mxCell id="parent" value="&lt;b&gt;Parent section&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Deadline + scope + exception&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#2d294c;strokeColor=#ac9cee;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="390" y="25.0" width="280" height="120" />
+        </mxCell>
+        <mxCell id="dedup" value="&lt;b&gt;Deduplicate regions&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;Three hits → one parent section&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="390" y="225" width="280" height="100" />
+        </mxCell>
+        <mxCell id="context" value="&lt;b&gt;Final context&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;780 / 900 tokens&lt;br&gt;Policy + escalation owner&lt;/font&gt;" style="shape=document;boundedLbl=1;whiteSpace=wrap;html=1;fillColor=#153d34;strokeColor=#66cba6;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="30" y="405.0" width="310" height="120" />
+        </mxCell>
+        <mxCell id="budget" value="&lt;b&gt;Pack within budget&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#c1ccdb&quot;&gt;520 policy + 260 escalation&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#15364c;strokeColor=#55b5df;strokeWidth=1.7;fontColor=#f1f6fc;fontSize=19;fontFamily=Helvetica;spacing=12;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="390" y="415" width="280" height="100" />
+        </mxCell>
+        <mxCell id="edge-0" value="expand" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="hit" target="parent">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="offset" x="0" y="-18" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="parent" target="dedup">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="dedup" target="budget">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jettySize=20;html=1;strokeColor=#9bb0cb;strokeWidth=2;endArrow=block;endFill=1;fontColor=#f1f6fc;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#101b2b;" edge="1" parent="1" source="budget" target="context">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
