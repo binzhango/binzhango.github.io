@@ -1,0 +1,75 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { interviewTopics, legacyTopicAnchors } from '../utils/interview-topics';
+interface Props { questions: CollectionEntry<'interview'>[] }
+const { questions } = Astro.props;
+const compiled = await Promise.all(questions.map(async (question) => ({ question, ...(await render(question)) })));
+---
+<div class="interview-bank" data-interview-bank data-mode="read">
+  <nav class="interview-mobile-topics" aria-label="Question topics">
+    <p>Topics · {questions.length} questions</p>
+    <ol>{interviewTopics.map(([id, title]) => <li><a href={`#topic-${id}`}>{title}</a></li>)}</ol>
+  </nav>
+  <div class="interview-controls" data-controls hidden>
+    <div class="interview-mode" role="group" aria-label="Study mode">
+      <button type="button" data-mode-button="read" aria-pressed="true">Read</button>
+      <button type="button" data-mode-button="practice" aria-pressed="false">Practice</button>
+    </div>
+    <div class="interview-filters">
+      <label>Topic<select data-topic-filter><option value="">All topics</option>{interviewTopics.map(([id, title]) => <option value={id}>{title}</option>)}</select></label>
+      <label>Search questions<input data-search type="search" placeholder="e.g. KV cache" autocomplete="off" /></label>
+    </div>
+    <div class="interview-toolbar">
+      <p data-result-count role="status" aria-live="polite"></p>
+      <button type="button" data-expand>Expand all answers</button>
+      <button type="button" data-clear>Clear filters</button>
+    </div>
+  </div>
+  <p class="interview-empty" data-empty hidden>No questions match your search. Try another phrase or <button type="button" data-clear>clear filters</button>.</p>
+  <div class="interview-practice-header" data-practice-header hidden>
+    <p class="interview-counter" data-position></p>
+    <p data-progress></p>
+  </div>
+  <div data-question-list>
+    {interviewTopics.map(([topicId, title]) => {
+      const entries = compiled.filter(({ question }) => question.data.topic === topicId);
+      if (!entries.length) return null;
+      return <section class="interview-topic" data-topic-section={topicId}>
+        {(legacyTopicAnchors[topicId] ?? []).map((id) => <span class="interview-anchor" id={id}></span>)}
+        <h2 id={`topic-${topicId}`} class="interview-topic-heading">{title}<span>{entries.length} questions</span></h2>
+        {entries.map(({ question, Content }) => <article class="interview-question" id={`question-${question.id}`} data-question={question.id} data-topic={topicId} aria-labelledby={`prompt-${question.id}`}>
+          {question.data.aliases.map((id) => <span class="interview-anchor" id={`question-${id}`}></span>)}
+          <div class="interview-question-meta"><span>{question.data.subtopic || title}</span><a href={`#question-${question.id}`} aria-label={`Link to question ${question.id}`}>{question.id}</a></div>
+          <Content />
+        </article>)}
+      </section>;
+    })}
+  </div>
+  <div class="interview-practice-actions" data-practice-actions hidden>
+    <button type="button" class="interview-primary" data-reveal>Show answer</button>
+    <div class="interview-ratings" data-ratings hidden role="group" aria-label="Your self-assessment">
+      <button type="button" data-rate="again" aria-pressed="false">Again</button><button type="button" data-rate="got-it" aria-pressed="false">Got it</button>
+    </div>
+    <div class="interview-navigation"><button type="button" data-previous>Previous</button><button type="button" data-next>Next</button></div>
+  </div>
+  <section class="interview-finish" data-finish hidden aria-labelledby="interview-finish-title">
+    <h2 id="interview-finish-title" tabindex="-1">Practice complete</h2>
+    <p data-summary></p>
+    <div><button type="button" data-review-again>Review Again</button><button type="button" data-restart>Restart set</button></div>
+    <p class="interview-hint">These ratings reflect your own assessment.</p>
+  </section>
+  <div class="interview-storage" data-storage hidden>
+    <p data-storage-note>Progress is saved in this browser.</p><button type="button" data-reset>Reset progress</button>
+    <div data-reset-confirm hidden><p>Clear all saved ratings for this question bank?</p><button type="button" data-reset-yes>Clear progress</button><button type="button" data-reset-no>Keep progress</button></div>
+  </div>
+  <p class="interview-live" data-announcement role="status" aria-live="polite" aria-atomic="true"></p>
+  <p class="interview-credit">Additional prompts adapted from Outcome School’s <a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise">interview question collection</a> under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>. Answers are independently written and organized by topic.</p>
+</div>
+<script>
+  import { setupInterviewBanks } from '../scripts/interview-bank';
+  import { setupCodeViews } from '../scripts/interview-code-view';
+  setupInterviewBanks();
+  setupCodeViews();
+  document.addEventListener('astro:page-load', setupInterviewBanks);
+  document.addEventListener('astro:page-load', setupCodeViews);
+</script>

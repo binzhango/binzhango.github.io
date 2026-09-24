@@ -8,6 +8,8 @@
     const codeBlocks = document.querySelectorAll('pre[data-language], .astro-code');
     
     codeBlocks.forEach((codeBlock) => {
+      // The interview article installs its own wrap/expand/copy toolbar.
+      if (codeBlock.closest('.interview-bank')) return;
       // Skip if already wrapped
       if (codeBlock.parentElement?.classList.contains('code-block-wrapper')) {
         return;
