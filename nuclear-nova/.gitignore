@@ -9,6 +9,7 @@ public/card-studio/
 
 # dependencies
 node_modules/
+test-results/
 animations/*/output/
 
 # logs

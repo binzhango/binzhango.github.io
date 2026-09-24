@@ -1,0 +1,100 @@
+@font-face { font-family: 'Interview Geist'; src: url('../assets/fonts/geist-latin-variable.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Interview Geist Mono'; src: url('../assets/fonts/geist-mono-latin-variable.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+.post.post--interview, .interview-rail {
+  --canvas: #fafafa; --surface: #fff; --ink: #18181b; --body-text: #27272a;
+  --muted: #52525b; --line: #e4e4e7; --accent: #356859; --accent-soft: #edf4f0; --accent-line: #b3c9bf;
+  --sl-color-text: var(--ink); --sl-color-text-accent: var(--accent); --sl-color-accent: var(--accent);
+  --font-sans: 'Interview Geist', system-ui, sans-serif;
+  font-family: var(--font-sans); color: var(--ink);
+}
+:root[data-theme='dark'] :is(.post.post--interview, .interview-rail) {
+  --canvas: #18181b; --surface: #202023; --ink: #fafafa; --body-text: #e4e4e7;
+  --muted: #a1a1aa; --line: #3f3f46; --accent: #8fc7b2; --accent-soft: #263d34; --accent-line: #4a6b5e;
+}
+.post.post--interview { background: var(--canvas); border-radius: 1rem; padding: clamp(1rem, 2vw, 1.75rem); }
+.post.post--interview .post-header { padding: 0 0 1.5rem; margin: 0 0 1.5rem; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
+.post.post--interview .post-header::before { display: none; }
+.post.post--interview .post-header h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 650; }
+.post.post--interview .post-taxonomy { margin-top: 1rem; padding-top: .75rem; border-color: var(--line); }
+.post.post--interview .post-mobile-contents { display: none; }
+.post.post--interview .post-content { max-width: 100%; }
+.post.post--interview .post-content > p { max-width: 65ch; }
+.interview-bank { margin-top: 2rem; }
+.interview-bank :is(button, select, input) { font: inherit; min-height: 44px; color: var(--ink); border: 1px solid var(--line); border-radius: .5rem; background: var(--surface); padding: .6rem .9rem; }
+.interview-bank button { cursor: pointer; font-weight: 550; transition: transform 120ms ease; }
+.interview-bank button:active { transform: translateY(1px); }
+.interview-bank button:hover:not(:disabled) { border-color: var(--accent); }
+.interview-bank button:disabled { opacity: .5; cursor: default; }
+.interview-bank .code-controls button { min-height: 44px; }
+:root[data-theme] .interview-bank .code-controls button[aria-pressed='true'] { color: var(--accent); background: var(--accent-soft); border-color: var(--accent-line); }
+.interview-bank [aria-pressed='true'], .interview-bank .interview-primary { color: var(--surface); background: var(--accent); border-color: var(--accent); }
+:root[data-theme='dark'] .interview-bank [aria-pressed='true'], :root[data-theme='dark'] .interview-bank .interview-primary { color: #18181b; }
+.interview-bank :is(button, input, select, summary, a):focus-visible, .interview-rail a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.interview-prompt:focus { outline: 2px solid var(--accent-line); outline-offset: .4rem; border-radius: .25rem; }
+.interview-mode { display: inline-grid; grid-template-columns: 1fr 1fr; gap: .25rem; padding: .25rem; border: 1px solid var(--line); border-radius: .75rem; margin-bottom: 1.5rem; background: var(--surface); }
+.interview-mode button { min-width: 7rem; border-color: transparent; }
+.interview-filters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 1rem; }
+.interview-filters label { display: grid; gap: .45rem; color: var(--muted); font-size: .875rem; font-weight: 550; }
+.interview-filters :is(select, input) { width: 100%; min-width: 0; font-size: 1rem; }
+.interview-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .75rem 0 2rem; }
+.interview-bank .interview-toolbar p { margin: 0 auto 0 0; color: var(--muted); font-size: .875rem; }
+.interview-toolbar button { font-size: .875rem; background: transparent; }
+.interview-bank .interview-topic-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; margin: 3rem 0 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); font-size: 1.5rem; }
+.interview-topic-heading::before { display: none !important; }
+.interview-topic-heading span { color: var(--muted); font-size: .8125rem; font-weight: 400; }
+.interview-question { padding: 1.5rem 0 2rem; border-bottom: 1px solid var(--line); scroll-margin-top: 7rem; }
+.interview-question-meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .8125rem; }
+.interview-question-meta a { flex-shrink: 0; text-decoration: none; font-family: 'Interview Geist Mono', monospace; }
+.interview-bank .interview-prompt { margin: 1rem 0; padding: 0; color: var(--ink); font-size: clamp(1.35rem, 2.5vw, 1.8rem); line-height: 1.4; font-weight: 600; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.interview-bank .interview-answer-kind { margin: .75rem 0; color: var(--accent); font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .055em; }
+.interview-brief, .interview-explanation { max-width: 65ch; line-height: 1.7; font-size: 1rem; color: var(--body-text); }
+.interview-brief > :first-child { margin-top: 0; }
+.interview-bank details { border: 0; border-top: 1px solid var(--line); margin: 1.25rem 0 0; padding: 0; background: transparent; border-radius: 0; box-shadow: none; }
+.interview-bank summary { min-height: 44px; padding: .75rem 0; color: var(--ink); font-size: .9375rem; }
+.interview-practice-header { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; scroll-margin-top: 7rem; }
+.interview-bank .interview-practice-header p { margin: 0; color: var(--muted); font-size: .875rem; }
+.interview-counter { font-family: 'Interview Geist Mono', monospace; }
+[data-mode='practice'] .interview-topic-heading { display: none; }
+[data-mode='practice'] .interview-question { padding: 0; border: 0; }
+[data-mode='practice'] .interview-surface { margin-top: 1rem; padding: clamp(1.5rem, 4vw, 2rem); border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); box-shadow: 0 8px 24px #18181b08; }
+[data-mode='practice'] .interview-prompt { font-size: clamp(1.35rem, 2.5vw, 1.8rem); margin: 0; }
+[data-mode='practice'][data-revealed='true'] .interview-prompt { font-size: 1rem; font-weight: 500; color: var(--muted); padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--line); }
+[data-mode='practice'] .interview-brief > :last-child { margin-bottom: 0; }
+.interview-practice-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; align-items: center; }
+.interview-ratings { display: flex; gap: .5rem; }
+.interview-navigation { display: flex; gap: .5rem; margin-left: auto; }
+.interview-storage { border-top: 1px solid var(--line); margin-top: 2rem; padding-top: 1rem; color: var(--muted); font-size: .875rem; }
+.interview-storage > p { display: inline; margin-right: 1rem; }
+.interview-storage button { background: transparent; font-size: .875rem; }
+.interview-finish { padding: 2rem; background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; }
+.interview-finish h2 { margin-top: 0; }
+.interview-finish > div { display: flex; gap: .5rem; flex-wrap: wrap; }
+.interview-hint, .interview-bank .interview-credit { color: var(--muted); font-size: .8125rem; line-height: 1.6; }
+.interview-credit { margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.interview-live { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
+.interview-anchor { display: block; scroll-margin-top: 7rem; }
+.interview-rail { padding: .5rem; }
+.interview-rail > p { font-size: .875rem; font-weight: 600; padding-bottom: .75rem; border-bottom: 1px solid var(--ink); }
+.interview-rail ol { list-style: none; padding: 0; margin: 0; max-height: calc(100dvh - 220px); overflow-y: auto; }
+.interview-rail li { border-left: 1px solid var(--line); }
+.interview-rail a { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; padding: .65rem .75rem; color: var(--muted); font-size: .8125rem; text-decoration: none; min-height: 44px; }
+.interview-rail a:hover { color: var(--accent); }
+.interview-rail small { font-family: 'Interview Geist Mono', monospace; }
+@media (max-width: 767px) {
+  .post.post--interview { padding: 1rem; }
+  .interview-filters { grid-template-columns: minmax(0, 1fr); }
+  .interview-navigation { width: 100%; margin-left: 0; justify-content: space-between; }
+  .interview-question-meta { flex-wrap: wrap; gap: .35rem; }
+  .interview-bank .interview-topic-heading { font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) { .interview-bank button { transition: none; } }
+@media print {
+  .post.post--interview { --ink: #18181b; --body-text: #18181b; --surface: #fff; --canvas: #fff; }
+  .interview-bank :is(.interview-controls, .interview-practice-actions, .interview-storage, .interview-practice-header, .interview-finish, .interview-empty, .interview-live), .interview-rail { display: none !important; }
+  .interview-bank :is([data-topic-section], [data-question], .interview-topic-heading, .interview-brief, .interview-detail, .interview-answer-kind) { display: block !important; }
+  .interview-bank details::details-content { display: block !important; content-visibility: visible !important; }
+  .interview-bank .interview-surface { transform: none !important; opacity: 1 !important; border: 0; padding: 0; box-shadow: none; }
+  .interview-bank .interview-prompt { font-size: 1.15rem !important; color: var(--ink) !important; }
+  .interview-bank pre { max-height: none !important; white-space: pre-wrap !important; }
+  .interview-question { break-inside: auto; }
+}

@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { interviewTopicIds } from './utils/interview-topics';
 
 const allowedCategories = [
   'AI ENGINEERING',
@@ -74,4 +75,19 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const interview = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/interview' }),
+  schema: z.object({
+    questionId: z.string().regex(/^[a-z0-9-]+$/),
+    aliases: z.array(z.string().regex(/^[a-z0-9-]+$/)).default([]),
+    topic: z.enum(interviewTopicIds),
+    subtopic: z.string().optional(),
+    order: z.number().int().positive(),
+    kind: z.enum(['factual', 'coding', 'design', 'behavioral']),
+    status: z.enum(['draft', 'reviewed']),
+    reviewedOn: z.string().nullable(),
+    sources: z.array(z.object({ label: z.string(), url: z.string().url() })),
+  }),
+});
+
+export const collections = { blog, interview };
