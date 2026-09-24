@@ -64,6 +64,7 @@ Include paraphrases, exact identifiers, exceptions, obsolete versions, ambiguous
 | Operations | What did this behavior cost? | Latency distribution, tokens, retries, errors, resource use |
 
 </div>
+
 Citation validity is a narrow check: an identifier belongs to the supplied registry. Citation support asks whether its content supports the associated claim. Reporting the first as the second makes an incorrect answer look trustworthy.
 
 Similarly, a retrieved relevant chunk does not guarantee that the decisive sentence survived truncation. Record candidate coverage and packed-context coverage independently. Their difference directs you toward retrieval or context assembly instead of another prompt rewrite.
@@ -170,6 +171,7 @@ Consider this deliberately invented comparison on 100 fixed cases:
 | p95 end-to-end latency | 1.8 s | 2.4 s | Compare against the product's agreed budget |
 
 </div>
+
 These are examples of a decision process, not suggested targets. Define thresholds from the application and its risk tolerance before evaluating the candidate. Security invariants should not be traded away for a better average relevance score.
 
 With small samples, a percentile can move sharply because of a few requests. Report sample counts and uncertainty; measure under representative load when making capacity claims. Separate time to first visible progress, time to first answer token, and time to a validated answer. They describe different user experiences.

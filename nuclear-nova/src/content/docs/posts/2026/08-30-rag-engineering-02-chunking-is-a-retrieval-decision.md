@@ -75,6 +75,7 @@ A representative parsing check should compare the original page with normalized 
 | Similarity-based | Split near changes in adjacent representations | Documents with weak explicit structure | Threshold stability and encoder cost |
 
 </div>
+
 LangChain's [recursive splitter](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) measures size in characters when using its default length function. A setting of `800` is therefore not automatically 800 tokens. A tokenizer-based length function changes that contract. Always report the unit when comparing settings.
 
 <figure class="rag-visual">
@@ -137,6 +138,7 @@ Consider a table:
 | P2 | 4 hours | Degraded service |
 
 </div>
+
 Flattening this as `P1 15 P2 4` loses both units and column meaning. A text representation might repeat headers for each row: “Severity P1; acknowledge within 15 minutes; applies to unplanned production outage.” A structured representation should retain the typed rows as well. Which representation to index depends on whether queries ask for an individual policy or an aggregate across records.
 
 A smaller search unit can point to a larger parent. Sentence retrieval followed by parent expansion allows the retriever to match a focused fact and the generator to receive its qualifiers. That reduces the pressure to solve every context problem with overlap. Part 5 examines expansion and its budget costs.
@@ -158,6 +160,7 @@ Use the same source snapshot and question set for the comparison. Include exact 
 | Supported answer and correct exception handling | Whether retained context was sufficient |
 
 </div>
+
 Do not choose a strategy solely because recall improved. It may retrieve more evidence by multiplying near-duplicate chunks and increasing prompt cost. Compare quality and resource use together, then inspect the cases that changed.
 
 A defensible starting point is structure-aware parsing with a simple bounded splitter. Add similarity-based segmentation when measured failures suggest that explicit structure is insufficient. The next article treats the resulting representation as versioned data, so changes to the parser or splitter can be reproduced and rolled back.

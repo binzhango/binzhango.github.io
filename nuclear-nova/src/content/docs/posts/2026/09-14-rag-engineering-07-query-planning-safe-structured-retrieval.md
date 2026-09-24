@@ -47,6 +47,7 @@ A router does not need to be a general autonomous agent. It can select from a sm
 | “Which service depends on this component?” | Traverse known relationships | Graph or relational dependency records |
 
 </div>
+
 Do not advertise graph retrieval just because a router has a `graph` label. It requires an implemented backend, a schema, authorization, bounded traversal, and evaluation. An unsupported route should be explicit rather than quietly producing a vector-search approximation.
 
 Some questions combine operations. “Which teams exceed the policy target?” requires both an authoritative policy and incident measurements. Preserve which part came from which source, and define the comparison carefully: an average below the threshold does not prove that every incident met it.

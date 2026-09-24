@@ -12,29 +12,43 @@ tags:
 
 <!-- more -->
 
-> **Update:** For a deeper systems-level treatment of LLM inference, especially the interaction between request scheduling, prefill, decode, and KV-cache reuse, see [arXiv:2606.24937](/assets/pdfs/2606.24937v1.pdf).
+The inference engine decides **how** the request runs efficiently, while the model decides **what** token comes next.
 
-<details class="pdf-embed">
-  <summary>Preview PDF: arXiv:2606.24937</summary>
-  <figure>
-    <iframe
-      src="/assets/pdfs/2606.24937v1.pdf"
-      title="arXiv:2606.24937 PDF"
-      loading="lazy"
-    ></iframe>
-    <figcaption>
-      Embedded PDF preview. <a href="/assets/pdfs/2606.24937v1.pdf">Open the paper in a separate tab</a>.
-    </figcaption>
-  </figure>
+<nav class="reading-map" aria-label="Seven steps in this walkthrough">
+<div class="reading-map__intro">
+<p>One request, seven steps</p>
+<span>Follow the walkthrough, or jump to the part you want to understand.</span>
+</div>
+<ol role="list">
+<li><a href="#step-1-from-raw-prompt-to-token-ids"><span>01</span><strong>Prompt → tokens</strong><small>Turn text into model input</small></a></li>
+<li><a href="#step-2-serving-scheduling-and-batching-before-model-execution"><span>02</span><strong>Serving &amp; scheduling</strong><small>Organize the work</small></a></li>
+<li><a href="#step-3-embeddings-and-positional-information"><span>03</span><strong>Embeddings &amp; position</strong><small>Give tokens a representation</small></a></li>
+<li><a href="#step-4-transformer-blocks---self-attention-ffn-and-the-core-computation-of-inference"><span>04</span><strong>Transformer blocks</strong><small>Attention and feed-forward computation</small></a></li>
+<li><a href="#step-5-prefill---processing-the-entire-prompt-in-parallel"><span>05</span><strong>Prefill</strong><small>Process the prompt together</small></a></li>
+<li><a href="#step-6-kv-cache---reusing-history-instead-of-recomputing-it"><span>06</span><strong>KV cache</strong><small>Reuse what is already computed</small></a></li>
+<li><a href="#step-7-decode---autoregressive-token-by-token-generation"><span>07</span><strong>Decode</strong><small>Generate the response, one token at a time</small></a></li>
+</ol>
+</nav>
+
+<section class="article-reference" aria-label="Related research paper">
+
+**Update:** For a deeper systems-level treatment of LLM inference, especially the interaction between request scheduling, prefill, decode, and KV-cache reuse, see [arXiv\:2606.24937](/assets/pdfs/2606.24937v1.pdf).
+
+<details class="pdf-disclosure">
+<summary><span class="pdf-disclosure__show">Show PDF preview</span><span class="pdf-disclosure__hide">Hide PDF preview</span></summary>
+<figure class="pdf-embed">
+  <iframe src="/tools/pdf-reader/" title="Read arXiv:2606.24937 inside this article" width="800" height="760" loading="lazy"></iframe>
+</figure>
 </details>
+</section>
 
 ## What Happens Between a Prompt and the Final Response
 
-From input to output, a prompt generally goes through seven steps: **request packaging**, **tokenization**, **inference scheduling**, **prefill**, and **decode** before the result is returned.
+The walkthrough above connects **request packaging**, **tokenization**, **inference scheduling**, **prefill**, and **decode** with the model operations that make them work.
 
-At the core, the model first processes the full input during the **prefill** stage, computing contextual representations and building the **KV cache**. It then enters an `autoregressive generation loop`, predicting only the next token at each step.
+At the core, the model first processes the full input during the **prefill** stage, computing contextual representations and building the **KV cache**. It then enters an **autoregressive generation loop**, predicting only the next token at each step.
 
-This inference pattern is fundamentally **autoregressive**: the model predicts the next token based on the preceding context, without updating its parameters during the run. The **Transformer**, meanwhile, provides the computational backbone through its internal attention and feed-forward network structure.
+This inference pattern is fundamentally **autoregressive**: the model predicts the next token based on the preceding context, <strong class="text-underline">without updating its parameters</strong> during the run. The **Transformer**, meanwhile, provides the computational backbone through its internal attention and feed-forward network structure.
 
 Why is this framing important? Because it cleanly separates the **system layer** from the **model layer**, and it also distinguishes **prefill** from **decode**.
 
@@ -42,12 +56,9 @@ Many people struggle to answer this question clearly not because they lack under
 
 Let's explain each step in detail.
 
-> A simple mental model:
-> the inference engine decides **how** the request runs efficiently, while the model decides **what** token comes next.
-
 ## Step 1: From Raw Prompt to Token IDs
 
-What we type into the chat box is natural language, but the model does not consume raw text directly.
+What you type into the chat box is natural language, but the model *does not consume raw text directly*.
 
 Before the input is passed to the model, the serving layer typically formats the conversation messages, such as system, user, and assistant turns, into a model-specific prompt template, often with special tokens or delimiters added.
 
@@ -55,13 +66,13 @@ After that, the text goes through a tokenizer and is split into a sequence of to
 
 In other words, from the model's perspective, text is first converted into a sequence of discrete **token IDs** rather than being treated as "sentences" directly.
 
-This layer is easy for many people to overlook, but it is critical. All subsequent inference is built on top of the token sequence.
+This layer is easy for many people to overlook, but it is critical. All subsequent inference is built on top of <mark>the token sequence</mark>.
 
 Whether you input a Chinese sentence, an English paragraph, or a block of code, the model's first step is always to convert it into token IDs.
 
 ## Step 2: Serving, Scheduling, and Batching Before Model Execution
 
-In real production systems, once a request arrives, it usually does **not** go straight onto the GPU for execution.
+In real production systems, once a request arrives, it usually *does not go straight onto the GPU* for execution.
 
 In real-world deployments, requests often first go through an inference serving framework such as **TGI** or **vLLM** before reaching the model. These systems handle request queuing, dynamic batching, cache management, streaming output, and other inference-time orchestration tasks.
 
@@ -69,16 +80,18 @@ The Hugging Face TGI documentation explicitly lists **continuous batching**, **t
 
 So from a systems perspective, the pipeline usually looks like this:
 
-1. user input
-2. prompt template expansion
-3. tokenization
-4. request scheduling and batching
-5. model execution
-6. detokenization and return
+<ol class="reading-sequence" role="list" aria-label="Request processing sequence">
+<li>User input</li>
+<li>Prompt template expansion</li>
+<li>Tokenization</li>
+<li>Request scheduling and batching</li>
+<li>Model execution</li>
+<li>Detokenization and return</li>
+</ol>
 
 The significance of this step is that model inference is not a "bare run" of a single request in isolation. Instead, it is jointly organized and optimized by the inference engine together with other requests.
 
-Strictly speaking, the tokenization we discussed in the previous stage is not part of the Transformer's forward inference itself, because the model only receives `input_ids`.
+Strictly speaking, the tokenization discussed in the previous stage is not part of the Transformer's forward inference itself, because the model only receives `input_ids`.
 
 But in modern inference services, the tokenizer is often tightly integrated with the serving engine. From an engineering perspective, it may appear as though the inference engine is processing raw text directly.
 
@@ -90,13 +103,13 @@ In some architectures, tokenization is performed earlier on the client side or i
 
 ## Step 3: Embeddings and Positional Information
 
-Once the input reaches the model, the first step is not "starting to answer," but mapping token IDs into high-dimensional vectors.
+Once the input reaches the model, the first step is not “starting to answer,” but *mapping token IDs into high-dimensional vectors*.
 
 This step is called **embedding lookup**. Each token looks up its own vector representation in a large embedding table. At this point, the model has truly entered numerical computation in continuous space.
 
 The foundational Transformer paper, *Attention Is All You Need*, defines exactly this kind of attention-based sequence modeling approach.
 
-However, token vectors alone are not enough, because the model also needs to know which token comes before and which comes after.
+However, <strong class="text-underline">token vectors alone are not enough</strong>, because the model also needs to know which token comes before and which comes after.
 
 Early Transformers used **positional encoding**, while many later large models use **RoPE** (*Rotary Position Embedding*). The key value of RoPE is that it integrates positional information directly into the attention computation, allowing the model to preserve relative position information while processing tokens.
 
@@ -113,8 +126,16 @@ These are combined with residual connections and normalization. This is exactly 
 
 You can think of it like this:
 
-- **Attention** is responsible for reading the group chat.
-- **FFN** is responsible for thinking it through privately and organizing the information.
+<div class="reading-compare">
+<section>
+<h3>Attention</h3>
+<p>Responsible for <em>reading the group chat</em>.</p>
+</section>
+<section>
+<h3>FFN</h3>
+<p>Responsible for <em>thinking it through privately</em> and organizing the information.</p>
+</section>
+</div>
 
 ### What does Self-Attention do?
 
@@ -126,7 +147,7 @@ The Transformer paper defines this as **Scaled Dot-Product Attention**.
 
 For generative language models, there is another point that must be emphasized: the **causal mask**.
 
-This means that the current position can only see itself and the tokens before it; it cannot peek at future tokens. This is what makes the model naturally autoregressive: it can only predict the next token based on the context that already exists.
+This means that the current position can only see itself and the tokens before it; it <strong class="text-underline">cannot peek at future tokens</strong>. This is what makes the model naturally autoregressive: it can only predict the next token based on the context that already exists.
 
 Even the few-shot and in-context learning discussed in the GPT-3 paper are fundamentally built on top of this autoregressive prediction mechanism.
 
@@ -154,16 +175,16 @@ The Transformer paper calls this a **position-wise feed-forward network**.
 
 So a Transformer block can be roughly understood as:
 
-> first decide which parts of the context I should attend to, and then perform a deeper feature transformation on the information I retrieved.
+> *first decide which parts of the context I should attend to*, and then perform a deeper feature transformation on the information I retrieved.
 
 One important thing to notice is that throughout the entire process, both the **prefill** stage and the **decode** stage go through **self-attention** and **FFN**.
 
-But be careful: "both go through them" does **not** mean they are executed in exactly the same way.
+But be careful: “both go through them” *does not mean they are executed in exactly the same way*.
 
 - **Prefill** sends the entire prompt into the model at once. At this point, every layer performs masked self-attention over that whole batch of tokens, then passes them through the FFN. Because the entire prompt is already known from the beginning, many tokens can be processed in parallel within a single request. Hugging Face also describes prefill this way: it processes the full input and builds the KV cache.
 - **Decode** begins generating one token at a time. Each newly generated token still goes through every layer in the same pattern: one self-attention operation and one FFN operation.
 
-However, decode does **not** rerun attention and FFN for all old tokens from scratch.
+However, decode <mark>does not rerun attention and FFN for all old tokens</mark> from scratch.
 
 Once KV cache exists, the **K** and **V** of old tokens are cached. When a new token arrives, the model only needs to compute the layer representations required for this new token, perform attention against the historical K/V, and then pass the result through the FFN.
 
@@ -181,7 +202,7 @@ Many people mistakenly think that the model starts generating word by word as so
 
 Before generation, there is typically a very important stage called **Prefill**.
 
-Prefill means that the model first runs the entire prompt through a full forward pass all at once.
+Prefill means that the model first runs <strong class="text-underline">the entire prompt through a full forward pass all at once</strong>.
 
 During this stage, the model computes the hidden states at every layer for all input tokens and also builds the **KV cache** that will later be used during decode.
 
@@ -205,12 +226,20 @@ Hugging Face's official documentation explains this very clearly: the goal of KV
 
 In one sentence:
 
-- **Without KV cache**: it is like rereading the entire article every time.
-- **With KV cache**: it is like having already taken notes on the earlier part and now only adding the final sentence.
+- **Without KV cache:** it is like rereading the entire article every time.
+- **With KV cache:** it is like having already taken notes on the earlier part and now only adding the final sentence.
+
+<figure class="reading-film">
+<video controls playsinline preload="none" poster="/assets/images/home/kv-cache.webp" width="1280" height="720" aria-label="Animation of per-layer KV-cache state">
+<source src="/assets/images/2026/kv-cache-per-layer.mp4" type="video/mp4" />
+<a href="/assets/images/2026/kv-cache-per-layer.mp4">Watch the KV-cache animation</a>
+</video>
+<figcaption><strong>See the cache take shape</strong> Each attention layer writes K and V state that later tokens can reuse. Play the animation to follow the path.</figcaption>
+</figure>
 
 ### Why does KV cache store only K and V, but not Q?
 
-Whether something is worth caching does not depend on whether it is important, but on whether it will be reused later.
+Whether something is worth caching does not depend on whether it is important, but on <mark>whether it will be reused later</mark>.
 
 KV cache stores only **K** and **V**, not **Q**, not because **Q** is unimportant, but because **Q** is useful only once at the current step.
 
@@ -228,7 +257,7 @@ Then, through **softmax** and a decoding strategy, the model decides which token
 
 There is another commonly asked question here: how is the next token selected?
 
-It is not always chosen simply by taking the token with the highest probability. Common decoding strategies include:
+It is *not always chosen simply by taking the token with the highest probability*. Common decoding strategies include:
 
 - **greedy decoding**
 - **sampling**
@@ -265,17 +294,36 @@ Doesn't that make it seem like almost all of this is the inference engine's job?
 
 From the perspective of the overall workflow, it is indeed the inference engine handling most of the process, so that interpretation is reasonable.
 
-But we should take one more step forward:
+There is one more distinction:
 
 - From the perspective of **workflow orchestration**, the LLM itself is indeed relatively passive.
 - From the perspective of **core computation and semantic generation**, the LLM is the most irreplaceable part of the entire pipeline.
 
-If we break the full pipeline apart, the responsibilities are roughly as follows:
+Breaking the full pipeline apart, the responsibilities are roughly as follows:
 
-| Layer | Main responsibilities |
-| --- | --- |
-| **Inference engine / serving system** | receiving HTTP requests, performing tokenization and input processing, scheduling batching, managing the KV cache, coordinating GPU workers, streaming results back, and handling part of the sampling logic and system-level optimizations |
-| **LLM model** | taking `input_ids`, converting them through embeddings, passing them through self-attention and feed-forward networks inside multiple Transformer blocks, and producing logits for the next token |
+<div class="table-scroll" role="region" tabindex="0" aria-label="Inference engine and model responsibilities — scroll horizontally" style="--table-min-width: 34rem">
+<table>
+<thead><tr><th scope="col">Layer</th><th scope="col">Main responsibilities</th></tr></thead>
+<tbody>
+<tr>
+<th scope="row">Inference engine / serving system</th>
+<td><ul>
+<li>Receiving HTTP requests, performing tokenization and input processing</li>
+<li>Scheduling batching, managing the KV cache, coordinating GPU workers</li>
+<li>Streaming results back, and handling part of the sampling logic and system-level optimizations</li>
+</ul></td>
+</tr>
+<tr>
+<th scope="row">LLM model</th>
+<td><ul>
+<li>Taking <code>input_ids</code>, converting them through embeddings</li>
+<li>Passing them through self-attention and feed-forward networks inside multiple Transformer blocks</li>
+<li>Producing logits for the next token</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
 
 The official vLLM documentation describes these layers quite directly: at minimum, there is one API server responsible for HTTP, tokenization, and input processing, one engine core responsible for the scheduler and KV cache management, and N GPU workers responsible for executing the model's forward computation.
 
@@ -283,4 +331,4 @@ The Transformer paper defines the core structure as **attention plus FFN**, and 
 
 So, the inference engine determines **how to run** the process efficiently, while the model determines **what to generate**.
 
-The former is mainly about orchestration and optimization; the latter is mainly about semantic computation and content generation.
+The former is mainly about *orchestration and optimization*; the latter is mainly about *semantic computation and content generation*.

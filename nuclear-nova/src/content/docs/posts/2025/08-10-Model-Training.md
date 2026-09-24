@@ -30,7 +30,7 @@ The project aims to serve as a practical, hands-on implementation of LLM trainin
 # Environment Setup
 - `macOS` with `M Series` chip
 
-    {==‼️ MPS is not optimized for training ==}
+    <mark>‼️ MPS is not optimized for training</mark>
 
 ```bash
     Testing on: macOS MPS device (M4, 64GB RAM)
@@ -59,7 +59,7 @@ The project aims to serve as a practical, hands-on implementation of LLM trainin
 ```
 
 - **python package** for `CUDA` support
-    - `torch` [PyTorch](https://pytorch.org/get-started/locally/) ‼️{== Be careful: CUDA version must match the PyTorch (12.6, 12.8, 12.9) ==}
+    - `torch` [PyTorch](https://pytorch.org/get-started/locally/) ‼️<mark>Be careful: CUDA version must match the PyTorch (12.6, 12.8, 12.9)</mark>
 
          `pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu129`
 
