@@ -77,6 +77,7 @@ A schema can require strings, nonempty claim lists, and known fields. A registry
 | Claim-support evaluation | Unsupported or contradicted statements | Universal correctness beyond the available evidence |
 
 </div>
+
 [Pydantic's model validation](https://docs.pydantic.dev/latest/concepts/models/) is useful for structural contracts. Its coercion and strictness options should be chosen deliberately; accepting a value after conversion is different from requiring its original type.
 
 A native structured-output feature can reduce malformed responses, but still cannot make a wrong number right. Keep tests for semantic failures even if invalid JSON becomes rare.
@@ -124,6 +125,7 @@ For the Atlas fixture, consider these **synthetic outputs**:
 | “The owner is Platform [C1]” | C1 contains only the deadline | Unsupported additional claim |
 
 </div>
+
 A source can also be wrong. Faithfulness asks whether the response follows its evidence; factual correctness asks whether the claim is correct. A faithfully quoted obsolete policy fails the user's need for a current answer. Source lifecycle and authority therefore remain part of answer quality.
 
 ## Bound repair and preserve the failure category
@@ -144,6 +146,7 @@ The application can expose several distinct outcomes:
 | Error | The operation could not complete under its contract | Return a stable failure code |
 
 </div>
+
 Extractive fallback is useful only when excerpts are appropriate to disclose and useful to the request. It may still be incomplete. A structured consumer expecting typed comparison rows cannot necessarily accept prose excerpts under the same schema; represent degradation explicitly in the public response type.
 
 Do not label a provider outage as “I don't know.” That hides an operational failure behind an evidence claim. Similarly, do not call the model when the policy has already determined there is no support for an answer.
@@ -161,6 +164,7 @@ Immediate token streaming improves perceived responsiveness but displays text be
 | Progress events plus validated answer | Shows retrieval and generation progress | Progress must not imply answer acceptance |
 
 </div>
+
 A service can stream status events while buffering answer text. If the provider stream ends early, the server can return an error or a documented fallback. Test that branch separately from a provider failure before generation begins.
 
 Measure time to first event, time to first answer content, total completion time, and validation latency separately. A fast “retrieval started” event is not the same as a fast answer.

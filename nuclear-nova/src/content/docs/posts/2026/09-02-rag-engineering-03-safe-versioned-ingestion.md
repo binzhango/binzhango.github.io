@@ -47,6 +47,7 @@ Use separate identities for the logical document, its content version, its parse
 | Index build | `support-v2:profile-b:build7` | Which searchable representation was published? |
 
 </div>
+
 These example IDs are readable teaching labels, not a proposed wire format. Real systems can use UUIDs or digests, provided relationships remain explicit.
 
 A document can be accepted while its new representation is not yet searchable. Expose that state to operators. Otherwise an upload success message can be mistaken for a freshness guarantee.
@@ -125,6 +126,7 @@ Suppose version 2 needs three embedding batches. Batches 1 and 2 succeed; batch 
 | Completeness checks pass | Published | Version 2 |
 
 </div>
+
 Retry should avoid embedding already persisted nodes when their identities and profile are unchanged. That requires checking more than a job status: each node must identify its source representation and embedding profile.
 
 Before publication, verify expected versus actual node identities, dimensions, finite values, and required metadata. A count match alone can hide one missing node and one unexpected node. After publication, a query should record which publication it used so the transition can be investigated.

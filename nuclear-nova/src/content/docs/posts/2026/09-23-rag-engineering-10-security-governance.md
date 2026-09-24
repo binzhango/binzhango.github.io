@@ -48,6 +48,7 @@ Start by identifying who can upload, index, search, administer, and inspect trac
 | Administrator | Change memberships and retention policies | Audited privileged changes and separation of duties where required |
 
 </div>
+
 This is an illustrative role model, not a universal policy. A healthcare record system and an internal engineering handbook require different rules. The important property is that a role name has a precise meaning at each resource boundary.
 
 Treat the client, uploaded files, retrieved text, model output, and externally fetched content as untrusted inputs. An authenticated client is still not entitled to choose another tenant's scope. A document that passed upload validation can still contain instructions intended to influence a model.
@@ -130,6 +131,7 @@ Caching only by question text can return one user's answer to another. Cache eli
 | Generated answer | Context identity, prompt and model revision, output contract, scope |
 
 </div>
+
 The exact key design depends on the system. If two users share a cache entry, establish that they have the same effective access for that entry and recheck access before serving it. A tenant ID alone may be insufficient when users inside that tenant have different document permissions.
 
 Revocation differs from an ordinary content update. A historical index may be useful for reproducing an answer, but it must not keep revoked evidence eligible for new requests. Define what happens to cached answers, source downloads, conversation history, and in-flight requests after a permission change. Choose and document a consistency guarantee that the implementation can enforce.

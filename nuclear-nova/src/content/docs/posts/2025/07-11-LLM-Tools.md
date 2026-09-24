@@ -21,7 +21,7 @@ tags:
 2. How LLM finds and uses these tools
 
 ## Create Tool
-{==Tool system is a form of **metaprogramming**==}
+<mark>Tool system is a form of **metaprogramming**</mark>
 
 Tools are defined with metadata, including
 
@@ -44,16 +44,16 @@ def get_weather(city: str) -> str:
 >
 >  LangChain reads the metadata (function name, docstring, type hints)
 >
->  :exclamation: **Note**: ==More comprehensive descriptions and schemas help LLMs understand and use tools effectively.==
+>  :exclamation: **Note**: <mark>More comprehensive descriptions and schemas help LLMs understand and use tools effectively.</mark>
 
 ## Tool Detection
 
 - How LLMs Detect the Required Tool?
-    - ==Query Parsing==:
+    - <mark>Query Parsing</mark>:
         - The LLM analyzes the user’s query using its natural language processing capabilities.
         - It matches the query’s intent and content to the tool descriptions or keywords. For example, a query like “What’s the weather in New York?” aligns with a tool described as “Retrieve the current weather.”
         - Modern LLMs, especially those fine-tuned for tool calling (e.g., OpenAI’s GPT-4o), use semantic understanding to infer intent rather than relying solely on keywords.
-    - ==Tool Selection==:
+    - <mark>Tool Selection</mark>:
        - **Prompt-Based (LangChain)**: The LLM is given a prompt that includes tool descriptions and instructions to select the appropriate tool. The LLM reasons about the query (often using a framework like ReAct) and outputs a decision to call a specific tool with arguments.
        - **Fine-Tuned Tool Calling (OpenAI)**: The LLM is trained to output a structured JSON object specifying the tool name and arguments directly, based on the query and tool schemas provided in the API call.
 

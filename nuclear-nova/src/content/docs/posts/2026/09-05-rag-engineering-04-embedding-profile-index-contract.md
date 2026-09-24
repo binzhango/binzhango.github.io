@@ -85,6 +85,7 @@ The query and document encoders must be a compatible pair. They need not apply i
 | Modality | Separate text-only and image/text representations |
 
 </div>
+
 A profile can be serialized canonically and assigned a digest. Record it on the build and compare it with the query encoder's profile before searching. Do not infer compatibility solely from the advertised model name or vector length.
 
 A changed revision may preserve compatibility or change it materially. The operationally safe assumption is that it requires evaluation; describing every revision change as guaranteed meaningless search would be too strong. Explicit compatibility decisions are preferable to silently mixing vectors.
@@ -148,6 +149,7 @@ That creates two different evaluation questions:
 | Unfiltered versus tenant-filtered queries | Behavior under the actual eligibility constraints |
 
 </div>
+
 An index can have excellent approximate recall over the whole corpus and perform poorly for a small filtered collection. Benchmark the shape of real filters, not just unfiltered nearest-neighbor search.
 
 Use exact retrieval on a manageable evaluation corpus as a diagnostic reference. If exact search misses the relevant passage, tuning HNSW search breadth cannot repair the underlying representation or label mismatch. If exact search finds it and approximate search does not, investigate the index and filter interaction before replacing the model.

@@ -46,6 +46,7 @@ A search hit, an expanded context item, and a citation target are related but no
 | Citation target | Versioned P1 section with source locator | Lets a reader inspect the supporting evidence |
 
 </div>
+
 If expansion replaces a sentence with its parent and discards the triggering ID, the trace becomes harder to explain. Preserve both the matching child and the returned source region. If the citation points only to the child, it may omit the exception used in the answer.
 
 These **illustrative context records** show the intended separation:
@@ -160,6 +161,7 @@ Distinguish three capabilities:
 | Visual question answering | An answer based on image content | A model that consumes the image plus answer evaluation |
 
 </div>
+
 Document-page retrieval systems such as [ColPali](https://arxiv.org/abs/2407.01449) explore richer visual representations than one whole-image similarity vector. They introduce different storage and scoring costs. Use them when the document layout carries information that text extraction loses, and evaluate on those cases.
 
 The same provenance rules apply to every modality: identify the asset version, page or region, triggering representation, and what the generator received. Image similarity is not proof that the retrieved diagram contains the requested answer.
