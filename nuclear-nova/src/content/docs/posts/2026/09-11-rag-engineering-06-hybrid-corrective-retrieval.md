@@ -155,5 +155,3 @@ Step-back queries broaden the framing; decomposition creates narrower subqueries
 Use a fixed corpus with an exact identifier, a paraphrase, a multi-part question, and an unanswerable question. Compare dense, lexical, and hybrid candidate coverage before adding a reranker. Then compare ranking and latency with the candidate pool held fixed.
 
 For correction, measure unsupported answers and false abstentions as well as successful recoveries. A system that retrieves repeatedly until it finds a plausible passage can look helpful while becoming less trustworthy. The objective is a supported response under a bounded policy, not a larger number of search operations.
-
-

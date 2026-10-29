@@ -152,4 +152,3 @@ Exercise identical uploads, concurrent duplicates, a parser revision change, a f
 Also test deletion during an in-flight query. Decide whether the request uses its initially authorized snapshot or must recheck access before response delivery. High-sensitivity use cases may require the latter. Record the policy explicitly so caches and citation endpoints do not follow a different rule.
 
 The important operational measurements are publication lag, failed-build rate, retry work, and requests served from older publications. “Upload succeeded” is too early to measure freshness. The next article adds the embedding-profile contract that makes a published index interpretable by its query encoder.
-

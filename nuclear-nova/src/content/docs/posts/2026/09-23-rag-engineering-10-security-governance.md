@@ -167,4 +167,3 @@ A useful baseline demonstrates a complete, inspectable path from a question to s
 Before expanding scope, replay three cases: a correct answer with its decisive evidence, an honest abstention when evidence is missing, and a denied request that never exposes restricted content. Then repeat them after an index update and a permission change.
 
 Those cases bring the series together. Parsing preserves evidence; retrieval finds it; context assembly retains the qualifiers; generation stays within its support; evaluation detects regressions; authorization decides whether the evidence may be used at all. Each boundary needs an observable contract. That is what makes a RAG system possible to debug, improve, and operate.
-
