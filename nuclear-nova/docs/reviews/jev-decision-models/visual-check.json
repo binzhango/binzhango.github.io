@@ -1,0 +1,218 @@
+[
+  {
+    "width": 1440,
+    "theme": "light",
+    "errors": [],
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "src": "/diagrams/jev-decisions/refund-path.svg",
+        "loaded": true,
+        "visible": true
+      },
+      {
+        "src": "/diagrams/jev-decisions/refund-path.dark.svg",
+        "loaded": true,
+        "visible": false
+      }
+    ],
+    "tables": 5,
+    "emptyHeadings": 0,
+    "regions": [
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      }
+    ],
+    "mathNodes": 0,
+    "borders": "1px"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "errors": [],
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "src": "/diagrams/jev-decisions/refund-path.svg",
+        "loaded": true,
+        "visible": false
+      },
+      {
+        "src": "/diagrams/jev-decisions/refund-path.dark.svg",
+        "loaded": true,
+        "visible": true
+      }
+    ],
+    "tables": 5,
+    "emptyHeadings": 0,
+    "regions": [
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      },
+      {
+        "width": 830,
+        "scroll": 830,
+        "tabindex": 0
+      }
+    ],
+    "mathNodes": 0,
+    "borders": "1px"
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "errors": [],
+    "scrollWidth": 390,
+    "images": [
+      {
+        "src": "/diagrams/jev-decisions/refund-path.svg",
+        "loaded": true,
+        "visible": true
+      },
+      {
+        "src": "/diagrams/jev-decisions/refund-path.dark.svg",
+        "loaded": true,
+        "visible": false
+      }
+    ],
+    "tables": 5,
+    "emptyHeadings": 0,
+    "regions": [
+      {
+        "width": 348,
+        "scroll": 760,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      }
+    ],
+    "mathNodes": 0,
+    "borders": "1px"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "errors": [],
+    "scrollWidth": 390,
+    "images": [
+      {
+        "src": "/diagrams/jev-decisions/refund-path.svg",
+        "loaded": true,
+        "visible": false
+      },
+      {
+        "src": "/diagrams/jev-decisions/refund-path.dark.svg",
+        "loaded": true,
+        "visible": true
+      }
+    ],
+    "tables": 5,
+    "emptyHeadings": 0,
+    "regions": [
+      {
+        "width": 348,
+        "scroll": 760,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      },
+      {
+        "width": 348,
+        "scroll": 600,
+        "tabindex": 0
+      }
+    ],
+    "mathNodes": 0,
+    "borders": "1px"
+  }
+]
