@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/tools/archify/rag-evaluation-flow.dataflow.json",
+  "output": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/public/tools/rag-evaluation-flow.html",
+  "specification": {
+    "sha256": "2f1eb7f24ee13a1079d38690046f1396c2aa84f787b1133885db1cc675423c57",
+    "bytes": 1697
+  },
+  "artifact": {
+    "sha256": "cf34d8fc36b5ef30928664461b1c427644bf4fdd161853bee8fac98b8de46933",
+    "bytes": 662700
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

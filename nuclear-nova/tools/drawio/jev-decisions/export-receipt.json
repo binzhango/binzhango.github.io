@@ -1,0 +1,22 @@
+{
+  "renderer": "Official draw.io GraphViewer / Graph.getSvg",
+  "runtimeSha256": "2ac3234bb654d99a80130b35a177611791eacb13bfce4e0c444c90223d5f718e",
+  "diagrams": [
+    {
+      "name": "refund-path",
+      "vertices": 14,
+      "edges": 12,
+      "width": "921px",
+      "height": "1120px",
+      "sha256": "def23af322d6e78253a9ded6aed4eec0db50fae2b88e9ae520488373c5083d3f"
+    },
+    {
+      "name": "refund-path.dark",
+      "vertices": 14,
+      "edges": 12,
+      "width": "921px",
+      "height": "1120px",
+      "sha256": "3ffb3483470be0a5e6acbb64c8c4948def9b9efb828084c3f1ed13129f1edeb1"
+    }
+  ]
+}

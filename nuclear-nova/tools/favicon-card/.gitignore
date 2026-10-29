@@ -1,0 +1,11 @@
+/tools/
+/web/node_modules/
+*.blend1
+/verification/
+/verification.json
+/asset-validation.json
+/layer-preview.png
+/web/*.bundle.js
+/web/card-config.json
+/web/assets/*
+!/web/assets/card.glb

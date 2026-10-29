@@ -1,0 +1,405 @@
+{
+  "report": [
+    {
+      "width": 1440,
+      "theme": "light",
+      "errors": [],
+      "scrollWidth": 1440,
+      "fontSize": "19px",
+      "lineHeight": "35.15px",
+      "proseWidth": 672,
+      "articleWidth": 832,
+      "bodyColor": "color(srgb 0.105255 0.149804 0.21051)",
+      "background": "rgb(248, 249, 251)",
+      "headings": [
+        {
+          "id": "where-a-decision-model-fits",
+          "text": "Where a decision model fits"
+        },
+        {
+          "id": "start-with-a-concrete-9-refund",
+          "text": "Start with a concrete $9 refund"
+        },
+        {
+          "id": "choice-noul-and-score-answer-different-questions",
+          "text": "Choice, Noul, and Score answer different questions"
+        },
+        {
+          "id": "choice-defines-the-available-categories",
+          "text": "Choice defines the available categories"
+        },
+        {
+          "id": "noul-expresses-uncertainty-about-a-proposition",
+          "text": "Noul expresses uncertainty about a proposition"
+        },
+        {
+          "id": "score-needs-an-interpretable-rubric",
+          "text": "Score needs an interpretable rubric"
+        },
+        {
+          "id": "a-small-invocation-before-the-full-agent",
+          "text": "A small invocation before the full agent"
+        },
+        {
+          "id": "connect-predictions-to-langchain-middleware",
+          "text": "Connect predictions to LangChain middleware"
+        },
+        {
+          "id": "before-the-run-classify-and-select-a-prompt-hint",
+          "text": "Before the run: classify and select a prompt hint"
+        },
+        {
+          "id": "around-generation-supply-the-selected-playbook",
+          "text": "Around generation: supply the selected playbook"
+        },
+        {
+          "id": "around-tools-inspect-the-proposed-refund",
+          "text": "Around tools: inspect the proposed refund"
+        },
+        {
+          "id": "keep-authorization-in-deterministic-code",
+          "text": "Keep authorization in deterministic code"
+        },
+        {
+          "id": "an-unavailable-decision-is-not-a-low-risk-decision",
+          "text": "An unavailable decision is not a low-risk decision"
+        },
+        {
+          "id": "compare-two-different-experimental-questions",
+          "text": "Compare two different experimental questions"
+        },
+        {
+          "id": "what-the-recorded-runs-show",
+          "text": "What the recorded runs show"
+        },
+        {
+          "id": "full-agent-outcomes-both-paths-completed-the-refunds",
+          "text": "Full-agent outcomes: both paths completed the refunds"
+        },
+        {
+          "id": "decision-only-calls-lower-latency-and-one-fewer-format-failure",
+          "text": "Decision-only calls: lower latency and one fewer format failure"
+        },
+        {
+          "id": "decide-whether-the-extra-model-helps",
+          "text": "Decide whether the extra model helps"
+        },
+        {
+          "id": "preserve-the-rules-and-evidence-across-review",
+          "text": "Preserve the rules and evidence across review"
+        },
+        {
+          "id": "run-the-lab-and-inspect-the-evidence",
+          "text": "Run the lab and inspect the evidence"
+        }
+      ],
+      "tables": 5,
+      "notes": 2,
+      "definitions": 3,
+      "mathNodes": 0,
+      "images": true
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "errors": [],
+      "scrollWidth": 1440,
+      "fontSize": "19px",
+      "lineHeight": "35.15px",
+      "proseWidth": 672,
+      "articleWidth": 832,
+      "bodyColor": "color(srgb 0.912 0.933961 0.960784)",
+      "background": "rgb(17, 24, 32)",
+      "headings": [
+        {
+          "id": "where-a-decision-model-fits",
+          "text": "Where a decision model fits"
+        },
+        {
+          "id": "start-with-a-concrete-9-refund",
+          "text": "Start with a concrete $9 refund"
+        },
+        {
+          "id": "choice-noul-and-score-answer-different-questions",
+          "text": "Choice, Noul, and Score answer different questions"
+        },
+        {
+          "id": "choice-defines-the-available-categories",
+          "text": "Choice defines the available categories"
+        },
+        {
+          "id": "noul-expresses-uncertainty-about-a-proposition",
+          "text": "Noul expresses uncertainty about a proposition"
+        },
+        {
+          "id": "score-needs-an-interpretable-rubric",
+          "text": "Score needs an interpretable rubric"
+        },
+        {
+          "id": "a-small-invocation-before-the-full-agent",
+          "text": "A small invocation before the full agent"
+        },
+        {
+          "id": "connect-predictions-to-langchain-middleware",
+          "text": "Connect predictions to LangChain middleware"
+        },
+        {
+          "id": "before-the-run-classify-and-select-a-prompt-hint",
+          "text": "Before the run: classify and select a prompt hint"
+        },
+        {
+          "id": "around-generation-supply-the-selected-playbook",
+          "text": "Around generation: supply the selected playbook"
+        },
+        {
+          "id": "around-tools-inspect-the-proposed-refund",
+          "text": "Around tools: inspect the proposed refund"
+        },
+        {
+          "id": "keep-authorization-in-deterministic-code",
+          "text": "Keep authorization in deterministic code"
+        },
+        {
+          "id": "an-unavailable-decision-is-not-a-low-risk-decision",
+          "text": "An unavailable decision is not a low-risk decision"
+        },
+        {
+          "id": "compare-two-different-experimental-questions",
+          "text": "Compare two different experimental questions"
+        },
+        {
+          "id": "what-the-recorded-runs-show",
+          "text": "What the recorded runs show"
+        },
+        {
+          "id": "full-agent-outcomes-both-paths-completed-the-refunds",
+          "text": "Full-agent outcomes: both paths completed the refunds"
+        },
+        {
+          "id": "decision-only-calls-lower-latency-and-one-fewer-format-failure",
+          "text": "Decision-only calls: lower latency and one fewer format failure"
+        },
+        {
+          "id": "decide-whether-the-extra-model-helps",
+          "text": "Decide whether the extra model helps"
+        },
+        {
+          "id": "preserve-the-rules-and-evidence-across-review",
+          "text": "Preserve the rules and evidence across review"
+        },
+        {
+          "id": "run-the-lab-and-inspect-the-evidence",
+          "text": "Run the lab and inspect the evidence"
+        }
+      ],
+      "tables": 5,
+      "notes": 2,
+      "definitions": 3,
+      "mathNodes": 0,
+      "images": true
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "errors": [],
+      "scrollWidth": 390,
+      "fontSize": "17.5px",
+      "lineHeight": "31.5px",
+      "proseWidth": 350,
+      "articleWidth": 350,
+      "bodyColor": "color(srgb 0.105255 0.149804 0.21051)",
+      "background": "rgb(248, 249, 251)",
+      "headings": [
+        {
+          "id": "where-a-decision-model-fits",
+          "text": "Where a decision model fits"
+        },
+        {
+          "id": "start-with-a-concrete-9-refund",
+          "text": "Start with a concrete $9 refund"
+        },
+        {
+          "id": "choice-noul-and-score-answer-different-questions",
+          "text": "Choice, Noul, and Score answer different questions"
+        },
+        {
+          "id": "choice-defines-the-available-categories",
+          "text": "Choice defines the available categories"
+        },
+        {
+          "id": "noul-expresses-uncertainty-about-a-proposition",
+          "text": "Noul expresses uncertainty about a proposition"
+        },
+        {
+          "id": "score-needs-an-interpretable-rubric",
+          "text": "Score needs an interpretable rubric"
+        },
+        {
+          "id": "a-small-invocation-before-the-full-agent",
+          "text": "A small invocation before the full agent"
+        },
+        {
+          "id": "connect-predictions-to-langchain-middleware",
+          "text": "Connect predictions to LangChain middleware"
+        },
+        {
+          "id": "before-the-run-classify-and-select-a-prompt-hint",
+          "text": "Before the run: classify and select a prompt hint"
+        },
+        {
+          "id": "around-generation-supply-the-selected-playbook",
+          "text": "Around generation: supply the selected playbook"
+        },
+        {
+          "id": "around-tools-inspect-the-proposed-refund",
+          "text": "Around tools: inspect the proposed refund"
+        },
+        {
+          "id": "keep-authorization-in-deterministic-code",
+          "text": "Keep authorization in deterministic code"
+        },
+        {
+          "id": "an-unavailable-decision-is-not-a-low-risk-decision",
+          "text": "An unavailable decision is not a low-risk decision"
+        },
+        {
+          "id": "compare-two-different-experimental-questions",
+          "text": "Compare two different experimental questions"
+        },
+        {
+          "id": "what-the-recorded-runs-show",
+          "text": "What the recorded runs show"
+        },
+        {
+          "id": "full-agent-outcomes-both-paths-completed-the-refunds",
+          "text": "Full-agent outcomes: both paths completed the refunds"
+        },
+        {
+          "id": "decision-only-calls-lower-latency-and-one-fewer-format-failure",
+          "text": "Decision-only calls: lower latency and one fewer format failure"
+        },
+        {
+          "id": "decide-whether-the-extra-model-helps",
+          "text": "Decide whether the extra model helps"
+        },
+        {
+          "id": "preserve-the-rules-and-evidence-across-review",
+          "text": "Preserve the rules and evidence across review"
+        },
+        {
+          "id": "run-the-lab-and-inspect-the-evidence",
+          "text": "Run the lab and inspect the evidence"
+        }
+      ],
+      "tables": 5,
+      "notes": 2,
+      "definitions": 3,
+      "mathNodes": 0,
+      "images": true
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "errors": [],
+      "scrollWidth": 390,
+      "fontSize": "17.5px",
+      "lineHeight": "31.5px",
+      "proseWidth": 350,
+      "articleWidth": 350,
+      "bodyColor": "color(srgb 0.912 0.933961 0.960784)",
+      "background": "rgb(17, 24, 32)",
+      "headings": [
+        {
+          "id": "where-a-decision-model-fits",
+          "text": "Where a decision model fits"
+        },
+        {
+          "id": "start-with-a-concrete-9-refund",
+          "text": "Start with a concrete $9 refund"
+        },
+        {
+          "id": "choice-noul-and-score-answer-different-questions",
+          "text": "Choice, Noul, and Score answer different questions"
+        },
+        {
+          "id": "choice-defines-the-available-categories",
+          "text": "Choice defines the available categories"
+        },
+        {
+          "id": "noul-expresses-uncertainty-about-a-proposition",
+          "text": "Noul expresses uncertainty about a proposition"
+        },
+        {
+          "id": "score-needs-an-interpretable-rubric",
+          "text": "Score needs an interpretable rubric"
+        },
+        {
+          "id": "a-small-invocation-before-the-full-agent",
+          "text": "A small invocation before the full agent"
+        },
+        {
+          "id": "connect-predictions-to-langchain-middleware",
+          "text": "Connect predictions to LangChain middleware"
+        },
+        {
+          "id": "before-the-run-classify-and-select-a-prompt-hint",
+          "text": "Before the run: classify and select a prompt hint"
+        },
+        {
+          "id": "around-generation-supply-the-selected-playbook",
+          "text": "Around generation: supply the selected playbook"
+        },
+        {
+          "id": "around-tools-inspect-the-proposed-refund",
+          "text": "Around tools: inspect the proposed refund"
+        },
+        {
+          "id": "keep-authorization-in-deterministic-code",
+          "text": "Keep authorization in deterministic code"
+        },
+        {
+          "id": "an-unavailable-decision-is-not-a-low-risk-decision",
+          "text": "An unavailable decision is not a low-risk decision"
+        },
+        {
+          "id": "compare-two-different-experimental-questions",
+          "text": "Compare two different experimental questions"
+        },
+        {
+          "id": "what-the-recorded-runs-show",
+          "text": "What the recorded runs show"
+        },
+        {
+          "id": "full-agent-outcomes-both-paths-completed-the-refunds",
+          "text": "Full-agent outcomes: both paths completed the refunds"
+        },
+        {
+          "id": "decision-only-calls-lower-latency-and-one-fewer-format-failure",
+          "text": "Decision-only calls: lower latency and one fewer format failure"
+        },
+        {
+          "id": "decide-whether-the-extra-model-helps",
+          "text": "Decide whether the extra model helps"
+        },
+        {
+          "id": "preserve-the-rules-and-evidence-across-review",
+          "text": "Preserve the rules and evidence across review"
+        },
+        {
+          "id": "run-the-lab-and-inspect-the-evidence",
+          "text": "Run the lab and inspect the evidence"
+        }
+      ],
+      "tables": 5,
+      "notes": 2,
+      "definitions": 3,
+      "mathNodes": 0,
+      "images": true
+    }
+  ],
+  "otherPost": {
+    "isJev": false,
+    "font": "18px",
+    "headerBorder": "1px"
+  }
+}
