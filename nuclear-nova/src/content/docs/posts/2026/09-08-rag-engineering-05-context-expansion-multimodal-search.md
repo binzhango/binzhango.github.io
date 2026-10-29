@@ -171,4 +171,3 @@ The same provenance rules apply to every modality: identify the asset version, p
 Report retrieval coverage both before and after assembly. A reranker may improve candidate order while an expansion policy removes the relevant qualifier. A larger token budget may improve answer completeness while increasing latency. These are different outcomes.
 
 For each failing query, inspect the final context text, source regions, token accounting, and exclusion decisions. The context manifest is the bridge between search metrics and answer quality. Without it, a successful retrieval stage can take the blame for a packing failure it did not cause.
-

@@ -174,5 +174,3 @@ A structured response should expose the interpreted operation, column names, typ
 If a language model summarizes the result, evaluate the summary separately. It may round incorrectly, swap team names, or turn an average into a claim about every incident. The exact query result remains the evidence; the prose is another transformation to validate.
 
 Test the valid aggregation, a missing filter, an unknown column, excessive limits, null values, and ambiguous time language. These cases show whether the system executes the intended operation, not merely whether it can generate plausible SQL.
-
-

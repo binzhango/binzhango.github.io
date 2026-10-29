@@ -164,4 +164,3 @@ Use the same source snapshot and question set for the comparison. Include exact 
 Do not choose a strategy solely because recall improved. It may retrieve more evidence by multiplying near-duplicate chunks and increasing prompt cost. Compare quality and resource use together, then inspect the cases that changed.
 
 A defensible starting point is structure-aware parsing with a simple bounded splitter. Add similarity-based segmentation when measured failures suggest that explicit structure is insufficient. The next article treats the resulting representation as versioned data, so changes to the parser or splitter can be reproduced and rolled back.
-

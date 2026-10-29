@@ -171,4 +171,3 @@ A small development application may compute embeddings on demand when no index e
 An incompatible published index is different. Falling back silently hides a deployment mistake. Expose the incompatibility, preserve the failed build state, and return an actionable error or explicitly configured degraded behavior.
 
 The resulting contract is simple to state and demanding to operate: every retrieval request must use an eligible source publication, a compatible encoder pair, and a known search configuration. The next article examines what happens after those vectors return candidates.
-

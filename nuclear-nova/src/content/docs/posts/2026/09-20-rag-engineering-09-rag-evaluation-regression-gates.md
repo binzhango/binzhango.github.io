@@ -177,5 +177,3 @@ These are examples of a decision process, not suggested targets. Define threshol
 With small samples, a percentile can move sharply because of a few requests. Report sample counts and uncertainty; measure under representative load when making capacity claims. Separate time to first visible progress, time to first answer token, and time to a validated answer. They describe different user experiences.
 
 A useful regression report ends with the failed case, the changed evidence path, and a concrete next action. If you cannot explain why a score changed, the evaluation has identified a symptom. The trace should help you find the cause.
-
-

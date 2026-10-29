@@ -182,4 +182,3 @@ At presentation time, render untrusted text with an appropriate escaping or sani
 Use a valid fixture response, malformed JSON, unknown IDs, a correct citation attached to a wrong number, a missing exception, an unavailable provider, and an interrupted stream. Verify both the returned content and the status category.
 
 For claim support, combine deterministic checks for stable facts with human-labelled examples and, where useful, a calibrated model judge. Record the judge configuration and its disagreement with human reviewers. A judge is another measurement tool, not a source of ground truth. The next article makes these distinctions part of repeatable evaluation.
-
