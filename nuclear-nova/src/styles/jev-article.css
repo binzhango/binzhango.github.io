@@ -1,0 +1,17 @@
+/* Article-specific media only. Typography and layout use the standard blog styles. */
+.post--jev .post-content .jev-table { margin: 1.6rem 0; }
+.post--jev .post-content .jev-table table { width: 100%; min-width: 600px; margin: 0; table-layout: auto; }
+.post--jev .post-content .jev-results table { table-layout: fixed; }
+.post--jev .post-content .jev-results tr > :first-child { width: 40%; }
+.post--jev .post-content .jev-table th, .post--jev .post-content .jev-table td { white-space: normal; word-break: normal; overflow-wrap: normal; }
+.post--jev .post-content .jev-table .table-scroll:focus-visible, .post--jev .post-content .jev-diagram-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.post--jev .post-content .jev-figure-title { font-weight: 650; color: var(--post-heading); margin-bottom: 0.4rem; }
+.post--jev .post-content .jev-diagram-scroll { overflow-x: auto; border: 1px solid var(--sl-color-hairline); background: #f8fafc; }
+.post--jev .post-content .jev-diagram-scroll img { display: block; width: 100%; min-width: 760px; height: auto; max-width: none; border: 0; border-radius: 0; margin: 0; }
+.post--jev .post-content .jev-diagram-scroll .jev-dark { display: none; }
+[data-theme='dark'] .post--jev .post-content .jev-diagram-scroll { background: #101b2b; }
+[data-theme='dark'] .post--jev .post-content .jev-diagram-scroll .jev-light { display: none; }
+[data-theme='dark'] .post--jev .post-content .jev-diagram-scroll .jev-dark { display: block; }
+.post--jev .post-content .jev-figure figcaption { text-align: left; }
+.post--jev .post-content .jev-figure-links { font-size: 0.9rem; }
+.post--jev .post-content .jev-scroll-hint { font-size: 0.85rem; color: var(--post-muted); }
