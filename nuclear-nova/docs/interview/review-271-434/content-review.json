@@ -1,0 +1,986 @@
+[
+  {
+    "id": "ai-271",
+    "briefWords": 56,
+    "detailWords": 138,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-272",
+    "briefWords": 52,
+    "detailWords": 122,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-273",
+    "briefWords": 50,
+    "detailWords": 125,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-274",
+    "briefWords": 53,
+    "detailWords": 119,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-275",
+    "briefWords": 52,
+    "detailWords": 119,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-276",
+    "briefWords": 52,
+    "detailWords": 125,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-277",
+    "briefWords": 47,
+    "detailWords": 124,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-278",
+    "briefWords": 55,
+    "detailWords": 109,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-279",
+    "briefWords": 49,
+    "detailWords": 120,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-280",
+    "briefWords": 59,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-281",
+    "briefWords": 49,
+    "detailWords": 119,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-282",
+    "briefWords": 56,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-283",
+    "briefWords": 43,
+    "detailWords": 119,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-284",
+    "briefWords": 54,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-285",
+    "briefWords": 55,
+    "detailWords": 107,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-286",
+    "briefWords": 46,
+    "detailWords": 213,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-287",
+    "briefWords": 57,
+    "detailWords": 118,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-288",
+    "briefWords": 51,
+    "detailWords": 107,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-289",
+    "briefWords": 49,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-290",
+    "briefWords": 51,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-291",
+    "briefWords": 52,
+    "detailWords": 102,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-292",
+    "briefWords": 53,
+    "detailWords": 109,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-293",
+    "briefWords": 50,
+    "detailWords": 123,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-294",
+    "briefWords": 51,
+    "detailWords": 98,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-295",
+    "briefWords": 52,
+    "detailWords": 183,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-296",
+    "briefWords": 49,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-297",
+    "briefWords": 53,
+    "detailWords": 118,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-298",
+    "briefWords": 52,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-299",
+    "briefWords": 47,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-300",
+    "briefWords": 50,
+    "detailWords": 104,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-301",
+    "briefWords": 52,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-302",
+    "briefWords": 52,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-303",
+    "briefWords": 57,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-304",
+    "briefWords": 54,
+    "detailWords": 125,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-305",
+    "briefWords": 52,
+    "detailWords": 175,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-306",
+    "briefWords": 56,
+    "detailWords": 115,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-307",
+    "briefWords": 58,
+    "detailWords": 105,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-308",
+    "briefWords": 51,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-309",
+    "briefWords": 49,
+    "detailWords": 133,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-310",
+    "briefWords": 52,
+    "detailWords": 117,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-311",
+    "briefWords": 52,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-312",
+    "briefWords": 48,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-313",
+    "briefWords": 55,
+    "detailWords": 179,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-314",
+    "briefWords": 46,
+    "detailWords": 117,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-315",
+    "briefWords": 48,
+    "detailWords": 106,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-316",
+    "briefWords": 51,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-317",
+    "briefWords": 59,
+    "detailWords": 146,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-318",
+    "briefWords": 55,
+    "detailWords": 154,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-319",
+    "briefWords": 46,
+    "detailWords": 115,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-320",
+    "briefWords": 55,
+    "detailWords": 116,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-321",
+    "briefWords": 47,
+    "detailWords": 115,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-322",
+    "briefWords": 48,
+    "detailWords": 120,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-323",
+    "briefWords": 49,
+    "detailWords": 109,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-324",
+    "briefWords": 55,
+    "detailWords": 113,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-325",
+    "briefWords": 55,
+    "detailWords": 109,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-326",
+    "briefWords": 52,
+    "detailWords": 115,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-327",
+    "briefWords": 52,
+    "detailWords": 186,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-328",
+    "briefWords": 47,
+    "detailWords": 265,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-329",
+    "briefWords": 51,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-330",
+    "briefWords": 49,
+    "detailWords": 109,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-331",
+    "briefWords": 52,
+    "detailWords": 96,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-332",
+    "briefWords": 49,
+    "detailWords": 104,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-333",
+    "briefWords": 54,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-334",
+    "briefWords": 54,
+    "detailWords": 113,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-335",
+    "briefWords": 58,
+    "detailWords": 97,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-336",
+    "briefWords": 54,
+    "detailWords": 104,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-337",
+    "briefWords": 57,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-338",
+    "briefWords": 53,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-339",
+    "briefWords": 57,
+    "detailWords": 106,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-340",
+    "briefWords": 56,
+    "detailWords": 98,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-341",
+    "briefWords": 55,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-342",
+    "briefWords": 52,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-343",
+    "briefWords": 50,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-344",
+    "briefWords": 48,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-345",
+    "briefWords": 53,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-346",
+    "briefWords": 48,
+    "detailWords": 107,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-347",
+    "briefWords": 54,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-348",
+    "briefWords": 53,
+    "detailWords": 104,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-349",
+    "briefWords": 53,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-350",
+    "briefWords": 55,
+    "detailWords": 109,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-351",
+    "briefWords": 53,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-352",
+    "briefWords": 42,
+    "detailWords": 98,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-353",
+    "briefWords": 48,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-354",
+    "briefWords": 49,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-355",
+    "briefWords": 53,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-356",
+    "briefWords": 49,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-357",
+    "briefWords": 52,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-358",
+    "briefWords": 51,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-359",
+    "briefWords": 52,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-360",
+    "briefWords": 50,
+    "detailWords": 107,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-361",
+    "briefWords": 51,
+    "detailWords": 102,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-362",
+    "briefWords": 56,
+    "detailWords": 260,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-363",
+    "briefWords": 53,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-364",
+    "briefWords": 47,
+    "detailWords": 114,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-365",
+    "briefWords": 55,
+    "detailWords": 93,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-366",
+    "briefWords": 48,
+    "detailWords": 116,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-367",
+    "briefWords": 46,
+    "detailWords": 104,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-368",
+    "briefWords": 63,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-369",
+    "briefWords": 52,
+    "detailWords": 113,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-370",
+    "briefWords": 55,
+    "detailWords": 117,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-371",
+    "briefWords": 52,
+    "detailWords": 105,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-372",
+    "briefWords": 56,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-373",
+    "briefWords": 50,
+    "detailWords": 106,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-374",
+    "briefWords": 49,
+    "detailWords": 236,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-375",
+    "briefWords": 54,
+    "detailWords": 205,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-376",
+    "briefWords": 51,
+    "detailWords": 104,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-377",
+    "briefWords": 51,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-378",
+    "briefWords": 50,
+    "detailWords": 102,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-379",
+    "briefWords": 57,
+    "detailWords": 106,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-380",
+    "briefWords": 50,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-381",
+    "briefWords": 55,
+    "detailWords": 115,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-382",
+    "briefWords": 54,
+    "detailWords": 97,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-383",
+    "briefWords": 54,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-384",
+    "briefWords": 56,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-385",
+    "briefWords": 57,
+    "detailWords": 263,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-386",
+    "briefWords": 52,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-387",
+    "briefWords": 56,
+    "detailWords": 94,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-388",
+    "briefWords": 49,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-389",
+    "briefWords": 52,
+    "detailWords": 113,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-390",
+    "briefWords": 49,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-391",
+    "briefWords": 51,
+    "detailWords": 102,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-392",
+    "briefWords": 57,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-393",
+    "briefWords": 53,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-394",
+    "briefWords": 58,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-395",
+    "briefWords": 48,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-396",
+    "briefWords": 45,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-397",
+    "briefWords": 50,
+    "detailWords": 107,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-398",
+    "briefWords": 52,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-399",
+    "briefWords": 50,
+    "detailWords": 321,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-400",
+    "briefWords": 50,
+    "detailWords": 118,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-401",
+    "briefWords": 60,
+    "detailWords": 209,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-402",
+    "briefWords": 55,
+    "detailWords": 116,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-403",
+    "briefWords": 51,
+    "detailWords": 117,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-404",
+    "briefWords": 52,
+    "detailWords": 107,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-405",
+    "briefWords": 54,
+    "detailWords": 102,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-406",
+    "briefWords": 52,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-407",
+    "briefWords": 55,
+    "detailWords": 105,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-408",
+    "briefWords": 54,
+    "detailWords": 102,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-409",
+    "briefWords": 56,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-410",
+    "briefWords": 56,
+    "detailWords": 220,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-411",
+    "briefWords": 50,
+    "detailWords": 115,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-412",
+    "briefWords": 52,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-413",
+    "briefWords": 59,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-414",
+    "briefWords": 57,
+    "detailWords": 109,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-415",
+    "briefWords": 53,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-416",
+    "briefWords": 56,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-417",
+    "briefWords": 51,
+    "detailWords": 101,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-418",
+    "briefWords": 50,
+    "detailWords": 105,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-419",
+    "briefWords": 49,
+    "detailWords": 103,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-420",
+    "briefWords": 53,
+    "detailWords": 254,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-421",
+    "briefWords": 51,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-422",
+    "briefWords": 58,
+    "detailWords": 106,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-423",
+    "briefWords": 52,
+    "detailWords": 110,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-424",
+    "briefWords": 52,
+    "detailWords": 108,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-425",
+    "briefWords": 53,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-426",
+    "briefWords": 54,
+    "detailWords": 97,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-427",
+    "briefWords": 62,
+    "detailWords": 104,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-428",
+    "briefWords": 56,
+    "detailWords": 102,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-429",
+    "briefWords": 50,
+    "detailWords": 112,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-430",
+    "briefWords": 55,
+    "detailWords": 115,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-431",
+    "briefWords": 55,
+    "detailWords": 106,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-432",
+    "briefWords": 59,
+    "detailWords": 105,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-433",
+    "briefWords": 55,
+    "detailWords": 142,
+    "reviewedOn": "2026-09-20"
+  },
+  {
+    "id": "ai-434",
+    "briefWords": 52,
+    "detailWords": 111,
+    "reviewedOn": "2026-09-20"
+  }
+]
