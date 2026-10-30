@@ -7,3 +7,7 @@ nuclear-nova/scripts/phase0-build-artifact-scan.sh
 nuclear-nova/ADMONITION_PLAYBOOK.md
 python/*
 
+# Local agent configuration and skills
+.codex/
+.agents/
+
