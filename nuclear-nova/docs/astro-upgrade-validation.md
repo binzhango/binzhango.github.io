@@ -1,5 +1,15 @@
 # Astro upgrade validation
 
+## October 30: Vercel browser-install timeout resolved
+
+Production commit `42dbc572` timed out before Astro started. Its logs end after the Playwright 1.58.1 Chromium download reaches 100%; npm and `dnf` had already completed. This matches the upstream [archive-extraction hang](https://github.com/microsoft/playwright/issues/40724), fixed by [Playwright PR 40747](https://github.com/microsoft/playwright/pull/40747).
+
+- Updated and pinned `playwright` and `@playwright/test` to 1.64.1, including the shared Mermaid renderer dependency.
+- Changed the Node engine from `>=24` to `24.x`. The hosted preview confirms Vercel switched from Node 26 to Node 24; GitHub Actions already uses Node 24.
+- Limited Vercel's browser installer to five minutes, logged Node/Playwright versions, and added a real Chromium launch check before the Astro build.
+- On Node 24.22.2, browser installation/launch, 63 unit tests, 27 browser tests, Astro checks (zero errors/warnings; two existing hints), and the production build pass.
+- A fresh [Vercel preview](https://vercel.com/binzhangos-projects/binzhango-github-io/8ajCvu1WZCDbWrinxxC7QrvvE3D7) reached READY on the actual hosted Linux image. Chromium extraction and launch both succeeded. This supersedes the hosted-build limitation in the original October 29 notes below.
+
 Verified on October 29, 2026. The npm `latest` tag and [Astro's upgrade documentation](https://docs.astro.build/en/upgrade-astro/) both identified **7.4.4** as the latest stable release.
 
 ## Migration
