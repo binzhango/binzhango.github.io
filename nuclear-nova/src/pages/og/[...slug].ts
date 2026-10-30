@@ -11,7 +11,6 @@ const localFonts = [
 
 export const { getStaticPaths, GET } = await OGImageRoute({
     pages,
-    param: 'slug',
     getImageOptions: (_id, page: (typeof pages)[string]) => {
         return {
             title: page.data.title || "Bin Zhang's Blog",

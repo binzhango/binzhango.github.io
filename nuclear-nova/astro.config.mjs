@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
@@ -20,6 +21,8 @@ import rehypeInterviewIds from './src/plugins/rehype-interview-ids.mjs';
 export default defineConfig({
     site: process.env.SITE_URL ?? 'https://binzhango.net',
     output: 'static',
+    // Preserve HTML-aware spacing between inline elements after the Astro 7 upgrade.
+    compressHTML: true,
     redirects: {
         '/posts/2026/08-27-local-lke-01-inspectable-rag-baseline':
             '/posts/2026/08-27-rag-engineering-01-inspectable-rag-baseline',
@@ -66,31 +69,35 @@ export default defineConfig({
     devToolbar: {
         enabled: false,
     },
-    adapter: vercel(),
+    // GitHub Pages needs HTML redirects; Vercel emits redirects in its routing config.
+    adapter: process.env.DEPLOY_TARGET === 'github-pages' ? undefined : vercel(),
     integrations: [
         mdx(),
         sitemap(),
     ],
     markdown: {
-        remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkLegacyEmoji, remarkStarlightAdmonitions, remarkInterview],
-        rehypePlugins: [
-            [
-                rehypeMathJax,
-                {
-                    tex: {
-                        inlineMath: [['$', '$']],
-                        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        // Keep the remark/rehype pipeline used by math, diagrams, and interview content.
+        processor: unified({
+            remarkPlugins: [remarkDirective, remarkMath, remarkGfm, remarkLegacyEmoji, remarkStarlightAdmonitions, remarkInterview],
+            rehypePlugins: [
+                [
+                    rehypeMathJax,
+                    {
+                        tex: {
+                            inlineMath: [['$', '$']],
+                            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                        },
+                        chtml: {
+                            fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
+                        },
                     },
-                    chtml: {
-                        fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
-                    },
-                },
+                ],
+                rehypeMermaidShikiAdapter,
+                [rehypeMermaid, { strategy: 'img-svg' }],
+                rehypeReadableContent,
+                rehypeInterviewIds,
             ],
-            rehypeMermaidShikiAdapter,
-            [rehypeMermaid, { strategy: 'img-svg' }],
-            rehypeReadableContent,
-            rehypeInterviewIds,
-        ],
+        }),
         shikiConfig: {
             // Choose from Shiki's built-in themes (or add your own)
             // https://shiki.style/themes

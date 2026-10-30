@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "astro",
+  "installCommand": "npm ci && bash scripts/install-vercel-browser.sh",
+  "buildCommand": "npm run build"
+}
