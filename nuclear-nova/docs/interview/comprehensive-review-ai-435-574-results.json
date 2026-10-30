@@ -1,0 +1,226 @@
+[
+  {
+    "check": "442 first-pass annotation hours",
+    "value": 5000.0
+  },
+  {
+    "check": "442 overlap annotation hours",
+    "value": 10000.0
+  },
+  {
+    "check": "442 adjudication hours",
+    "value": 1000.0
+  },
+  {
+    "check": "445 ten step independent success",
+    "value": 0.8170728068875467
+  },
+  {
+    "check": "446 percentage-point loss",
+    "value": 6.0
+  },
+  {
+    "check": "448 raw vectors decimal GB",
+    "value": 30.72
+  },
+  {
+    "check": "449 task-embodiment cells",
+    "value": 36
+  },
+  {
+    "check": "449 hours/cell",
+    "value": 1388.888888888889
+  },
+  {
+    "check": "449 accepted hours",
+    "value": 65
+  },
+  {
+    "check": "451 ideal banding recall at .85",
+    "value": 0.9972749294876767
+  },
+  {
+    "check": "451 ideal banding candidates at .5",
+    "value": 0.4032805261667818
+  },
+  {
+    "check": "454 trace ms",
+    "value": 3000
+  },
+  {
+    "check": "457 serial budget ms",
+    "value": 3000
+  },
+  {
+    "check": "457 output allocation tokens",
+    "value": 120.0
+  },
+  {
+    "check": "458 metadata TB decimal",
+    "value": 100.0
+  },
+  {
+    "check": "458 vectors TB decimal",
+    "value": 153.6
+  },
+  {
+    "check": "459 RRF dual-list",
+    "value": 0.030679156908665108
+  },
+  {
+    "check": "459 RRF single-list",
+    "value": 0.016129032258064516
+  },
+  {
+    "check": "470 average replicas lower bound",
+    "value": 24
+  },
+  {
+    "check": "470 peak replicas lower bound",
+    "value": 70
+  },
+  {
+    "check": "488 ten attempts probability",
+    "value": 0.8926258175999999
+  },
+  {
+    "check": "497 binomial standard error percentage points",
+    "value": 0.8579044235810888
+  },
+  {
+    "check": "505 document tokens",
+    "value": 130000.0
+  },
+  {
+    "check": "505 single input cost",
+    "value": 0.26
+  },
+  {
+    "check": "505 eighteen input passes",
+    "value": 4.68
+  },
+  {
+    "check": "505 retrieval input cost",
+    "value": 0.024
+  },
+  {
+    "check": "505 available contract context",
+    "value": 120000
+  },
+  {
+    "check": "507 review cells",
+    "value": 90000
+  },
+  {
+    "check": "507 expected errors",
+    "value": 900.0
+  },
+  {
+    "check": "509 unsupported-claim rate",
+    "value": 0.03
+  },
+  {
+    "check": "512 full pass input cost",
+    "value": 200.0
+  },
+  {
+    "check": "512 eighteen pass input cost",
+    "value": 3600.0
+  },
+  {
+    "check": "512 idealized minutes",
+    "value": 25.0
+  },
+  {
+    "check": "512 token quota minutes",
+    "value": 100.0
+  },
+  {
+    "check": "512 generated tokens",
+    "value": 3600000
+  },
+  {
+    "check": "515 serial budget ms",
+    "value": 2000
+  },
+  {
+    "check": "524 history budget",
+    "value": 45
+  },
+  {
+    "check": "526 raw KV bytes",
+    "value": 4294967296
+  },
+  {
+    "check": "526 length+precision reduction",
+    "value": 16.0
+  },
+  {
+    "check": "529 illustrative message dollars",
+    "value": 0.0216
+  },
+  {
+    "check": "529 corrected self-host unit example, 360 sec at $10/hr",
+    "value": 1.0
+  },
+  {
+    "check": "537 active speech streams",
+    "value": 200.0
+  },
+  {
+    "check": "537 worker lower bound",
+    "value": 10.0
+  },
+  {
+    "check": "539 first audio budget ms",
+    "value": 900
+  },
+  {
+    "check": "545 finalization seconds",
+    "value": 10
+  },
+  {
+    "check": "558 cycle duration ms",
+    "value": 5.0
+  },
+  {
+    "check": "558 semantic request ms",
+    "value": 150
+  },
+  {
+    "check": "558 elapsed control cycles",
+    "value": 30.0
+  },
+  {
+    "check": "559 accepted demo hours",
+    "value": 3.0
+  },
+  {
+    "check": "561 rule of three",
+    "value": 0.1
+  },
+  {
+    "check": "565 control interval ms",
+    "value": 5.0
+  },
+  {
+    "check": "566 prediction horizon seconds",
+    "value": 0.4
+  },
+  {
+    "check": "566 execution horizon seconds",
+    "value": 0.1
+  },
+  {
+    "check": "571 total budget ms",
+    "value": 100
+  },
+  {
+    "check": "438 consensus positive integer validation, six invalid values and k=1 completion",
+    "result": "passed"
+  },
+  {
+    "check": "140 bodies have no external Markdown links or See/References-only directions",
+    "result": "passed"
+  }
+]

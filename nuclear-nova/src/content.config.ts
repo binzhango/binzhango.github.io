@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 import { interviewTopicIds } from './utils/interview-topics';
 
@@ -47,7 +48,7 @@ const blog = defineCollection({
     description: z.string().optional(),
     excerpt: z.string().optional(),
     date: z
-      .union([z.date(), z.string(), z.record(z.any())])
+      .union([z.date(), z.string(), z.record(z.string(), z.any())])
       .optional()
       .transform((val) => {
         if (!val) return undefined;
@@ -86,7 +87,7 @@ const interview = defineCollection({
     kind: z.enum(['factual', 'coding', 'design', 'behavioral']),
     status: z.enum(['draft', 'reviewed']),
     reviewedOn: z.string().nullable(),
-    sources: z.array(z.object({ label: z.string(), url: z.string().url() })),
+    sources: z.array(z.object({ label: z.string(), url: z.url() })),
   }),
 });
 

@@ -1,0 +1,191 @@
+[
+  {
+    "score": 0.794,
+    "a": "llm-055",
+    "b": "llm-056",
+    "q1": "Why do we need Cross-Attention?",
+    "q2": "Explain Cross-Attention.",
+    "decision": "retain",
+    "reason": "Motivation for cross-source conditioning versus tensor mechanism and equations."
+  },
+  {
+    "score": 0.744,
+    "a": "llm-037",
+    "b": "llm-038",
+    "q1": "What’s the formula of a GLU block using GeLU?",
+    "q2": "What’s the formula of a GLU block using Swish?",
+    "decision": "retain",
+    "reason": "GeGLU and SwiGLU use materially different activations."
+  },
+  {
+    "score": 0.719,
+    "a": "ai-109",
+    "b": "llm-046",
+    "q1": "Implement multi-head attention, then convert it to grouped-query attention.",
+    "q2": "Compare Multi-head, Multi-Query, and Grouped-Query Attention.",
+    "decision": "retain",
+    "reason": "Runnable implementation and conversion exercise versus conceptual architecture comparison."
+  },
+  {
+    "score": 0.695,
+    "a": "llm-035",
+    "b": "llm-038",
+    "q1": "What’s the Swish formula?",
+    "q2": "What’s the formula of a GLU block using Swish?",
+    "decision": "retain",
+    "reason": "Scalar Swish activation versus a gated feed-forward block."
+  },
+  {
+    "score": 0.689,
+    "a": "llm-126",
+    "b": "llm-147",
+    "q1": "What is RAG?",
+    "q2": "Why evaluate RAG?",
+    "decision": "retain",
+    "reason": "Definition of RAG versus reasons and failure attribution in evaluation."
+  },
+  {
+    "score": 0.682,
+    "a": "llm-034",
+    "b": "llm-037",
+    "q1": "What’s the GeLU formula?",
+    "q2": "What’s the formula of a GLU block using GeLU?",
+    "decision": "retain",
+    "reason": "Scalar GeLU formula versus GeGLU block composition."
+  },
+  {
+    "score": 0.661,
+    "a": "ai-107",
+    "b": "ai-173",
+    "q1": "Design the serving stack for a consumer chat assistant at hundreds of millions of users.",
+    "q2": "Design the serving stack for a ChatGPT-scale consumer assistant: hundreds of millions of weekly users, streaming chat, multiple model tiers.",
+    "decision": "retain",
+    "reason": "Later scenario adds weekly-user workload, streaming and multiple serving tiers."
+  },
+  {
+    "score": 0.641,
+    "a": "llm-064",
+    "b": "llm-066",
+    "q1": "What is KL divergence?",
+    "q2": "What’s the difference between KL divergence and cross-entropy?",
+    "decision": "retain",
+    "reason": "Definition of KL divergence versus its relationship to cross-entropy."
+  },
+  {
+    "score": 0.632,
+    "a": "ai-332",
+    "b": "llm-066",
+    "q1": "How is KL divergence loss different from cross-entropy loss? And from contrastive loss?",
+    "q2": "What’s the difference between KL divergence and cross-entropy?",
+    "decision": "retain",
+    "reason": "Imported comparison additionally requires contrastive loss."
+  },
+  {
+    "score": 0.61,
+    "a": "ai-266",
+    "b": "ai-287",
+    "q1": "What is multi-token prediction (MTP) and why train with it?",
+    "q2": "What is Multi-Token Prediction (MTP), why add an MTP layer, and how does it help at inference time?",
+    "decision": "retain",
+    "reason": "Later question explicitly adds inference use of multi-token prediction."
+  },
+  {
+    "score": 0.6,
+    "a": "ai-340",
+    "b": "llm-017",
+    "q1": "What is Maximum Likelihood Estimation and how does it differ from Bayesian inference?",
+    "q2": "Explain maximum likelihood estimation for language modeling.",
+    "decision": "retain",
+    "reason": "MLE versus Bayesian inference extends language-model maximum-likelihood objective."
+  },
+  {
+    "score": 0.599,
+    "a": "ai-169",
+    "b": "llm-066",
+    "q1": "What is the relationship between cross-entropy, KL divergence and perplexity, and why is cross-entropy the training loss for language models?",
+    "q2": "What’s the difference between KL divergence and cross-entropy?",
+    "decision": "retain",
+    "reason": "Additional perplexity and language-model training rationale."
+  },
+  {
+    "score": 0.597,
+    "a": "llm-023",
+    "b": "llm-026",
+    "q1": "What’s the difference between prefix decoder, causal decoder, and encoder-decoder architectures?",
+    "q2": "Explain the difference between encoder-only, decoder-only, and encoder-decoder models.",
+    "decision": "retain",
+    "reason": "Prefix-decoder masking differs from encoder-only architecture comparison."
+  },
+  {
+    "score": 0.591,
+    "a": "llm-023",
+    "b": "llm-027",
+    "q1": "What’s the difference between prefix decoder, causal decoder, and encoder-decoder architectures?",
+    "q2": "What’s the difference between prefix LM and causal LM?",
+    "decision": "retain",
+    "reason": "Focused causal/prefix mask comparison preserved as a follow-up."
+  },
+  {
+    "score": 0.579,
+    "a": "ai-332",
+    "b": "llm-064",
+    "q1": "How is KL divergence loss different from cross-entropy loss? And from contrastive loss?",
+    "q2": "What is KL divergence?",
+    "decision": "retain",
+    "reason": "Three loss objectives compared rather than one divergence defined."
+  },
+  {
+    "score": 0.578,
+    "a": "llm-133",
+    "b": "llm-135",
+    "q1": "Why is PDF parsing necessary?",
+    "q2": "What problems exist in PDF parsing?",
+    "decision": "retain",
+    "reason": "Purpose of extraction versus concrete layout and OCR failure modes."
+  },
+  {
+    "score": 0.577,
+    "a": "ai-003",
+    "b": "llm-045",
+    "q1": "What are Multi-Query Attention (MQA) and Grouped-Query Attention (GQA), and what do they trade away?",
+    "q2": "Explain Multi-Query Attention (MQA).",
+    "decision": "retain",
+    "reason": "MQA/GQA comparison adds grouping, quality and cache tradeoffs."
+  },
+  {
+    "score": 0.575,
+    "a": "llm-163",
+    "b": "llm-164",
+    "q1": "Why do we need PEFT?",
+    "q2": "What is PEFT and its advantages?",
+    "decision": "merged",
+    "reason": "Merged into llm-163 with both original answer pairs retained."
+  },
+  {
+    "score": 0.561,
+    "a": "ai-263",
+    "b": "ai-502",
+    "q1": "Tell me about a time you owned an ambiguous problem end-to-end without much direction.",
+    "q2": "Tell me about a time you owned a customer-facing problem end to end.",
+    "decision": "retain",
+    "reason": "Customer-facing ownership adds stakeholder communication and delivery constraints."
+  },
+  {
+    "score": 0.557,
+    "a": "ai-169",
+    "b": "ai-332",
+    "q1": "What is the relationship between cross-entropy, KL divergence and perplexity, and why is cross-entropy the training loss for language models?",
+    "q2": "How is KL divergence loss different from cross-entropy loss? And from contrastive loss?",
+    "decision": "retain",
+    "reason": "Perplexity/LM objective versus contrastive-learning objective."
+  },
+  {
+    "score": 0.557,
+    "a": "llm-085",
+    "b": "llm-096",
+    "q1": "How to construct instruction fine-tuning datasets?",
+    "q2": "What are the benefits of instruction fine-tuning?",
+    "decision": "retain",
+    "reason": "Dataset construction process versus intended benefits of instruction tuning."
+  }
+]
