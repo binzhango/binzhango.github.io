@@ -1,0 +1,35 @@
+---
+interface Props { kind: 'decision-journey' | 'recall-pipeline'; }
+const { kind } = Astro.props;
+const journey = kind === 'decision-journey';
+const title = journey ? 'A decision survives the conversation' : 'From a question to selected evidence';
+const alt = journey
+  ? 'An explicit remember command records the planner’s constraint. Hindsight retains it in a durable bank. A fresh coder process recalls facts and supplies them to the model.'
+  : 'A scoped question searches semantic, keyword, graph and temporal paths. Ranked lists are fused, reranked, diversified and filtered to the evidence token budget.';
+const base = `/diagrams/hindsight/${kind}`;
+---
+<figure class="hindsight-flow">
+  <div class="hindsight-flow__title">{title}</div>
+  {['light', 'dark'].map(theme => {
+    const suffix = theme === 'dark' ? '.dark' : '';
+    return <picture class={`hindsight-flow__${theme}`}>
+      <source media="(max-width: 640px)" srcset={`${base}.mobile${suffix}.svg`} width={journey ? 350 : 390} height={journey ? 510 : 800} />
+      <img class="no-lightbox" src={`${base}${suffix}.svg`} alt={alt} width="830" height={journey ? 190 : 760} />
+    </picture>;
+  })}
+  <figcaption>
+    {journey ? 'Local sample: the planner and coder use the same user/project bank. No previous chat history is passed to the coder.' : 'Simplified engine flow: the useful retrieval paths depend on the query, stored memories, and configuration. The application generates the final answer.'}
+    {' '}<a href={`${base}.svg`} target="_blank" rel="noopener">Full-size diagram</a>{' · '}<a href={`${base}.drawio`}>Editable source</a>
+  </figcaption>
+</figure>
+<style>
+  .hindsight-flow { width: min(100%, var(--reading-width)); margin: 2rem auto; border: 1px solid var(--line); }
+  .hindsight-flow__title { padding: 1rem 1.25rem; font-weight: 600; color: var(--post-heading); border-bottom: 1px solid var(--line); }
+  .hindsight-flow picture { display: block; background: #f8fafc; }
+  .hindsight-flow img { display: block; width: 100%; height: auto; margin: 0; border: 0; border-radius: 0; }
+  .hindsight-flow .hindsight-flow__dark { display: none; background: #101b2b; }
+  :global([data-theme='dark']) .hindsight-flow picture.hindsight-flow__light { display: none; }
+  :global([data-theme='dark']) .hindsight-flow picture.hindsight-flow__dark { display: block; }
+  .hindsight-flow figcaption { margin: 0; padding: 1rem 1.25rem; font-size: .85rem; line-height: 1.65; border-top: 1px solid var(--line); color: var(--post-body); }
+  .hindsight-flow a { color: var(--post-link); }
+</style>

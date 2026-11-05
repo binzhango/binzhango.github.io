@@ -1,0 +1,72 @@
+---
+import recordedRun from '../../public/assets/benchmarks/hindsight-memory/results.json';
+interface Props { view?: 'answers' | 'latency' }
+const { view = 'answers' } = Astro.props;
+const modes = [
+  { key: 'no_memory', name: 'Without memory', input: 'Current question + empty evidence' },
+  { key: 'hindsight', name: 'With Hindsight', input: 'Current question + recalled project fact' },
+  { key: 'provided_context', name: 'Source in prompt', input: 'Current question + original source' },
+].map((mode) => {
+  const trials = recordedRun.trials.filter((trial) => trial.mode === mode.key);
+  const times = trials.map((trial) => trial.total_seconds).sort((a, b) => a - b);
+  const middle = Math.floor(times.length / 2);
+  const known = trials.filter((trial) => trial.expected !== null);
+  return {
+    ...mode,
+    answer: trials.find((trial) => trial.case === 'database' && trial.repeat === 1)!.answer,
+    seconds: (times[middle - 1] + times[middle]) / 2,
+    score: `${known.filter((trial) => trial.correct).length}/${known.length} stored-fact checks`,
+  };
+});
+---
+
+<figure class="hindsight-evidence" aria-label={view === 'answers' ? 'Recorded database answers under three memory configurations' : 'Median response latency by memory configuration'}>
+  {view === 'answers' ? (
+    <>
+      <div class="evidence-question"><span>Same question · same local model</span><p>Which database did we select for my project?</p></div>
+      <div class="evidence-answers">
+        {modes.map((mode) => <div class="evidence-answer"><strong>{mode.name}</strong><span>{mode.input}</span><samp>{mode.answer}</samp></div>)}
+      </div>
+      <figcaption>Recorded answers from the first database trial. Every request starts with fresh messages and identifies the current user as Alice. Both ways of supplying the missing fact recover SQLite.</figcaption>
+    </>
+  ) : (
+    <>
+      <p class="evidence-title">Correctness improves; answer time increases</p>
+      <div class="evidence-bars">
+        {modes.map((mode) => <div class="evidence-bar-row"><div><strong>{mode.name}</strong><span>{mode.score}</span></div><div class="evidence-track" aria-hidden="true"><span style={`width: ${mode.seconds / 20 * 100}%`}></span></div><b>{mode.seconds.toFixed(2)} s</b></div>)}
+      </div>
+      <figcaption>Median end-to-end answer time across 12 requests per mode, including unknown and other-user cases. The common scale runs from 0 to 20 seconds. Initial ingestion is excluded.</figcaption>
+    </>
+  )}
+</figure>
+
+<style>
+  .hindsight-evidence { width: min(100%, var(--reading-width)); margin: 2rem auto; color: var(--post-body); }
+  .evidence-question { padding: 1.1rem 0; border-block: 1px solid var(--line); }
+  .evidence-question > span { color: var(--post-muted); font-size: .8rem; }
+  .evidence-question > p, .evidence-title { margin: .4rem 0 0; color: var(--post-heading); font-weight: 600; line-height: 1.5; }
+  .evidence-answers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+  .evidence-answer { min-width: 0; padding: 1.1rem .8rem 1.1rem 0; }
+  .evidence-answer + .evidence-answer { border-left: 1px solid var(--line); padding-left: .8rem; }
+  .evidence-answer > strong { display: block; color: var(--post-heading); font-size: .9rem; }
+  .evidence-answer > span { display: block; min-height: 3.4em; margin: .5rem 0 .8rem; color: var(--post-muted); font-size: .8rem; line-height: 1.6; }
+  .evidence-answer > samp { display: block; color: var(--post-heading); font-size: .77rem; overflow-wrap: anywhere; line-height: 1.8; }
+  .hindsight-evidence > figcaption { text-align: left; margin-top: .8rem; color: var(--post-muted); font-size: .83rem; line-height: 1.7; }
+  .evidence-bars { display: grid; gap: 1.3rem; margin: 1.3rem 0; padding-block: 1.2rem; border-block: 1px solid var(--line); }
+  .evidence-bar-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 4.5rem; align-items: center; gap: 1rem; }
+  .evidence-bar-row strong { display: block; font-size: .85rem; color: var(--post-heading); }
+  .evidence-bar-row > div:first-child > span { display: block; color: var(--post-muted); font-size: .75rem; }
+  .evidence-track { background: var(--accent-soft); height: .8rem; overflow: hidden; }
+  .evidence-track > span { display: block; height: 100%; background: var(--post-link); }
+  .evidence-bar-row > b { color: var(--post-heading); font-size: .9rem; font-variant-numeric: tabular-nums; text-align: right; }
+  @media (max-width: 640px) {
+    .evidence-answers { grid-template-columns: 1fr; }
+    .evidence-answer, .evidence-answer + .evidence-answer { border-left: 0; padding: 1rem 0; }
+    .evidence-answer + .evidence-answer { border-top: 1px solid var(--line); }
+    .evidence-answer > span { min-height: 0; margin: .3rem 0 .5rem; }
+    .evidence-answer > samp { font-size: .85rem; }
+    .evidence-bar-row { grid-template-columns: minmax(0, 1fr) 4.5rem; gap: .5rem; }
+    .evidence-track { grid-column: 1; grid-row: 2; }
+    .evidence-bar-row > b { grid-column: 2; grid-row: 2; }
+  }
+</style>

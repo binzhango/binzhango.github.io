@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/public/diagrams/hindsight/local-architecture.json",
+  "output": "/Users/binzhang/projects/repos/binzhango.github.io/nuclear-nova/public/diagrams/hindsight/local-architecture.html",
+  "specification": {
+    "sha256": "ec1fe76b5679bf962c236855fda060cbde823db568ba54c3d689ae9c2f71b1cd",
+    "bytes": 2288
+  },
+  "artifact": {
+    "sha256": "fd9293d9bd89e7650ceb7c61f4193bc46ff9fcf0477e58f1ed2801a64b5274fe",
+    "bytes": 664920
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}
