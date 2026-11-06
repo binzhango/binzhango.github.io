@@ -248,21 +248,23 @@ Historical memory explains the request; it does not authorize a payment.
 
 ## What the live benchmark actually improved
 
-**Memory improved task completion; adding Jev did not.** In this exploratory run, Hindsight alone completed **16/16** tasks, compared with **4/16** for the worker without history. Hindsight + Jev completed **14/16**: two valid requests stopped at preflight.
+**Hindsight alone scored higher than Hindsight + Jev on task completion, 16/16 versus 14/16.** Both configurations got all four unknown or out-of-scope trials right. The difference came from one known-answer question that Jev's preflight gate blocked in both repeats.
 
 <MemoryDecisionBenchmark />
+
+**What counted toward 14/16?** Hindsight + Jev returned **10 correct answers on 12 known-answer trials** and asked for clarification on all four unknown or out-of-scope trials. Hindsight alone returned **12 correct known answers** and correctly reported an unknown answer on those same four trials. The scoring rules credit either appropriate response when the answer is unavailable.
 
 The experiment made **64 live requests**: eight cases × four configurations × two repeats. Muse Glimmer generated answers locally; Hindsight recalled actual stored facts; the hosted reviewer reported model **`jev-1.14.0`**. All 64 trials completed without service errors.
 
 Six cases required project history. The other two tested an unknown release date and another user's scope. **The memory-free worker abstained rather than inventing facts**: all 12 non-successes were JSON null on questions whose answers existed only in memory.
 
-### The added gate caused two regressions
+### Why the gate blocked the same question twice
 
-Across 16 matched memory-only/combined pairs, the combination had **0 wins, 2 regressions, and 14 ties**. Both regressions involved the approved test command. Hindsight returned the exact command, but Jev's preflight confidence fell below 0.60 in each repeat: **0.46** and **0.37**.
+The question was **“What is the exact approved test command?”** Hindsight retrieved `uv run pytest -q` in both repeats, and the memory-only worker returned it both times. Jev chose `proceed` in both trials, with confidence scores of **0.46** and **0.37**. The app sends any decision below **0.60** to review, so the combined worker never got to answer.
 
 <MemoryDecisionLiveTrace />
 
-This is a **policy tradeoff**, not a retrieval failure. Lowering the threshold might admit these answers, but changing it after seeing the scores would tune on the evaluation cases. The threshold stayed fixed; a follow-up should choose it on separate development cases.
+Across the 16 matched pairs, the combined configuration had **two losses and 14 ties**. The two losses came from the same case, so they show a repeatable failure on this question in this run. The trace shows that Jev also gave weight to `clarify`, but it provides no explanation for that uncertainty. A follow-up could tune the threshold on separate development cases.
 
 ### Lower median time did not mean better completion
 
@@ -285,9 +287,9 @@ The end-to-end worker produced no incorrect factual drafts for Jev to catch. To 
 
 </div>
 
-**History made review more selective.** Without it, Jev withheld every draft. With it, the gate released all ten supported factual drafts while still withholding all twelve unsupported ones. Both conditions also withheld two valid clarification drafts, exposing another cost of the confidence threshold.
+**Recall helped Jev distinguish supported from unsupported drafts.** Without recall, Jev withheld every draft. With recall, it released all ten supported factual drafts and withheld all twelve unsupported ones. Both conditions also withheld two valid clarification drafts, exposing another cost of the confidence threshold.
 
-These are **planted drafts, not observed worker mistakes**. The diagnostic was added after early end-to-end observations and is exploratory. It supports a narrow claim about evidence-informed review; it does not establish improved task completion. Inspect the [raw reviewer calls](/assets/benchmarks/hindsight-jev/review-probe.json) and [diagnostic report](/assets/benchmarks/hindsight-jev/REVIEW-PROBE.md).
+This exploratory diagnostic compares **Jev with recall against Jev without recall**, using authored drafts. For the separate task-completion comparison, Hindsight alone had the higher score. [Raw reviewer calls](/assets/benchmarks/hindsight-jev/review-probe.json) · [Diagnostic report](/assets/benchmarks/hindsight-jev/REVIEW-PROBE.md)
 
 ### Reproduce the measurements
 

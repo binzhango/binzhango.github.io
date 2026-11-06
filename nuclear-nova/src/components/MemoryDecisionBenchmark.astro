@@ -13,10 +13,18 @@ const modes = ['baseline','memory','jev','combined'] as const;
       <span><b>{s.median_total_seconds.toFixed(2)} s</b> median</span>
     </div>;})}
   </div>
-  <div class="article-table memory-decision-table" role="region" aria-label="Live benchmark error and withholding counts" tabindex="0">
-    <table><thead><tr><th scope="col">Configuration</th><th scope="col">Accepted non-success</th><th scope="col">Withheld</th><th scope="col">Service errors</th></tr></thead><tbody>{modes.map(mode=><tr><th scope="row">{labels[mode]}</th><td>{run.summary[mode].accepted_wrong}</td><td>{run.summary[mode].withheld}</td><td>{run.summary[mode].errors}</td></tr>)}</tbody></table>
+  <div class="article-table memory-decision-table" role="region" aria-label="Live benchmark successes by question type" tabindex="0">
+    <table>
+      <thead><tr><th scope="col">Configuration</th><th scope="col">Correct known answers</th><th scope="col">Correct unknown or out-of-scope handling</th></tr></thead>
+      <tbody>
+        {modes.map(mode => {
+          const result = run.summary[mode];
+          return <tr><th scope="row">{labels[mode]}</th><td>{result.known_correct}/{result.known_n}</td><td>{result.unknown_correct}/{result.unknown_n}</td></tr>;
+        })}
+      </tbody>
+    </table>
   </div>
-  <figcaption>Same Muse Glimmer worker and strict JSON scoring. Unknown/scope cases allow correct clarification. Withholding a known answer does not count as success. Accepted non-success includes unknown answers on known-fact questions. All errors remain in the denominator; repeated cases are not independent tasks.</figcaption>
+  <figcaption>Each score adds correct known answers and correct handling of unavailable answers. A JSON null response or an appropriate clarification earns credit on unknown or out-of-scope trials. Each configuration ran the same eight questions twice.</figcaption>
   <p><a href="/assets/benchmarks/hindsight-jev/live-results.json">Raw inputs and responses</a> · <a href="/assets/benchmarks/hindsight-jev/LIVE-REPORT.md">Recomputed report</a> · <a href="/assets/benchmarks/hindsight-jev/LIVE-PROTOCOL.md">Protocol and scoring</a></p>
 </figure>
 <style>
