@@ -256,7 +256,9 @@ Historical memory explains the request; it does not authorize a payment.
 
 The experiment made **64 live requests**: eight cases × four configurations × two repeats. Muse Glimmer generated answers locally; Hindsight recalled actual stored facts; the hosted reviewer reported model **`jev-1.14.0`**. All 64 trials completed without service errors.
 
-Six cases required project history. The other two tested an unknown release date and another user's scope. **The memory-free worker abstained rather than inventing facts**: all 12 non-successes were JSON null on questions whose answers existed only in memory.
+The suite mainly tests **recall and abstention**. Five questions ask for stored project decisions. A sixth asks for the approved database while quoting a conflicting README suggestion. One case asks for an unrecorded release date, and one repeats the database question as a different user with an empty memory bank.
+
+The memory-free worker returned JSON null on all 12 trials that required a stored fact. The memory-only worker answered all 12 correctly. That ceiling makes the suite useful for spotting unnecessary blocks, but leaves little room to measure the value of catching a bad draft. The separate draft diagnostic probes that behavior directly. [Case-level scores](/assets/benchmarks/hindsight-jev/LIVE-REPORT.md)
 
 ### Why the gate blocked the same question twice
 
@@ -362,7 +364,7 @@ The live benchmark used the four configurations below. The same switches are ava
 
 </HindsightList>
 
-Use abbreviated follow-ups, changed constraints, distracting facts, wrong-scope history, and insufficient evidence. Leave Hindsight’s retrieval configuration fixed so the experiment isolates application-level Jev decisions.
+For an end-to-end review test, include tasks where the worker has to **apply a constraint**. For example, ask for a deployment plan when an older memo proposes cloud hosting and a later approved decision requires local deployment. Score whether the delivered plan respects the current decision. Include straightforward requests as controls and count both unsupported answers that reach the user and valid requests the gate blocks. Leave Hindsight’s retrieval configuration fixed so the comparison isolates the added decision layer.
 
 ### Measure useful answers and the cost of review
 
