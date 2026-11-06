@@ -1,0 +1,14 @@
+---
+interface Props { title: string; }
+const { title } = Astro.props;
+---
+<aside class="hindsight-aside" aria-label={title}>
+  <strong>{title}</strong>
+  <div><slot /></div>
+</aside>
+<style>
+  .hindsight-aside { width: min(100%, var(--reading-width)); box-sizing: border-box; margin: 1.5rem auto; padding: 1rem 1.25rem; border-left: 3px solid var(--post-link); background: var(--accent-soft); }
+  .hindsight-aside > strong { color: var(--post-heading); font-size: .9rem; }
+  .hindsight-aside > div { color: var(--post-body); font-size: .95rem; line-height: 1.7; margin-top: .4rem; }
+  .hindsight-aside :global(p) { margin: 0; }
+</style>

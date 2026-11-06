@@ -1,0 +1,63 @@
+---
+import run from '../../public/assets/benchmarks/hindsight-jev/live-results.json';
+
+const configurations = [
+  { mode: 'baseline', label: 'Worker only' },
+  { mode: 'memory', label: 'Hindsight' },
+  { mode: 'jev', label: 'Jev' },
+  { mode: 'combined', label: 'Hindsight + Jev' },
+] as const;
+
+const cases = run.cases.map(testCase => ({
+  ...testCase,
+  scores: configurations.map(({ mode }) => {
+    const trials = run.trials.filter(trial => trial.case === testCase.id && trial.mode === mode);
+    return { mode, correct: trials.filter(trial => trial.correct).length, total: trials.length };
+  }),
+}));
+---
+
+<figure class="memory-cases">
+  <div class="article-table memory-decision-table" role="region" aria-label="Benchmark case results" tabindex="0">
+    <table>
+      <caption>Results by benchmark case</caption>
+      <thead>
+        <tr>
+          <th scope="col">Question</th>
+          <th scope="col">Expected answer</th>
+          {configurations.map(({ label }) => <th scope="col">{label}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {cases.map(testCase => (
+          <tr>
+            <th scope="row">
+              {testCase.question}
+              {testCase.other_user && <small>Asked as a different user with an empty memory bank.</small>}
+            </th>
+            <td>{testCase.expected === null ? 'Unknown' : <code>{testCase.expected}</code>}</td>
+            {testCase.scores.map(({ mode, correct, total }) => (
+              <td>
+                {testCase.id === 'command' && mode === 'combined'
+                  ? <><strong>{correct}/{total}</strong><small>Both blocked at preflight</small></>
+                  : `${correct}/${total}`}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <figcaption>Scores count successful repeats. For unknown answers, JSON null or an appropriate clarification earns credit.</figcaption>
+</figure>
+
+<style>
+  .memory-cases { width: min(100%, var(--reading-width)); margin: 1.5rem auto 2rem; }
+  .article-table { max-width: 100%; overflow-x: auto; }
+  table { min-width: 42rem; }
+  caption { text-align: left; font-weight: 700; padding: .5rem 0 .75rem; }
+  tbody th { min-width: 13rem; }
+  td { font-variant-numeric: tabular-nums; }
+  small { display: block; margin-top: .25rem; line-height: 1.4; }
+  figcaption { text-align: left; font-size: .83rem; line-height: 1.7; color: var(--post-muted); }
+</style>

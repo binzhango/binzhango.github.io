@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Local agents with Hindsight memory",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "roles",
+      "type": "frontend",
+      "label": "Planner / coder",
+      "sublabel": "LangChain wrapper",
+      "pos": [
+        60,
+        250
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "memory",
+      "type": "backend",
+      "label": "Hindsight API",
+      "sublabel": "Retain / recall :8889",
+      "pos": [
+        460,
+        250
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "database",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Persistent memory volume",
+      "pos": [
+        860,
+        250
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "model",
+      "type": "external",
+      "label": "LM Studio",
+      "sublabel": "Muse Glimmer :1234",
+      "pos": [
+        260,
+        30
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "retrieval",
+      "type": "backend",
+      "label": "Retrieval models",
+      "sublabel": "Embedding + reranking",
+      "pos": [
+        460,
+        480
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "ui",
+      "type": "frontend",
+      "label": "Control plane",
+      "sublabel": "Inspect memory :9998",
+      "pos": [
+        860,
+        480
+      ],
+      "size": [
+        220,
+        80
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "roles",
+      "to": "memory",
+      "label": "Retain / recall"
+    },
+    {
+      "from": "memory",
+      "to": "database",
+      "label": "Read / write"
+    },
+    {
+      "from": "roles",
+      "to": "model",
+      "label": "Answer generation",
+      "fromSide": "top",
+      "toSide": "left"
+    },
+    {
+      "from": "memory",
+      "to": "model",
+      "label": "Fact extraction",
+      "fromSide": "top",
+      "toSide": "right"
+    },
+    {
+      "from": "memory",
+      "to": "retrieval",
+      "label": "Embed / rank",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "ui",
+      "to": "memory",
+      "label": "Inspect via API"
+    }
+  ]
+}

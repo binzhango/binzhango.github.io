@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="decision-journey" name="A decision survives the conversation">
+    <mxGraphModel grid="1" page="0" background="#f8fafc">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="source" value="&lt;b&gt;1 · Record decision&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Planner records Alice’s constraints&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="0" y="0" width="220" height="140" />
+        </mxCell>
+        <mxCell id="bank" value="&lt;b&gt;2 · Memory bank&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Retain extracts and stores facts&lt;/font&gt;" vertex="1" parent="1" style="shape=cylinder3;boundedLbl=1;size=12;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="280" y="0" width="220" height="140" />
+        </mxCell>
+        <mxCell id="coder" value="&lt;b&gt;3 · New coder&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Recall → evidence → model answer&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="560" y="0" width="220" height="140" />
+        </mxCell>
+        <mxCell id="e0" edge="1" parent="1" source="source" target="bank" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="bank" target="coder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

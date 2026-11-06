@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="recall-pipeline.mobile" name="From a question to selected evidence">
+    <mxGraphModel grid="1" page="0" background="#f8fafc">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="query" value="&lt;b&gt;Question + bank&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Scope the search&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="40" y="0" width="260" height="90" />
+        </mxCell>
+        <mxCell id="semantic" value="&lt;b&gt;Semantic + keyword&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Meaning and exact terms&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="0" y="150" width="160" height="140" />
+        </mxCell>
+        <mxCell id="graph" value="&lt;b&gt;Graph + temporal&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Relationships and time&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="180" y="150" width="160" height="140" />
+        </mxCell>
+        <mxCell id="fusion" value="&lt;b&gt;Fuse ranked lists&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Reciprocal rank fusion&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="40" y="350" width="260" height="90" />
+        </mxCell>
+        <mxCell id="rank" value="&lt;b&gt;Rerank + diversify&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Relevance and coverage&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="40" y="500" width="260" height="90" />
+        </mxCell>
+        <mxCell id="evidence" value="&lt;b&gt;Return evidence&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#42536a&quot; style=&quot;font-size:17px&quot;&gt;Fit the fact-token budget&lt;/font&gt;" vertex="1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#e2f5ed;strokeColor=#278162;fontColor=#15263a;fontFamily=Helvetica;fontSize=20;spacing=12;strokeWidth=1.5;">
+          <mxGeometry as="geometry" x="40" y="650" width="260" height="100" />
+        </mxCell>
+        <mxCell id="e0" edge="1" parent="1" source="query" target="semantic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="query" target="graph" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="semantic" target="fusion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="graph" target="fusion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="fusion" target="rank" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="rank" target="evidence" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#278162;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

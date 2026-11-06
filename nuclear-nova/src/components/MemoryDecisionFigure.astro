@@ -1,0 +1,27 @@
+<figure class="memory-decision-figure">
+  <div class="diagram-scroll" role="region" aria-label="Memory-informed answer flow" tabindex="0">
+    {['light','dark'].map(theme => {
+      const suffix = theme === 'dark' ? '.dark' : '';
+      return <picture class={`decision-${theme}`}>
+        <source media="(max-width:640px)" srcset={`/diagrams/hindsight-jev/evidence-flow.mobile${suffix}.svg`} />
+        <img class="no-lightbox" src={`/diagrams/hindsight-jev/evidence-flow${suffix}.svg`} alt="Scoped recall feeds Jev preflight, the local worker, Jev draft review, and a Python output gate. Preflight can stop generation." width="668" height="833" loading="lazy" />
+      </picture>;
+    })}
+  </div>
+  <figcaption>Implemented answer path. Preflight stops before generation on clarification, review, or low confidence. Provider failures stop the request. Writes remain explicit.</figcaption>
+  <p><a href="/diagrams/hindsight-jev/evidence-flow.svg">Open full-size diagram</a> · <a href="/diagrams/hindsight-jev/evidence-flow.drawio" download>Editable draw.io source</a></p>
+</figure>
+<style>
+.memory-decision-figure {max-width: var(--reading-width); margin: 2rem auto;}
+.diagram-scroll {overflow-x:auto; border:1px solid var(--border-color, #71849e);}
+.diagram-scroll img {display:block; width:100%;  height:auto; margin:0; border:0; border-radius:0;}
+picture {display:block;}
+.decision-dark {display:none;}
+:global([data-theme="dark"]) .decision-light {display:none;}
+:global([data-theme="dark"]) .decision-dark {display:block;}
+figcaption {font-size:.9rem; line-height:1.6; color:var(--post-body); margin-top:.8rem;}
+p {font-size:.85rem;}
+.diagram-scroll:focus-visible {outline:2px solid var(--post-link); outline-offset:3px;}
+ :global([data-theme='dark'] .memory-decision-table tbody tr:nth-child(even)) {background:#213345 !important;}
+ :global([data-theme='dark'] .memory-decision-table td) {color:#e5edf8 !important;}
+</style>

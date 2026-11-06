@@ -1,0 +1,70 @@
+{
+  "renderer": "Official draw.io GraphViewer / Graph.getSvg",
+  "runtimeSha256": "35b8ef54369e938ad2399d3c8ce3945591d4b200a01f6942d0e39743bea1f1a1",
+  "diagrams": [
+    {
+      "name": "decision-journey",
+      "vertices": 3,
+      "edges": 2,
+      "width": "830px",
+      "height": "190px",
+      "sha256": "a86a18b3d75d3db7c65edee6a875d647e707a9d580b79435e12c2345a4760b92"
+    },
+    {
+      "name": "decision-journey.dark",
+      "vertices": 3,
+      "edges": 2,
+      "width": "830px",
+      "height": "190px",
+      "sha256": "f60fda4655eb12a545daddb5655fc511c7b64f59c7bcd338b125a690930ff195"
+    },
+    {
+      "name": "decision-journey.mobile",
+      "vertices": 3,
+      "edges": 2,
+      "width": "350px",
+      "height": "510px",
+      "sha256": "4c7b26b76c1d5475610deca45b3d7ba80dbd7b7078d8ee090b7ecd0a50df61dc"
+    },
+    {
+      "name": "decision-journey.mobile.dark",
+      "vertices": 3,
+      "edges": 2,
+      "width": "350px",
+      "height": "510px",
+      "sha256": "4d4a409cd2eb65a7c8a55762566ceff41e5ce16c905223a32c1ad9879f7ba031"
+    },
+    {
+      "name": "recall-pipeline",
+      "vertices": 6,
+      "edges": 6,
+      "width": "830px",
+      "height": "760px",
+      "sha256": "ff31a0e12a73bcf0fe98c15bef3f985ff1e9404b4442df9dad486551f1399fd2"
+    },
+    {
+      "name": "recall-pipeline.dark",
+      "vertices": 6,
+      "edges": 6,
+      "width": "830px",
+      "height": "760px",
+      "sha256": "9008e584cf0cad78a654041fee589692215e9ebe4d2ce89645321ba1609d6f25"
+    },
+    {
+      "name": "recall-pipeline.mobile",
+      "vertices": 6,
+      "edges": 6,
+      "width": "390px",
+      "height": "800px",
+      "sha256": "218d178c78f2dbe7e7fcf3c95e9201dd4053d4b4e6d83622ca2126526a484566"
+    },
+    {
+      "name": "recall-pipeline.mobile.dark",
+      "vertices": 6,
+      "edges": 6,
+      "width": "390px",
+      "height": "800px",
+      "sha256": "6e53e64ce80370ab39540039aa3325b71f0fbbafd0f96738f9dde6495150f9a8"
+    }
+  ]
+}

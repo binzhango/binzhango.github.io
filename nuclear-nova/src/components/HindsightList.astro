@@ -1,0 +1,12 @@
+---
+interface Props { tone: 'concept' | 'workflow' | 'measurement' | 'caveat'; }
+const { tone } = Astro.props;
+---
+<div class="hindsight-list" data-tone={tone}><slot /></div>
+<style>
+  /* Reuse the site's list typography; vary its inherited label/marker accent. */
+  .hindsight-list[data-tone='concept'] { --accent: var(--violet); }
+  .hindsight-list[data-tone='workflow'] { --accent: var(--teal); }
+  .hindsight-list[data-tone='measurement'] { --accent: var(--blue); }
+  .hindsight-list[data-tone='caveat'] { --accent: var(--amber); }
+</style>

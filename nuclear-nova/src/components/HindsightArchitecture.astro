@@ -1,0 +1,15 @@
+<figure class="hindsight-architecture">
+  <p>Scroll horizontally to inspect the architecture, or <a href="/diagrams/hindsight/local-architecture.html" target="_blank" rel="noopener">open the full-size interactive view</a>.</p>
+  <div class="architecture-scroll" role="region" aria-label="Hindsight architecture, scroll horizontally" tabindex="0">
+    <iframe src="/diagrams/hindsight/local-architecture.html" title="Local Hindsight architecture: agents, memory API, models, and persistent storage" loading="lazy"></iframe>
+  </div>
+  <figcaption>Architecture of the local sample, checked against its wrapper and Compose configuration. Retain and recall share one memory service; the agent and extraction paths use the same LM Studio model. Responses return to the calling component.</figcaption>
+  <p><a href="/diagrams/hindsight/local-architecture.html" target="_blank" rel="noopener">Explore the full-size architecture</a> · <a href="/diagrams/hindsight/local-architecture.json" download>Diagram source</a></p>
+</figure>
+<style>
+  .hindsight-architecture { width: min(100%, var(--reading-width)); margin: 2rem auto; }
+  .architecture-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: .7rem; }
+  .architecture-scroll:focus-visible { outline: 2px solid var(--post-link); outline-offset: 3px; }
+  iframe { display: block; width: 1280px; max-width: none; height: 820px; border: 0; background: var(--surface); }
+  figcaption, p { font-size: .85rem; line-height: 1.7; text-align: left; color: var(--post-muted); }
+</style>

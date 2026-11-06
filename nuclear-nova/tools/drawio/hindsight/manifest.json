@@ -1,0 +1,206 @@
+[
+  {
+    "slug": "decision-journey",
+    "title": "A decision survives the conversation",
+    "nodes": [
+      [
+        "source",
+        "1 \u00b7 Record decision",
+        "Planner records Alice\u2019s constraints",
+        "process"
+      ],
+      [
+        "bank",
+        "2 \u00b7 Memory bank",
+        "Retain extracts and stores facts",
+        "store"
+      ],
+      [
+        "coder",
+        "3 \u00b7 New coder",
+        "Recall \u2192 evidence \u2192 model answer",
+        "process"
+      ]
+    ],
+    "edges": [
+      [
+        "source",
+        "bank"
+      ],
+      [
+        "bank",
+        "coder"
+      ]
+    ]
+  },
+  {
+    "slug": "decision-journey.mobile",
+    "title": "A decision survives the conversation",
+    "nodes": [
+      [
+        "source",
+        "1 \u00b7 Record decision",
+        "Planner records Alice\u2019s constraints",
+        "process"
+      ],
+      [
+        "bank",
+        "2 \u00b7 Memory bank",
+        "Retain extracts and stores facts",
+        "store"
+      ],
+      [
+        "coder",
+        "3 \u00b7 New coder",
+        "Recall \u2192 evidence \u2192 model answer",
+        "process"
+      ]
+    ],
+    "edges": [
+      [
+        "source",
+        "bank"
+      ],
+      [
+        "bank",
+        "coder"
+      ]
+    ]
+  },
+  {
+    "slug": "recall-pipeline",
+    "title": "From a question to selected evidence",
+    "nodes": [
+      [
+        "query",
+        "Question + bank",
+        "Scope the search",
+        "process"
+      ],
+      [
+        "semantic",
+        "Semantic + keyword",
+        "Meaning and exact terms",
+        "process"
+      ],
+      [
+        "graph",
+        "Graph + temporal",
+        "Relationships and time",
+        "process"
+      ],
+      [
+        "fusion",
+        "Fuse ranked lists",
+        "Reciprocal rank fusion",
+        "process"
+      ],
+      [
+        "rank",
+        "Rerank + diversify",
+        "Relevance and coverage",
+        "process"
+      ],
+      [
+        "evidence",
+        "Return evidence",
+        "Fit the fact-token budget",
+        "process"
+      ]
+    ],
+    "edges": [
+      [
+        "query",
+        "semantic"
+      ],
+      [
+        "query",
+        "graph"
+      ],
+      [
+        "semantic",
+        "fusion"
+      ],
+      [
+        "graph",
+        "fusion"
+      ],
+      [
+        "fusion",
+        "rank"
+      ],
+      [
+        "rank",
+        "evidence"
+      ]
+    ]
+  },
+  {
+    "slug": "recall-pipeline.mobile",
+    "title": "From a question to selected evidence",
+    "nodes": [
+      [
+        "query",
+        "Question + bank",
+        "Scope the search",
+        "process"
+      ],
+      [
+        "semantic",
+        "Semantic + keyword",
+        "Meaning and exact terms",
+        "process"
+      ],
+      [
+        "graph",
+        "Graph + temporal",
+        "Relationships and time",
+        "process"
+      ],
+      [
+        "fusion",
+        "Fuse ranked lists",
+        "Reciprocal rank fusion",
+        "process"
+      ],
+      [
+        "rank",
+        "Rerank + diversify",
+        "Relevance and coverage",
+        "process"
+      ],
+      [
+        "evidence",
+        "Return evidence",
+        "Fit the fact-token budget",
+        "process"
+      ]
+    ],
+    "edges": [
+      [
+        "query",
+        "semantic"
+      ],
+      [
+        "query",
+        "graph"
+      ],
+      [
+        "semantic",
+        "fusion"
+      ],
+      [
+        "graph",
+        "fusion"
+      ],
+      [
+        "fusion",
+        "rank"
+      ],
+      [
+        "rank",
+        "evidence"
+      ]
+    ]
+  }
+]
