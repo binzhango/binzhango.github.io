@@ -22,6 +22,7 @@ import MemoryDecisionTrace from '../../../../components/MemoryDecisionTrace.astr
 import MemoryDecisionState from '../../../../components/MemoryDecisionState.astro';
 import MemoryDecisionLab from '../../../../components/MemoryDecisionLab.astro';
 import MemoryDecisionBenchmark from '../../../../components/MemoryDecisionBenchmark.astro';
+import MemoryDecisionCases from '../../../../components/MemoryDecisionCases.astro';
 import MemoryDecisionLiveTrace from '../../../../components/MemoryDecisionLiveTrace.astro';
 import '../../../../styles/memory-decisions-article.css';
 
@@ -256,9 +257,13 @@ Historical memory explains the request; it does not authorize a payment.
 
 The experiment made **64 live requests**: eight cases × four configurations × two repeats. Muse Glimmer generated answers locally; Hindsight recalled actual stored facts; the hosted reviewer reported model **`jev-1.14.0`**. All 64 trials completed without service errors.
 
-The suite mainly tests **recall and abstention**. Five questions ask for stored project decisions. A sixth asks for the approved database while quoting a conflicting README suggestion. One case asks for an unrecorded release date, and one repeats the database question as a different user with an empty memory bank.
+<HindsightAside title="What these cases measure">
+The suite tests <strong>recall and abstention</strong>. Six questions require a stored fact, including one with a conflicting README suggestion. The other two test how the worker handles unavailable information.
 
-The memory-free worker returned JSON null on all 12 trials that required a stored fact. The memory-only worker answered all 12 correctly. That ceiling makes the suite useful for spotting unnecessary blocks, but leaves little room to measure the value of catching a bad draft. The separate draft diagnostic probes that behavior directly. [Case-level scores](/assets/benchmarks/hindsight-jev/LIVE-REPORT.md)
+Hindsight alone answered all 12 known-answer trials correctly, so this run exposes unnecessary blocks. The separate draft diagnostic tests whether review catches unsupported answers.
+</HindsightAside>
+
+<MemoryDecisionCases />
 
 ### Why the gate blocked the same question twice
 
