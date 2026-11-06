@@ -1,15 +1,15 @@
 ---
 import run from '../../public/assets/benchmarks/hindsight-jev/live-results.json';
 
-const { memory, combined } = run.summary;
+const { baseline, memory, combined } = run.summary;
 ---
 
 <section class="takeaways-panel" aria-labelledby="takeaways">
   <div class="takeaways-overview">
     <div class="takeaways-message">
       <slot />
-      <p class="takeaways-lead">Start with recall for direct lookups.</p>
-      <p>When a stored fact answers the question, measure how often the worker can deliver it. Use that baseline before adding a preflight gate.</p>
+      <p class="takeaways-lead">Use recall when the answer depends on an earlier decision.</p>
+      <p>The worker scored {baseline.correct}/{baseline.n} without history. Hindsight supplied the missing facts. Jev’s preflight gate held both repeats of one answerable lookup for review.</p>
     </div>
 
     <div class="takeaways-result">
@@ -29,12 +29,14 @@ const { memory, combined } = run.summary;
 
   <div class="takeaways-guidance">
     <div>
-      <h3>Test plans against constraints</h3>
-      <p>Give Jev the evidence the worker saw. Test plans that respect a remembered decision alongside plausible plans that violate it.</p>
+      <h3>Hindsight for cross-session context</h3>
+      <p>Store confirmed decisions with <code>remember</code>. Run <code>ask</code> with the same user and project to give the worker the relevant facts.</p>
+      <p><strong>Skip recall</strong> when the request already contains the facts it needs. For current status, query the system that owns it.</p>
     </div>
     <div>
-      <h3>Measure the two gates separately</h3>
-      <p>Count answerable requests stopped before generation, supported drafts withheld, and unsupported drafts released. Break out latency for requests that reached the worker.</p>
+      <h3>Jev for drafts that apply constraints</h3>
+      <p>Try <code>--jev</code> when a draft could violate a remembered constraint. In the controlled draft test, Jev with recall released 10/10 supported factual drafts and withheld 12/12 unsupported ones.</p>
+      <p><strong>Skip the gate</strong> for straightforward lookups or checks your code can enforce directly, such as an allowlist.</p>
     </div>
   </div>
 </section>
@@ -70,6 +72,7 @@ const { memory, combined } = run.summary;
 
   .takeaways-guidance { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
   .takeaways-panel .takeaways-guidance h3 { margin: 0 0 .4rem; font-size: 1rem; font-weight: 700; }
+  .takeaways-panel .takeaways-guidance p + p { margin-top: .65rem; }
 
   @media (max-width: 640px) {
     .takeaways-overview, .takeaways-guidance { grid-template-columns: 1fr; gap: 1rem; }
