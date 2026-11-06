@@ -401,6 +401,16 @@ Jev may catch contradictions while also rejecting useful answers. The experiment
 
 </HindsightList>
 
+## Takeaways
+
+<HindsightList tone="workflow">
+
+- **Start with recall for direct lookups.** If the question asks for a stored decision, give the worker the recalled fact and measure how often it answers correctly. That gives you a baseline for deciding whether a preflight gate is worth adding.
+- **Test draft review on tasks that apply a constraint.** Give Jev the same evidence the worker saw. Include both compliant plans and plausible plans that violate a remembered decision so you can measure which drafts the reviewer lets through.
+- **Measure preflight and draft review separately.** Count answerable requests stopped before generation, supported drafts withheld, and unsupported drafts released. Report latency across all requests and for requests that reached the worker to show the effect of early exits.
+
+</HindsightList>
+
 ## Continue exploring
 
 Read the [Hindsight architecture and memory walkthrough](/posts/2026/11-05-hindsight-agent-memory-benchmark/), inspect the [example repository](https://github.com/binzhango/hindsight-memory-agents), or compare the [action-review harness](/posts/2026/10-29-decision-models-jev-langchain/).
