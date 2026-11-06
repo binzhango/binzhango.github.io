@@ -1,0 +1,208 @@
+[
+  {
+    "slug": "evidence-flow",
+    "title": "Hindsight evidence shared by Jev and the local worker",
+    "nodes": [
+      [
+        "scope",
+        "Request + user/project scope",
+        "Application selects the memory bank",
+        30,
+        20,
+        620,
+        80,
+        "base"
+      ],
+      [
+        "recall",
+        "Hindsight recalls once",
+        "Fact IDs + text form the shared evidence snapshot",
+        30,
+        155,
+        620,
+        80,
+        "base"
+      ],
+      [
+        "preflight",
+        "Jev preflight",
+        "Proceed, clarify, or review \u00b7 hosted prediction",
+        30,
+        290,
+        620,
+        80,
+        "model"
+      ],
+      [
+        "worker",
+        "Local worker drafts an answer",
+        "Same question, instructions and memory evidence",
+        30,
+        435,
+        620,
+        80,
+        "base"
+      ],
+      [
+        "review",
+        "Jev reviews the draft",
+        "Same snapshot + draft \u00b7 hosted prediction",
+        30,
+        570,
+        620,
+        80,
+        "model"
+      ],
+      [
+        "policy",
+        "Python applies the gate",
+        "Proceed with confidence \u2265 0.60 \u2192 accepted answer<br>Otherwise \u2192 clarify/review; draft kept separate",
+        30,
+        705,
+        620,
+        100,
+        "policy"
+      ]
+    ],
+    "edges": [
+      [
+        "scope",
+        "recall",
+        "question",
+        "",
+        []
+      ],
+      [
+        "recall",
+        "preflight",
+        "shared history",
+        "",
+        []
+      ],
+      [
+        "preflight",
+        "worker",
+        "proceed + confidence \u2265 0.60",
+        "",
+        []
+      ],
+      [
+        "worker",
+        "review",
+        "draft + history",
+        "",
+        []
+      ],
+      [
+        "review",
+        "policy",
+        "decision",
+        "",
+        []
+      ]
+    ]
+  },
+  {
+    "slug": "evidence-flow.mobile",
+    "title": "Memory-informed answer decisions, narrow layout",
+    "nodes": [
+      [
+        "scope",
+        "Request + user/project scope",
+        "Application selects the memory bank",
+        20,
+        20,
+        340,
+        110,
+        "base"
+      ],
+      [
+        "recall",
+        "Hindsight recalls once",
+        "Fact IDs + text form the shared evidence snapshot",
+        20,
+        185,
+        340,
+        110,
+        "base"
+      ],
+      [
+        "preflight",
+        "Jev preflight",
+        "Proceed, clarify, or review \u00b7 hosted prediction",
+        20,
+        350,
+        340,
+        110,
+        "model"
+      ],
+      [
+        "worker",
+        "Local worker drafts an answer",
+        "Same question, instructions and memory evidence",
+        20,
+        515,
+        340,
+        110,
+        "base"
+      ],
+      [
+        "review",
+        "Jev reviews the draft",
+        "Same snapshot + draft \u00b7 hosted prediction",
+        20,
+        680,
+        340,
+        110,
+        "model"
+      ],
+      [
+        "policy",
+        "Python applies the gate",
+        "Proceed with confidence \u2265 0.60 \u2192 accepted answer<br>Otherwise \u2192 clarify/review; draft kept separate",
+        20,
+        845,
+        340,
+        135,
+        "policy"
+      ]
+    ],
+    "edges": [
+      [
+        "scope",
+        "recall",
+        "question",
+        "",
+        []
+      ],
+      [
+        "recall",
+        "preflight",
+        "shared history",
+        "",
+        []
+      ],
+      [
+        "preflight",
+        "worker",
+        "proceed + confidence \u2265 0.60",
+        "",
+        []
+      ],
+      [
+        "worker",
+        "review",
+        "draft + history",
+        "",
+        []
+      ],
+      [
+        "review",
+        "policy",
+        "decision",
+        "",
+        []
+      ]
+    ]
+  }
+]

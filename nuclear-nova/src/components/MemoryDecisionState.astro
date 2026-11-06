@@ -1,0 +1,9 @@
+<figure class="memory-state" aria-label="Evidence available at each decision point">
+  <div class="memory-state__source"><span class="memory-eyebrow">One recalled snapshot</span><p><strong>Question + role instructions + memory facts</strong></p><small>Each fact carries an ID and text. No hidden evaluator labels.</small></div>
+  <div class="memory-state__stages">
+    <section><span>01 · Before generation</span><h3>Jev preflight</h3><p>Is the available context sufficient to answer?</p><small>Cannot assess a draft that does not exist yet.</small></section>
+    <section><span>02 · Generation</span><h3>Local worker</h3><p>Produce a recommendation using that evidence.</p><small>Prompt also labels memory as untrusted data.</small></section>
+    <section><span>03 · After generation</span><h3>Jev review</h3><p>Assess <strong>the same snapshot + the draft</strong>.</p><small>Can detect a conflict with supplied evidence.</small></section>
+  </div>
+  <figcaption>Shared evidence makes the comparison inspectable. It also creates a shared blind spot: a missing or stale fact can mislead both the worker and reviewer.</figcaption>
+</figure>

@@ -1,0 +1,12 @@
+---
+import recorded from '../../public/assets/benchmarks/hindsight-jev/decision-lab.json';
+const labels: Record<string,string> = {accepted:'Both stages proceed', rejected_draft:'Draft rejected',missing_context:'Clarification needed',low_confidence:'Proceed at 0.59',threshold_boundary:'Proceed at 0.60',preflight_timeout:'Preflight times out',review_timeout:'Review times out',memory_only:'Jev disabled',jev_without_memory:'Recall disabled'};
+---
+<figure class="memory-lab">
+  <div class="memory-lab__heading"><span class="memory-eyebrow">Executed boundary lab</span><strong>9 scripted paths · 0 live model calls</strong></div>
+  <div class="article-table memory-decision-table" role="region" aria-label="Recorded wrapper control-flow results" tabindex="0">
+    <table><thead><tr><th scope="col">Scripted case</th><th scope="col">Recall / worker / Jev calls</th><th scope="col">Observed outcome</th></tr></thead><tbody>{recorded.cases.map(row=><tr><th scope="row">{labels[row.case]}</th><td>{row.recall_calls} / {row.worker_calls} / {row.decision_calls}</td><td><span class={`memory-lab__outcome memory-lab__outcome--${row.outcome}`}>{row.outcome}</span></td></tr>)}</tbody></table>
+  </div>
+  <figcaption>Measured application behavior with scripted memory, worker, and reviewer responses. No accuracy or latency claim about Hindsight, Muse Glimmer, or Jev follows from these results.</figcaption>
+  <p><a href="/assets/benchmarks/hindsight-jev/decision-lab.json">Inspect all inputs, events, and outputs</a> · <a href="/assets/benchmarks/hindsight-jev/decision_lab.py" download>Download the runnable lab</a></p>
+</figure>

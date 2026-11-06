@@ -2,7 +2,7 @@
 
 Working draft · November 5, 2026
 
-Status: architecture and experiment design. The combined integration has not been implemented or benchmarked. This file stays outside the published content collection while the example and evidence are developed.
+Status: preserved architecture and experiment design. A companion page now implements the first step: optional Jev preflight and answer review in the existing Hindsight wrapper. See [the article source](../../src/content/docs/posts/2026/11-05-hindsight-jev-memory-informed-decisions.mdx). The support-action integration and combined live benchmark below remain planned.
 
 ## Opening
 

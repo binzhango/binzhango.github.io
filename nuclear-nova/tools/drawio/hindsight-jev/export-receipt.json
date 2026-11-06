@@ -1,0 +1,38 @@
+{
+  "renderer": "Official draw.io GraphViewer / Graph.getSvg",
+  "runtimeSha256": "35b8ef54369e938ad2399d3c8ce3945591d4b200a01f6942d0e39743bea1f1a1",
+  "diagrams": [
+    {
+      "name": "evidence-flow",
+      "vertices": 6,
+      "edges": 5,
+      "width": "670px",
+      "height": "835px",
+      "sha256": "6e1b2b0c2b4d660173f77ee56712b8ed16e17767949c8ba0fe53d6456eb30e97"
+    },
+    {
+      "name": "evidence-flow.dark",
+      "vertices": 6,
+      "edges": 5,
+      "width": "670px",
+      "height": "835px",
+      "sha256": "b7a6e7daf8d93a944cdbd7a978b4390035acda6b1f85b18385b1c6acfc51077a"
+    },
+    {
+      "name": "evidence-flow.mobile",
+      "vertices": 6,
+      "edges": 5,
+      "width": "390px",
+      "height": "1010px",
+      "sha256": "304c07839a1bd0708fcfa1c4bb4637208692610aab65765b569287804c2c263e"
+    },
+    {
+      "name": "evidence-flow.mobile.dark",
+      "vertices": 6,
+      "edges": 5,
+      "width": "390px",
+      "height": "1010px",
+      "sha256": "8469168da4d37a12db496815d9009a4511db614c9307ed2316d7dcad4535feac"
+    }
+  ]
+}

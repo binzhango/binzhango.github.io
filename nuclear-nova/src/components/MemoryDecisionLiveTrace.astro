@@ -1,0 +1,16 @@
+---
+import run from '../../public/assets/benchmarks/hindsight-jev/live-results.json';
+const row=run.trials.find(t=>t.case==='command' && t.repeat===1 && t.mode==='combined')!;
+const event=row.events[0];
+const decision=event.response.answers.disposition;
+const fact=event.state.memories.find(f=>f.text.includes('pytest'))!;
+---
+<figure class="memory-trace" aria-label="Recorded live regression: available evidence but answer withheld">
+  <div class="memory-trace__header"><span class="memory-eyebrow">Recorded failure · live services</span><span>Test-command case · repeat 1</span></div>
+  <div class="memory-trace__comparison">
+    <section><h3>Hindsight returned the answer</h3><p>{fact.text}</p><small>The requested command was in the selected evidence.</small></section>
+    <section><h3>Jev selected proceed</h3><p>Confidence: <strong>{decision.confidence.toFixed(2)}</strong><br />Application threshold: <strong>0.60</strong></p><small>A proceed label alone does not pass the gate.</small></section>
+  </div>
+  <div class="memory-trace__result"><span aria-hidden="true">↳</span><div><strong>Python withheld the answer</strong><p>{row.text} The worker was never called.</p></div></div>
+  <figcaption>This is an observed preflight rejection, not a planted draft. The threshold stayed fixed throughout the benchmark.</figcaption>
+</figure>

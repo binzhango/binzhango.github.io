@@ -1,0 +1,76 @@
+/* Reading hierarchy scoped to the Hindsight + Jev article. */
+.memory-decisions-article { --memory-accent: #087b72; --memory-violet: #7051a5; --memory-amber: #956018; }
+[data-theme='dark'] .memory-decisions-article { --memory-accent: #79d8c4; --memory-violet: #c4adf1; --memory-amber: #edc27e; }
+.memory-decisions-article :is(.memory-summary, .memory-trace, .memory-boundaries) { width: min(100%, var(--reading-width)); box-sizing: border-box; margin: 2rem auto; }
+.memory-decisions-article .memory-eyebrow { display: block; font-size: .75rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--memory-accent); }
+.memory-decisions-article .memory-summary { border-block: 2px solid var(--memory-accent); background: var(--accent-soft); padding: 1.5rem; }
+.memory-decisions-article .memory-summary__intro { display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; align-items: start; }
+.memory-decisions-article .memory-summary__intro p { margin: 0; font-size: clamp(1.2rem, 2vw, 1.55rem); line-height: 1.35; font-weight: 650; color: var(--post-heading); }
+.memory-decisions-article .memory-summary dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin: 1.5rem 0 0; }
+.memory-decisions-article .memory-summary dl > div { border-top: 1px solid var(--line); padding-top: 1rem; }
+.memory-decisions-article .memory-summary dt { font-size: .95rem; font-weight: 650; color: var(--post-heading); }
+.memory-decisions-article .memory-summary dd { margin: .45rem 0 0; font-size: .9rem; line-height: 1.6; color: var(--post-body); }
+.memory-decisions-article .memory-summary .memory-summary__status { border-top: 1px solid var(--line); margin: 1.25rem 0 0; padding-top: 1rem; font-size: .82rem; line-height: 1.65; }
+.memory-decisions-article .memory-trace { border: 1px solid var(--line); }
+.memory-decisions-article .memory-trace__header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; padding: .8rem 1.25rem; border-bottom: 1px solid var(--line); }
+.memory-decisions-article .memory-trace__header > span:last-child { color: var(--post-muted); font-size: .75rem; }
+.memory-decisions-article .memory-trace__comparison { display: grid; grid-template-columns: 1fr 1fr; }
+.memory-decisions-article .memory-trace__comparison section { min-width: 0; padding: 1.25rem; }
+.memory-decisions-article .memory-trace__comparison section + section { border-left: 1px solid var(--line); }
+.memory-decisions-article .memory-trace__comparison h3 { font-size: .8rem; margin: 0 0 1rem; color: var(--memory-accent); letter-spacing: .02em; }
+.memory-decisions-article .memory-trace__comparison section + section h3 { color: var(--memory-amber); }
+.memory-decisions-article .memory-trace__comparison p { font-size: 1.07rem; line-height: 1.65; margin: 0 0 1rem; }
+.memory-decisions-article .memory-trace small { display: block; color: var(--post-muted); font-size: .78rem; line-height: 1.5; }
+.memory-decisions-article .memory-trace__result { display: flex; gap: 1rem; padding: 1.15rem 1.25rem; border-top: 1px solid var(--line); background: var(--accent-soft); }
+.memory-decisions-article .memory-trace__result > span { font-size: 1.6rem; color: var(--memory-violet); }
+.memory-decisions-article .memory-trace__result strong { font-size: .95rem; }
+.memory-decisions-article .memory-trace__result p { margin: .35rem 0 0; font-size: .9rem; line-height: 1.65; }
+.memory-decisions-article .memory-trace figcaption { text-align: left; padding: .85rem 1.25rem; margin: 0; border-top: 1px solid var(--line); font-size: .8rem; line-height: 1.6; }
+.memory-decisions-article .memory-boundaries { display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid var(--line); }
+.memory-decisions-article .memory-boundaries > div { padding: 1.25rem 1.25rem 1.25rem 0; }
+.memory-decisions-article .memory-boundaries > div:nth-child(even) { border-left: 1px solid var(--line); padding-left: 1.25rem; }
+.memory-decisions-article .memory-boundaries > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+.memory-decisions-article .memory-boundaries dt { font-size: 1rem; font-weight: 650; color: var(--memory-violet); }
+.memory-decisions-article .memory-boundaries dd { margin: .5rem 0 0; font-size: .93rem; line-height: 1.7; }
+.memory-decisions-article .memory-section-lead { border-left: 3px solid var(--memory-violet); padding-left: 1rem; font-size: 1.1rem; }
+/* Concepts, procedures, evidence, and limits each keep a consistent accent. */
+.memory-decisions-article :is(#what-does-jev-add-after-memory-already-works, #one-evidence-snapshot-two-decision-points, #what-jev-decides-and-what-python-enforces, #four-boundaries-to-preserve)::before { background: var(--memory-violet); }
+.memory-decisions-article :is(#run-the-gate-including-the-failure-paths, #evaluate-the-combination-with-four-configurations, #verification-so-far)::before { background: var(--blue); }
+.memory-decisions-article :is(#from-answer-review-to-action-review, #when-does-the-extra-review-pay-for-itself)::before { background: var(--memory-amber); }
+.memory-decisions-article .hindsight-list { max-width: var(--reading-width); margin-inline: auto; }
+.memory-decisions-article > p { margin-block: 1.15rem; }
+.memory-decisions-article > p > strong { color: var(--post-heading); }
+
+.memory-decisions-article > ul > li, .memory-decisions-article > ol > li { margin-block: .65rem; }
+@media (max-width: 640px) {
+ .memory-decisions-article .memory-summary { padding: 1.1rem; }
+ .memory-decisions-article .memory-summary__intro, .memory-decisions-article .memory-summary dl, .memory-decisions-article .memory-trace__comparison, .memory-decisions-article .memory-boundaries { grid-template-columns: 1fr; }
+ .memory-decisions-article .memory-summary__intro { gap: .75rem; }
+ .memory-decisions-article .memory-summary dl { gap: .8rem; margin-top: 1rem; }
+ .memory-decisions-article .memory-summary dd { margin-top: .2rem; }
+ .memory-decisions-article .memory-trace__comparison section + section { border-left: 0; border-top: 1px solid var(--line); }
+ .memory-decisions-article .memory-boundaries > div, .memory-decisions-article .memory-boundaries > div:nth-child(even) { border-left: 0; padding: 1rem 0; }
+ .memory-decisions-article .memory-boundaries > div + div { border-top: 1px solid var(--line); }
+}
+
+.memory-decisions-article :is(.memory-state,.memory-lab) { width:min(100%,var(--reading-width)); margin:2rem auto; }
+.memory-decisions-article .memory-state__source { padding:1.25rem; border-block:2px solid var(--memory-accent); background:var(--accent-soft); }
+.memory-decisions-article .memory-state__source p { margin:.5rem 0; }
+.memory-decisions-article .memory-state small { display:block; font-size:.8rem; line-height:1.6; color:var(--post-muted); }
+.memory-decisions-article .memory-state__stages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-bottom:1px solid var(--line); }
+.memory-decisions-article .memory-state__stages section { padding:1.25rem 1rem; min-width:0; }
+.memory-decisions-article .memory-state__stages section + section { border-left:1px solid var(--line); }
+.memory-decisions-article .memory-state__stages section > span { font-size:.72rem; color:var(--memory-violet); }
+.memory-decisions-article .memory-state__stages h3 { font-size:1rem; margin:.4rem 0 .7rem; }
+.memory-decisions-article .memory-state__stages p { font-size:.93rem; line-height:1.65; margin:0 0 .7rem; }
+.memory-decisions-article :is(.memory-state,.memory-lab) figcaption { font-size:.83rem; text-align:left; line-height:1.7; color:var(--post-muted); }
+.memory-decisions-article .memory-lab__heading { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:space-between; padding:1rem 0; border-top:2px solid var(--memory-violet); }
+.memory-decisions-article .memory-lab__heading > strong { font-size:.87rem; }
+.memory-decisions-article .memory-lab__outcome { font-size:.83rem; font-weight:650; color:var(--post-heading); }
+.memory-decisions-article .memory-lab__outcome--answered { color:var(--memory-accent); }
+.memory-decisions-article .memory-lab__outcome--error { color:var(--memory-amber); }
+.memory-decisions-article .memory-lab > p { font-size:.83rem; }
+@media(max-width:640px) {
+ .memory-decisions-article .memory-state__stages { grid-template-columns:1fr; }
+ .memory-decisions-article .memory-state__stages section + section { border-left:0; border-top:1px solid var(--line); }
+}

@@ -1,0 +1,399 @@
+---
+title: "Memory-Informed Decisions: Hindsight and Jev in a LangChain Agent"
+date: 2026-11-05T12:00:00-05:00
+author: BZ
+description: "Extend Hindsight Memory Agents with optional Jev preflight and answer review, sharing recalled evidence with a local LangChain worker."
+excerpt: "A 64-request live benchmark and 48-call review diagnostic show what memory adds to Jev decisions—and where a confidence gate rejects answers it could have delivered."
+categories:
+  - AI ENGINEERING
+tags:
+  - hindsight
+  - jev
+  - langchain
+  - agent-memory
+  - evaluation
+---
+
+import HindsightAside from '../../../../components/HindsightAside.astro';
+import HindsightList from '../../../../components/HindsightList.astro';
+import MemoryDecisionFigure from '../../../../components/MemoryDecisionFigure.astro';
+import MemoryDecisionSummary from '../../../../components/MemoryDecisionSummary.astro';
+import MemoryDecisionTrace from '../../../../components/MemoryDecisionTrace.astro';
+import MemoryDecisionState from '../../../../components/MemoryDecisionState.astro';
+import MemoryDecisionLab from '../../../../components/MemoryDecisionLab.astro';
+import MemoryDecisionBenchmark from '../../../../components/MemoryDecisionBenchmark.astro';
+import MemoryDecisionLiveTrace from '../../../../components/MemoryDecisionLiveTrace.astro';
+import '../../../../styles/memory-decisions-article.css';
+
+<div class="memory-decisions-article">
+
+[Hindsight](https://hindsight.vectorize.io/developer/api/recall) supplies **historical evidence**. [Jev](https://docs.langchain.com/oss/python/integrations/providers/typesafe) assesses **whether to proceed, clarify, or review**. The local LangChain worker writes the answer; Python applies the gate.
+
+<MemoryDecisionSummary />
+
+The example builds on the [Hindsight Memory Agents](https://github.com/binzhango/hindsight-memory-agents) repository from the [memory introduction](/posts/2026/11-05-hindsight-agent-memory-benchmark/). **Jev support is on `main`**: install the `jev` extra and add `--jev` to enable preflight and draft review.
+
+{/* more */}
+
+## What does Jev add after memory already works?
+
+The [first Hindsight experiment](/posts/2026/11-05-hindsight-agent-memory-benchmark/#what-the-local-benchmark-confirms) tested **recovery across fresh processes**. In that small exploratory run, the worker recovered **8/8 stored facts**, versus **0/8 without memory**.
+
+Retrieving a constraint does not ensure that the worker follows it. A model can receive “use SQLite” and still recommend another database: recall succeeded, but generation contradicted the evidence.
+
+This extension adds an **answer-release decision**. Jev assesses the supplied context and draft; application code decides whether to return the answer, request clarification, or require review.
+
+<div class="article-table memory-decision-table" role="region" aria-label="Retrieval and decision failures" tabindex="0">
+
+| Failure | What went wrong? | Where to investigate |
+| --- | --- | --- |
+| **Missing context** | The needed decision never reached the worker | Retain, scope, recall, evidence budget |
+| **Ignored constraint** | The worker received the fact but contradicted it | Worker prompt and draft review |
+| **Stale agreement** | Worker and reviewer agree on an outdated fact | Source updates, event time, current records |
+| **Unnecessary rejection** | Review blocks a useful, supported answer | Decision rubric and threshold |
+
+</div>
+
+Review can catch an **ignored constraint**, but it can also reject a useful answer. When the evidence itself is missing or stale, another model reading the same snapshot may share the worker’s mistake.
+
+## One constraint, one conflicting draft
+
+A planner records Alice’s project constraints. A coder starts in a fresh process and receives: “I am Alice. Suggest a minimal implementation stack for this project.”
+
+<MemoryDecisionTrace />
+
+The reviewer sees **the request, the earlier constraint, and the draft together**. The stored constraint makes the conflict visible: a paid hosted database violates Alice’s requirement.
+
+## One evidence snapshot, two decision points
+
+**Recall once per request.** Give the same fact IDs and text to Jev preflight, the worker, and Jev review. Only the review stage adds the generated draft.
+
+<MemoryDecisionFigure />
+
+**Keep the snapshot stable during review.** A second recall could return different facts, making a disagreement harder to explain. Each new `ask` starts a fresh snapshot.
+
+### Inspect what each model actually knows
+
+<MemoryDecisionState />
+
+The [wrapper’s state construction](https://github.com/binzhango/hindsight-memory-agents/blob/main/src/memory_agents/app.py) is small enough to inspect directly:
+
+```python
+state = {
+    "question": question,
+    "instructions": self.instructions,
+    "memories": json.loads(evidence),
+}
+# After the worker returns:
+state["draft"] = reply.content
+```
+
+**The evidence is shared; the tasks differ.** The worker receives history as labelled JSON and generates advice. Jev receives a copy of the state and a classification rubric.
+
+The inherited `MemoryFact` contains **ID and text only**. The wrapper omits source timestamps, detailed provenance, and current business records from the Jev request.
+
+**Stale evidence can pass both stages.** Handling changed decisions reliably requires richer metadata and a policy for deciding which source takes precedence.
+
+## What Jev decides, and what Python enforces
+
+The [TypeSafe LangChain integration](https://docs.langchain.com/oss/python/integrations/providers/typesafe) accepts named questions with their state at invocation time. This example uses a `Choice` question with three outcomes.
+
+<div class="article-table memory-decision-table" role="region" aria-label="Decision outcomes" tabindex="0">
+
+| Outcome | Before the worker | After the worker |
+| --- | --- | --- |
+| Proceed | Generate a draft | Return the accepted answer |
+| Clarify | Return a clarification request | Withhold the draft and request clarification |
+| Review | Return a review status | Keep the draft separate for inspection |
+
+</div>
+
+<HindsightAside title="The threshold is application policy">
+Confidence below <strong>0.60</strong> routes to review, even when Jev selects proceed. This is an illustrative threshold, not a measured optimum. High confidence does not establish correctness.
+</HindsightAside>
+
+Three rules keep the gate explicit:
+
+<HindsightList tone="caveat">
+
+- **Stop on failure:** propagate service errors and reject malformed decisions.
+- **Separate rejected drafts:** preserve them in `draft`; return the clarification or review message in `text`. Consumers must honor `disposition`.
+- **Check constraints and claims:** look for invented preferences, contradictions, and claims of unperformed actions. General advice can go beyond stored facts.
+
+</HindsightList>
+
+### A typed decision still needs an application rule
+
+The [Jev adapter](https://github.com/binzhango/hindsight-memory-agents/blob/main/src/memory_agents/decisions.py) sends the state and question together. This excerpt uses the existing classifier and rubric:
+
+```python
+result = await self.client.ainvoke({
+    "state": {**state, "stage": stage},
+    "questions": {"disposition": self.question},
+})
+answer = result.choices["disposition"]
+```
+
+**Choice and confidence feed the gate separately.** Python first checks the confidence threshold, then the selected outcome. A `proceed` decision at **0.59** stops for review; at **0.60**, it continues. The lab below exercises that boundary.
+
+**Use semantic review for natural-language judgments.** Jev assesses whether a recommendation conflicts with a stated constraint. Exact invariants—ownership, numeric limits, and allowed tool names—belong in deterministic checks.
+
+**Compare alternatives before choosing a reviewer.** Worker self-review and another LLM judge are also options. This repository has not compared their quality, latency, or cost against Jev.
+
+## Run the gate, including the failure paths
+
+The boundary lab executes **nine scripted cases through the actual wrapper**. It records memory calls, worker inputs, reviewer state, and returned output so each path can be inspected.
+
+<MemoryDecisionLab />
+
+Two traces expose the mechanism:
+
+<HindsightList tone="measurement">
+
+- **Low-confidence proceed:** recall → preflight returns `proceed` at 0.59 → Python returns `review`. **The worker is never called.**
+- **Review timeout:** recall → preflight proceeds → worker generates → reviewer times out → error. **The generated answer is not returned as accepted text.**
+
+</HindsightList>
+
+Two additional checks cover **output separation** and **independent switches**: rejected text stays in `draft`, and Jev can run with recall disabled. All decisions in this lab are scripted; these observations establish wiring behavior, not live prediction quality.
+
+Run the lab from the repository after installation:
+
+```sh
+uv run python labs/decision_lab.py \
+  --output benchmarks/my-decision-lab/results.json
+```
+
+The terminal reports `Verified 9 scripted control-flow cases; zero live model calls.` Open the generated JSON to inspect **each event and its output**, including the reviewer’s input state.
+
+## Run Hindsight + Jev
+
+Jev support is included on `main` in [Hindsight Memory Agents](https://github.com/binzhango/hindsight-memory-agents). Clone the repository and install the optional Jev dependency:
+
+```sh
+git clone https://github.com/binzhango/hindsight-memory-agents.git
+cd hindsight-memory-agents
+uv sync --frozen --extra jev
+cp .env.example .env
+```
+
+Configure **LM Studio** and **Hindsight** using the repository’s setup instructions, then add `TYPESAFE_API_KEY` to `.env`.
+
+<HindsightAside title="Local worker · hosted decisions">
+Jev receives the question, agent instructions, selected memory facts, and generated draft. These walkthrough records are synthetic; enabling Jev sends that selected context to its hosted service.
+</HindsightAside>
+
+```sh
+uv run memory-agents remember \
+  'For this project Alice requires Python, SQLite, and no paid external APIs.' \
+  --user sample-alice --project jev-demo \
+  --agent planner --document-id project-constraints
+
+uv run --extra jev memory-agents ask \
+  'I am Alice. Suggest a minimal implementation stack for this project.' \
+  --user sample-alice --project jev-demo --agent coder --jev
+```
+
+**Inspect the decision trace** alongside the returned memories. Each decision records its stage, choice, confidence, provider request ID, and elapsed milliseconds.
+
+Call counts reveal the path taken: **one decision** for a preflight stop, **two** for an accepted draft, and **none** when `--jev` is disabled.
+
+## Four boundaries to preserve
+
+The optional provider exposes `assess(state, stage)` on `MemoryAgent`. A live Jev adapter and deterministic test doubles use the same control flow.
+
+<dl class="memory-boundaries">
+  <div><dt>Shared evidence</dt><dd>Construct the memory payload once, supply it to the worker, and copy it into each decision request. Add the draft only for review.</dd></div>
+  <div><dt>Explicit writes</dt><dd>Only <code>remember</code> retains facts. A later outcome-writing path should record source identity, event time, and execution status.</dd></div>
+  <div><dt>Trusted scope</dt><dd>The CLI’s user/project pair selects a bank; it is not authentication. A deployed application must derive scope from a trusted session and enforce access.</dd></div>
+  <div><dt>Visible failures</dt><dd>A specifically identified missing bank becomes empty history; other retrieval errors propagate. Missing-bank and successful-empty telemetry are still combined.</dd></div>
+</dl>
+
+**Treat memory as untrusted evidence.** Prompt labels communicate that boundary but do not guarantee resistance to prompt injection. Keep retention explicit so speculative answers and predictions do not become confirmed facts.
+
+## From answer review to action review
+
+<p class="memory-section-lead">Planned extension: check the proposed action <strong>before execution</strong>.</p>
+
+Consider “The replacement has the same problem as yesterday.” Memory explains the follow-up; the **current order record** establishes what can happen now.
+
+<div class="article-table memory-decision-table" role="region" aria-label="Support evidence responsibilities" tabindex="0">
+
+| Evidence | Source | Establishes |
+| --- | --- | --- |
+| Earlier problem and replacement | Scoped memory | Meaning of the follow-up |
+| Current owner, fulfillment, refund state | Application tools | Present eligibility |
+| Proposed-action assessment | Jev | A prediction for policy to consider |
+| Execution result | Application tool | What actually happened |
+
+</div>
+
+An action gate needs three steps:
+
+<HindsightList tone="workflow">
+
+1. **Check eligibility:** ownership, amount limits, and idempotency against current records.
+2. **Assess the proposal:** give Jev the concrete action and relevant evidence.
+3. **Execute or review:** revalidate current records when resuming an action.
+
+</HindsightList>
+
+Historical memory explains the request; it does not authorize a payment.
+
+<HindsightAside title="Answer review has a timing limit">
+<strong>Post-answer review cannot prevent tools that already ran.</strong> A tool-executing agent needs checks around the tool call itself. See the <a href="/posts/2026/10-29-decision-models-jev-langchain/">earlier Jev harness</a>. Refund execution and a human approval queue remain future work here.
+</HindsightAside>
+
+**Keep internal memory decisions separate.** Hindsight documents its own [decision-model provider](https://hindsight.vectorize.io/developer/decision-models). Changing it would also change the memory system, so this experiment leaves retrieval fixed and applies Jev at the application boundary.
+
+## What the live benchmark actually improved
+
+**Memory improved task completion; adding Jev did not.** In this exploratory run, Hindsight alone completed **16/16** tasks, compared with **4/16** for the worker without history. Hindsight + Jev completed **14/16**: two valid requests stopped at preflight.
+
+<MemoryDecisionBenchmark />
+
+The experiment made **64 live requests**: eight cases × four configurations × two repeats. Muse Glimmer generated answers locally; Hindsight recalled actual stored facts; the hosted reviewer reported model **`jev-1.14.0`**. All 64 trials completed without service errors.
+
+Six cases required project history. The other two tested an unknown release date and another user's scope. **The memory-free worker abstained rather than inventing facts**: all 12 non-successes were JSON null on questions whose answers existed only in memory.
+
+### The added gate caused two regressions
+
+Across 16 matched memory-only/combined pairs, the combination had **0 wins, 2 regressions, and 14 ties**. Both regressions involved the approved test command. Hindsight returned the exact command, but Jev's preflight confidence fell below 0.60 in each repeat: **0.46** and **0.37**.
+
+<MemoryDecisionLiveTrace />
+
+This is a **policy tradeoff**, not a retrieval failure. Lowering the threshold might admit these answers, but changing it after seeing the scores would tune on the evaluation cases. The threshold stayed fixed; a follow-up should choose it on separate development cases.
+
+### Lower median time did not mean better completion
+
+Combined median request time was **13.65 s**, versus **15.46 s** for memory only. The combined path skipped worker generation on six requests: four appropriate unknown/scope clarifications and the two unnecessary stops.
+
+**Early exits change the latency mix.** Among the ten combined requests that generated and released an answer, median latency was **16.85 s**. That subset is a different workload, so it also does not establish a clean speed ranking. Median total Jev time across all combined requests was **0.37 s**.
+
+### A separate test shows the benefit of shared history
+
+The end-to-end worker produced no incorrect factual drafts for Jev to catch. To inspect review behavior, I ran **48 additional live reviewer calls** over six deliberately authored draft pairs, two evidence conditions, and two repeats. Each pair contains a supported answer and an unsupported alternative.
+
+<div class="article-table memory-decision-table" role="region" aria-label="Controlled live draft review with and without memory" tabindex="0">
+
+| Observed review behavior | Jev without history | Jev with Hindsight recall |
+| --- | ---: | ---: |
+| Supported factual drafts released | 0/10 | **10/10** |
+| Unsupported drafts withheld | 12/12 | **12/12** |
+| Supported clarification drafts unnecessarily withheld | 2/2 | 2/2 |
+| Service errors | 0/24 | 0/24 |
+
+</div>
+
+**History made review more selective.** Without it, Jev withheld every draft. With it, the gate released all ten supported factual drafts while still withholding all twelve unsupported ones. Both conditions also withheld two valid clarification drafts, exposing another cost of the confidence threshold.
+
+These are **planted drafts, not observed worker mistakes**. The diagnostic was added after early end-to-end observations and is exploratory. It supports a narrow claim about evidence-informed review; it does not establish improved task completion. Inspect the [raw reviewer calls](/assets/benchmarks/hindsight-jev/review-probe.json) and [diagnostic report](/assets/benchmarks/hindsight-jev/REVIEW-PROBE.md).
+
+### Reproduce the measurements
+
+After the repository setup above and with the services running:
+
+```sh
+uv run --extra jev python -m memory_agents.decision_benchmark \
+  --output benchmarks/my-jev-run --repeats 2
+
+uv run python labs/report_decision_benchmark.py \
+  benchmarks/my-jev-run/results.json
+```
+
+Use a new output directory. The runner creates **separate memory-only and combined banks** with equivalent source history, rotates mode order, and starts every worker request with fresh messages. Ingestion took **114.25 s** and **85.11 s** for the two banks and is excluded from answer timings.
+
+**Scoring is strict:** known facts require exact JSON values; unknown/scope cases allow JSON null or clarification. Withholding a known answer never earns credit, and errors stay in the denominator. Expected labels and case IDs never enter model inputs. Repeats are not independent tasks, and this small synthetic set is not held-out validation.
+
+## When does the extra review pay for itself?
+
+**An accepted answer adds two sequential Jev calls.** A preflight stop makes only one and saves worker generation. A review-stage rejection has already paid for generation.
+
+For this wrapper, ignoring small orchestration overhead:
+
+```text
+Memory only:   T_recall + T_worker
+Accepted:      T_recall + T_preflight + T_worker + T_review
+Early stop:    T_recall + T_preflight
+```
+
+These formulas explain the measured paths above. Each stage median summarizes a different distribution, so the component medians need not add up to the total median.
+
+Review trades **prevented bad answers** against added latency and **rejected good answers**. Both outcomes matter to the user.
+
+**Count task completion as well as accepted-answer quality.** A gate that rejects everything may release no mistakes while completing no tasks.
+
+<div class="article-table memory-decision-table" role="region" aria-label="How to interpret decision review outcomes" tabindex="0">
+
+| Draft quality, judged separately | Gate accepts | Gate withholds |
+| --- | --- | --- |
+| Supported and useful | Desired completion | Unnecessary review or clarification |
+| Contradictory or unsupported | Missed error | Error caught before release |
+
+</div>
+
+**Score the draft independently of the gate.** Report all four outcomes with denominators, and count preflight stops separately. This exposes whether fewer released errors came from better review or simply more rejection.
+
+## Evaluate the combination with four configurations
+
+The live benchmark used the four configurations below. The same switches are available for individual `ask` requests:
+
+<div class="article-table memory-decision-table" role="region" aria-label="Four experiment configurations" tabindex="0">
+
+| Configuration | Flags on `ask` | Historical evidence |
+| --- | --- | --- |
+| Baseline | `--no-memory` | None |
+| Memory only | No additional flags | Recalled snapshot |
+| Jev only | `--no-memory --jev` | None |
+| Combined | `--jev` | Same snapshot for worker and Jev |
+
+</div>
+
+### Design the next evaluation
+
+<HindsightList tone="measurement">
+
+- **Hold the worker fixed:** same model, instructions, request, and generation settings.
+- **Isolate history:** equivalent preloaded evidence, separate banks, and independent run state. Keep expected answers out of all model inputs.
+- **Freeze the protocol:** set thresholds on development cases, then evaluate held-out cases.
+- **Account for repetition:** counterbalance run order and distinguish repeat runs from independent scenarios.
+
+</HindsightList>
+
+Use abbreviated follow-ups, changed constraints, distracting facts, wrong-scope history, and insufficient evidence. Leave Hindsight’s retrieval configuration fixed so the experiment isolates application-level Jev decisions.
+
+### Measure useful answers and the cost of review
+
+<div class="article-table memory-decision-table" role="region" aria-label="Evaluation measures" tabindex="0">
+
+| Measure | Inspect |
+| --- | --- |
+| **Answer quality** | Grounding, constraint adherence, appropriate clarification |
+| **Review quality** | Missed reviews and unnecessary reviews, separately |
+| **Latency** | Recall, worker, Jev, and total request time |
+| **Future action quality** | Actual tool, target, amount, and executed effect |
+
+</div>
+
+**The live run does not establish a general improvement.** It shows a factual-recovery benefit from memory, more selective review when history is available, and a completion regression from the current gate.
+
+For a reproducible comparison, preserve the code revision, input evidence, decisions, accepted and rejected drafts, failures, and per-case scores. Those records are needed to support any improvement claim.
+
+Jev may catch contradictions while also rejecting useful answers. The experiment should expose **both sides of that tradeoff**.
+
+## Verification so far
+
+<HindsightList tone="measurement">
+
+- **Nine executed lab paths:** raw states, call counts, and outputs are linked above.
+- **18 tests pass:** SDK adapter contract, shared evidence, preflight stops, rejected drafts, provider failure, and benchmark scoring.
+- **Lint and formatting pass:** Ruff checks the implementation and tests.
+- **Two live experiments:** 64 end-to-end requests and 48 reviewer-diagnostic calls, with raw traces and explicit limitations. These are separate experiments; their scores are not pooled.
+
+</HindsightList>
+
+## Continue exploring
+
+Read the [Hindsight architecture and memory walkthrough](/posts/2026/11-05-hindsight-agent-memory-benchmark/), inspect the [example repository](https://github.com/binzhango/hindsight-memory-agents), or compare the [action-review harness](/posts/2026/10-29-decision-models-jev-langchain/).
+
+</div>
