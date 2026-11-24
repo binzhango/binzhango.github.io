@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import ModelApiExplorer from '../../components/ModelApiExplorer.astro';
 import InterviewTopics from '../../components/InterviewTopics.jsx';
 import InterviewBank from '../../components/InterviewBank.astro';
 import { interviewReadingTime } from '../../utils/interview-reading-time';
@@ -44,6 +45,7 @@ const allInterviewQuestions = isInterview ? await getCollection('interview') : [
 if (isInterview && import.meta.env.PROD) validateInterviewBank(allInterviewQuestions);
 const interviewQuestions = allInterviewQuestions.filter((q) => q.data.status === 'reviewed').sort((a, b) => a.data.order - b.data.order);
 const pageTitle = post.data.title;
+const isModelApiGuide = post.id === '2026/11-17-understanding-model-apis';
 const isInferenceWalkthrough = post.id === '2026/03-07-prompt-in-llm';
 const isJevArticle = post.id === '2026/10-29-decision-models-jev-langchain';
 const isRagSeries = post.data.tags?.includes('rag-engineering') ?? false;
@@ -111,7 +113,7 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
     {isInterview && <InterviewTopics slot="secondary" topics={topicLinks} total={interviewQuestions.length} />}
     {!isInterview && tocHeadings.length > 0 && <TableOfContents slot="secondary" headings={tocHeadings} />}
 
-    <article data-topic-tone={getTopicTone(post.data.categories?.[0])} class:list={['post', { 'post--walkthrough': isInferenceWalkthrough, 'post--interview': isInterview, 'post--jev': isJevArticle }]}>
+    <article data-topic-tone={getTopicTone(post.data.categories?.[0])} class:list={['post', { 'post--api': isModelApiGuide, 'post--walkthrough': isInferenceWalkthrough, 'post--interview': isInterview, 'post--jev': isJevArticle }]}>
       <header class="post-header">
         <h1>{post.data.title}</h1>
         {pageDescription && <p class="post-header__summary">{pageDescription}</p>}
@@ -166,6 +168,8 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
         {isInterview && <InterviewBank questions={interviewQuestions} />}
       </section>
 
+      {isModelApiGuide && <ModelApiExplorer />}
+
       {(prevPost || nextPost) && (
         <nav class="post-nav" aria-labelledby="keep-reading">
           <div class="post-nav__heading">
@@ -202,6 +206,16 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
 
 
 <style>
+
+  .post--api .post-header { background: none; border: 0; padding: 0; margin-bottom: 1.5rem; }
+  .post--api .post-header h1 { margin: 0; font-size: clamp(2.1rem, 4.5vw, 3.65rem); line-height: 1.06; letter-spacing: -.055em; }
+  .post--api .post-header__summary { max-width: 68ch; margin-block: .65rem; line-height: 1.45; }
+  .post--api .post-taxonomy { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem .8rem; margin-top: .65rem; padding: 0; border: 0; }
+  .post--api .post-taxonomy__group { display: flex; gap: .3rem; }
+  .post--api .post-taxonomy__label { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
+  .post--api .post-content :global(h2) { text-wrap: balance; }
+  .post--api .post-content :global(.code-block-wrapper) { margin-top: .35rem; }
+  .post--api .post-content :global(.sample-label) { margin: 1.3rem 0 .3rem; color: var(--muted); font: 600 .8rem/1.45 var(--font-mono); }
 
   .post { min-width: 0; width: 100%; max-width: var(--reading-width); margin-inline: auto; }
   .post-header {
