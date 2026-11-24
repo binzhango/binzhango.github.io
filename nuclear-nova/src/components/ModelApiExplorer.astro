@@ -1,0 +1,115 @@
+---
+import { Code } from '@astryxdesign/core/Code';
+import { Code as HighlightedCode } from 'astro:components';
+import { butterSyntax } from '../styles/butter-syntax.mjs';
+const endpoints = [
+  {
+    label: 'Responses', task: 'New OpenAI app', provider: 'OpenAI', path: '/v1/responses',
+    use: 'Start here for a new OpenAI app. Read text for a simple reply, or dispatch typed output items when the model requests a tool.',
+    request: '{ "model": "MODEL_ID", "input": "Define a checked bag." }',
+    read: 'output[] → message → content[] → output_text',
+    link: '#tool-calls-and-state', topic: 'Follow a tool call',
+  },
+  {
+    label: 'Chat Completions', task: 'Existing chat client', provider: 'OpenAI-compatible chat', path: '/v1/chat/completions',
+    use: 'Choose this when your service owns the transcript or your gateway expects Chat Completions. Append each assistant turn to the history you send.',
+    request: '{ "model": "MODEL_ID", "messages": [\n  { "role": "user", "content": "Define a checked bag." }\n] }',
+    read: 'choices[0].message → content or tool_calls',
+    link: '#tool-calls-and-state', topic: 'Compare the tool handoff',
+  },
+  {
+    label: 'Messages', task: 'Native Claude app', provider: 'Anthropic', path: '/v1/messages',
+    use: 'Use Claude’s native API for conversations with text, images, or tools. One assistant turn can contain several typed blocks.',
+    request: '{ "model": "MODEL_ID", "max_tokens": 64,\n  "messages": [{ "role": "user", "content": "Define a checked bag." }] }',
+    read: 'content[] → inspect block.type',
+    link: '#images-in-claude-and-gemini', topic: 'Compare image inputs',
+  },
+  {
+    label: 'generateContent', task: 'Native Gemini app', provider: 'Google Gemini', path: '/v1beta/models/{model}:generateContent',
+    use: 'Use Gemini’s native method for a question, image, or other supported input. Choose a candidate, then inspect the parts of that answer.',
+    request: '{ "contents": [{ "role": "user", "parts": [\n  { "text": "Define a checked bag." }\n] }] }',
+    read: 'candidates[0].content.parts[] → text or functionCall',
+    link: '#images-in-claude-and-gemini', topic: 'Compare image inputs',
+  },
+  {
+    label: 'Completions', task: 'Legacy text template', provider: 'OpenAI legacy', path: '/v1/completions',
+    use: 'Keep this contract for a legacy caller that appends generated text to a prefix. The caller owns the template and any speaker labels.',
+    request: '{ "model": "MODEL_ID", "prompt": "English: Checked bag\\nFrench:" }',
+    read: 'choices[0].text → append to prompt',
+    link: '#prompts-and-message-history', topic: 'Compare prompt and transcript',
+  },
+  {
+    label: 'Embeddings', task: 'Similarity search', provider: 'OpenAI', path: '/v1/embeddings',
+    use: 'Choose an embedding model for similarity search or clustering. Store the vectors with document IDs so your index can retrieve the original text.',
+    request: '{ "model": "EMBEDDING_MODEL_ID", "input": "Oversized baggage fees" }',
+    read: 'data[] → index + embedding',
+    link: '#retrieval-with-embeddings', topic: 'Follow a retrieval request',
+  },
+  {
+    label: 'List models', task: 'Model discovery', provider: 'OpenAI', method: 'GET', path: '/v1/models',
+    use: 'Use this for a model picker or to check which model IDs a credential can see. Check feature support separately for the selected model.',
+    request: 'No request body. Use the credentials for the target project.',
+    read: 'data[] → id',
+    link: '#model-discovery', topic: 'Debug a missing model',
+  },
+];
+---
+<fieldset class="api-browser" id="endpoint-reference">
+  <legend>Endpoint reference</legend>
+  <div class="api-grid">
+    {endpoints.map((entry, index) => (
+      <>
+        <input type="radio" id={'api-choice-' + index} name="api-contract" checked={index === 0} aria-controls={'api-panel-' + index} />
+        <label for={'api-choice-' + index} style={`--row:${index + 1}`}><span>{entry.label}</span><small>{entry.task}</small></label>
+        <section id={'api-panel-' + index} aria-label={entry.label + ' contract'}>
+          <span class="api-provider">{entry.provider}</span>
+          <div class="api-path"><strong>{entry.method ?? 'POST'}</strong><Code size="inherit">{entry.path}</Code></div>
+          <p>{entry.use}</p>
+          <dl>
+            <dt>Request body</dt><dd class="api-request">{entry.method === 'GET'
+              ? <p>{entry.request}</p>
+              : <HighlightedCode code={entry.request} lang="json" themes={butterSyntax} defaultColor={false} />
+            }</dd>
+            <dt>Read the response</dt><dd><Code size="inherit">{entry.read}</Code></dd>
+          </dl>
+          <a href={entry.link}>{entry.topic} <span aria-hidden="true">↓</span></a>
+        </section>
+      </>
+    ))}
+  </div>
+</fieldset>
+<style>
+  .api-browser { scroll-margin-top: 6rem; min-inline-size: 0; margin: 0 0 2.2rem; padding: 0; border: 0; color: var(--ink); }
+  legend { font-weight: 650; font-size: 1.15rem; letter-spacing: -.02em; margin-bottom: .7rem; }
+  .api-grid { position: relative; display: grid; grid-template-columns: minmax(11.5rem, .95fr) minmax(0, 3fr); border: 1px solid var(--line); border-radius: var(--radius-container); overflow: hidden; background: var(--surface); }
+  input { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); }
+  label { display: flex; flex-direction: column; justify-content: center; align-items: start; grid-row: var(--row); grid-column: 1; min-height: 2.65rem; padding: .48rem .9rem; border-inline-start: 3px solid transparent; cursor: pointer; color: var(--muted); font-family: inherit; font-size: .89rem; font-weight: 600; line-height: 1.35; }
+  label small { font-size: .72rem; font-weight: 450; color: var(--muted); }
+  label:hover { background: var(--accent-soft); color: var(--ink); }
+  input:checked + label { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); font-weight: 700; }
+  input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: -3px; }
+  section { align-content: center; display: none; grid-column: 2; grid-row: 1 / span 7; min-width: 0; padding: 1.25rem 1.4rem; border-inline-start: 1px solid var(--line); }
+  input:checked + label + section { display: block; }
+  .api-provider, dt { display: block; color: var(--muted); font-size: .76rem; font-weight: 600; }
+  .api-path { display: flex; align-items: baseline; gap: .55rem; margin: .35rem 0 .6rem; }
+  :global(.api-browser code), .api-path strong { font-family: var(--font-mono); }
+  .api-path strong { color: var(--accent); font-size: .76rem; }
+  .api-path :global(code) { font-size: clamp(1rem, 1.5vw, 1.23rem); letter-spacing: -.045em; overflow-wrap: anywhere; }
+  p { font-size: .95rem; line-height: 1.55; margin: 0; }
+  dl { margin: .85rem 0; }
+  dd { margin: .25rem 0 .65rem; padding: .5rem .65rem; border-inline-start: 2px solid var(--accent-line); background: var(--accent-soft); font-size: .85rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .api-request { padding: 0; border: 0; background: transparent; min-width: 0; }
+  .api-request :global(.code-block-wrapper) { margin-block: 0; }
+  a { color: var(--accent); font-size: .85rem; font-weight: 650; text-underline-offset: .17em; }
+  @media (max-width: 640px) {
+    .api-grid { display: flex; flex-wrap: wrap; padding: .35rem; }
+    label { flex: 1 1 42%; min-height: 2.55rem; padding: .35rem .55rem; border: 0; border-radius: .2rem; }
+    input:checked + label { box-shadow: inset 0 -2px var(--accent); }
+    section { order: 1; width: 100%; border: 0; border-top: 1px solid var(--line); padding: 1rem .45rem .7rem; margin-top: .3rem; }
+  }
+  @media print {
+    .api-grid, .api-grid section { display: block; }
+    .api-grid label { display: none; }
+    section { break-inside: avoid; }
+  }
+</style>
