@@ -1,24 +1,27 @@
 ---
 import 'pdfjs-dist/web/pdf_viewer.css';
+import '../../styles/butter.css';
+import ThemeManager from '../../components/ThemeManager.astro';
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-astryx-theme="butter" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>Embedded PDF reader</title>
+    <ThemeManager />
   </head>
   <body>
     <div class="toolbar" role="toolbar" aria-label="PDF controls">
-      <button id="previous" aria-label="Previous PDF page" disabled>←</button>
+      <button data-butter-button="ghost" id="previous" aria-label="Previous PDF page" disabled>←</button>
       <label>Page <input id="page-number" type="number" min="1" value="1" aria-label="PDF page number" disabled /></label>
       <span id="page-count">/ …</span>
-      <button id="next" aria-label="Next PDF page" disabled>→</button>
+      <button data-butter-button="ghost" id="next" aria-label="Next PDF page" disabled>→</button>
       <span class="spacer"></span>
-      <button id="zoom-out" aria-label="Zoom out" disabled>−</button>
-      <button id="fit" disabled>Fit width</button>
-      <button id="zoom-in" aria-label="Zoom in" disabled>+</button>
+      <button data-butter-button="ghost" id="zoom-out" aria-label="Zoom out" disabled>−</button>
+      <button data-butter-button="secondary" id="fit" disabled>Fit width</button>
+      <button data-butter-button="ghost" id="zoom-in" aria-label="Zoom in" disabled>+</button>
     </div>
     <p id="status" role="status">Loading PDF…</p>
     <div id="viewerContainer" tabindex="0" aria-label="PDF document">
@@ -83,28 +86,31 @@ import 'pdfjs-dist/web/pdf_viewer.css';
       }
       // Keep the reader controls consistent with the enclosing article's theme.
       try {
-        const source = window.parent.document.documentElement;
-        const syncTheme = () => { document.documentElement.dataset.theme = source.dataset.theme ?? 'light'; };
-        syncTheme();
-        new MutationObserver(syncTheme).observe(source, { attributes: true, attributeFilter: ['data-theme'] });
+        if (window.parent !== window) {
+          const source = window.parent.document.documentElement;
+          const syncTheme = () => { const mode = source.dataset.theme ?? 'light'; document.documentElement.dataset.theme = mode; document.documentElement.style.colorScheme = mode; };
+          syncTheme();
+          new MutationObserver(syncTheme).observe(source, { attributes: true, attributeFilter: ['data-theme'] });
+        }
       } catch { /* The reader also works when opened on its own. */ }
       initializeReader();
     </script>
   </body>
 </html>
 <style is:global>
-  :root { --reader-bg: #e6e9ee; --reader-surface: #fff; --reader-text: #172231; --reader-line: #c6ced9; color-scheme: light; }
-  :root[data-theme='dark'] { --reader-bg: #222a34; --reader-surface: #19232e; --reader-text: #edf2f8; --reader-line: #465568; color-scheme: dark; }
-  html, body { height: 100%; margin: 0; overflow: hidden; font: 14px system-ui, sans-serif; color: var(--reader-text); background: var(--reader-bg); }
+  :root {
+    --reader-bg: var(--surface-muted);
+    --reader-surface: var(--surface);
+    --reader-text: var(--ink);
+    --reader-line: var(--line);
+  }
+  html, body { height: 100%; margin: 0; overflow: hidden; font: 14px var(--font-sans); color: var(--reader-text); background: var(--reader-bg); }
   * { box-sizing: border-box; }
   .toolbar { height: 54px; display: flex; align-items: center; gap: 6px; padding: 7px 10px; background: var(--reader-surface); border-bottom: 1px solid var(--reader-line); }
   .toolbar label { display: flex; align-items: center; gap: 5px; }
-  button, input { font: inherit; color: inherit; background: var(--reader-surface); border: 1px solid var(--reader-line); border-radius: 4px; height: 34px; }
-  button { padding: 0 9px; cursor: pointer; }
-  button:disabled { opacity: 0.4; cursor: default; }
-  button:hover:not(:disabled) { background: var(--reader-bg); }
+  input { font: inherit; color: inherit; background: var(--reader-surface); border: 1px solid var(--reader-line); border-radius: var(--radius-element); height: 34px; }
   input { width: 55px; padding: 0 4px; }
-  :focus-visible { outline: 2px solid #548bee; outline-offset: -2px; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
   .spacer { flex: 1; }
   #viewerContainer { position: absolute; inset: 54px 0 0; overflow: auto; overscroll-behavior: contain; }
   #status { position: absolute; z-index: 2; top: 60px; left: 12px; padding: 8px 12px; background: var(--reader-surface); border-radius: 4px; }

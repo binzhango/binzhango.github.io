@@ -1,0 +1,41 @@
+/* Markdown and authored HTML keep their native list semantics and counters. */
+.post-content ul:not([class]) { list-style-type: disc; }
+.post-content :is(ul, ol) ul:not([class]) { list-style-type: circle; }
+.post-content :is(ul, ol) :is(ul, ol) ul:not([class]) { list-style-type: square; }
+.post-content ol:not([class]) { font-variant-numeric: tabular-nums; }
+.post-content .contains-task-list { list-style: none; padding-inline-start: 0; }
+.post-content .task-list-item > input[type='checkbox'] {
+  inline-size: 1em;
+  block-size: 1em;
+  margin-inline: 0 .45em;
+  vertical-align: -.05em;
+  accent-color: var(--color-accent);
+}
+.post-content :is(.table-scroll, .rag-table) td :is(ul, ol) > li { margin-block: .3rem; line-height: 1.55; }
+
+/* Butter's syntax accents provide a readable foreground in each theme. */
+.post-content p :is(strong, b):where(:not(a *, th *)) {
+  color: var(--prose-emphasis, var(--violet)) !important;
+}
+.post-content [data-emphasis='concept'] { --prose-emphasis: var(--violet); }
+.post-content [data-emphasis='process'] { --prose-emphasis: var(--teal); }
+.post-content [data-emphasis='data'] { --prose-emphasis: var(--blue); }
+.post-content [data-emphasis='caution'] { --prose-emphasis: var(--amber); }
+
+.post-content :not(pre) > code {
+  background: var(--surface-muted);
+  border-radius: var(--radius-inner);
+}
+.post-content thead :not(pre) > code { background: transparent; }
+
+:root[data-astryx-theme='butter'] .post-content :not(pre, a[href*='github.com/'][href*='/blob/']) > code:not(thead code) {
+  background: light-dark(
+    color-mix(in srgb, var(--color-background-yellow) 58%, var(--canvas)),
+    color-mix(in srgb, var(--color-background-yellow) 24%, var(--canvas))
+  );
+  color: light-dark(var(--color-text-yellow), var(--color-accent)) !important;
+  box-shadow: inset 0 0 0 1px light-dark(
+    var(--color-border-yellow),
+    color-mix(in srgb, var(--color-border-yellow) 66%, var(--canvas))
+  );
+}

@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import InterviewTopics from '../../components/InterviewTopics.jsx';
 import InterviewBank from '../../components/InterviewBank.astro';
 import { interviewReadingTime } from '../../utils/interview-reading-time';
 import { validateInterviewBank } from '../../utils/interview-validation';
@@ -98,14 +99,17 @@ const nextPost = toNav(series && seriesIndex >= 0 ? series.posts[seriesIndex + 1
 const readingTime = isInterview
   ? interviewReadingTime([post.body ?? '', ...interviewQuestions.map((q) => q.body ?? '')].join('\n\n'))
   : estimateReadingTime(post.body ?? '');
-const sectionHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
+const topicLinks = isInterview ? interviewTopics.map(([id, title]) => ({
+  id, title, count: interviewQuestions.filter((question) => question.data.topic === id).length,
+})) : [];
+const sectionHeadings = headings.filter((heading) => heading.depth >= 2);
 const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filter((heading) => heading.depth === 1);
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <BlogShell article>
-    {isInterview && <nav slot="secondary" class="interview-rail" aria-label="Question topics"><p>Topics · {interviewQuestions.length} questions</p><ol>{interviewTopics.map(([id, title]) => <li><a href={`#topic-${id}`}><span>{title}</span><small>{interviewQuestions.filter((q) => q.data.topic === id).length}</small></a></li>)}</ol></nav>}
-    {!isInterview && tocHeadings.length > 0 && <TableOfContents slot="secondary" tone={getTopicTone(post.data.categories?.[0])} headings={tocHeadings} />}
+    {isInterview && <InterviewTopics slot="secondary" topics={topicLinks} total={interviewQuestions.length} />}
+    {!isInterview && tocHeadings.length > 0 && <TableOfContents slot="secondary" headings={tocHeadings} />}
 
     <article data-topic-tone={getTopicTone(post.data.categories?.[0])} class:list={['post', { 'post--walkthrough': isInferenceWalkthrough, 'post--interview': isInterview, 'post--jev': isJevArticle }]}>
       <header class="post-header">
@@ -150,7 +154,12 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
         )}
       </header>
 
-      {tocHeadings.length > 0 && <div class="post-mobile-contents"><TableOfContents headings={tocHeadings} mode="mobile" /></div>}
+      {isInterview ? <div class="post-mobile-contents">
+        <details class="interview-topics-mobile">
+          <summary>Question topics <span>{topicLinks.length} topics</span></summary>
+          <InterviewTopics topics={topicLinks} total={interviewQuestions.length} />
+        </details>
+      </div> : tocHeadings.length > 0 && <div class="post-mobile-contents"><TableOfContents headings={tocHeadings} mode="mobile" /></div>}
 
       <section class="post-content" data-series={isRagSeries ? 'rag-engineering' : undefined}>
         <Content />
@@ -193,17 +202,17 @@ const tocHeadings = sectionHeadings.length > 0 ? sectionHeadings : headings.filt
 
 
 <style>
+
   .post { min-width: 0; width: 100%; max-width: var(--reading-width); margin-inline: auto; }
   .post-header {
-    position: relative; margin-bottom: 2rem; padding: clamp(1.25rem, 2.6vw, 2rem);
-    border: 1px solid var(--accent-line); border-radius: .75rem;
-    background: color-mix(in srgb, var(--accent-soft) 65%, var(--surface));
+    margin-bottom: 2rem; padding: clamp(1.25rem, 2.6vw, 2rem);
+    border: 1px solid var(--line); border-radius: var(--radius-container);
+    background: var(--color-background-card);
   }
-  .post-header::before { content: ''; position: absolute; top: 1.6rem; bottom: 1.6rem; left: -1px; width: 4px; border-radius: 4px; background: var(--accent); }
   .post-header h1 { font-size: clamp(2rem, 3.5vw, 3.1rem); line-height: 1.18; letter-spacing: -.035em; max-width: 28ch; }
   .post-header__summary { max-width: 60ch; font-size: 1.08rem; line-height: 1.7; }
   .post-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; color: var(--muted); font-size: .875rem; }
-  .post-taxonomy { display: grid; gap: .75rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--accent-line); }
+  .post-taxonomy { display: grid; gap: .75rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
   .post-taxonomy__group { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); align-items: start; gap: .75rem; }
   .post-taxonomy__label { padding-top: .4rem; font-size: .8125rem; color: var(--muted); }
   .post-categories, .post-tags { display: flex; flex-wrap: wrap; gap: .5rem; min-width: 0; }

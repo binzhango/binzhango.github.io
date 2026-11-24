@@ -3,7 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#fafafa" />
+    <script>
+      try {
+        const root = document.documentElement;
+        const choice = localStorage.getItem('starlight-theme');
+        const dark = choice === 'dark' || (choice === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+        root.dataset.theme = dark ? 'dark' : 'light';
+      } catch { /* Use the default theme when storage is unavailable. */ }
+    </script>
     <link rel="icon" href="./assets/favicon.png" />
     <title>Bin Zhang · Engineering Notes</title>
     <link rel="stylesheet" href="./style.css" />

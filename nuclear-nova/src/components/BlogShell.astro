@@ -1,31 +1,46 @@
 ---
 import BrowseControls from './BrowseControls.astro';
+import BlogSidebar from './BlogSidebar.astro';
 const hasSecondary = Astro.slots.has('secondary');
 interface Props { article?: boolean; }
 const { article = false } = Astro.props;
 ---
-<div class:list={{ 'article-shell': article, 'article-shell--single': article && !hasSecondary }}>
+<div class:list={{ 'article-shell': article }}>
 {article ? <a class="article-back" href="/posts/">← All posts</a> : <BrowseControls />}
 <div class:list={['blog-layout', { 'blog-layout--article': hasSecondary }]}>
-  {hasSecondary && <aside class="blog-secondary"><slot name="secondary" /></aside>}
+  <aside class="blog-primary" aria-label="Blog navigation"><BlogSidebar /></aside>
   <section class="blog-main"><slot /></section>
+  {hasSecondary && <aside class="blog-secondary"><slot name="secondary" /></aside>}
 </div>
 </div>
 <style>
-  /* One reading column and one adjacent contents rail, without nested gutters. */
-  .article-shell { --reading-width: 52rem; --contents-width: 15rem; --contents-gap: 2rem; max-width: calc(var(--reading-width) + var(--contents-width) + var(--contents-gap)); margin-inline: auto; }
-  .article-shell--single { max-width: var(--reading-width); }
+  .article-shell { --reading-width: 52rem; }
   .article-back { display: inline-block; font-size: .875rem; text-decoration: none; padding-block: .35rem; }
   .article-back:hover { text-decoration: underline; }
-  .blog-layout { margin-top: 1.5rem; }
+  .blog-layout {
+    --posts-width-expanded: clamp(12rem, 18vw, 15rem);
+    --posts-width-collapsed: 5.25rem;
+    --posts-width: var(--posts-width-expanded);
+    --contents-width: 15rem;
+    display: grid;
+    grid-template-columns: var(--posts-width) minmax(0, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: start;
+    margin-top: 1.5rem;
+  }
+  .blog-layout--article { grid-template-columns: var(--posts-width) minmax(0, 1fr) var(--contents-width); }
+  .blog-layout:has(.blog-primary :global([data-enhanced] > .blog-posts:not([open]))) { --posts-width: var(--posts-width-collapsed); }
+  .blog-primary, .blog-secondary { min-width: 0; position: sticky; top: 112px; }
   .blog-main { min-width: 0; }
-  .blog-layout--article { display: grid; grid-template-columns: minmax(0, 1fr) var(--contents-width, 15rem); gap: var(--contents-gap, 2rem); align-items: start; }
-  .blog-secondary { grid-column: 2; grid-row: 1; position: sticky; top: 112px; }
-  .blog-layout--article .blog-main { grid-column: 1; grid-row: 1; }
   @media (max-width: 1023px) {
-    .article-shell { max-width: var(--reading-width); }
-    .blog-layout--article { display: flex; flex-direction: column; gap: 2rem; }
+    .blog-layout--article { grid-template-columns: var(--posts-width) minmax(0, 1fr); }
     .blog-secondary { display: none; }
-    .blog-main { width: 100%; }
+  }
+  @media (max-width: 720px) {
+    .blog-layout, .blog-layout--article { grid-template-columns: minmax(0, 1fr); }
+    .blog-primary { position: static; }
+  }
+  @media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
+    .blog-layout { transition: grid-template-columns 240ms ease; }
   }
 </style>

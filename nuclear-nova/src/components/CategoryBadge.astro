@@ -1,5 +1,7 @@
 ---
-import { normalizeCategory, slugifyCategory } from '../utils/taxonomy';
+import { Badge, type BadgeVariant } from '@astryxdesign/core/Badge';
+import { getTopicTone, type TopicTone } from '../utils/presentation';
+import { getCategoryLabel, slugifyCategory } from '../utils/taxonomy';
 
 interface Props {
     category: string;
@@ -7,17 +9,19 @@ interface Props {
 }
 
 const { category, link = true } = Astro.props;
-const normalizedCategory = normalizeCategory(category);
-const categoryUrl = `/categories/${slugifyCategory(normalizedCategory)}/`;
+const label = getCategoryLabel(category);
+const categoryUrl = `/categories/${slugifyCategory(category)}/`;
+const variants = {
+  blue: 'blue',
+  teal: 'green',
+  violet: 'purple',
+  rose: 'pink',
+  amber: 'orange',
+} satisfies Record<TopicTone, BadgeVariant>;
+const variant = variants[getTopicTone(category)];
 
 ---
 
 {link ? (
-    <a href={categoryUrl} class="category-badge">
-        {normalizedCategory}
-    </a>
-) : (
-    <span class="category-badge">
-        {normalizedCategory}
-    </span>
-)}
+  <a href={categoryUrl} class="taxonomy-badge category-badge"><Badge label={label} variant={variant} /></a>
+) : <Badge className="category-badge" label={label} variant={variant} />}

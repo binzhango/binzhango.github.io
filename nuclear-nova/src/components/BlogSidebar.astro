@@ -1,0 +1,311 @@
+---
+import { SideNavCollapseButton } from '@astryxdesign/core/SideNav';
+import { Icon } from '@astryxdesign/core/Icon';
+import PostSideNav from './PostSideNav.jsx';
+import { getPostPath, getPostsByYear } from '../utils/post-utils';
+
+const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
+const postsByYear = await getPostsByYear();
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+const currentYear = /^\/(?:archive|posts)\/(\d{4})\//.exec(currentPath)?.[1];
+const openYear = currentYear && years.includes(currentYear) ? currentYear : years[0];
+const dateFormat = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+});
+const groups = years.map((year) => {
+  const entries = postsByYear[year].toSorted((a, b) =>
+    (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0)
+  ).map((post) => {
+    const href = getPostPath(post);
+    const date = post.data.date;
+    const published = date && Number.isFinite(date.getTime())
+      ? { label: dateFormat.format(date), iso: date.toISOString().slice(0, 10) }
+      : undefined;
+    return { href, title: post.data.title, current: currentPath === href, published };
+  });
+  return { year, entries, open: year === openYear || entries.some(entry => entry.current) };
+});
+---
+<div class="blog-posts-panel" data-blog-posts-panel>
+  <div class="blog-posts-header">
+    <span class="blog-posts-label">Posts by year</span>
+    <SideNavCollapseButton
+      collapsible={{ isCollapsed: false, onCollapsedChange: () => {} }}
+      label="Collapse posts sidebar"
+      title="Collapse posts sidebar"
+      aria-controls="blog-posts-nav"
+      aria-expanded="true"
+    >
+      <Icon icon="viewColumns" size="md" color="inherit" />
+    </SideNavCollapseButton>
+    <SideNavCollapseButton
+      collapsible={{ isCollapsed: true, onCollapsedChange: () => {} }}
+      label="Expand posts sidebar"
+      title="Expand posts sidebar"
+      aria-controls="blog-posts-nav"
+      aria-expanded="false"
+    >
+      <span class="blog-posts-reopen">
+        <Icon icon="viewColumns" size="sm" color="inherit" /> Posts
+      </span>
+    </SideNavCollapseButton>
+  </div>
+  <details class="blog-posts" open>
+    <summary><Icon icon="viewColumns" size="md" color="inherit" /> Posts by year</summary>
+    <div class="blog-posts-search" hidden>
+      <label class="blog-posts-search-field">
+        <Icon icon="search" size="md" color="inherit" />
+        <input type="search" aria-label="Find a post" aria-controls="blog-posts-nav" placeholder="Find a post…" autocomplete="off" />
+      </label>
+      <p class="blog-posts-search-status" role="status"></p>
+    </div>
+    <PostSideNav groups={groups} client:load />
+  </details>
+</div>
+
+<script is:inline>
+  (() => {
+    const panel = document.currentScript.previousElementSibling;
+    const sidebar = panel.querySelector('.blog-posts');
+    const collapse = panel.querySelector('button[aria-expanded="true"]');
+    const expand = panel.querySelector('button[aria-expanded="false"]');
+    const desktop = matchMedia('(min-width: 721px)');
+    const key = 'blog-sidebar-collapsed';
+    let desktopOpen = true;
+    try { desktopOpen = localStorage.getItem(key) !== 'true'; } catch { /* Use the default. */ }
+    const sync = () => { sidebar.open = desktop.matches && desktopOpen; };
+    sync();
+    panel.setAttribute('data-enhanced', '');
+    const toggle = () => {
+      desktopOpen = !desktopOpen;
+      sync();
+      try { localStorage.setItem(key, String(!desktopOpen)); } catch { /* The disclosure still works. */ }
+      (desktopOpen ? collapse : expand).focus();
+    };
+    collapse.addEventListener('click', toggle);
+    expand.addEventListener('click', toggle);
+    desktop.addEventListener('change', sync);
+
+    const search = panel.querySelector('.blog-posts-search');
+    const input = search.querySelector('input');
+    const status = search.querySelector('[role="status"]');
+    const years = [...panel.querySelectorAll('.post-year')].map(group => ({
+      group,
+      count: group.querySelector('.post-year-count'),
+      links: [...group.querySelectorAll('a')].map(link => ({
+        link, text: `${group.dataset.year} ${link.textContent}`.toLowerCase(),
+      })),
+    }));
+    let priorOpen;
+    search.hidden = false;
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      const terms = query ? query.split(/\s+/) : [];
+      if (query && !priorOpen) priorOpen = years.map(({ group }) => group.open);
+      let matches = 0;
+      years.forEach(({ group, count, links }, index) => {
+        let visible = 0;
+        for (const { link, text } of links) {
+          link.hidden = !terms.every(term => text.includes(term));
+          if (!link.hidden) visible += 1;
+        }
+        group.hidden = visible === 0;
+        if (query) group.open = visible > 0;
+        else if (priorOpen) group.open = priorOpen[index];
+        count.textContent = String(visible);
+        count.setAttribute('aria-label', `${visible} posts`);
+        matches += visible;
+      });
+      if (!query) priorOpen = undefined;
+      status.toggleAttribute('data-empty', Boolean(query) && matches === 0);
+      status.textContent = query
+        ? matches === 0 ? 'No matching posts.' : `${matches} matching ${matches === 1 ? 'post' : 'posts'}.`
+        : '';
+    });
+  })();
+</script>
+
+<style>
+  .blog-posts-panel {
+    --post-nav-pad: .625rem;
+    min-width: 0;
+    padding: var(--post-nav-pad);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-container);
+    background: var(--surface-muted);
+    color: var(--ink);
+  }
+  .blog-posts-header { display: none; }
+  .blog-posts-label,
+  .blog-posts > summary,
+  .blog-posts :global(.post-year > summary) {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 2.25rem;
+    padding: .25rem .45rem;
+    border-radius: var(--radius-element);
+    list-style: none;
+    font-size: .9rem;
+    font-weight: 600;
+  }
+  .blog-posts :global(summary) { cursor: pointer; }
+  .blog-posts :global(summary::-webkit-details-marker) { display: none; }
+  .blog-posts :global(summary:hover) { background: var(--color-overlay-hover); }
+  .blog-posts :global(summary:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+  .blog-posts > summary::after {
+    content: '';
+    flex: 0 0 .4rem;
+    height: .4rem;
+    margin-inline-start: auto;
+    border-inline-end: 1.5px solid currentColor;
+    border-block-end: 1.5px solid currentColor;
+    transform: rotate(45deg);
+  }
+  .blog-posts[open] > summary::after { transform: rotate(225deg); }
+  .blog-posts-search { position: relative; padding-block: .375rem .5rem; }
+  .blog-posts-search-field {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding-inline: .625rem;
+    min-block-size: 2.375rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-element);
+    background: var(--surface);
+    color: var(--muted);
+  }
+  .blog-posts-search-field:focus-within { outline: 2px solid var(--color-accent); outline-offset: -1px; }
+  .blog-posts-search-field input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: .875rem;
+  }
+  .blog-posts-search-field input:focus { outline: none; }
+  .blog-posts-search-field input::placeholder { color: var(--muted); }
+  .blog-posts-search-status {
+    margin: .625rem .45rem 0;
+    color: var(--muted);
+    font-size: .875rem;
+  }
+  .blog-posts-search-status:not([data-empty]) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .blog-posts :global(.post-side-nav) {
+    width: 100%;
+    max-height: calc(100dvh - 12rem);
+    padding: 0;
+    background: transparent;
+    scrollbar-width: thin;
+  }
+  .blog-posts :global(.post-year > summary) { color: var(--muted); }
+  .blog-posts :global(.post-year[open] > summary) { color: var(--ink); }
+  .blog-posts :global(.post-year-count) {
+    margin-inline-start: auto;
+    color: var(--muted);
+    font-size: .75rem;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+  }
+  .blog-posts :global(.post-year-chevron) { display: flex; color: var(--muted); }
+  .blog-posts :global(.post-year[open] .post-year-chevron) { transform: rotate(90deg); }
+  .blog-posts :global(.post-year-entries) {
+    margin: .125rem 0 .375rem .875rem;
+    padding-inline-start: .375rem;
+    border-inline-start: 1px solid var(--line);
+  }
+  .blog-posts :global(a.astryx-side-nav-item) {
+    height: auto;
+    padding: .375rem .5rem;
+    color: var(--muted);
+    line-height: 1.45;
+    text-decoration: none;
+  }
+  .blog-posts :global(a.astryx-side-nav-item:hover) {
+    background: var(--color-overlay-hover);
+    color: var(--ink);
+  }
+  .blog-posts :global(a.astryx-side-nav-item > span) {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .blog-posts :global(a[aria-current='page']) {
+    background: var(--color-accent-muted);
+    color: var(--color-text-accent);
+    font-weight: 600;
+  }
+  :global(.sidebar-post-preview) {
+    width: min(18rem, calc(100vw - 2rem));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-container);
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-med);
+  }
+  :global(.sidebar-post-preview strong) {
+    display: block;
+    color: var(--ink);
+    font: 600 .9375rem/1.4 var(--font-sans);
+    overflow-wrap: anywhere;
+  }
+  :global(.sidebar-post-preview time) {
+    display: block;
+    margin-top: .25rem;
+    color: var(--muted);
+    font: .8125rem/1.4 var(--font-sans);
+  }
+  @media (min-width: 721px) {
+    .blog-posts { overflow: clip; overflow-clip-margin: 6px; }
+    [data-enhanced] .blog-posts > summary { display: none; }
+    [data-enhanced] .blog-posts-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-1);
+      min-block-size: var(--size-element-md);
+    }
+    .blog-posts-label {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .blog-posts-header :global(button) { flex: none; }
+    .blog-posts-panel:has(.blog-posts[open]) .blog-posts-header :global(button[aria-expanded='false']),
+    .blog-posts-panel:has(.blog-posts:not([open])) .blog-posts-header :global(button[aria-expanded='true']),
+    .blog-posts-panel:has(.blog-posts:not([open])) .blog-posts-label { display: none; }
+    .blog-posts-panel[data-enhanced]:has(.blog-posts:not([open])) {
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    .blog-posts-header :global(button[aria-expanded='false']) { inline-size: var(--posts-width-collapsed); }
+    .blog-posts-reopen {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-1);
+      font-family: var(--font-family-body);
+      font-size: .875rem;
+      font-weight: 600;
+    }
+  }
+  @media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
+    .blog-posts::details-content {
+      inline-size: calc(var(--posts-width-expanded) - 2 * var(--post-nav-pad) - 2px);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 240ms ease, content-visibility 240ms allow-discrete;
+    }
+    .blog-posts[open]::details-content { clip-path: inset(0); }
+  }
+  @media (max-width: 720px) { .blog-posts :global(.post-side-nav) { max-height: 50dvh; } }
+</style>

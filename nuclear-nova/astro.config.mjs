@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
+import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import remarkDirective from 'remark-directive';
@@ -16,6 +17,7 @@ import rehypeReadableContent from './src/plugins/rehype-readable-content.mjs';
 import remarkLegacyEmoji from './src/plugins/remark-legacy-emoji.mjs';
 import remarkInterview from './src/plugins/remark-interview.mjs';
 import rehypeInterviewIds from './src/plugins/rehype-interview-ids.mjs';
+import { butterSyntax } from './src/styles/butter-syntax.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -72,6 +74,7 @@ export default defineConfig({
     // GitHub Pages needs HTML redirects; Vercel emits redirects in its routing config.
     adapter: process.env.DEPLOY_TARGET === 'github-pages' ? undefined : vercel(),
     integrations: [
+        react(),
         mdx(),
         sitemap(),
     ],
@@ -99,15 +102,7 @@ export default defineConfig({
             ],
         }),
         shikiConfig: {
-            // Choose from Shiki's built-in themes (or add your own)
-            // https://shiki.style/themes
-            theme: 'github-dark',
-            // Alternatively, provide multiple themes
-            // See note below for using dual light/dark themes
-            themes: {
-                light: 'github-light',
-                dark: 'github-dark',
-            },
+            themes: butterSyntax,
             // Add custom languages
             // Note: Shiki has countless langs built-in, including .astro!
             // https://shiki.style/languages
@@ -119,6 +114,14 @@ export default defineConfig({
             transformers: [
                 transformerNotationDiff(),
                 transformerNotationHighlight(),
+                {
+                    name: 'blog-code-title',
+                    pre(node) {
+                        const meta = this.options.meta?.__raw ?? '';
+                        const title = /(?:^|\s)(?:title|filename)=(?:"([^"]*)"|'([^']*)'|(\S+))/.exec(meta);
+                        if (title) node.properties['data-code-title'] = title[1] ?? title[2] ?? title[3];
+                    },
+                },
             ],
             // Expose dual-theme CSS variables; global.css applies them per theme.
             defaultColor: false,

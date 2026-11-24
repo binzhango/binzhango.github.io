@@ -1,11 +1,21 @@
 ---
+import '../styles/butter.css';
 import studioHtml from '../../tools/favicon-card/web/index.html?raw';
 import card from '../../tools/favicon-card/card-config.json';
 
 // An Astro route makes the directory URL work in dev as well as static hosting.
 // Resolve all viewer assets consistently with or without a trailing slash.
 const canonical = new URL('/card-studio/', Astro.site ?? Astro.url).href;
-const escapeAttribute = (value: string) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
-const html = studioHtml.replace('<head>', `<head><base href="/card-studio/" /><link rel="canonical" href="${escapeAttribute(canonical)}" /><meta name="description" content="${escapeAttribute(card.description)}" />`);
+const head = studioHtml.slice(studioHtml.indexOf('<head>') + '<head>'.length, studioHtml.indexOf('</head>'));
+const body = studioHtml.slice(studioHtml.indexOf('<body>') + '<body>'.length, studioHtml.indexOf('</body>'));
 ---
-<Fragment set:html={html} />
+<!doctype html>
+<html lang="en" data-astryx-theme="butter" data-theme="light">
+  <head>
+    <base href="/card-studio/" />
+    <link rel="canonical" href={canonical} />
+    <meta name="description" content={card.description} />
+    <Fragment set:html={head} />
+  </head>
+  <body><Fragment set:html={body} /></body>
+</html>

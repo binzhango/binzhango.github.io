@@ -6,14 +6,14 @@
 }
 :root {
   color-scheme: light;
-  --paper: #fafafa;
-  --ink: #242625;
-  --muted: #666d65;
-  --line: #e4e6e3;
-  --accent: #a34829;
-  --focus: #42645b;
-  --control: #f0f1ee;
-  font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --paper: var(--color-background-body, #fafafa);
+  --ink: var(--color-text-primary, #242625);
+  --muted: var(--color-text-secondary, #666d65);
+  --line: var(--color-border, #e4e6e3);
+  --accent: var(--color-text-accent, #a34829);
+  --focus: var(--color-accent, #42645b);
+  --control: var(--color-background-muted, #f0f1ee);
+  font-family: var(--font-family-body, "Helvetica Neue", "PingFang SC", sans-serif);
   color: var(--ink);
   background: var(--paper);
   font-synthesis: none;
@@ -145,19 +145,19 @@ button svg {
     color 0.18s;
 }
 .icon-button:hover:not(:disabled) {
-  background: #e9ebe6;
+  background: var(--control);
 }
 .icon-button[aria-pressed="true"] {
   color: var(--accent);
-  background: #f1eae5;
+  background: var(--color-accent-muted, #f1eae5);
 }
 .save-button {
-  background: var(--ink);
-  color: #fff;
+  background: var(--focus);
+  color: var(--color-on-accent, #fff);
 }
 .save-button:hover:not(:disabled) {
-  background: #474a44;
-  color: white;
+  background: color-mix(in srgb, var(--focus) 85%, var(--ink));
+  color: var(--color-on-accent, white);
 }
 .gallery {
   height: calc(100svh - 278px);
@@ -386,7 +386,7 @@ button svg {
   bottom: 176px;
   width: 266px;
   padding: 20px 22px 24px;
-  background: #fff;
+  background: var(--color-background-surface, #fff);
   border-radius: 8px;
   box-shadow: 0 12px 45px #20261b1a;
 }
@@ -399,7 +399,7 @@ button svg {
     width: calc(100% - 48px);
     margin: 28px auto 0;
     box-shadow: none;
-    background: #f1f2ee;
+    background: var(--control);
   }
 }
 .panel-heading {
@@ -472,7 +472,7 @@ button svg {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: #eff0ed;
+  background: var(--control);
   padding: 4px;
   border-radius: 6px;
 }
@@ -579,7 +579,7 @@ button svg {
   background: linear-gradient(135deg, #8a5a1c, #e8c468 46%, #6f4a12);
 }
 .swatch.original {
-  background: #fff;
+  background: var(--color-background-surface, #fff);
 }
 .foil-row {
   display: flex;
@@ -659,10 +659,10 @@ dialog {
   padding: 40px;
   box-shadow: 0 20px 90px #20261b29;
   color: var(--ink);
-  background: #fff;
+  background: var(--color-background-surface, #fff);
 }
 dialog::backdrop {
-  background: #30342d33;
+  background: var(--color-overlay, #30342d33);
 }
 .modal-close {
   position: absolute;
@@ -846,7 +846,7 @@ dialog dd {
     width: calc(100% - 48px);
     margin: 28px auto 0;
     box-shadow: none;
-    background: #f1f2ee;
+    background: var(--control);
   }
 }
 @media (max-width: 365px) {
@@ -886,3 +886,6 @@ html.embedded, .embedded body { min-width: 0; width: 100%; height: 100%; overflo
 .embedded .masthead, .embedded .artwork-bar, .embedded .footer, .embedded .stage-note, .embedded #parameter-panel, .embedded #notice { display: none !important; }
 .embedded main, .embedded .gallery { width: 100%; height: 100%; min-height: 0; max-height: none; margin: 0; padding: 0; }
 .embedded .stage { inset: 0; outline: none; }
+
+:root[data-theme='dark'] { color-scheme: dark; }
+input[type='range'] { accent-color: var(--focus); }

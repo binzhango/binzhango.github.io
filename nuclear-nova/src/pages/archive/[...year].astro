@@ -1,6 +1,7 @@
 ---
 import { getPostsByYear, getPostsByTag, type Post } from '../../utils/post-utils';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagBadge from '../../components/TagBadge.astro';
 import PostPreview from '../../components/PostPreview.astro';
 import BlogShell from '../../components/BlogShell.astro';
 import { slugifyTag } from '../../utils/taxonomy';
@@ -64,11 +65,16 @@ const pageDescription = year ? `Blog posts from ${year}` : 'Browse all blog post
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
   <BlogShell>
-    <details class="archive-tags" data-disclosure><summary>Browse tags</summary><div class="archive-tags__links">{tags.map((tag) => <a href={`/tags/${tag.slug}/`}>{tag.label}</a>)}</div></details>
+    <details class="archive-tags" data-disclosure><summary>Browse tags</summary><div class="archive-tags__links">{tags.map((tag) => <TagBadge tag={tag.label} />)}</div></details>
     <header class="page-heading"><p class="eyebrow">From the archive</p><h1>{year ?? 'A growing notebook.'}</h1><p>{year ? `Everything published in ${year}.` : 'Years of learning, building, and writing things down.'}</p></header>
-    {year ? <div class="post-list">{(posts ?? []).map((post) => <PostPreview post={post} />)}</div> : years.map((entry) => (
-      <section class="year-section" aria-label={`Posts from ${entry}`}><h2><a href={`/archive/${entry}/`}>{entry}</a> <span class="meta">{postsByYear?.[entry].length} articles</span></h2><div class="post-list">{postsByYear?.[entry].map((post) => <PostPreview post={post} />)}</div></section>
+    {year ? <ul class="post-list archive-posts" role="list">{(posts ?? []).map((post) => <li><PostPreview post={post} /></li>)}</ul> : years.map((entry) => (
+      <section class="year-section" aria-label={`Posts from ${entry}`}><h2><a href={`/archive/${entry}/`}>{entry}</a> <span class="meta">{postsByYear?.[entry].length} articles</span></h2><ul class="post-list archive-posts" role="list">{postsByYear?.[entry].map((post) => <li><PostPreview post={post} /></li>)}</ul></section>
     ))}
   </BlogShell>
 </BaseLayout>
-<style>.archive-tags { margin-top: -1rem; font-size: .8rem; }.archive-tags__links { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; padding-block: 1rem; max-width: 800px; }.archive-tags__links a { color: var(--muted); }</style>
+<style>
+  .archive-tags { margin-top: -1rem; font-size: .875rem; }
+  .archive-tags summary { padding: .5rem 0; font-weight: 600; }
+  .archive-tags__links { display: flex; flex-wrap: wrap; gap: .5rem; padding-block: .85rem; max-width: 50rem; }
+  .archive-posts :global(.post-preview:not(.post-preview--pinned)) { padding-block: 1.1rem; }
+</style>

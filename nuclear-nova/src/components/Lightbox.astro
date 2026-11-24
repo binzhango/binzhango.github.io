@@ -1,71 +1,66 @@
----
-import 'glightbox/dist/css/glightbox.min.css';
----
-
 <script>
-  import GLightbox from 'glightbox';
-
-  type LightboxWindow = Window & {
-    __glightbox?: { destroy?: () => void };
-    __glightboxBound?: boolean;
-  };
+  const imageSelector = '.sl-markdown-content img:not(.no-lightbox):not([id^="mermaid-"])';
+  let closeGallery: (() => void) | undefined;
+  let galleryLoading = false;
 
   function initializeLightbox() {
-    const contentImages = document.querySelectorAll<HTMLImageElement>(
-      '.sl-markdown-content img:not(.no-lightbox):not([id^="mermaid-"])'
-    );
-
-    contentImages.forEach((img) => {
-      // Preserve authored links and omit hidden media fallbacks from the gallery.
+    document.querySelectorAll<HTMLImageElement>(imageSelector).forEach((img) => {
       if (img.closest('a, video, audio, object')) return;
 
       const link = document.createElement('a');
-      link.href = img.src;
-      link.classList.add('glightbox', 'glightbox-wrapper');
-      link.setAttribute('data-gallery', 'content-gallery');
-
-      if (img.alt && img.dataset.lightboxDescription !== 'none') {
-        link.setAttribute('data-description', img.alt);
-      }
-
+      link.href = img.currentSrc || img.src;
+      link.className = 'article-image-link';
+      link.setAttribute('aria-haspopup', 'dialog');
+      link.setAttribute('aria-label', img.alt ? `Open image: ${img.alt}` : 'Open image');
       const media = img.closest('picture') ?? img;
-      const parent = media.parentNode;
-      if (!parent) return;
-
-      parent.insertBefore(link, media);
-      link.appendChild(media);
+      media.before(link);
+      link.append(media);
     });
-
-    const state = window as LightboxWindow;
-    state.__glightbox?.destroy?.();
-    state.__glightbox = GLightbox({
-      touchNavigation: true,
-      loop: true,
-      autoplayVideos: true,
-      closeButton: true,
-      zoomable: true,
-      draggable: true,
-      dragToleranceX: 40,
-      dragToleranceY: 65,
-      preload: true,
-    }) as unknown as { destroy?: () => void };
   }
+
+  document.addEventListener('click', async (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+    if (!(event.target instanceof Element)) return;
+    const trigger = event.target.closest<HTMLAnchorElement>('a.article-image-link');
+    if (!trigger) return;
+    event.preventDefault();
+    if (galleryLoading || document.querySelector('[data-article-gallery]')) return;
+
+    const images = Array.from(document.querySelectorAll<HTMLImageElement>('.article-image-link img'))
+      .filter((img) => img.getClientRects().length);
+    const index = images.findIndex((img) => trigger.contains(img));
+    if (index < 0) return;
+
+    galleryLoading = true;
+    try {
+      const { openGallery } = await import('./ArticleGallery.jsx');
+      if (!trigger.isConnected) return;
+      const host = document.createElement('div');
+      host.dataset.articleGallery = '';
+      document.body.append(host);
+      closeGallery = openGallery(host, images.map((img) => ({
+        src: img.currentSrc || img.src,
+        alt: img.alt,
+        caption: img.dataset.lightboxDescription === 'none' ? undefined : img.alt || undefined,
+      })), index, trigger);
+    } catch {
+      if (trigger.isConnected) window.location.assign(trigger.href);
+    } finally {
+      galleryLoading = false;
+    }
+  });
 
   initializeLightbox();
-
-  const state = window as LightboxWindow;
-  if (!state.__glightboxBound) {
-    document.addEventListener('astro:page-load', initializeLightbox);
-    document.addEventListener('astro:before-swap', () => {
-      state.__glightbox?.destroy?.();
-    });
-    state.__glightboxBound = true;
-  }
+  document.addEventListener('astro:page-load', initializeLightbox);
+  document.addEventListener('astro:before-swap', () => {
+    if (document.querySelector('[data-article-gallery]')) closeGallery?.();
+    closeGallery = undefined;
+  });
 </script>
 
 <style is:global>
   /* Lightbox wrapper styling */
-  .glightbox-wrapper {
+  .article-image-link {
     display: block;
     width: fit-content;
     max-width: 100%;
@@ -73,30 +68,20 @@ import 'glightbox/dist/css/glightbox.min.css';
     transition: opacity 0.2s ease;
   }
 
-  .glightbox-wrapper:hover {
+  .article-image-link:hover {
     opacity: 0.9;
   }
 
   /* Ensure images within lightbox links maintain their styling */
-  .glightbox-wrapper img {
+  .article-image-link img {
     display: block;
     width: auto;
     max-width: 100%;
     height: auto;
   }
 
-  /* Custom GLightbox theme adjustments for dark mode */
-  :root[data-theme='dark'] .gslide-description {
-    background: rgba(0, 0, 0, 0.85);
-    color: #fff;
-  }
-
-  :root[data-theme='dark'] .gslide-title {
-    color: #fff;
-  }
-
   /* Ensure lightbox works well with Starlight's content area */
-  .sl-markdown-content .glightbox-wrapper {
+  .sl-markdown-content .article-image-link {
     margin: 1rem auto;
   }
 

@@ -1,7 +1,12 @@
 ---
+import Table from './Table.astro';
 import run from '../../public/assets/benchmarks/hindsight-jev/live-results.json';
 const labels: Record<string,string> = {baseline:'Worker only',memory:'Hindsight',jev:'Jev',combined:'Hindsight + Jev'};
 const modes = ['baseline','memory','jev','combined'] as const;
+const scores = modes.map((mode) => {
+  const result = run.summary[mode];
+  return [labels[mode], `${result.known_correct}/${result.known_n}`, `${result.unknown_correct}/${result.unknown_n}`];
+});
 ---
 <figure class="memory-live" aria-label="Live four-configuration benchmark results">
   <div class="memory-live__heading"><span class="memory-eyebrow">Live services · exploratory benchmark</span><strong>{run.trials.length} requests · 8 cases · 2 repeats</strong></div>
@@ -13,23 +18,16 @@ const modes = ['baseline','memory','jev','combined'] as const;
       <span><b>{s.median_total_seconds.toFixed(2)} s</b> median</span>
     </div>;})}
   </div>
-  <div class="article-table memory-decision-table" role="region" aria-label="Live benchmark successes by question type" tabindex="0">
-    <table>
-      <thead><tr><th scope="col">Configuration</th><th scope="col">Correct known answers</th><th scope="col">Correct unknown or out-of-scope handling</th></tr></thead>
-      <tbody>
-        {modes.map(mode => {
-          const result = run.summary[mode];
-          return <tr><th scope="row">{labels[mode]}</th><td>{result.known_correct}/{result.known_n}</td><td>{result.unknown_correct}/{result.unknown_n}</td></tr>;
-        })}
-      </tbody>
-    </table>
-  </div>
+  <Table
+    label="Live benchmark successes by question type"
+    data={[[ 'Configuration', 'Correct known answers', 'Correct unknown or out-of-scope handling' ], ...scores]}
+    hasRowHeaders
+  />
   <figcaption>Each score adds correct known answers and correct handling of unavailable answers. A JSON null response or an appropriate clarification earns credit on unknown or out-of-scope trials. Each configuration ran the same eight questions twice.</figcaption>
   <p><a href="/assets/benchmarks/hindsight-jev/live-results.json">Raw inputs and responses</a> · <a href="/assets/benchmarks/hindsight-jev/LIVE-REPORT.md">Recomputed report</a> · <a href="/assets/benchmarks/hindsight-jev/LIVE-PROTOCOL.md">Protocol and scoring</a></p>
 </figure>
 <style>
 .memory-live {width:min(100%,var(--reading-width)); margin:2rem auto;}
-.memory-live .article-table {overflow-x:auto;max-width:100%;}
 .memory-live__heading {display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;padding:1rem 0;border-top:2px solid var(--blue);}
 .memory-live__heading strong {font-size:.85rem;}
 .memory-live__rows {display:grid;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line);}
