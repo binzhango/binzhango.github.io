@@ -32,7 +32,6 @@ const groups = years.map((year) => {
     <SideNavCollapseButton
       collapsible={{ isCollapsed: false, onCollapsedChange: () => {} }}
       label="Collapse posts sidebar"
-      title="Collapse posts sidebar"
       aria-controls="blog-posts-nav"
       aria-expanded="true"
     >
@@ -41,7 +40,6 @@ const groups = years.map((year) => {
     <SideNavCollapseButton
       collapsible={{ isCollapsed: true, onCollapsedChange: () => {} }}
       label="Expand posts sidebar"
-      title="Expand posts sidebar"
       aria-controls="blog-posts-nav"
       aria-expanded="false"
     >
@@ -69,6 +67,7 @@ const groups = years.map((year) => {
     const sidebar = panel.querySelector('.blog-posts');
     const collapse = panel.querySelector('button[aria-expanded="true"]');
     const expand = panel.querySelector('button[aria-expanded="false"]');
+    for (const control of [collapse, expand]) control.title = control.getAttribute('aria-label') ?? '';
     const desktop = matchMedia('(min-width: 721px)');
     const key = 'blog-sidebar-collapsed';
     let desktopOpen = true;
