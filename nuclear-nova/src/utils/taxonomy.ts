@@ -1,15 +1,15 @@
-const KNOWN_CATEGORIES = [
-  'AI ENGINEERING',
-  'DATA ENGINEERING',
-  'DATA SCIENCE',
-  'DEVOPS',
-  'LARGE LANGUAGE MODELS',
-  'MACHINE LEARNING',
-  'SOFTWARE ENGINEERING',
-] as const;
+const CATEGORY_LABELS = new Map([
+  ['AI ENGINEERING', 'AI engineering'],
+  ['DATA ENGINEERING', 'Data engineering'],
+  ['DATA SCIENCE', 'Data science'],
+  ['DEVOPS', 'DevOps'],
+  ['LARGE LANGUAGE MODELS', 'Large language models'],
+  ['MACHINE LEARNING', 'Machine learning'],
+  ['SOFTWARE ENGINEERING', 'Software engineering'],
+]);
 
 const CATEGORY_LOOKUP = new Map(
-  KNOWN_CATEGORIES.map((category) => [category.toLowerCase(), category])
+  Array.from(CATEGORY_LABELS.keys(), (category) => [category.toLowerCase(), category])
 );
 
 const LEGACY_CATEGORY_LOOKUP = new Map([
@@ -45,6 +45,11 @@ export function normalizeCategory(name: string): string {
 
 export function slugifyCategory(name: string): string {
   return slugify(normalizeCategory(name));
+}
+
+export function getCategoryLabel(name: string): string {
+  const category = normalizeCategory(name);
+  return CATEGORY_LABELS.get(category) ?? category;
 }
 
 export function slugifyTag(name: string): string {

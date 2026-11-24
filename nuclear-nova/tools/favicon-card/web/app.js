@@ -400,7 +400,8 @@ function fallback3D(error) {
 
   // ---- interaction state (independent of the WebGL path) ----
   let tx = -0.03, ty = -0.06, curX = 0, curY = 0, curFlip = 0, flipTarget = 0;
-  let lastMove = 0, sway = !media.matches;
+  let lastMove = 0;
+  const sway = !media.matches;
   let scale = 1, depthScale = 1, bgScale = 1;
   const applyLayers = () => {
     for (const [name, { el, z }] of layers) {
@@ -439,18 +440,6 @@ function fallback3D(error) {
     flipped = value;
     flipTarget = flipped ? Math.PI : 0;
     faceLabels();
-  };
-  const setAutoUI = (value) => {
-    sway = value;
-    const b = $("auto");
-    if (!b) return;
-    b.setAttribute("aria-pressed", String(value));
-    b.setAttribute("aria-label", value ? "Pause rotation" : "Auto rotate");
-    b.title = value ? "Pause rotation" : "Auto rotate";
-    const icon = document.createElement("i");
-    icon.setAttribute("data-lucide", value ? "pause" : "play");
-    b.replaceChildren(icon);
-    refreshIcons();
   };
   const fallbackFinish = (value) => {
     front.classList.remove("finish-gold", "finish-silver", "finish-pearl", "finish-original");

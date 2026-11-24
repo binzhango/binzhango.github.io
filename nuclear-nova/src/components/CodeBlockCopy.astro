@@ -1,3 +1,11 @@
+---
+import { Icon } from '@astryxdesign/core/Icon';
+---
+<template id="code-copy-icons">
+  <span class="code-copy-symbol"><Icon icon="copy" size="sm" color="inherit" /></span>
+  <span class="code-copy-check"><Icon icon="check" size="sm" color="inherit" /></span>
+  <span class="code-copy-retry">Retry</span>
+</template>
 <script>
   import { setupCodeViews, setupTableOverflow } from '../scripts/code-view';
   function setup() { setupCodeViews(); setupTableOverflow(); }

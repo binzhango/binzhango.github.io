@@ -9,7 +9,7 @@ const isHeader = variant === 'header';
 
 <div class="theme-control" data-theme-control data-variant={variant}>
   {isHeader ? (
-    <button type="button" class="theme-switch" data-theme-switch aria-label="Switch to dark theme" aria-pressed="false" hidden>
+    <button type="button" class="theme-switch" data-butter-button="ghost" data-theme-switch aria-label="Switch to dark theme" aria-pressed="false" hidden>
       <span class="theme-switch__track" aria-hidden="true">
         <span class="theme-switch__icon theme-switch__icon--light">
           <svg viewBox="0 0 24 24">
@@ -185,8 +185,7 @@ const isHeader = variant === 'header';
 
 <style>
   .theme-control { display: inline-flex; }
-  .theme-switch { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: transparent; }
-  .theme-switch:hover { background: var(--accent-soft); }
+  .theme-switch { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; }
   .theme-switch__track { display: grid; place-items: center; }
   .theme-switch__icon svg { display: block; width: 18px; height: 18px; }
   .theme-switch__thumb, .theme-switch__icon--dark { display: none; }

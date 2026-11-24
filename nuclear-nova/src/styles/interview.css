@@ -1,34 +1,19 @@
-@font-face { font-family: 'Interview Geist'; src: url('../assets/fonts/geist-latin-variable.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Interview Geist Mono'; src: url('../assets/fonts/geist-mono-latin-variable.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-.post.post--interview, .interview-rail {
-  --canvas: #fafafa; --surface: #fff; --ink: #18181b; --body-text: #27272a;
-  --muted: #52525b; --line: #e4e4e7; --accent: #356859; --accent-soft: #edf4f0; --accent-line: #b3c9bf;
-  --sl-color-text: var(--ink); --sl-color-text-accent: var(--accent); --sl-color-accent: var(--accent);
-  --font-sans: 'Interview Geist', system-ui, sans-serif;
-  font-family: var(--font-sans); color: var(--ink);
-}
-:root[data-theme='dark'] :is(.post.post--interview, .interview-rail) {
-  --canvas: #18181b; --surface: #202023; --ink: #fafafa; --body-text: #e4e4e7;
-  --muted: #a1a1aa; --line: #3f3f46; --accent: #8fc7b2; --accent-soft: #263d34; --accent-line: #4a6b5e;
-}
 .post.post--interview { background: var(--canvas); border-radius: 1rem; padding: clamp(1rem, 2vw, 1.75rem); }
 .post.post--interview .post-header { padding: 0 0 1.5rem; margin: 0 0 1.5rem; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
-.post.post--interview .post-header::before { display: none; }
 .post.post--interview .post-header h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 650; }
 .post.post--interview .post-taxonomy { margin-top: 1rem; padding-top: .75rem; border-color: var(--line); }
-.post.post--interview .post-mobile-contents { display: none; }
 .post.post--interview .post-content { max-width: 100%; }
 .post.post--interview .post-content > p { max-width: 65ch; }
 .interview-bank { margin-top: 2rem; }
-.interview-bank :is(button, select, input) { font: inherit; min-height: 44px; color: var(--ink); border: 1px solid var(--line); border-radius: .5rem; background: var(--surface); padding: .6rem .9rem; }
+.interview-bank :is(button:not(.astryx-button, [data-butter-button]), select, input:not(.astryx-text-input, [type='checkbox'])) { font: inherit; min-height: 44px; color: var(--ink); border: 1px solid var(--line); border-radius: .5rem; background: var(--surface); padding: .6rem .9rem; }
 .interview-bank button { cursor: pointer; font-weight: 550; transition: transform 120ms ease; }
 .interview-bank button:active { transform: translateY(1px); }
 .interview-bank button:hover:not(:disabled) { border-color: var(--accent); }
 .interview-bank button:disabled { opacity: .5; cursor: default; }
+.interview-bank :is(.astryx-button, .astryx-text-input, input[data-search]) { min-height: 44px; }
 .interview-bank .code-controls button { min-height: 44px; }
 :root[data-theme] .interview-bank .code-controls button[aria-pressed='true'] { color: var(--accent); background: var(--accent-soft); border-color: var(--accent-line); }
-.interview-bank [aria-pressed='true'], .interview-bank .interview-primary { color: var(--surface); background: var(--accent); border-color: var(--accent); }
-:root[data-theme='dark'] .interview-bank [aria-pressed='true'], :root[data-theme='dark'] .interview-bank .interview-primary { color: #18181b; }
+.interview-bank [aria-pressed='true'], .interview-bank .interview-primary { color: var(--color-on-accent); background: var(--color-accent); border-color: var(--color-accent); }
 .interview-bank :is(button, input, select, summary, a):focus-visible, .interview-rail a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .interview-prompt:focus { outline: 2px solid var(--accent-line); outline-offset: .4rem; border-radius: .25rem; }
 .interview-mode { display: inline-grid; grid-template-columns: 1fr 1fr; gap: .25rem; padding: .25rem; border: 1px solid var(--line); border-radius: .75rem; margin-bottom: 1.5rem; background: var(--surface); }
@@ -44,7 +29,7 @@
 .interview-topic-heading span { color: var(--muted); font-size: .8125rem; font-weight: 400; }
 .interview-question { padding: 1.5rem 0 2rem; border-bottom: 1px solid var(--line); scroll-margin-top: 7rem; }
 .interview-question-meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .8125rem; }
-.interview-question-meta a { flex-shrink: 0; text-decoration: none; font-family: 'Interview Geist Mono', monospace; }
+.interview-question-meta a { flex-shrink: 0; text-decoration: none; font-family: var(--font-mono); }
 .interview-bank .interview-prompt { margin: 1rem 0; padding: 0; color: var(--ink); font-size: clamp(1.35rem, 2.5vw, 1.8rem); line-height: 1.4; font-weight: 600; letter-spacing: -.02em; overflow-wrap: anywhere; }
 .interview-bank .interview-answer-kind { margin: .75rem 0; color: var(--accent); font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .055em; }
 .interview-brief, .interview-explanation { max-width: 65ch; line-height: 1.7; font-size: 1rem; color: var(--body-text); }
@@ -53,10 +38,10 @@
 .interview-bank summary { min-height: 44px; padding: .75rem 0; color: var(--ink); font-size: .9375rem; }
 .interview-practice-header { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; scroll-margin-top: 7rem; }
 .interview-bank .interview-practice-header p { margin: 0; color: var(--muted); font-size: .875rem; }
-.interview-counter { font-family: 'Interview Geist Mono', monospace; }
+.interview-counter { font-family: var(--font-mono); }
 [data-mode='practice'] .interview-topic-heading { display: none; }
 [data-mode='practice'] .interview-question { padding: 0; border: 0; }
-[data-mode='practice'] .interview-surface { margin-top: 1rem; padding: clamp(1.5rem, 4vw, 2rem); border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); box-shadow: 0 8px 24px #18181b08; }
+[data-mode='practice'] .interview-surface { margin-top: 1rem; padding: clamp(1.5rem, 4vw, 2rem); border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); box-shadow: var(--shadow-low); }
 [data-mode='practice'] .interview-prompt { font-size: clamp(1.35rem, 2.5vw, 1.8rem); margin: 0; }
 [data-mode='practice'][data-revealed='true'] .interview-prompt { font-size: 1rem; font-weight: 500; color: var(--muted); padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--line); }
 [data-mode='practice'] .interview-brief > :last-child { margin-bottom: 0; }
@@ -74,12 +59,13 @@
 .interview-live { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
 .interview-anchor { display: block; scroll-margin-top: 7rem; }
 .interview-rail { padding: .5rem; }
+.interview-topics-mobile .interview-rail ul { max-height: 50dvh; }
+.interview-topics-mobile .interview-rail > p { border-bottom-color: var(--line); }
 .interview-rail > p { font-size: .875rem; font-weight: 600; padding-bottom: .75rem; border-bottom: 1px solid var(--ink); }
-.interview-rail ol { list-style: none; padding: 0; margin: 0; max-height: calc(100dvh - 220px); overflow-y: auto; }
-.interview-rail li { border-left: 1px solid var(--line); }
+.interview-rail ul { max-height: calc(100dvh - 220px); overflow-y: auto; }
 .interview-rail a { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; padding: .65rem .75rem; color: var(--muted); font-size: .8125rem; text-decoration: none; min-height: 44px; }
 .interview-rail a:hover { color: var(--accent); }
-.interview-rail small { font-family: 'Interview Geist Mono', monospace; }
+.interview-rail small { font-family: var(--font-mono); }
 @media (max-width: 767px) {
   .post.post--interview { padding: 1rem; }
   .interview-filters { grid-template-columns: minmax(0, 1fr); }

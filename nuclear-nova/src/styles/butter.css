@@ -1,0 +1,79 @@
+@import '@astryxdesign/core/astryx.css';
+@import '@astryxdesign/theme-butter/theme.css';
+@import '@astryxdesign/theme-butter/fonts.css';
+
+:root[data-astryx-theme='butter'] {
+  color-scheme: light;
+  --canvas: var(--color-background-body);
+  --surface: var(--color-background-surface);
+  --surface-muted: var(--color-background-muted);
+  --ink: var(--color-text-primary);
+  --body-text: color-mix(in srgb, var(--ink) 82%, var(--color-text-secondary));
+  --muted: var(--color-text-secondary);
+  --line: var(--color-border);
+  --selection-bg: color-mix(in srgb, var(--color-accent) 24%, var(--canvas));
+  --selection-text: var(--ink);
+  --accent: var(--color-text-accent);
+  --accent-soft: color-mix(in srgb, var(--color-accent) 12%, var(--surface));
+  --accent-line: color-mix(in srgb, var(--color-accent) 34%, var(--line));
+  --card-shadow: var(--shadow-low);
+  --table-head: var(--surface-muted);
+  --font-sans: var(--font-family-body);
+  --font-mono: var(--font-family-code);
+  --font-display: Sarina, var(--font-family-heading);
+
+  --blue: var(--color-syntax-function);
+  --teal: var(--color-syntax-property);
+  --violet: var(--color-syntax-type);
+  --amber: var(--color-syntax-number);
+  --rose: var(--color-syntax-tag);
+  --blue-soft: color-mix(in srgb, var(--blue) 12%, var(--surface));
+  --teal-soft: color-mix(in srgb, var(--teal) 12%, var(--surface));
+  --violet-soft: color-mix(in srgb, var(--violet) 12%, var(--surface));
+  --amber-soft: color-mix(in srgb, var(--amber) 12%, var(--surface));
+  --rose-soft: color-mix(in srgb, var(--rose) 12%, var(--surface));
+  --blue-line: color-mix(in srgb, var(--blue) 32%, var(--line));
+  --teal-line: color-mix(in srgb, var(--teal) 32%, var(--line));
+  --violet-line: color-mix(in srgb, var(--violet) 32%, var(--line));
+  --amber-line: color-mix(in srgb, var(--amber) 32%, var(--line));
+  --rose-line: color-mix(in srgb, var(--rose) 32%, var(--line));
+}
+
+:root[data-astryx-theme='butter'][data-theme='dark'] { color-scheme: dark; }
+
+/* Native controls whose state is owned by the article and tool scripts. */
+[data-butter-button] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  min-height: var(--size-element-md);
+  padding-inline: var(--spacing-3);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-element);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: var(--text-body-size);
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+[data-butter-button='secondary'] {
+  border-color: var(--color-accent);
+  color: var(--color-text-accent);
+}
+[data-butter-button='primary'] {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+[data-butter-button='secondary']:hover:enabled,
+[data-butter-button='secondary'][aria-pressed='true'] {
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+[data-butter-button='ghost']:hover:enabled { background: var(--color-overlay-hover); }
+[data-butter-button='primary']:hover:enabled { filter: brightness(.94); }
+[data-butter-button]:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+[data-butter-button]:disabled { opacity: .45; cursor: default; }

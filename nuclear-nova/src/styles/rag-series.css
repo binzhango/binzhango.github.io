@@ -452,10 +452,10 @@
   background: var(--table-head);
 }
 .post-content[data-series='rag-engineering'] .rag-table--header th {
-  color: #fff !important;
+  color: var(--ink) !important;
 }
 .post-content[data-series='rag-engineering'] .rag-table--header {
-  --sticky-head: var(--table-head); --sticky-head-text: #fff;
+  --sticky-head: var(--table-head); --sticky-head-text: var(--ink);
   border-radius: 0.8rem;
 }
 .post-content[data-series='rag-engineering'] .rag-table--striped thead {

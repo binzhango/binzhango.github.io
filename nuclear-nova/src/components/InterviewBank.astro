@@ -1,4 +1,6 @@
 ---
+import { Button } from '@astryxdesign/core/Button';
+import { TextInput } from '@astryxdesign/core/TextInput';
 import { render, type CollectionEntry } from 'astro:content';
 import { interviewTopics, legacyTopicAnchors } from '../utils/interview-topics';
 interface Props { questions: CollectionEntry<'interview'>[] }
@@ -13,12 +15,12 @@ const compiled = await Promise.all(questions.map(async (question) => ({ question
     </div>
     <div class="interview-filters">
       <label>Topic<select data-topic-filter><option value="">All topics</option>{interviewTopics.map(([id, title]) => <option value={id}>{title}</option>)}</select></label>
-      <label>Search questions<input data-search type="search" placeholder="e.g. KV cache" autocomplete="off" /></label>
+      <TextInput id="interview-search" type="search" label="Search questions" placeholder="e.g. KV cache" value="" data-search />
     </div>
     <div class="interview-toolbar">
       <p data-result-count role="status" aria-live="polite"></p>
-      <button type="button" data-expand>Expand all answers</button>
-      <button type="button" data-clear>Clear filters</button>
+      <Button data-expand label="Expand all answers" variant="secondary" />
+      <Button data-clear label="Clear filters" variant="secondary" />
     </div>
   </div>
   <p class="interview-empty" data-empty hidden>No questions match your search. Try another phrase or <button type="button" data-clear>clear filters</button>.</p>
@@ -42,21 +44,21 @@ const compiled = await Promise.all(questions.map(async (question) => ({ question
     })}
   </div>
   <div class="interview-practice-actions" data-practice-actions hidden>
-    <button type="button" class="interview-primary" data-reveal>Show answer</button>
+    <Button className="interview-primary" data-reveal label="Show answer" variant="primary" />
     <div class="interview-ratings" data-ratings hidden role="group" aria-label="Your self-assessment">
       <button type="button" data-rate="again" aria-pressed="false">Again</button><button type="button" data-rate="got-it" aria-pressed="false">Got it</button>
     </div>
-    <div class="interview-navigation"><button type="button" data-previous>Previous</button><button type="button" data-next>Next</button></div>
+    <div class="interview-navigation"><Button data-previous label="Previous" variant="secondary" /><Button data-next label="Next" variant="secondary" /></div>
   </div>
   <section class="interview-finish" data-finish hidden aria-labelledby="interview-finish-title">
     <h2 id="interview-finish-title" tabindex="-1">Practice complete</h2>
     <p data-summary></p>
-    <div><button type="button" data-review-again>Review Again</button><button type="button" data-restart>Restart set</button></div>
+    <div><Button data-review-again label="Review Again" variant="secondary" /><Button data-restart label="Restart set" variant="secondary" /></div>
     <p class="interview-hint">These ratings reflect your own assessment.</p>
   </section>
   <div class="interview-storage" data-storage hidden>
-    <p data-storage-note>Progress is saved in this browser.</p><button type="button" data-reset>Reset progress</button>
-    <div data-reset-confirm hidden><p>Clear all saved ratings for this question bank?</p><button type="button" data-reset-yes>Clear progress</button><button type="button" data-reset-no>Keep progress</button></div>
+    <p data-storage-note>Progress is saved in this browser.</p><Button data-reset label="Reset progress" variant="secondary" />
+    <div data-reset-confirm hidden><p>Clear all saved ratings for this question bank?</p><Button data-reset-yes label="Clear progress" variant="secondary" /><Button data-reset-no label="Keep progress" variant="secondary" /></div>
   </div>
   <p class="interview-live" data-announcement role="status" aria-live="polite" aria-atomic="true"></p>
   <p class="interview-credit">Additional prompts adapted from Outcome School’s <a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise">interview question collection</a> under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>. Answers are independently written and organized by topic.</p>

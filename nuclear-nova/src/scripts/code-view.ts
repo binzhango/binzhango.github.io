@@ -7,23 +7,46 @@ export function getCodeText(code: Element): string {
 }
 
 export function setupCodeViews() {
+  const icons = document.querySelector<HTMLTemplateElement>('#code-copy-icons');
+  const updateScrollFocus = (pre: Element) => {
+    const scrolls = pre.scrollWidth > pre.clientWidth + 1 || pre.scrollHeight > pre.clientHeight + 1;
+    if (scrolls) pre.setAttribute('tabindex', '0');
+    else pre.removeAttribute('tabindex');
+  };
+  const scrollObserver = new ResizeObserver((entries) => {
+    for (const { target } of entries) updateScrollFocus(target);
+  });
   document.querySelectorAll<HTMLElement>('pre[data-language], pre.astro-code').forEach((pre) => {
-    if (pre.closest('.code-block-wrapper')) return;
+    if (pre.closest('.code-block-wrapper, .astryx-code-block')) return;
     const code = pre.querySelector('code');
     if (!code) return;
-    const wrapper = document.createElement('div');
+    const wrapper = document.createElement('figure');
     wrapper.className = 'code-block-wrapper';
     wrapper.dataset.wrap = 'true';
-    const toolbar = document.createElement('div');
+    const source = getCodeText(code).trimEnd();
+    const compact = source.length <= 120 && !source.includes('\n') && !code.querySelector('.diff, .highlighted');
+    wrapper.toggleAttribute('data-compact', compact);
+    const toolbar = document.createElement('figcaption');
     toolbar.className = 'code-toolbar';
     const language = document.createElement('span');
     language.className = 'code-language';
-    language.textContent = pre.dataset.language || 'Code';
+    language.textContent = pre.dataset.codeTitle || pre.dataset.language || 'Code';
+    language.title = language.textContent;
+    language.dir = 'auto';
+    pre.dir = 'ltr';
+    pre.setAttribute('aria-label', `${language.textContent} code`);
+    for (const line of code.querySelectorAll(':scope > .line')) {
+      const text = document.createElement('span');
+      text.className = 'code-line-source';
+      text.append(...line.childNodes);
+      line.append(text);
+    }
     const controls = document.createElement('div');
     controls.className = 'code-controls';
     const button = (label: string, className: string) => {
       const control = document.createElement('button');
       control.type = 'button'; control.textContent = label; control.className = className;
+      control.dataset.butterButton = 'ghost';
       controls.append(control);
       return control;
     };
@@ -35,23 +58,38 @@ export function setupCodeViews() {
       wrapper.dataset.wrap = String(enabled);
       wrap.setAttribute('aria-pressed', String(enabled));
       pre.scrollLeft = 0;
+      updateScrollFocus(pre);
     });
     const expand = button('Expand', 'code-expand-button');
     expand.setAttribute('aria-haspopup', 'dialog');
+    if (compact) {
+      wrap.hidden = true;
+      expand.hidden = true;
+    }
     const copy = button('Copy', 'copy-button');
     copy.setAttribute('aria-label', 'Copy code to clipboard');
+    copy.title = 'Copy code';
+    if (icons) {
+      copy.replaceChildren(icons.content.cloneNode(true));
+      copy.classList.add('code-copy-icon-button');
+    }
     const status = document.createElement('span');
     status.className = 'code-status'; status.setAttribute('role', 'status');
+    const setCopyFeedback = (state: 'idle' | 'copied' | 'failed') => {
+      copy.dataset.copyState = state;
+      copy.title = state === 'copied' ? 'Copied' : state === 'failed' ? 'Retry copying code' : 'Copy code';
+      if (!icons) copy.textContent = state === 'idle' ? 'Copy' : copy.title;
+    };
     let feedback: ReturnType<typeof setTimeout>;
     copy.addEventListener('click', async () => {
       clearTimeout(feedback);
       try {
         await navigator.clipboard.writeText(getCodeText(code));
-        copy.textContent = 'Copied'; status.textContent = 'Code copied';
+        setCopyFeedback('copied'); status.textContent = 'Code copied';
       } catch {
-        copy.textContent = 'Try again'; status.textContent = 'Copy failed. Select the code to copy it manually.';
+        setCopyFeedback('failed'); status.textContent = 'Copy failed. Select the code to copy it manually.';
       }
-      feedback = setTimeout(() => { copy.textContent = 'Copy'; status.textContent = ''; }, 2000);
+      feedback = setTimeout(() => { setCopyFeedback('idle'); status.textContent = ''; }, 2000);
     });
     let dialog: HTMLDialogElement | undefined;
     expand.addEventListener('click', () => {
@@ -82,8 +120,10 @@ export function setupCodeViews() {
     });
     toolbar.append(language, controls, status);
     pre.before(wrapper); wrapper.append(toolbar, pre);
+    scrollObserver.observe(pre);
     document.addEventListener('astro:before-swap', () => { clearTimeout(feedback); dialog?.close(); }, { once: true });
   });
+  document.addEventListener('astro:before-swap', () => scrollObserver.disconnect(), { once: true });
 }
 
 export function setupTableOverflow() {

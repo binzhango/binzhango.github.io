@@ -1,0 +1,27 @@
+/* Astryx Butter 0.7.17 roles for the standalone diagram toolbars. */
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark'] { color-scheme: dark; }
+
+.toolbar {
+  --butter-accent: light-dark(#225bff, #fdee8c);
+  --toolbar-bg: light-dark(#ffffff, #2e2117);
+  --toolbar-border: light-dark(#c7c4b2, #939184);
+  --toolbar-text: light-dark(#1d1c11, #f3f2e2);
+  --toolbar-hover: light-dark(#f3f2e2, #3a2a1f);
+  --toolbar-menu-bg: light-dark(#ffffff, #3a2a1f);
+}
+
+.toolbar button {
+  border-radius: .5rem;
+  box-shadow: none;
+}
+
+.toolbar button:hover,
+.toolbar button[aria-expanded='true'],
+.toolbar button[aria-pressed='true']:not(#btn-theme),
+.toolbar #btn-export:is(:hover, [aria-expanded='true']) {
+  border-color: var(--butter-accent);
+  background: var(--toolbar-hover);
+}
+
+.toolbar button:focus-visible { outline-color: var(--butter-accent); }

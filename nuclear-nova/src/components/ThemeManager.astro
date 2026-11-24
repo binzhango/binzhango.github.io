@@ -29,7 +29,6 @@ const { defaultTheme = "light" } = Astro.props;
     function applyTheme(theme) {
       const resolvedTheme = theme === "auto" ? systemTheme : theme;
       document.documentElement.dataset.theme = resolvedTheme;
-      document.documentElement.setAttribute("data-theme", resolvedTheme);
       document.documentElement.style.colorScheme = resolvedTheme;
       
       document.dispatchEvent(
@@ -45,7 +44,8 @@ const { defaultTheme = "light" } = Astro.props;
     }
     
     function getTheme() {
-      return store.getItem(storageKey) || defaultTheme;
+      const choice = store.getItem(storageKey);
+      return ["light", "dark", "auto"].includes(choice) ? choice : defaultTheme;
     }
     
     function getSystemTheme() {

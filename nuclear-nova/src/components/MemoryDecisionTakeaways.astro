@@ -1,4 +1,5 @@
 ---
+import Metadata from './Metadata.jsx';
 import run from '../../public/assets/benchmarks/hindsight-jev/live-results.json';
 
 const { baseline, memory, combined } = run.summary;
@@ -14,16 +15,10 @@ const { baseline, memory, combined } = run.summary;
 
     <div class="takeaways-result">
       <p>Task completion in this run</p>
-      <dl>
-        <div>
-          <dt>Hindsight alone</dt>
-          <dd>{memory.correct}/{memory.n}</dd>
-        </div>
-        <div>
-          <dt>Hindsight + Jev</dt>
-          <dd>{combined.correct}/{combined.n}</dd>
-        </div>
-      </dl>
+      <Metadata columns={2} items={[
+        { label: 'Hindsight alone', value: `${memory.correct}/${memory.n}` },
+        { label: 'Hindsight + Jev', value: `${combined.correct}/${combined.n}` },
+      ]} />
     </div>
   </div>
 
@@ -45,10 +40,9 @@ const { baseline, memory, combined } = run.summary;
   .takeaways-panel {
     margin: 3rem 0;
     padding: clamp(1.25rem, 4vw, 2.25rem);
-    border: 1px solid color-mix(in srgb, var(--memory-violet) 34%, var(--line));
-    border-top: 4px solid var(--memory-violet);
-    border-radius: .5rem;
-    background: color-mix(in srgb, var(--memory-violet) 7%, var(--post-surface));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-container);
+    background: var(--surface-muted);
   }
 
   .takeaways-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(12rem, .7fr); gap: 1.75rem; align-items: end; }
@@ -66,9 +60,8 @@ const { baseline, memory, combined } = run.summary;
 
   .takeaways-result { border-inline-start: 1px solid var(--line); padding-inline-start: 1.25rem; }
   .takeaways-panel .takeaways-result p { margin-bottom: .65rem; color: var(--post-muted); font-size: .8rem; }
-  .takeaways-result dl { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; margin: 0; }
-  .takeaways-result dt { color: var(--post-muted); font-size: .76rem; line-height: 1.35; }
-  .takeaways-result dd { margin: .2rem 0 0; color: var(--post-heading); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .takeaways-result :global(dt) { color: var(--post-muted); font-size: .76rem; line-height: 1.35; }
+  .takeaways-result :global(dd) { margin: .2rem 0 0; color: var(--post-heading); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
 
   .takeaways-guidance { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
   .takeaways-panel .takeaways-guidance h3 { margin: 0 0 .4rem; font-size: 1rem; font-weight: 700; }

@@ -91,6 +91,7 @@ test('code copy, wrapping and expanded view preserve the original source', async
   await page.goto(`${path}#question-llm-058`);
   await page.locator('#question-llm-058 .interview-detail summary').click();
   const wrapper = page.locator('#question-llm-058 .code-block-wrapper');
+  await expect(wrapper.locator('figcaption .code-language')).toHaveText('python');
   await wrapper.locator('.code-wrap-button').click();
   await expect(wrapper).toHaveAttribute('data-wrap', 'false');
   await wrapper.locator('.code-expand-button').click();
@@ -99,6 +100,7 @@ test('code copy, wrapping and expanded view preserve the original source', async
   await expect(wrapper.locator('.code-expand-button')).toBeFocused();
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await wrapper.locator('.copy-button').click();
+  await expect(wrapper.locator('.copy-button')).toHaveAttribute('data-copy-state', 'copied');
   await expect(wrapper.locator('.code-status')).toHaveText('Code copied');
   const copied = await page.evaluate(() => navigator.clipboard.readText());
   expect(copied).toContain('import torch');
@@ -170,7 +172,7 @@ test('server reading remains usable without JavaScript', async ({ browser }) => 
 for (const width of [375, 768, 1024, 1440]) for (const theme of ['light', 'dark']) {
   test(`responsive ${width}px ${theme}`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
-    await page.evaluate(theme => document.documentElement.dataset.theme = theme, theme);
+    await page.evaluate(theme => window.theme?.setTheme(theme as 'light' | 'dark'), theme);
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: `test-results/interview/${width}-${theme}-header.png` });
     await page.locator('[data-mode-button="practice"]').click();
@@ -220,15 +222,15 @@ test('complete-bank interaction measurements and local fonts', async ({ page }) 
     return {
       questions: document.querySelectorAll('[data-question]').length,
       briefAnswers: document.querySelectorAll('.interview-brief').length,
-      geistLoaded: document.fonts.check('16px "Interview Geist"'),
-      monoLoaded: document.fonts.check('16px "Interview Geist Mono"'),
+      outfitLoaded: [...document.fonts].some(font => font.family === 'Outfit' && font.status === 'loaded'),
+      monoLoaded: [...document.fonts].some(font => font.family === 'JetBrains Mono' && font.status === 'loaded'),
       samples,
     };
   });
   expect(errors).toEqual([]);
   expect(measurements.questions).toBe(762);
   expect(measurements.briefAnswers).toBe(measurements.questions);
-  expect(measurements.geistLoaded && measurements.monoLoaded).toBe(true);
+  expect(measurements.outfitLoaded && measurements.monoLoaded).toBe(true);
   await writeFile('test-results/interview/interaction-measurements.json', JSON.stringify(measurements, null, 2));
 });
 

@@ -146,7 +146,7 @@ class Cdp {
 }
 
 /** Launch a headless instance and attach to its page target. */
-async function launch({ width, height, extraFlags = [] }, out) {
+async function launch({ width, height, extraFlags = [] }) {
   const port = await freePort();
   const profile = mkdtempSync(path.join(tmpdir(), "holo-profile-"));
   const child = spawn(
@@ -212,7 +212,7 @@ async function desktopPass(base, out) {
     checks.push({ name, pass: !!pass, detail });
     console.log(`${pass ? "PASS" : "FAIL"}  ${name}${detail ? "  — " + detail : ""}`);
   };
-  const { cdp, close } = await launch({ width: 1440, height: 1000 }, out);
+  const { cdp, close } = await launch({ width: 1440, height: 1000 });
   try {
     await cdp.send("Page.navigate", { url: base });
     const ready = await waitReady(cdp);
@@ -407,7 +407,7 @@ async function mobilePass(base, out) {
     checks.push({ name, pass: !!pass, detail });
     console.log(`${pass ? "PASS" : "FAIL"}  ${name}${detail ? "  — " + detail : ""}`);
   };
-  const { cdp, close } = await launch({ width: 390, height: 844 }, out);
+  const { cdp, close } = await launch({ width: 390, height: 844 });
   try {
     // headless --window-size bottoms out near 492 CSS px, so the narrow viewport is
     // forced; deviceScaleFactor 2 mirrors a real phone.
@@ -459,7 +459,7 @@ async function homepagePass(base, out) {
     checks.push({ name, pass: !!pass, detail });
     console.log(`${pass ? 'PASS' : 'FAIL'}  ${name} ${detail}`);
   };
-  const { cdp, close } = await launch({ width: 1440, height: 1000 }, out);
+  const { cdp, close } = await launch({ width: 1440, height: 1000 });
   const ready = async () => {
     for (let i = 0; i < 100; i++) {
       const value = await cdp.eval(`document.querySelector('[data-home-card]')?.dataset.renderer`);

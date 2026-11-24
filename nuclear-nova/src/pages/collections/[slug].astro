@@ -1,4 +1,6 @@
 ---
+import { Button } from '@astryxdesign/core/Button';
+import { TextInput } from '@astryxdesign/core/TextInput';
 import { getTopicTone, getDisplayTitle } from '../../utils/presentation';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategoryBadge from '../../components/CategoryBadge.astro';
@@ -56,18 +58,12 @@ function getNoteId(postId: string): string {
   <div class="collection-browser" data-collection-browser data-topic-tone={getTopicTone(collection.posts[0]?.data.categories?.[0])}>
     <aside class="collection-selector" aria-label="Collection notes">
       <div class="collection-selector__header">
-        <label for="collection-search">Find a note</label>
+        <h2>Collection notes</h2>
         <span data-result-count role="status">{collection.posts.length} notes</span>
       </div>
-      <input
-        id="collection-search"
-        class="collection-search"
-        type="search"
-        placeholder="Search titles, categories, or tags"
-        autocomplete="off"
-        data-collection-search
-        hidden
-      />
+      <div data-collection-search-field hidden>
+        <TextInput id="collection-search" type="search" label="Find a note" isLabelHidden placeholder="Search titles, categories, or tags" value="" width="100%" />
+      </div>
 
       <div class="collection-selector__scroll" data-collection-list tabindex="-1">
         <ol>
@@ -118,18 +114,16 @@ function getNoteId(postId: string): string {
             <p class="note-preview__excerpt">{getCollectionExcerpt(post, 300)}</p>
 
             <div class="note-preview__actions">
-              <a class="note-preview__read" href={getPostPath(post)}>
-                Read
-              </a>
+              <Button href={getPostPath(post)} label="Read article" variant="primary" />
               <div class="note-preview__pager" aria-label="Collection navigation">
                 {index > 0 && (
-                  <button type="button" data-preview-direction="previous" data-target={getNoteId(collection.posts[index - 1].id)}>
+                  <button type="button" data-butter-button="secondary" data-preview-direction="previous" data-target={getNoteId(collection.posts[index - 1].id)}>
                     <span aria-hidden="true">&larr;</span>
                     <span>Previous</span>
                   </button>
                 )}
                 {index < collection.posts.length - 1 && (
-                  <button type="button" data-preview-direction="next" data-target={getNoteId(collection.posts[index + 1].id)}>
+                  <button type="button" data-butter-button="secondary" data-preview-direction="next" data-target={getNoteId(collection.posts[index + 1].id)}>
                     <span>Next</span>
                     <span aria-hidden="true">&rarr;</span>
                   </button>
@@ -152,10 +146,10 @@ function getNoteId(postId: string): string {
     const buttons = Array.from(browser.querySelectorAll<HTMLAnchorElement>('[data-collection-item]'));
     const panels = Array.from(browser.querySelectorAll<HTMLElement>('[data-note-panel]'));
     const rows = Array.from(browser.querySelectorAll<HTMLElement>('[data-collection-row]'));
-    const search = browser.querySelector<HTMLInputElement>('[data-collection-search]');
+    const search = browser.querySelector<HTMLInputElement>('#collection-search');
     const count = browser.querySelector<HTMLElement>('[data-result-count]');
     const empty = browser.querySelector<HTMLElement>('[data-empty-state]');
-    if (search) search.hidden = false;
+    if (search) browser.querySelector<HTMLElement>('[data-collection-search-field]')?.removeAttribute('hidden');
 
     function selectNote(target: string, updateHash = true) {
       const selectedButton = buttons.find((button) => button.dataset.target === target);
@@ -260,11 +254,12 @@ function getNoteId(postId: string): string {
   .collection-browser { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr); gap: 3rem; border-top: 1px solid var(--line); padding-top: 2rem; }
   .collection-selector { min-width: 0; }
   .collection-selector__header { display: flex; justify-content: space-between; font-size: .875rem; color: var(--muted); margin-bottom: .75rem; }
-  .collection-search { width: 100%; padding: .8rem; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); font-size: .875rem; }
+  .collection-selector__header h2 { margin: 0; font-size: 1rem; letter-spacing: 0; }
   .collection-selector__scroll { max-height: 550px; overflow: auto; margin-top: 1rem; scrollbar-width: thin; }
   ol { list-style: none; padding: 0; margin: 0; }
   .collection-selector__item { width: 100%; display: grid; grid-template-columns: 22px 1fr; gap: .4rem .7rem; border: 0; border-bottom: 1px solid var(--line); border-left: 2px solid transparent; padding: 1rem .8rem; background: transparent; color: var(--body-text); text-align: left; text-decoration: none; }
-  .collection-selector__item:hover, .collection-selector__item[aria-current='true'] { background: var(--surface); border-left-color: var(--accent); color: var(--accent); }
+  .collection-selector__item:hover { background: var(--color-overlay-hover); }
+  .collection-selector__item[aria-current='true'] { background: var(--color-accent-muted); border-left-color: var(--color-accent); color: var(--color-text-accent); }
   .collection-selector__index, .collection-selector__date { color: var(--muted); font-family: var(--font-mono); font-size: .8125rem; }
   .collection-selector__title { font-size: .875rem; line-height: 1.45; }
   .collection-selector__date { grid-column: 2; }
@@ -274,12 +269,8 @@ function getNoteId(postId: string): string {
   .note-preview h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.2; margin-block: 1rem; }
   .note-preview__excerpt { line-height: 1.8; font-size: 1rem; }
   .note-preview__actions { margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  .note-preview__read { color: var(--canvas); background: var(--ink); text-decoration: none; padding: .7rem 1.3rem; border-radius: 5px; font-size: .85rem; }
   .note-preview__pager { display: none; gap: .5rem; }
   [data-ready='true'] .note-preview__pager { display: flex; }
-  .note-preview__pager button { background: transparent; border: 1px solid var(--line); border-radius: 5px; padding: .65rem .8rem; color: var(--ink); font-size: .875rem; }
-  .note-preview__pager button:hover { background: var(--accent-soft); }
-  .note-preview__pager button:disabled { opacity: .45; cursor: default; }
   .collection-selector__empty { font-size: .85rem; }
   @media (max-width: 767px) {
     .collection-hero { display: block; }

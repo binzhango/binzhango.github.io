@@ -1,106 +1,27 @@
 ---
+import ComparisonTable from './ComparisonTable.jsx';
+
 interface Props {
-    data: string[][];
+  data: string[][];
+  label?: string;
+  hasRowHeaders?: boolean;
 }
 
-const { data } = Astro.props;
-const headers = data[0];
-const rows = data.slice(1);
+const { data, label = 'Table', hasRowHeaders = false } = Astro.props;
+const [headers, ...rows] = data;
 ---
-
-<div class="table-wrapper">
-    <table class="custom-table">
-        <thead>
-            <tr>
-                {headers.map(header => (
-                    <th>{header}</th>
-                ))}
-            </tr>
-        </thead>
-        <tbody>
-            {rows.map(row => (
-                <tr>
-                    {row.map(cell => (
-                        <td>{cell}</td>
-                    ))}
-                </tr>
-            ))}
-        </tbody>
-    </table>
-</div>
+{headers && <div class="table-wrapper" role="region" aria-label={label} tabindex="0">
+  <ComparisonTable headers={headers} rows={rows} label={label} hasRowHeaders={hasRowHeaders} />
+</div>}
 
 <style>
-    .table-wrapper {
-        width: 100%;
-        overflow-x: auto;
-        margin: 1.75rem 0;
-        border: 1px solid color-mix(in srgb, var(--sl-color-hairline) 82%, transparent);
-        border-radius: 1rem;
-        background: color-mix(in srgb, var(--sl-color-bg) 92%, transparent);
-        box-shadow: 0 1rem 2rem color-mix(in srgb, var(--sl-color-black) 5%, transparent);
-    }
-
-    .custom-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-
-    .custom-table thead {
-        background: linear-gradient(90deg, #0f62fe 0%, #0f766e 100%);
-        color: #f8fafc;
-    }
-
-    .custom-table th {
-        padding: 0.95rem 1rem;
-        text-align: left;
-        font-size: 0.82rem;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        white-space: nowrap;
-    }
-
-    .custom-table tbody tr {
-        transition: background-color 0.2s ease;
-    }
-
-    .custom-table tbody tr:nth-child(even) {
-        background: color-mix(in srgb, #0f766e 5%, transparent);
-    }
-
-    .custom-table tbody tr:hover {
-        background-color: color-mix(in srgb, #0f62fe 8%, transparent);
-    }
-
-    .custom-table td {
-        padding: 0.9rem 1rem;
-        border-top: 1px solid color-mix(in srgb, var(--sl-color-hairline) 72%, transparent);
-        color: var(--sl-color-text);
-        vertical-align: top;
-    }
-
-    :root[data-theme='dark'] .table-wrapper {
-        background: rgba(15, 23, 42, 0.9);
-        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.24);
-    }
-
-    :root[data-theme='dark'] .custom-table thead {
-        background: linear-gradient(90deg, #1d4ed8 0%, #0f766e 100%);
-    }
-
-    :root[data-theme='dark'] .custom-table td {
-        border-top-color: rgba(148, 163, 184, 0.18);
-    }
-
-    @media (max-width: 640px) {
-        .table-wrapper {
-            border-radius: 0.85rem;
-        }
-
-        .custom-table th,
-        .custom-table td {
-            padding: 0.8rem 0.85rem;
-        }
-    }
+  .table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 1.75rem 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-container);
+    background: var(--surface);
+  }
+  .table-wrapper :global(table) { margin: 0; min-width: 100%; border: 0; }
 </style>
