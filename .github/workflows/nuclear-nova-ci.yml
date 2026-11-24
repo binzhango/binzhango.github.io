@@ -12,8 +12,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: nuclear-nova-${{ github.ref }}
@@ -47,13 +45,10 @@ jobs:
       - name: Run Astro checks and build
         run: npx astro check && npm run build
 
-  deploy-github-pages:
+  build-github-pages:
     if: github.event_name == 'push' && github.ref == 'refs/heads/binzhango-server'
     runs-on: ubuntu-latest
     needs: validate
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     defaults:
       run:
         working-directory: nuclear-nova
@@ -84,6 +79,19 @@ jobs:
         with:
           path: nuclear-nova/dist
 
+  # Give the uploaded artifact a job boundary before Pages looks it up.
+  deploy-github-pages:
+    needs: build-github-pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
